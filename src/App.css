@@ -1,0 +1,139 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#hero {
+  
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  
+  margin-top: 5%;
+}
+
+#hero .carousel, #hero .carousel-inner, #hero .carousel-item, #hero .carousel-item::before {
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0; 
+  border-radius: 25px;
+  border: 1px white;
+  width: 55vw;
+  height: 70vh;
+}
+
+
+
+#hero .carousel-item::before {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.342);
+}
+#hero .carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  top: 30px;
+  left: 50px;
+  right: 50px;
+}
+
+#hero .container {
+  text-align: center;
+  margin-left: 20px;
+}
+#hero .carousel-inner .carousel-item {
+  transition-property: opacity;
+  background-position: center top;
+}
+
+#hero .carousel-inner .carousel-item,
+#hero .carousel-inner .active.carousel-item-left,
+#hero .carousel-inner .active.carousel-item-right {
+  opacity: 0;
+}
+
+#hero .carousel-indicators li {
+  cursor: pointer;
+  background: #fff;
+  width: 15px;
+  border: 0;
+  height: 5px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+#hero .carousel-indicators li.active {
+  background: #428bca;
+}
+
+#hero .carousel-inner .active,
+#hero .carousel-inner .carousel-item-next.carousel-item-left,
+#hero .carousel-inner .carousel-item-prev.carousel-item-right {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+#hero .carousel-inner .carousel-item-next,
+#hero .carousel-inner .carousel-item-prev,
+#hero .carousel-inner .active.carousel-item-left,
+#hero .carousel-inner .active.carousel-item-right {
+  left: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+ #hero .carousel-control-next-icon:hover, #hero .carousel-control-prev-icon:hover {
+  background: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+} 
+#hero .carousel-control-next, #hero .carousel-control-prev{
+  background: rgb(255, 255, 255);
+  font-size: 40px;
+  color: rgb(255, 255, 255);
+} 
+#hero .carousel-control-next, #hero .carousel-control-prev{
+  opacity: 0;
+} 
+
+
