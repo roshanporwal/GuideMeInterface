@@ -265,6 +265,14 @@
         
         
     }
+    .doctor_container{
+        width: 100% !important;
+        
+    }
+
+    .doctor_detail_container{
+        width: 70% !important;
+    }
 
     
 
@@ -516,15 +524,16 @@ tbody{
 }
 
 .doctor_container{
-    height: 24rem;
-    width: 100rem;
-    background: #f2f2f2;
-    border-radius: 20px;
-    cursor: pointer;
-    box-shadow: 0 0 20px 8px #d0d0d0;  
-    text-align: center;
-    margin-top: 1rem;
-    margin-left: 12rem;
+   
+    
+  
+        background: #f2f2f2;
+        border-radius: 20px;
+       
+        box-shadow: 0 0 20px 8px #d0d0d0;
+        text-align: left;
+        margin-top: 1rem;
+        padding: 30px 15px;
 }
 
 .doctor_image{
@@ -539,9 +548,8 @@ tbody{
        border: 1px white;
        border-radius: 10px;
        background-color: white;
-      
-       width: 14rem;
-       height: 3rem;
+       
+       
       
 }
 
@@ -668,4 +676,15 @@ tbody{
     width: 200px;
     margin-left: 5px;
     margin-top: 5px;
+}
+
+.patient_form_container{
+   
+    height: 90rem;
+    
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    
 }
