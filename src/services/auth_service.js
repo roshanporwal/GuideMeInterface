@@ -4,9 +4,12 @@ import { instance } from './base_service';
 
 
 
-function login(data) {
-  console.log(data,"data")
+function login(data) { 
   const req = instance.post('/doctor/login', data);
+  return req
+}
+function enquries(data) {
+  const req = instance.post('/enquries/create', data);
   return req
 }
 
@@ -15,5 +18,6 @@ function login(data) {
 export default {
  
   login,
+  enquries
   
 };
