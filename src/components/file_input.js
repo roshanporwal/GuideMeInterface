@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-bootstrap';
 
 
-export default function InputField(props) {
+export default function File(props) {
     console.log(props)
     return (
 

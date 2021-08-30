@@ -6,12 +6,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PATIENT_DASHBOARD from './pages/patient_dashboard';
 import HOSPITAL_DASHBOARD from './pages/hospital_dashboard';
 import DOCTOR_LIST from './pages/doctor_list.js';
-<<<<<<< HEAD
 import HOSPITAL_PROFILE from './pages/hospital_profile';
-=======
-import HOSPITAL_PROFILE from './pages/hospital_profile'; 
->>>>>>> 840a1921a379650e826ab1f3e6d5c33d42c8ae74
 import PATIENT_FORM from './pages/patient_form';
+import ADMIN_HOSPITAL_DASHBOARD from './admin/admin_hospital_dashboard';
+import ADMIN_HOSPITAL_PROFILE from './admin/admin_hospital_profile';
+import ADMIN_PATIENT_DASHBOARD from './admin/admin_patient_dashboard';
+import ADMIN_Home from './admin/admin_home.js';
+
 
 import './App.css';
 import 'react-bootstrap';
@@ -28,15 +29,12 @@ class  App extends Component {
         <Route path='/patient' component={PATIENT_DASHBOARD} />
         <Route path='/HOSPITAL_DASHBOARD' component={HOSPITAL_DASHBOARD} />
         <Route path='/DOCTOR_LIST' component={DOCTOR_LIST} />        
-<<<<<<< HEAD
         <Route path='/HOSPITAL_PROFILE' component={HOSPITAL_PROFILE} />
         <Route path='/PATIENT_FORM' component={PATIENT_FORM} />
-=======
-        <Route path='/HOSPITAL_PROFILE' component={HOSPITAL_PROFILE}/>
-        <Route path='/HOSPITAL_PROFILE' component={PATIENT_FORM}
-        />
-       
->>>>>>> 840a1921a379650e826ab1f3e6d5c33d42c8ae74
+        <Route path='/ADMIN_HOSPITAL_DASHBOARD' component={ADMIN_HOSPITAL_DASHBOARD} />
+        <Route path='/ADMIN_HOSPITAL_PROFILE' component={ADMIN_HOSPITAL_PROFILE} />
+        <Route path='/ADMIN_PATIENT_DASHBOARD' component={ADMIN_PATIENT_DASHBOARD} />
+        <Route path='/ADMIN_HOME' component={ADMIN_Home} />
       </Switch>
       
     </Router>

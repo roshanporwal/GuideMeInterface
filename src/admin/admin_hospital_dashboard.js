@@ -63,10 +63,10 @@ const state = {
       {
         label: 'Patients',
         backgroundColor: [
-          'rgb(119, 136, 153)',
-          'rgb(65, 105, 625)',
-          'rgb(0, 0, 225)',
-          'rgb(56, 56, 121)'
+            '#EAF2F6',
+          '#42B3CE',
+          '#164473',
+          '#5899BD'
         ],
         hoverBackgroundColor: [
         '#501800',
@@ -79,7 +79,7 @@ const state = {
     ]
   }
 
-class HOSPITAL_DASHBOARD extends React.Component{
+class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
 
     constructor(props) {
         super();
@@ -144,7 +144,7 @@ class HOSPITAL_DASHBOARD extends React.Component{
             </div>
             </div>
                 ))}
-            <div className = "chart_content d-flex pl-5">
+            <div className = "chart_content d-flex">
                 <div className = "chart_container d-flex">
                     <div>
                     <Pie
@@ -157,13 +157,13 @@ class HOSPITAL_DASHBOARD extends React.Component{
                             },
                             legend:{
                             display:true,
-                            position:'right'
+                            position:'bottom'
                             }
                         }}
                     />
                     </div>
                      <div className = "pie_list">
-                        <ul>
+                        <ul style = {{fontSize: 16}}>
                             <li>Awaiting Patients</li>
                             <li>Won Patients</li>
                             <li>Lost Patients</li>
@@ -175,26 +175,28 @@ class HOSPITAL_DASHBOARD extends React.Component{
                 res.alert.map((target,index) => (
                    
                 
-                <div className = "alert_container d-flex"  key = {index}{...target}>
+                <div className = "alert_container col-sm-5 d-flex"  key = {index}{...target}>
                     <div>
                         <h1 style = {{fontSize: 54, color: "white", marginTop: "8rem", marginLeft: "12rem"}}>{target.pending}</h1>
                         <button className = "view_patients_button">View Now</button>
                     </div>
                     <div className = "alert">
                             <h1>Alert</h1><br />
-                            <h3>You have following enquiries<br/>
+                            <h4>You have following enquiries<br />
                             {target.pending} unattended new enquiries
-                            since {target.hours} hours and {target.minutes} minutes</h3>
+                            since {target.hours} hours and {target.minutes} minutes</h4>
                     </div>
                 </div>
                
                 ))}
-                
+                <div style = {{marginLeft: 20}}>
+                <button className="join_button">ADD PATIENT</button>
+                </div>
             </div>
             <div className = "patient_table_container">
                 <table>
-                    <thead style = {{height: "5rem"}}>
-                        <th style = {{paddingLeft: "2rem"}}>Patient Name</th>
+                    <thead>
+                        <th>Patient Name</th>
                         <th>Query</th>
                         <th>Insurance/TPA</th>
                         <th>Date</th>
@@ -218,7 +220,7 @@ class HOSPITAL_DASHBOARD extends React.Component{
                     </tbody>
                 </table>
             </div>
-            <div className = "pagination" style = {{marginLeft: "60rem"}}>
+            <div className = "pagination" style = {{marginLeft: "50rem"}}>
                 <Pagination
                         activePage={this.state.activePage}
                         itemsCountPerPage={10}
@@ -232,4 +234,4 @@ class HOSPITAL_DASHBOARD extends React.Component{
     }
 }
 
-export default HOSPITAL_DASHBOARD;
+export default ADMIN_HOSPITAL_DASHBOARD;

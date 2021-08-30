@@ -2,17 +2,17 @@ import React from 'react';
 import 'react-bootstrap';
 
 
-export default function InputField(props) {
+export default function Checkbox(props) {
     console.log(props)
     return (
 
 
 
-        <div className="col-md-12">
+        <div className="col-md-4">
             <div className="form-group pt-4">
                 <label>{props.label}</label>
                 <input
-                    style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }}
+                    style={{ borderColor: "rgb(56, 56, 121)" }}
                     className={props.className}
                     onChange={props.onChange}
                     type={props.type}

@@ -126,9 +126,9 @@
    }
  
    .join_button{
-       border: 1px rgb(56, 56, 121);
+       border: 1px #164473;
        border-radius: 10px;
-       background-color: rgb(56, 56, 121);
+       background-color: #164473;
        color: white;
        width: 14rem;
        height: 3rem;
@@ -316,7 +316,7 @@
     
     margin-left: 10%;
     margin-top: 10%;
-    height: 30rem;
+    
     width: 24rem;
     background: #f2f2f2;
     border-radius: 20px;
@@ -333,14 +333,15 @@
 .patient_details{
     margin-left: 5%;
     margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .container_patient_preferences{
     margin-left: 10%;
     margin-top: 5%;
-    height: 60rem;
+    
     width: 24rem;
-    background: rgb(56, 56, 121);
+    background: #164473;
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0; 
@@ -374,9 +375,9 @@
 .query_container{
     
     margin-top: 5%;
-    height: 50rem;
+    
     width: 100rem;
-    background: rgb(56, 56, 121);
+    background: #164473;
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0; 
@@ -385,20 +386,20 @@
 }
 
 .query_title{
-    text-align: center;
+    margin-left: 2rem;
     padding-top: 2rem;  
 }
 
 .query_content{
-    padding: 5%;
+    padding: 2%;
     margin-top: 1%;
     text-align: justify;
 }
 
 .download_button{
-    border: 1px rgb(174, 174, 180);
+    border: 1px #E3E3E3;
        border-radius: 10px;
-       background-color: rgb(174, 174, 180);
+       background-color: #E3E3E3;
        color: black;
        width: 28rem;
        height: 5rem;
@@ -412,9 +413,9 @@
     transition: 0.5s;
 }
 .view_button{
-    border: 1px rgb(174, 174, 180);
+    border: 1px #E3E3E3;
        border-radius: 10px;
-       background-color: rgb(174, 174, 180);
+       background-color: #E3E3E3;
        color: black;
        width: 28rem;
        height: 5rem;
@@ -439,7 +440,8 @@ p{
 
 .chart_container{
     height: 30rem;
-    
+    width: 70rem;
+    margin-left: 35px;
     background: #f2f2f2;
     border-radius: 20px;
     cursor: pointer;
@@ -454,25 +456,26 @@ p{
 
 .alert_container{
     height: 30rem;
-    
-    background: rgb(56, 56, 121);
+    width: 70rem;
+    background: #164473;
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0; 
-    margin-left: 1rem; 
+    margin-left: 2rem; 
 }
 
 .chart_content{
     
     margin-top: 5rem;
+    
 }
 
 .pie_list{
-    margin-left: -1rem;
+    margin-left: 1rem;
 }
 
 .view_patients_button{
-    border: 1px rgb(56, 56, 121);
+    border: 1px #164473;
     border-radius: 10px;
     background-color: rgb(236, 236, 245);
     color: black;
@@ -490,21 +493,30 @@ p{
     margin-left: 3rem;
 }
 
-.table_header{
-    background: rgb(56, 56, 121);
+thead{
+    background: #164473; 
    
     color: white;
     font-size: 16px;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 5%;
     height: 5rem;
-    vertical-align: text-top;
+    vertical-align: text-center;
 }
 
-.table{
+table{
     margin-top: 5rem;
     border: 1px solid black;
-    border-radius: 15px;
+    
+    align-items: center;
+    width: 95%;
+    margin-left: 5rem;
+    margin-right: 20rem;
+    
+} 
+
+table thead th:first-child th:last-child {
+    border-radius:4px 0 0 0;
 }
 
 .patient_table_container{
@@ -514,6 +526,7 @@ p{
 tbody{
     font-size: 14px;
     background-color: rgb(204, 197, 197);
+    height: 20rem;
 }
 
 
@@ -529,10 +542,9 @@ tbody{
   
         background: #f2f2f2;
         border-radius: 20px;
-       
         box-shadow: 0 0 20px 8px #d0d0d0;
         text-align: left;
-        margin-top: 1rem;
+        margin-top: 4rem;
         padding: 30px 15px;
 }
 
@@ -568,9 +580,9 @@ tbody{
     height: 40rem;
     width: 30rem;
     background: #f2f2f2;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 0 20px 8px #d0d0d0;  
+    box-shadow: 0 0 8px 8px #e0dddd;  
 }
 
 .medstar_image{
@@ -584,7 +596,7 @@ tbody{
     /* width: 85%; */
     background-color: rgb(56, 56, 121);
     height: 50px;
-    border: 1px rgb(56, 56, 121);
+    border: 1px #164473;
     border-radius: 5px;
     padding: 4px;
 }
@@ -617,7 +629,7 @@ tbody{
 
 .add_hospital_button:hover{
     transition: 0.5s;
-    background-color: rgb(56,56,121);
+    background-color: #164473;
     color: white;
 }
 
