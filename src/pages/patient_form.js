@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'react-bootstrap';
+import InputField from '../components/input';
 //import auth_service from "../services/auth_service";
 
 function PATIENT_FORM(props) {
@@ -126,9 +127,26 @@ function PATIENT_FORM(props) {
             <div className="patient_form_container">
                 <form className="col-md-12" onSubmit={handleSubmit}>
                     <div className="col-md-4">
+                        <InputField
+                        label="Patient Name"
+                        className ={`form-control ${formErrors.patient_name ? "is-invalid" : ""}`}
+                        onChange={handleChange} 
+                        type="text" 
+                        name="patient_name" 
+                        id="patient_name" 
+                        value={formValues.patient_name}/>
+                         <InputField
+                        label="Patient Email"
+                        className ={`form-control ${formErrors.patient_name ? "is-invalid" : ""}`}
+                        onChange={handleChange} 
+                        type="email" 
+                        name="patient_email" 
+                        id="patient_email" 
+                        value={formValues.patient_email}/>
+
                         <div className="form-group pt-4">
                             <label>Patient Name</label>
-                            <input style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }} className={`form-control ${formErrors.patient_name ? "is-invalid" : ""}`} onChange={handleChange  } type="text" name="patient_name" id="patient_name" value={formValues.patient_name} />
+                            <input style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }} className={`form-control ${formErrors.patient_name ? "is-invalid" : ""}`} onChange={handleChange} type="text" name="patient_name" id="patient_name" value={formValues.patient_name} />
                         </div>
                         <div className="invalid-feedback">{formErrors.patient_name}</div>
                         <div className="form-group pt-4">
