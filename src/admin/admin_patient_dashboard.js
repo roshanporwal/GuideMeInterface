@@ -201,11 +201,24 @@ class ADMIN_PATIENT_DASHBOARD extends React.Component{
             </div>
                 ))}<div className = "pt-5 pb-5">
                     <label>Select Hospital</label>
-                    <select  style = {{borderColor: "rgb(56, 56, 121)"}} className = "form-control" name="hospital" id="hospital">
-                        <option value="hospital_1">Hospital 1</option>
-                        <option value="hospital_2">Hospital 2</option>
-                        
-                    </select>
+                    <div className = "form-check">
+                                <input type = "checkbox" className = "form-check-input"  />
+                                <label className="form-check-label" >
+                                Hospital 1
+                                </label>
+                            </div>
+                            <div className = "form-check">
+                                <input type = "checkbox" className = "form-check-input"/>
+                                <label className="form-check-label" >
+                                Hospital 2
+                                </label>
+                            </div>
+                            <div className = "form-check">
+                                <input type = "checkbox" className = "form-check-input" />
+                                <label className="form-check-label" >
+                                Hospital 3
+                                </label>
+                            </div>
                     </div>                   
                 </div>
                 

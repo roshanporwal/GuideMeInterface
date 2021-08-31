@@ -176,7 +176,7 @@ function PATIENT_FORM(props) {
                         <div className="invalid-feedback">{formErrors.patient_gender}</div>
                         <div className="pt-4">
                             <label>Patient Gender</label>
-                            <div className="d-flex">
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <RadioField
                                 style = {{paddingLeft: 4}}
                                 label="Male"
@@ -267,7 +267,8 @@ function PATIENT_FORM(props) {
                         <div className="invalid-feedback">{formErrors.medical_history}</div>
                         <div className="pt-4 " style = {{marginLeft: 15}}>
                             <label>Proposed Treatment plan/requirement</label>
-                            <div className="d-flex">
+                            <div style = {{border: "2px solid #164473", borderRadius: 10}}>
+                            <div className="d-flex ml-4">
                                 <div className="form-check">
                                     <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "Surgical Consultation")} type="checkbox" name="proposed_treatment_plan" id="surgical_consultation" value={formValues.proposed_treatment_plan} />
                                     <label className="form-check-label" >
@@ -281,19 +282,19 @@ function PATIENT_FORM(props) {
                                     </label>
                                 </div>
                             </div>
-                            <div className="form-check">
+                            <div className="form-check pt-4">
                                 <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "Second Opinion of Consultation")} type="checkbox" name="proposed_treatment_plan" id="second_opinion_of_report" value={formValues.proposed_treatment_plan} />
                                 <label className="form-check-label" >
                                     Second Opinion of Consultation
                                 </label>
                             </div>
-                            <div className="form-check">
+                            <div className="form-check pt-4">
                                 <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", " International Expert Opinion")} type="checkbox" name="proposed_treatment_plan" id="international_expert_opinion" value={formValues.proposed_treatment_plan} />
                                 <label className="form-check-label" >
                                     International Expert Opinion
                                 </label>
                             </div>
-                            <div className="d-flex">
+                            <div className="d-flex pt-4">
                                 <div className="form-check">
                                     <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", " Home Care Services")} type="checkbox" name="proposed_treatment_plan" id="home_care_services" value={formValues.proposed_treatment_plan} />
                                     <label className="form-check-label" >
@@ -306,12 +307,14 @@ function PATIENT_FORM(props) {
                                         Teleconsultation
                                     </label>
                                 </div>
+                                
                             </div>
-                            <div className="form-check">
+                            <div className="form-check pt-4">
                                 <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", " Need Multiple Options to choose the best")} type="checkbox" name="proposed_treatment_plan" id="multiple_options" value={formValues.proposed_treatment_plan} />
                                 <label className="form-check-label" >
                                     Need Multiple Options to choose the best
                                 </label>
+                            </div>
                             </div>
                             <div className = "form-group">
                             <InputField
@@ -328,7 +331,7 @@ function PATIENT_FORM(props) {
                         </div>
                         <div className="pt-4">
                             <label>Transport Facility Needed</label>
-                            <div className="d-flex">
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <RadioField
                                 style = {{paddingLeft: 4}}
                                 label="Yes"
@@ -363,6 +366,7 @@ function PATIENT_FORM(props) {
                     <div className="col-md-4">
                         <div className="pt-4" style={{ border: "1px rgb(56, 56, 121)", marginLeft: 15 }}>
                             <label>Language Spoken</label>
+                            <div  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <div className="d-flex">
                                 <div className="form-check">
                                     <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "English")} type="checkbox" name="languages_spoken" id="english" value={formValues.languages_spoken} />
@@ -383,7 +387,7 @@ function PATIENT_FORM(props) {
                                     </label>
                                 </div>
                             </div>
-                            <div className="d-flex">
+                            <div className="d-flex pt-4">
                                 <div className="form-check">
                                     <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Urdu")} type="checkbox" name="languages_spoken" id="urdu" value={formValues.proposed_treatment_plan} />
                                     <label className="form-check-label" >
@@ -403,7 +407,7 @@ function PATIENT_FORM(props) {
                                     </label>
                                 </div>
                             </div>
-                            <div className="d-flex">
+                            <div className="d-flex pt-4">
                                 <div className="form-check">
                                     <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Afrikaans")} type="checkbox" name="languages_spoken" id="afrikaans" value={formValues.proposed_treatment_plan} />
                                     <label className="form-check-label" >
@@ -422,6 +426,7 @@ function PATIENT_FORM(props) {
                                         Bengali
                                     </label>
                                 </div>
+                            </div>
                             </div>
                             <div className="form-group">
                             <InputField
@@ -448,7 +453,7 @@ function PATIENT_FORM(props) {
                         <div className="invalid-feedback">{formErrors.food_preferences}</div>
                         <div className="pt-4" style = {{marginLeft: 15}}>
                             <label>Accomodation / Other Logistic Support Needed</label>
-                            <div className="d-flex">
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <RadioField
                                 style = {{paddingLeft: 4}}
                                 label="Yes"
@@ -534,7 +539,7 @@ function PATIENT_FORM(props) {
 
 
                     </div>
-                    <button style={{ marginTop: 50, marginLeft: 130 }} className="join_button" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                    <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
                 </form>
             </div>
         </>

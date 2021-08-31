@@ -3,6 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import Pagination from "react-js-pagination";
 import 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
 
 const res = {
     "enquiries":[
@@ -96,6 +97,8 @@ class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
         this.setState({activePage: pageNumber});
       }
     render(){
+
+        
         return (
             <>
             <div className = "hospital_dashboard_title">
@@ -208,7 +211,7 @@ class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
                     { 
                 res.patient_table.map((target,index) => (
                         <tr key = {index} {...target}>
-                            <td style = {{paddingLeft: "2rem"}}>{target.name}</td>
+                            <td style = {{paddingLeft: "2rem"}}><Link to = "/ADMIN_PATIENT_DASHBOARD">{target.name}</Link></td>
                             <td style = {{width: "50rem"}}>{target.query}</td>
                             <td>{target["insurance/tpa"]}</td>
                             <td>{target.date}</td>
