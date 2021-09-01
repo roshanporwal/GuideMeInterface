@@ -41,7 +41,7 @@ function DOCTOR_LIST(){
                     <h1>Our Doctors</h1>
                     
                 </div>
-                <button style = {{marginLeft: "120rem"}} className = "new_doctor"  onClick={this.openModal}><i style = {{fontSize: 32}} className = "fa fa-user-plus"></i></button>
+                <button style = {{marginLeft: "120rem"}} className = "new_doctor" ><i style = {{fontSize: 32}} className = "fa fa-user-plus"></i></button>
                 
              { 
                 res.doctors.map((target,index) => (

@@ -208,15 +208,7 @@ function HOSPITAL_DASHBOARD(){
                     </tbody>
                 </table>
             </div>
-            <div className = "pagination" style = {{marginLeft: "60rem"}}>
-                <Pagination
-                        activePage={this.state.activePage}
-                        itemsCountPerPage={10}
-                        totalItemsCount={450}
-                        pageRangeDisplayed={3}
-                        onChange={this.handlePageChange.bind(this)}
-                />
-            </div>    
+              
             </>
         );
     

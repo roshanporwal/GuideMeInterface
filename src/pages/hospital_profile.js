@@ -194,22 +194,28 @@ function HOSPITAL_PROFILE(){
     }
               </div>
               
-              <div className = "col-md-11 hospital_photos_container">
+              <div className = "col-md-5 hospital_photos_container">
                   <h5>Gallery</h5>
                  <div className = "d-flex">
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
+                    
                  </div>
                  <div className = "d-flex">
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
+                    
+                 </div>
+                 <div className = "d-flex">
                     <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
+                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
+                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
+                    
                  </div>
               </div>
-              <div className = "col-md-11 hospital_photos_container">
+              <div className = "col-md-5 hospital_photos_container">
                   <h5>Insurance</h5>
                  <div className = "d-flex">
                  { 
