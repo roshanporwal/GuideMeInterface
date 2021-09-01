@@ -396,42 +396,43 @@ function PATIENT_DASHBOARD(props) {
                         id="estimate_copay" 
                         value={formValues.estimate_copay}/>
                 </div>
-                <div className = "pt-4">
+                <div className = "pt-4" style = {{marginLeft: 15}}>
                         <label style = {{marginLeft: 10}}>Types of Anesthesia</label>
-                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
+                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem", marginRight: 15}}>
                             <div class="form-check">
-                            <RadioField
+                            <input
                                 style = {{paddingLeft: 4}}
-                                label="Local"
+                                
                                 className ={`form-check-input ${formErrors.type_of_anesthesia ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="types_of_anesthesia" 
                                 id="local" 
-                                value={formValues.type_of_anesthesia}/>
+                                value="local" /><label>Local</label>
                             </div>
-                            <div class="form-check" style = {{paddingLeft: 350}}>
-                            <RadioField
+                            <div class="form-check" style = {{paddingLeft: 300}}>
+                            <input
                                 style = {{paddingLeft: 4}}
-                                label="General"
+                                
                                 className ={`form-check-input ${formErrors.type_of_anesthesia ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="types_of_anesthesia" 
                                 id="general" 
-                                value={formValues.type_of_anesthesia}/>
+                                value="general" /><label>General</label>
                             </div>
-                            <div class="form-check"  style = {{paddingLeft: 350}}>
-                            <RadioField
+                            <div class="form-check"  style = {{paddingLeft: 300}}>
+                            <input
                                 style = {{paddingLeft: 4}}
-                                label="Epidural"
+                        
                                 className ={`form-check-input ${formErrors.type_of_anesthesia ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="types_of_anesthesia" 
                                 id="epidural" 
-                                value={formValues.type_of_anesthesia}/>
+                                value="epidural" /><label>Epidural</label>
                             </div>
+                    </div>
                     </div>
                         <div className = "form-group pt-4">
                         <InputField
@@ -453,11 +454,11 @@ function PATIENT_DASHBOARD(props) {
                         id="expected_length" 
                         value={formValues.expected_length}/>
                         </div>
-                </div>
+                
                 
                     <div style = {{marginLeft: 20}}>
                         <label>Free Room Upgrade</label>
-                    <div className = "d-flex" style = {{border: "2px solid #164473", width: 360,  borderRadius: 10}}>
+                    <div className = "d-flex" style = {{border: "2px solid #164473", width: 360,  borderRadius: 10, height: "5rem"}}>
                             <div class="form-check">
                                 <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_room_upgrade" id="yes"/>
                                 <label className="form-check-label" for="exampleRadios1">
@@ -478,9 +479,9 @@ function PATIENT_DASHBOARD(props) {
                             </div>
                     </div>
                     </div>
-                    <div  style = {{paddingLeft: 650, marginTop: -60}}>
+                    <div  style = {{marginLeft: 600, marginTop: -70, marginRight: 20}}>
                         <label>Free Physiotherapy</label>
-                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
+                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
                         
                             <div class="form-check">
                                 <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="patient_gender" id="male"/>
@@ -515,60 +516,60 @@ function PATIENT_DASHBOARD(props) {
                         value={formValues.free_other_speciality_consultant}/> 
                 </div>
                         
-                    <div className = "pt-4" >
+                    <div className = "pt-4" style = {{marginLeft: 15}}>
                         <label style = {{marginLeft: 10}}>Free Telephonic Feedback from other patients / attendants who have undergone similar treatment</label>
-                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
+                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem", marginRight: 15}}>
                             <div class="form-check">
-                            <RadioField
+                            <input
                                 style = {{paddingLeft: 4}}
-                                label="Yes"
+                                
                                 className ={`form-check-input ${formErrors.free_telephonic_feedback ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="free_telephonic_feedback" 
                                 id="yes" 
-                                value={formValues.free_telephonic_feedback}/>
+                                value="yes" /><label>Yes</label>
                             </div>
                             <div class="form-check" style = {{paddingLeft: 350}}>
-                            <RadioField
+                            <input
                                 style = {{paddingLeft: 4}}
-                                label="No"
+                               
                                 className ={`form-check-input ${formErrors.free_telephonic_feedback ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="free_telephonic_feedback" 
                                 id="no" 
-                                value={formValues.type_of_anesthesia}/>
+                                value="no" /><label>No</label>
                             </div>
                             <div class="form-check"  style = {{paddingLeft: 350}}>
-                            <RadioField
+                            <input
                             
-                                label="Discount"
+                                
                                 className ={`form-check-input ${formErrors.free_telephonic_feedback ? "is-invalid" : ""}`}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="free_telephonic_feedback" 
                                 id="at_discount" 
-                                value={formValues.free_telephonic_feedback}/>
+                                value="at_discount" /><label>At discount</label>
                             </div>
                         </div>
                     </div>
-                <div className = "pt-4">
+                <div className = "pt-4" style = {{marginLeft: 15}}>
                         <label>Free Annual Checkup</label>
-                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
+                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem", marginRight: 15}}>
                             <div class="form-check">
                                 <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={() => checkBox("free_annual_checkup", "patient")} type="checkbox" name="free_annual_checkup" id="male" value = {formValues.free_annual_checkup}/>
                                 <label className="form-check-label">
                                 Patient
                                 </label>
                             </div>
-                            <div class="form-check" style = {{paddingLeft: 400}}>
+                            <div class="form-check" style = {{paddingLeft: 350}}>
                                 <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={() => checkBox("free_annual_checkup", "family_members")} type="checkbox" name="free_annual_checkup" id="female" value = {formValues.free_annual_checkup}/>
                                 <label className="form-check-label">
                                 Family Members
                                 </label>
                             </div>
-                            <div class="form-check"  style = {{paddingLeft: 400}}>
+                            <div class="form-check"  style = {{paddingLeft: 350}}>
                                 <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} onChange={() => checkBox("free_annual_checkup", "discounted")} type="checkbox" name="free_annual_checkup" id="neutral" value = {formValues.free_annual_checkup}/>
                                 <label className="form-check-label">
                                 Discounted
@@ -576,48 +577,48 @@ function PATIENT_DASHBOARD(props) {
                             </div>
                     </div>
                 </div>
-                <div className = "d-flex pt-4">
+                <div className = "d-flex pt-4" style = {{marginLeft: 15}}>
                     <div>
                         <label>Pickup And Drop</label>
                     <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
                     <div class="form-check">
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="yes" value = {formValues.pickup_and_drop} />
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="yes" value = "yes" />
                                 <label className="form-check-label" for="exampleRadios1">
                                 Yes
                                 </label>
                             </div>
                             <div class="form-check" style = {{paddingLeft: 100}}>
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="no" value = {formValues.pickup_and_drop} />
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="no" value = "no" />
                                 <label className="form-check-label" for="exampleRadios2">
                                 No
                                 </label>
                             </div>
                             <div class="form-check"  style = {{paddingLeft: 100}}>
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="discount" value = {formValues.pickup_and_drop} />
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="pickup_and_drop" id="could_be_planned" value = "could_be_planned" />
                                 <label className="form-check-label" for="exampleRadios3">
                                 Could be Planned
                                 </label>
                             </div>
                     </div>
                     </div>
-                    <div  style = {{paddingLeft: 250}}>
+                    <div  style = {{paddingLeft: 250, marginRight: 15}}>
                         <label>Dedicated Patient Relationship Executive</label>
                         <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}x>
                         
                             <div class="form-check">
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="yes" value = {formValues.free_patient_dedicated_relationship}/>
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="yes" value = "yes"/>
                                 <label className="form-check-label" for="exampleRadios1">
                                 Yes
                                 </label>
                             </div>
                             <div class="form-check" style = {{paddingLeft: 100}}>
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="no" value = {formValues.free_patient_dedicated_relationship}/>
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="no" value = "no" />
                                 <label className="form-check-label" for="exampleRadios2">
                                 No
                                 </label>
                             </div>
                             <div class="form-check"  style = {{paddingLeft: 100}}>
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="available" value = {formValues.free_patient_dedicated_relationship}/>
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="available" value = "available" />
                                 <label className="form-check-label" for="exampleRadios3">
                                 Available to handle issues
                                 </label>
