@@ -3,7 +3,7 @@ import 'react-bootstrap';
 
 
 export default function Checkbox(props) {
-    console.log(props)
+   
     return (
 
 

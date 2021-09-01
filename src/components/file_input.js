@@ -3,7 +3,7 @@ import 'react-bootstrap';
 
 
 export default function File(props) {
-    console.log(props)
+
     return (
 
 

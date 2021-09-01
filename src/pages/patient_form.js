@@ -91,7 +91,8 @@ function PATIENT_FORM(props) {
 
         const formData = new FormData();
         formValues.proposed_treatment_plan = proposed_treatment_plan;
-        formValues.languages_spoken = languages_spoken
+        formValues.languages_spoken = languages_spoken;
+        formValues.status="new";
       
         formData.append('patient_document', patient_document);
         formData.append('patient_reports', patient_reports);
@@ -100,7 +101,7 @@ function PATIENT_FORM(props) {
         
         console.log(formValues)
 
-        /* const login = await auth_service.enquries(formData)
+         /*const login = await auth_service.enquries(formData)
          console.log(login)*/
     };
 
@@ -112,6 +113,7 @@ function PATIENT_FORM(props) {
         }))
     }
     const onchange = e => {
+
         const { name } = e.currentTarget
 
         if (name === 'patient_document') {
@@ -185,7 +187,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="patient_gender" 
                                 id="patient_gender" 
-                                value={formValues.patient_gender}/>
+                                value={"Male"}/>
                             <RadioField
                                 label="Female"
                                 className ={`form-check-input ${formErrors.patient_gender ? "is-invalid" : ""}`}
@@ -193,7 +195,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="patient_gender" 
                                 id="patient_gender" 
-                                value={formValues.patient_gender}/>
+                                value={"Female"}/>
                             <RadioField
                                 label="Neutral"
                                 className ={`form-check-input ${formErrors.patient_gender ? "is-invalid" : ""}`}
@@ -201,7 +203,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="patient_gender" 
                                 id="patient_gender" 
-                                value={formValues.patient_gender}/>
+                                value={"Neutral"}/>
                             </div>
                             <div className="invalid-feedback">{formErrors.patient_gender}</div>
                         </div>
@@ -217,19 +219,19 @@ function PATIENT_FORM(props) {
                         <File
                         label="Identification Document"
                         className ={`form-control ${formErrors.patient_document ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
+                        onChange={onchange} 
                         type="file" 
                         name="patient_document" 
                         id="patient_document" 
-                        value={formValues.patient_document}/>
+                       />
                         <File
                         label="Patient reports(including lab, diagnosis, and prescription)"
                         className ={`form-control ${formErrors.patient_reports ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
+                        onChange={onchange} 
                         type="file" 
                         name="patient_reports" 
                         id="patient_reports" 
-                        value={formValues.patient_reports}/>
+                       />
                         <div className="invalid-feedback">{formErrors.patient_reports}</div>
                         
                         
@@ -249,11 +251,11 @@ function PATIENT_FORM(props) {
                         <File
                         label="Insurance Card Copy"
                         className ={`form-control ${formErrors.insurance_card_copy ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
+                        onChange={onchange} 
                         type="file" 
                         name="insurance_card_copy" 
                         id="insurance_card_copy" 
-                        value={formValues.insurance_card_copy}/>
+                        />
                         <div className="invalid-feedback">{formErrors.insurance_card_copy}</div>
                         
                         <InputField
@@ -307,7 +309,6 @@ function PATIENT_FORM(props) {
                                         Teleconsultation
                                     </label>
                                 </div>
-                                
                             </div>
                             <div className="form-check pt-4">
                                 <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", " Need Multiple Options to choose the best")} type="checkbox" name="proposed_treatment_plan" id="multiple_options" value={formValues.proposed_treatment_plan} />
@@ -340,7 +341,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="transport_support_needed" 
                                 id="yes" 
-                                value={formValues.transport_support_needed}/>
+                                value={"yes"}/>
                             <RadioField
                                 label="No"
                                 className ={`form-check-input ${formErrors.transport_support_needed ? "is-invalid" : ""}`}
@@ -348,7 +349,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="transport_support_needed" 
                                 id="no" 
-                                value={formValues.transport_support_needed}/>
+                                value={"No"}/>
                             <RadioField
                                 label="Maybe"
                                 className ={`form-check-input ${formErrors.transport_support_needed ? "is-invalid" : ""}`}
@@ -356,7 +357,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="transport_support_needed" 
                                 id="maybe" 
-                                value={formValues.transport_support_needed}/>
+                                value={"Maybe"}/>
                             </div>
                         </div>
                         
@@ -462,7 +463,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="accomodation" 
                                 id="yes" 
-                                value={formValues.accomodation}/>
+                                value={"Yes"}/>
                             <RadioField
                                 label="No"
                                 className ={`form-check-input ${formErrors.accomodation ? "is-invalid" : ""}`}
@@ -470,7 +471,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="accomodation" 
                                 id="no" 
-                                value={formValues.accomodation}/>
+                                value={"No"}/>
                             <RadioField
                                 label="Maybe"
                                 className ={`form-check-input ${formErrors.accomodation ? "is-invalid" : ""}`}
@@ -478,7 +479,7 @@ function PATIENT_FORM(props) {
                                 type="radio" 
                                 name="accomodation" 
                                 id="maybe" 
-                                value={formValues.accomodation}/>
+                                value={"Maybe"}/>
                             </div>
                         </div>
                         
