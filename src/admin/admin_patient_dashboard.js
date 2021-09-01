@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import 'font-awesome/css/font-awesome.min.css';
+import {MultiSelect} from "react-multi-select-component";
 
 const res = {
     "patient_details":[
@@ -63,40 +64,59 @@ const res = {
             "anes3": "Dr Chatterji Manas",
         }
     ],
+
+    "quotations": [
+        {
+            "vital_estimate": "$10000",
+            "vital_treatment": "some text",
+            "vital_inclusions": "some text",
+            "vital_exclusions": "some text",
+            "vital_copay": "$1000",
+            "vital_anesthesia": "Local",
+            "vital_room": "super deluxe",
+            "vital_length": "5 days",
+            "vital_free_upgrade": "yes",
+            "vital_physiotherapy": "no",
+            "vital_pickup_drop": "can be arranged",
+            "vital_other_fees": "gynacology",
+            "vital_annual": "for patient"
+        },
+
+        {
+            "meodor_estimate": "$10000",
+            "meodor_treatment": "some text",
+            "meodor_inclusions": "some text",
+            "meodor_exclusions": "some text",
+            "meodor_copay": "$1000",
+            "meodor_anesthesia": "Local",
+            "meodor_room": "super deluxe",
+            "meodor_length": "5 days",
+            "meodor_free_upgrade": "yes",
+            "meodor_physiotherapy": "no",
+            "meodor_pickup_drop": "can be arranged",
+            "meodor_other_fees": "gynacology",
+            "meodor_annual": "for patient"
+        }
+    ]
 }
 
 
 
-class ADMIN_PATIENT_DASHBOARD extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-            name: 'React',
-            
-        };
-      }
-      handleSubmit = event => {
-        event.preventDefault();
-        this.setState({ isSubmitting: true });
-        const { formValues, formValidity } = this.state;
-        if (Object.values(formValidity).every(Boolean)) {
-          alert("Form is validated! Submitting the form...");
-          this.setState({ isSubmitting: false });
-        } else {
-          for (let key in formValues) {
-            let target = {
-              name: key,
-              value: formValues[key]
-            };
-            this.handleValidation(target);
-          }
-          this.setState({ isSubmitting: false });
-        }
-        console.log({formValues});
+
+
+function ADMIN_PATIENT_DASHBOARD(props){
     
-      }; 
     
-    render(){
+        const options = [
+          { label: "Hospital 1", value: "hospital1" },
+          { label: "Hospital 2", value: "hospital2" },
+          { label: "Hospital 3", value: "hospital3" },
+         
+        ];
+      
+        const [selected, setSelected] = useState([]);  
+    
+   
         
         return (
             <>
@@ -199,35 +219,93 @@ class ADMIN_PATIENT_DASHBOARD extends React.Component{
                         </div>
                     </div>
             </div>
-                ))}<div className = "pt-5 pb-5">
-                    <label>Select Hospital</label>
-                    <div className = "form-check">
-                                <input type = "checkbox" className = "form-check-input"  />
-                                <label className="form-check-label" >
-                                Hospital 1
-                                </label>
-                            </div>
-                            <div className = "form-check">
-                                <input type = "checkbox" className = "form-check-input"/>
-                                <label className="form-check-label" >
-                                Hospital 2
-                                </label>
-                            </div>
-                            <div className = "form-check">
-                                <input type = "checkbox" className = "form-check-input" />
-                                <label className="form-check-label" >
-                                Hospital 3
-                                </label>
-                            </div>
-                    </div>                   
+                ))}<div>
+                <h4>Select Hospitals</h4>
+                {/* <pre>{JSON.stringify(selected)}</pre> */}
+                <MultiSelect
+                  options={options}
+                  value={selected}
+                  onChange={setSelected}
+                  labelledBy="Select"
+                />
+              </div>         
                 </div>
                 
                 </div>
-                    
+                <div className = "col-md-12" style = {{marginTop: 20}}>
+                    <div className = "col-md-3">
+                        
+                    </div>
+                    <div className = "col-md-3">
+                        <p><b>Hospital 1</b></p>
+                    </div>
+                    <div className = "col-md-3">
+                        <p><b>Hospital 2</b></p>
+                    </div>
+                    <div className = "col-md-3">
+                        <p><b>Hospital 3</b></p>   
+                    </div>
+                </div>
+                 <div className = "col-md-12" >
+                    <div className = "col-md-3" style = {{textAlign: "center"}}>
+                        <p><b>Estimate Price</b></p>
+                        <p><b>Treatment Plan</b></p>
+                        <p><b>Inclusions</b></p>
+                        <p><b>Exclusions</b></p>
+                        <p><b>Copay Required</b></p>
+                        <p><b>Types of Anesthesia</b></p>
+                        <p><b>Type of room</b></p>
+                        <p><b>Length of stay</b></p>
+                        <p><b>Free room upgrade</b></p>
+                        <p><b>Free Physiotherapy</b></p>
+                        <p><b>Pickup and drop</b></p>
+                        <p><b>Other free consultation</b></p>
+                        <p><b>Free Annual checkup</b></p>
+                    </div>
+                    { 
+                res.quotations.map((target,index) => (
+                    <div className = "col-md-3" key = {index} {...target}>
+                        <p>{target.vital_estimate}</p>
+                        <p>{target.vital_treatment}</p>
+                        <p>{target.vital_inclusions}</p>
+                        <p>{target.vital_exclusions}</p>
+                        <p>{target.vital_copay}</p>
+                        <p>{target.vital_anesthesia}</p>
+                        <p>{target.vital_room}</p>
+                        <p>{target.vital_length}</p>
+                        <p>{target.vital_free_upgrade}</p>
+                        <p>{target.vital_physiotherapy}</p>
+                        <p>{target.vital_pickup_drop}</p>
+                        <p>{target.vital_other_fees}</p>
+                        <p>{target.vital_annual}</p>
+                    </div>
+                ))}
+{ 
+                res.quotations.map((target,index) => (
+                    <div className = "col-md-3" key = {index} {...target}>
+                        <p>{target.meodor_estimate}</p>
+                        <p>{target.meodor_treatment}</p>
+                        <p>{target.meodor_inclusions}</p>
+                        <p>{target.meodor_exclusions}</p>
+                        <p>{target.meodor_copay}</p>
+                        <p>{target.meodor_anesthesia}</p>
+                        <p>{target.meodor_room}</p>
+                        <p>{target.meodor_length}</p>
+                        <p>{target.meodor_free_upgrade}</p>
+                        <p>{target.meodor_physiotherapy}</p>
+                        <p>{target.meodor_pickup_drop}</p>
+                        <p>{target.meodor_other_fees}</p>
+                        <p>{target.meodor_annual}</p>
+                    </div>
+                ))}
+                <div className = "col-md-3">
+                    AWAITING FOR QUOTATION
+                </div>
+                </div>   
                   
             </>
         );
-    } 
+    
 }
 
 export default ADMIN_PATIENT_DASHBOARD;

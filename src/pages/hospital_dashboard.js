@@ -79,23 +79,13 @@ const state = {
     ]
   }
 
-class HOSPITAL_DASHBOARD extends React.Component{
+function HOSPITAL_DASHBOARD(){
 
-    constructor(props) {
-        super();
-        
-        this.state = {
-          name: 'React'
-        };
-      }
 
       
      
-      handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        this.setState({activePage: pageNumber});
-      }
-    render(){
+     
+  
         return (
             <>
             <div className = "hospital_dashboard_title">
@@ -229,7 +219,7 @@ class HOSPITAL_DASHBOARD extends React.Component{
             </div>    
             </>
         );
-    }
+    
 }
 
 export default HOSPITAL_DASHBOARD;

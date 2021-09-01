@@ -193,7 +193,7 @@ class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
                
                 ))}
                 <div style = {{marginLeft: 20}}>
-                <button className="join_button">ADD PATIENT</button>
+                <button className="join_button"><Link to = "/PATIENT_FORM" style = {{color: "white"}}>ADD PATIENT</Link></button>
                 </div>
             </div>
             <div className = "patient_table_container">

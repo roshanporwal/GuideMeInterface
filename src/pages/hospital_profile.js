@@ -67,8 +67,8 @@ const res = {
 
 }
 
-class HOSPITAL_PROFILE extends React.Component{
-    render(){
+function HOSPITAL_PROFILE(){
+    
         return(
             <>
               <div className = "hospital_profile_title">
@@ -257,7 +257,7 @@ class HOSPITAL_PROFILE extends React.Component{
               
             </>
         );
-    }
+    
 }
 
 export default HOSPITAL_PROFILE;

@@ -1,7 +1,7 @@
 import React from "react";
 import 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
-import { Modal, Button } from 'react-bootstrap';
+
 
 const res = {
     "doctors":[
@@ -28,24 +28,11 @@ const res = {
 
 
 
-class DOCTOR_LIST extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-          name: 'React'
-        };
-      }
-
-      state = {
-        isOpen: false
-      };
+function DOCTOR_LIST(){
     
-      openModal = () => this.setState({ isOpen: true });
-      closeModal = () => this.setState({ isOpen: false });
-    
+      
     
    
-    render(){
       
          
         return(
@@ -55,17 +42,7 @@ class DOCTOR_LIST extends React.Component{
                     
                 </div>
                 <button style = {{marginLeft: "120rem"}} className = "new_doctor"  onClick={this.openModal}><i style = {{fontSize: 32}} className = "fa fa-user-plus"></i></button>
-                <Modal show={this.state.isOpen} onHide={this.closeModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={this.closeModal}>
-                    Close
-                    </Button>
-                </Modal.Footer>
-                </Modal>
+                
              { 
                 res.doctors.map((target,index) => (
                    
@@ -103,7 +80,7 @@ class DOCTOR_LIST extends React.Component{
         );
         
     
-    }
+  
 }
 
 export default DOCTOR_LIST;
