@@ -3,7 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import InputField from '../components/input';
 import RadioField from '../components/radio';
-import File from '../components/file_input';
+
 
 const res = {
     "patient_details":[
@@ -77,6 +77,7 @@ function PATIENT_DASHBOARD(props) {
         select_anesthesiologist: "",
         treatment_plan: "",
         estimate_price: "",
+        inclusion: "",
         exclusion: "",
         expected_length: "",
         estimate_copay: "",
@@ -290,10 +291,10 @@ function PATIENT_DASHBOARD(props) {
             </div>
                 ))}
                     <div style = {{marginLeft: "40%", marginTop: "3%", marginBottom: "4%"}}>
-                    <button className = "join_button" type = "submit">Send Quote<i style = {{fontSize: 12, marginLeft: "20%"}} className="fa fa-share"></i></button>
+                    <button className = "join_button" type = "submit" onClick={handleSubmit}>Send Quote<i style = {{fontSize: 12, marginLeft: "20%"}} className="fa fa-share"></i></button>
                     </div>
                     <div>
-                        <form style = {{border: "2px",borderColor: "#164473", borderRadius: "15px"}}>
+                        <form style = {{border: "2px",borderColor: "#164473", borderRadius: "15px"}} onSubmit={handleSubmit}>
                             <div className = "d-flex">
                         { 
                 res.doctor_checkbox.map((target,index) => (
@@ -346,24 +347,34 @@ function PATIENT_DASHBOARD(props) {
                 ))}   
                 </div>
                 <div className = "form-group pt-4">
-                <File
-                        label="Identification Document"
+                <InputField
+                        label="Treatment Plan"
                         className ={`form-control ${formErrors.treatment_plan ? "is-invalid" : ""}`}
                         onChange={handleChange} 
-                        type="file" 
+                        type="text" 
                         name="treatment_plan" 
                         id="treatment_plan" 
                         value={formValues.treatment_plan}/>
                 </div>
                 <div className = "form-group pt-4">
-                <File
-                        label="Identification Document"
+                <InputField
+                        label="Estimate price"
                         className ={`form-control ${formErrors.estimate_price ? "is-invalid" : ""}`}
                         onChange={handleChange} 
-                        type="file" 
+                        type="text" 
                         name="estimate_price" 
                         id="estimate_price" 
                         value={formValues.estimate_price}/>     
+                </div>
+                <div className = "form-group pt-4">
+                <InputField
+                        label="Inclusions"
+                        className ={`form-control ${formErrors.inclusion ? "is-invalid" : ""}`}
+                        onChange={handleChange} 
+                        type="text" 
+                        name="inclusion" 
+                        id="inclusion" 
+                        value={formValues.inclusion}/>
                 </div>
                 <div className = "form-group pt-4">
                 <InputField
@@ -387,7 +398,7 @@ function PATIENT_DASHBOARD(props) {
                 </div>
                 <div className = "pt-4">
                         <label style = {{marginLeft: 10}}>Types of Anesthesia</label>
-                        <div className = "d-flex" style = {{border: "3px black"}}>
+                        <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <div class="form-check">
                             <RadioField
                                 style = {{paddingLeft: 4}}
@@ -424,7 +435,7 @@ function PATIENT_DASHBOARD(props) {
                     </div>
                         <div className = "form-group pt-4">
                         <InputField
-                        label="Estimated Co-Pay"
+                        label="Type of Room"
                         className ={`form-control ${formErrors.type_of_room ? "is-invalid" : ""}`}
                         onChange={handleChange} 
                         type="text" 
@@ -546,13 +557,13 @@ function PATIENT_DASHBOARD(props) {
                         <label>Free Annual Checkup</label>
                         <div className = "d-flex" style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <div class="form-check">
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} onChange={() => checkBox("free_annual_checkup", "patient")} type="checkbox" name="free_annual_checkup" id="male" value = {formValues.free_annual_checkup}/>
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={() => checkBox("free_annual_checkup", "patient")} type="checkbox" name="free_annual_checkup" id="male" value = {formValues.free_annual_checkup}/>
                                 <label className="form-check-label">
                                 Patient
                                 </label>
                             </div>
                             <div class="form-check" style = {{paddingLeft: 400}}>
-                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={handleChange} onChange={() => checkBox("free_annual_checkup", "family_members")} type="checkbox" name="free_annual_checkup" id="female" value = {formValues.free_annual_checkup}/>
+                                <input style = {{borderColor: "rgb(56, 56, 121)"}} className="form-check-input" onChange={() => checkBox("free_annual_checkup", "family_members")} type="checkbox" name="free_annual_checkup" id="female" value = {formValues.free_annual_checkup}/>
                                 <label className="form-check-label">
                                 Family Members
                                 </label>
