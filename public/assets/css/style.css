@@ -698,7 +698,7 @@ tbody{
 
 .patient_form_container{
    
-    height: 90rem;
+    height: 130rem;
     
     background: white;
     border-radius: 20px;
@@ -710,4 +710,43 @@ tbody{
 .all_container{
     border: 1px solid #164473;
     border-radius: 10px;
+}
+
+.reports_blue_side{
+    background-color: #164473;
+    margin-top: 10px;
+    border: 1px solid #164473;
+    border-radius: 15px;
+    height: 60rem;
+}
+
+.guidemedoc{
+    height: 20px;
+    margin-left: 45px;
+    margin-top: 50px;
+}
+
+.reports_buttons_side{
+    background-color: #42B3CE;
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid #42B3CE;
+    border-radius: 15px;
+    height: 53rem;
+}
+
+.doctor_form{
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    width: 100rem;
+    justify-self: center;
+    justify-content: center;
+   
+    margin-top: 5rem;
+}
+
+.select_doctor{
+    overflow: hidden;
+    overflow-y: scroll;
 }
