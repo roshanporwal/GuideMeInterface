@@ -34,13 +34,14 @@ function ADMIN_Home(props) {
       <div className="content d-flex" >
         <div className="col-4">
           <div className="d-flex">
+          
             <img className="login_image" src="assets\images\admin_login.jpg" alt="" />
 
           </div>
 
         </div>
         <div className="col-8">
-          <h2 class="login_title">Hospital/Doctor Login</h2>
+          <h2 class="login_title">Welcome Admin</h2>
           <form className="login_form">
             <div className="email_field">
               <label htmlFor="exampleInputEmail1">Email</label>
