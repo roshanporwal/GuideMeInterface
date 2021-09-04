@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import { quoteSchema } from '../components/Validations/quoteValidation';
 import InputField from '../components/input';
-import RadioField from '../components/radio';
+//import RadioField from '../components/radio';
 import * as auth_service from "../services/auth_service";
 
 const res = {
@@ -115,8 +115,8 @@ function PATIENT_DASHBOARD(props) {
 
     })
     /* const [isSubmitting, setIsSubmitting] = useState(false) */
-    const [treatment_plan/* , setTreatment_plan */] = useState()
-    const [estimate_price/* , setEstimate_price */] = useState()
+   // const [treatment_plan/* , setTreatment_plan */] = useState()
+    //const [estimate_price/* , setEstimate_price */] = useState()
     /* const [inclusion] = useState()
     const [exclusion] = useState()
     const [expected_length] = useState()
@@ -181,7 +181,7 @@ function PATIENT_DASHBOARD(props) {
         setEnqurie_data([props.location.state])
         console.log(props.location)
         console.log(props.location.state)
-          const getenquries = await auth_service.getdoctorbyhospital("Al Jalilas Children Speciality Hospital",data.login_id)
+        const getenquries = await auth_service.getdoctorbyhospital(data._id,data.login_id)
          setDoctor(getenquries.payload)
          /*const getenquries1 = await auth_service.getenquriesbyhospitals()
         
@@ -233,8 +233,8 @@ function PATIENT_DASHBOARD(props) {
 
         console.log(formValues)
 
-        //const login = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, formValues)
-       // console.log(login)
+        const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id,data._id, formValues)
+        console.log(formsubmit)
     };
 
     const handleChange = e => {
@@ -282,7 +282,7 @@ function PATIENT_DASHBOARD(props) {
                                         <h5><b>{target.patient_name}</b></h5>
                                     </div>
                                     <div className="patient_details">
-                                        <p className="card-text">Phone Number: {target.patient_phone}</p>
+                                        <p className="card-text">Phone Number: {target.patient_mobile}</p>
                                         <p className="card-text">Email: {target.patient_email}</p>
                                         <p className="card-text">Age: {target.patient_age}</p>
                                         <p className="card-text">Gender: {target.patient_gender}</p>
@@ -386,9 +386,9 @@ function PATIENT_DASHBOARD(props) {
 
                                                 doctor.map((target, index) => (
                                                 <div className="form-check"  key={index} {...target} >
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor",target.DOCTOR_NAME)} name={formValues.select_doctor} />
+                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor",target.doctor_name)} name={formValues.select_doctor} />
                                                     <label className="form-check-label">
-                                                        {target.DOCTOR_NAME}
+                                                        {target.doctor_name}
                                                     </label>
                                                 </div>
                                                 ))}

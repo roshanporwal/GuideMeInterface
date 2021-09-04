@@ -21,7 +21,7 @@ function updateenquries(_id,data,login_id) {
   return req
 }
 function getdoctorbyhospital(_id,login_id) {
-  const req = instance.get(`/doctor/${login_id}/forhospital?Hospital_Name=${_id}`);
+  const req = instance.get(`/doctor/${login_id}/forhospital?hospital_id=${_id}`);
   return req
 }
 function gethospitals(login_id) {
@@ -34,8 +34,8 @@ function getenquries(login_id) {
   return req
 }
 
-function getenquriesbyhospitals(login_id) {
-  const req = instance.get(`/enquries/${login_id}/hospital?hospital_login=${login_id}`);
+function getenquriesbyhospitals(login_id,id) {
+  const req = instance.get(`/enquries/${login_id}/hospital?hospital_id=${id}`);
   return req
 }
 
@@ -44,9 +44,9 @@ function specility(login_id) {
   return req
 }
 
-function sendquote(enquries_id,login_id,data) {
+function sendquote(enquries_id,login_id,id,data) {
   
-  const req = instance.post(`/enquries/${login_id}/hospital/sendquote?hospital_login=${login_id}&enquries_id=${enquries_id}`,data);
+  const req = instance.post(`/enquries/${login_id}/hospital/sendquote?hospital_id=${id}&enquries_id=${enquries_id}`,data);
   return req
 }
 

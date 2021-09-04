@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
-import Pagination from "react-js-pagination";
+//import Pagination from "react-js-pagination";
 import 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import { useHistory } from 'react-router-dom';
@@ -98,12 +98,12 @@ function HOSPITAL_DASHBOARD(props) {
         let data=localStorage.getItem("login")
         data= JSON.parse(data)
         //console.log("data",data)
-        const getenquries = await auth_service.getenquriesbyhospitals(data.login_id);
+        const getenquries = await auth_service.getenquriesbyhospitals(data.login_id,data._id);
         console.log(getenquries)
         
         //console.log(getenquries.payload,"hospitals")
         for(const st of getenquries.payload){
-            const hospital =st.hospitals.find(item => item.hospital_login === data.login_id) 
+            const hospital =st.hospitals.find(item => item.hospital_id === data._id) 
             st.status= hospital.status
         }
         setEnquries(getenquries.payload);

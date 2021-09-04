@@ -45,7 +45,7 @@ function Home(props) {
 
         </div>
         <div className="col-8">
-          <h2 class="login_title">Hospital/Doctor Login</h2>
+          <h2 className="login_title">Hospital/Doctor Login</h2>
           <form className="login_form">
             <div className="email_field">
               <label htmlFor="exampleInputEmail1">Email</label>

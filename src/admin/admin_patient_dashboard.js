@@ -105,14 +105,7 @@ const res = {
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hospitals, setHospitals] = useState([])
-    const [selecthospital, setSelecthospital] = useState([])
     const [selected, setSelected] = useState([]);
-    const options = [
-        { label: "Hospital 1", value: "hospital1" },
-        { label: "Hospital 2", value: "hospital2" },
-        { label: "Hospital 3", value: "hospital3" },
-
-    ];
     useEffect(() => {
 
         fetchData();
@@ -191,7 +184,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <h5><b>{target.patient_name}</b></h5>
                                     </div>
                                     <div className="patient_details">
-                                        <p className="card-text">Phone Number: {target.patient_phone}</p>
+                                        <p className="card-text">Phone Number: {target.patient_mobile}</p>
                                         <p className="card-text">Email: {target.patient_email}</p>
                                         <p className="card-text">Age: {target.patient_age}</p>
                                         <p className="card-text">Gender: {target.patient_gender}</p>
