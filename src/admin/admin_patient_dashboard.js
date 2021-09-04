@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState,useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
@@ -102,20 +102,24 @@ const res = {
 
 
 
+
+
+
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
     useEffect(() => {
+       
+        fetchData(props);
+      }, [props]);
 
-        fetchData();
-    }, []);
 
-
-    async function fetchData() {
+    async function fetchData(props) {
 
         //  const getenquries = await auth_service.getenquries()
         // setEnquries(getenquries.payload)
+        console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         setEnqurie_data([props.location.state])

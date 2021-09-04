@@ -116,7 +116,7 @@ function HOSPITAL_DASHBOARD(props) {
         // history.push(,{params:event});
       
        
-         history.push({
+        history.push({
              pathname:'/patient',
              state:event
            });
@@ -226,6 +226,7 @@ function HOSPITAL_DASHBOARD(props) {
             <div className="patient_table_container">
                 <table>
                     <thead style={{ height: "5rem" }}>
+                        <tr>
                         <th style={{ paddingLeft: "2rem" }}>Patient Name</th>
                         <th>Query</th>
                         <th>Insurance/TPA</th>
@@ -233,6 +234,7 @@ function HOSPITAL_DASHBOARD(props) {
                         <th>Time</th>
                         <th>Speciality</th>
                         <th>Status</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {

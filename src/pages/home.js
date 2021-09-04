@@ -6,7 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 
 function Home(props) {
-  const [values, setValues] = useState({})
+  const [values, setValues] = useState({
+    login_id:"",
+    password:""
+  })
   const history = useHistory();
   const handleChange = e => {
     const { name, value } = e.currentTarget

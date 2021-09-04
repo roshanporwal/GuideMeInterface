@@ -223,6 +223,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             <div className="patient_table_container">
                 <table>
                     <thead>
+                    <tr>
                         <th>Patient Name</th>
                         <th>Query</th>
                         <th>Insurance/TPA</th>
@@ -230,6 +231,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                         <th>Time</th>
                         <th>Speciality</th>
                         <th>Status</th>
+                    </tr>
                     </thead>
                     <tbody>
                         {

@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 function ADMIN_Home(props) {
   const history = useHistory();
   const [values, setValues] = useState({
+    login_id:"",
+    password:""
    
   })
   const handleChange = e => {

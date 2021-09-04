@@ -115,7 +115,7 @@ function PATIENT_DASHBOARD(props) {
 
     })
     /* const [isSubmitting, setIsSubmitting] = useState(false) */
-   // const [treatment_plan/* , setTreatment_plan */] = useState()
+    // const [treatment_plan/* , setTreatment_plan */] = useState()
     //const [estimate_price/* , setEstimate_price */] = useState()
     /* const [inclusion] = useState()
     const [exclusion] = useState()
@@ -140,6 +140,7 @@ function PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [errors, setErrors] = useState({});
     const [doctor, setDoctor] = useState([])
+    const [sendquote, setSendquote] = useState(true)
 
 
 
@@ -169,23 +170,23 @@ function PATIENT_DASHBOARD(props) {
     })
     useEffect(() => {
 
-        fetchData();
-    }, []);
+        fetchData(props);
+    }, [props]);
 
 
-    async function fetchData() {
+    async function fetchData(props) {
 
-        let data=localStorage.getItem("login")
-        data= JSON.parse(data)
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
 
         setEnqurie_data([props.location.state])
         console.log(props.location)
         console.log(props.location.state)
-        const getenquries = await auth_service.getdoctorbyhospital(data._id,data.login_id)
-         setDoctor(getenquries.payload)
-         /*const getenquries1 = await auth_service.getenquriesbyhospitals()
-        
-         console.log(getenquries1.payload) */
+        const getenquries = await auth_service.getdoctorbyhospital(data._id, data.login_id)
+        setDoctor(getenquries.payload)
+        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
+       
+        console.log(getenquries1.payload) */
 
     }
 
@@ -222,7 +223,7 @@ function PATIENT_DASHBOARD(props) {
         setErrors(err);
 
 
-        
+
         formValues.select_doctor = select_doctor;
         formValues.select_anesthesiologist = select_anesthesiologist;
         formValues.status = "Done"
@@ -233,7 +234,7 @@ function PATIENT_DASHBOARD(props) {
 
         console.log(formValues)
 
-        const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id,data._id, formValues)
+        const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues)
         console.log(formsubmit)
     };
 
@@ -352,10 +353,10 @@ function PATIENT_DASHBOARD(props) {
                     }
                     <div className="buttons d-flex">
                         <div>
-                        <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
+                            <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
                         </div>
                         <div>
-                        <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
+                            <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
                         </div>
                     </div>
                     {
@@ -371,32 +372,34 @@ function PATIENT_DASHBOARD(props) {
                                 </div>
                             </div>
                         ))}
+
+                    {
+                      sendquote?
+                        
                     <div style={{ marginLeft: "40%", marginTop: "3%", marginBottom: "4%" }}>
-                        <button className="join_button" type="submit" onClick={handleSubmit}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
+                        <button className="join_button" type="submit" onClick={()=>setSendquote(false)}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
                     </div>
-                    <div>
-                        <form style={{ border: "2px", borderColor: "#164473", borderRadius: "15px" }} onSubmit={handleSubmit}>
+                    :
+                    <div >
+                        <form style={{ border: "2px", borderColor: "#164473", borderRadius: "15px" }} onSubmit={handleSubmit} >
                             <div className="d-flex">
                                 <div>
                                     <h5>Select Doctors</h5>
-                                  
 
-                                            <div style={{ border: "2px solid #164473", borderRadius: 10, height: "18rem" }} className="select_doctor">
-                                            {
 
-                                                doctor.map((target, index) => (
-                                                <div className="form-check"  key={index} {...target} >
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor",target.doctor_name)} name={formValues.select_doctor} />
+                                    <div style={{ border: "2px solid #164473", borderRadius: 10, height: "18rem" }} className="select_doctor">
+                                        {
+
+                                            doctor.map((target, index) => (
+                                                <div className="form-check" key={index} {...target} >
+                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", target.doctor_name)} name={formValues.select_doctor} />
                                                     <label className="form-check-label">
                                                         {target.doctor_name}
                                                     </label>
                                                 </div>
-                                                ))}
-                                                
-                                            </div>
+                                            ))}
 
-
-                                        
+                                    </div>
                                     <span style={{ color: "red" }}>{errors?.select_doctor}</span>
                                 </div>
                                 <div>
@@ -737,6 +740,8 @@ function PATIENT_DASHBOARD(props) {
                                 </div>
                                 <span style={{ color: "red" }}>{errors?.free_annual_checkup}</span>
                             </div>
+
+                            
                             <div className="d-flex pt-4" style={{ marginLeft: 15 }}>
                                 <div>
                                     <label>Pickup And Drop</label>
@@ -763,8 +768,11 @@ function PATIENT_DASHBOARD(props) {
                                     <span style={{ color: "red" }}>{errors?.pickup_and_drop}</span>
                                 </div>
                                 <div style={{ paddingLeft: 250, marginRight: 15 }}>
+
+
+
                                     <label>Dedicated Patient Relationship Executive</label>
-                                    <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }} x>
+                                    <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }} >
 
                                         <div className="form-check">
                                             <input style={{ borderColor: "rgb(56, 56, 121)" }} className="form-check-input" onChange={handleChange} type="radio" name="free_patient_dedicated_relationship" id="yes" value="yes" />
@@ -786,6 +794,9 @@ function PATIENT_DASHBOARD(props) {
                                         </div>
                                     </div>
                                     <span style={{ color: "red" }}>{errors?.free_patient_dedicated_relationship}</span>
+
+
+
 
                                 </div>
 
@@ -847,7 +858,11 @@ function PATIENT_DASHBOARD(props) {
                             <span style={{ color: "red" }}>{errors?.general_disclaimer}</span>
 
                         </form>
+                        <div style={{ marginLeft: "40%", marginTop: "3%", marginBottom: "4%" }}>
+                        <button className="join_button" type="submit" onClick={handleSubmit}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
                     </div>
+                    </div>
+}
 
                 </div>
             </div>
