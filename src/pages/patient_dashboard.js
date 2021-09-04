@@ -379,71 +379,24 @@ function PATIENT_DASHBOARD(props) {
                             <div className="d-flex">
                                 <div>
                                     <h5>Select Doctors</h5>
-                                    {
+                                  
 
-                                        doctor.map((target, index) => (
+                                            <div style={{ border: "2px solid #164473", borderRadius: 10, height: "18rem" }} className="select_doctor">
+                                            {
 
-                                            <div key={index} {...target} style={{ border: "2px solid #164473", borderRadius: 10, height: "14rem" }} className="select_doctor">
-
-                                                <div className="form-check">
+                                                doctor.map((target, index) => (
+                                                <div className="form-check"  key={index} {...target} >
                                                     <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Ashiya Leo")} name={formValues.select_doctor} />
                                                     <label className="form-check-label">
                                                         {target.DOCTOR_NAME}
                                                     </label>
                                                 </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Badami Sheetal")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc2}
-                                                    </label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc3}
-                                                    </label>
-
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc4}
-                                                    </label>
-
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label" >
-                                                        {target.doc5}
-                                                    </label>
-
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc6}
-                                                    </label>
-
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc7}
-                                                    </label>
-
-                                                </div>
-                                                <div className="form-check">
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Chatterji Manas")} name={formValues.select_doctor} />
-                                                    <label className="form-check-label">
-                                                        {target.doc8}
-                                                    </label>
-
-                                                </div>
-
+                                                ))}
+                                                
                                             </div>
 
 
-                                        ))}
+                                        
                                     <span style={{ color: "red" }}>{errors?.select_doctor}</span>
                                 </div>
                                 <div>
