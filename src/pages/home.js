@@ -1,13 +1,13 @@
 import React,{useState} from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-//import auth_service from "../services/auth_service";
+import  * as auth_service from "../services/auth_service";
+import { useHistory } from 'react-router-dom';
 
-//const history = useHistory();
+
 
 function Home(props) {
-  const [values, setValues] = useState({
-   
-  })
+  const [values, setValues] = useState({})
+  const history = useHistory();
   const handleChange = e => {
     const { name, value } = e.currentTarget
     setValues(prevState => ({
@@ -18,8 +18,13 @@ function Home(props) {
   const handleSubmit = async (event) => {
     console.log(values)
     event.preventDefault();
-  /*  const login=await auth_service.login(values)
-    console.log(login)*/
+   const login=await auth_service.login(values)
+   if(login.payload){
+    localStorage.setItem('login', JSON.stringify(login.payload));
+    history.push({
+      pathname:'/HOSPITAL_DASHBOARD'
+    });
+   }
 
 
 

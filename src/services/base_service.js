@@ -7,13 +7,15 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
+    let user =localStorage.getItem("login")
+    user =JSON.parse(user)
    /* const state = store.getState();
-    const { user } = state.appReducer;
+    const { user } = state.appReducer;*/
 
     if (user && user.token) {
       config.headers.common.authorization = `Bearer ${user.token}`;
-      config.headers.common['X-Arnexa-Fid'] = constants.defaultNamespace;
-    }*/
+      //config.headers.common['X-Arnexa-Fid'] = constants.defaultNamespace;
+    }
   
     return config;
   },
