@@ -1,12 +1,13 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import Pagination from "react-js-pagination";
 import 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
-import { Link } from 'react-router-dom';
+import  * as auth_service from "../services/auth_service";
+import { useHistory } from 'react-router-dom';
 
 const res = {
-    "enquiries":[
+    "enquiries": [
         {
             "total": "153",
             "new": "20",
@@ -59,144 +60,167 @@ const res = {
 
 const state = {
     labels: ['Awaiting Patients', 'Won Patients', 'Lost Patients',
-             'New Patients'],
+        'New Patients'],
     datasets: [
-      {
-        label: 'Patients',
-        backgroundColor: [
-            '#EAF2F6',
-          '#42B3CE',
-          '#164473',
-          '#5899BD'
-        ],
-        hoverBackgroundColor: [
-        '#501800',
-        '#4B5000',
-        '#175000',
-        '#003350',
-        ],
-        data: [65, 59, 80, 81]
-      }
+        {
+            label: 'Patients',
+            backgroundColor: [
+                '#EAF2F6',
+                '#42B3CE',
+                '#164473',
+                '#5899BD'
+            ],
+            hoverBackgroundColor: [
+                '#501800',
+                '#4B5000',
+                '#175000',
+                '#003350',
+            ],
+            data: [65, 59, 80, 81]
+        }
     ]
-  }
+}
 
-class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
+export default function ADMIN_HOSPITAL_DASHBOARD(props) {
+    const history = useHistory();
+    const [activePage, setActivePage] = useState()
+    const [enquries, setEnquries] = useState([])
 
-    constructor(props) {
-        super();
-        
-        this.state = {
-          name: 'React'
-        };
+    useEffect(() => {
+       
+        fetchData();
+      }, []);
+
+
+      async function fetchData() {
+        let data=localStorage.getItem("login")
+        data= JSON.parse(data)
+       
+        const getenquries = await auth_service.getenquries(data.login_id)
+        setEnquries(getenquries.payload)
+        console.log(getenquries.payload)
       }
 
-      
-     
-      handlePageChange(pageNumber) {
+      const handleSubmit = async (event) => {
+        
+       // history.push(,{params:event});
+        history.push({
+            pathname:'/ADMIN_PATIENT_DASHBOARD',
+            state:event
+          });
+
+       
+        console.log("formValues")
+
+        /* const login = await auth_service.enquries(formData)
+         console.log(login)*/
+    };
+
+    function handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.setState({activePage: pageNumber});
-      }
-    render(){
+       setActivePage(pageNumber)
+    }
 
-        
-        return (
-            <>
-            <div className = "hospital_dashboard_title">
-                <h1>Hospital Dashboard</h1> 
+
+
+    return (
+        <>
+            <div className="hospital_dashboard_title">
+                <h1>Hospital Dashboard</h1>
             </div>
-            { 
-                res.enquiries.map((target,index) => (
-                   
-                <div key = {index}{...target}> 
-            <div style = {{justifyContent: "center", paddingTop: "2rem"}}className = "enquiries  d-flex">
-                <div className = "total_enquiries">
-                    <div className = "d-flex">
-                        <i style = {{fontSize: 32, paddingLeft: "1rem", marginTop: "25px"}} className = "fa fa-file"></i>
-                        <h1 style = {{paddingLeft: "1rem"}}>{target.total}</h1>
+            {
+                res.enquiries.map((target, index) => (
+
+                    <div key={index}{...target}>
+                        <div style={{ justifyContent: "center", paddingTop: "2rem" }} className="enquiries  d-flex">
+                            <div className="total_enquiries">
+                                <div className="d-flex">
+                                    <i style={{ fontSize: 32, paddingLeft: "1rem", marginTop: "25px" }} className="fa fa-file"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.total}</h1>
+                                </div>
+                                <h3>Total Enquiries</h3>
+                            </div>
+                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                                <div className="d-flex">
+                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-plus"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.new}</h1>
+                                </div>
+                                <h3 style={{ paddingLeft: "5rem" }}>New Enquiries</h3>
+                            </div>
+                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                                <div className="d-flex">
+                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-pause"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.awaiting}</h1>
+                                </div>
+                                <h3 style={{ paddingLeft: "5rem" }}>Awaiting Enquiries</h3>
+                            </div>
+                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                                <div className="d-flex">
+                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className=" fa fa-smile-o "></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.won}</h1>
+                                </div>
+                                <h3 style={{ paddingLeft: "5rem" }}>Won Enquiries</h3>
+                            </div>
+                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                                <div className="d-flex">
+                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-frown-o"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.lost}</h1>
+                                </div>
+                                <h3 style={{ paddingLeft: "5rem" }}>Lost Enquiries</h3>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Total Enquiries</h3>
-                </div>
-                <div style = {{paddingLeft: "3rem"}} className = "new_enquiries">
-                    <div className = "d-flex">
-                        <i style = {{fontSize: 32, paddingLeft: "5rem", marginTop: "25px"}} className = "fa fa-plus"></i>
-                        <h1 style = {{paddingLeft: "1rem"}}>{target.new}</h1>
-                    </div>
-                    <h3 style = {{paddingLeft: "5rem"}}>New Enquiries</h3>
-                </div>
-                <div style = {{paddingLeft: "3rem"}} className = "new_enquiries">
-                    <div className = "d-flex">
-                        <i style = {{fontSize: 32, paddingLeft: "5rem", marginTop: "25px"}} className = "fa fa-pause"></i>
-                        <h1 style = {{paddingLeft: "1rem"}}>{target.awaiting}</h1>
-                    </div>
-                    <h3 style = {{paddingLeft: "5rem"}}>Awaiting Enquiries</h3>
-                </div>
-                <div style = {{paddingLeft: "3rem"}} className = "new_enquiries">
-                    <div className = "d-flex">
-                        <i style = {{fontSize: 32, paddingLeft: "5rem", marginTop: "25px"}} className = " fa fa-smile-o "></i>
-                        <h1 style = {{paddingLeft: "1rem"}}>{target.won}</h1>
-                    </div>
-                    <h3 style = {{paddingLeft: "5rem"}}>Won Enquiries</h3>
-                </div>
-                <div style = {{paddingLeft: "3rem"}} className = "new_enquiries">
-                    <div className = "d-flex">
-                        <i style = {{fontSize: 32, paddingLeft: "5rem", marginTop: "25px"}} className = "fa fa-frown-o"></i>
-                        <h1 style = {{paddingLeft: "1rem"}}>{target.lost}</h1>
-                    </div>
-                    <h3 style = {{paddingLeft: "5rem"}}>Lost Enquiries</h3>
-                </div>
-            </div>
-            </div>
                 ))}
-            <div className = "chart_content d-flex">
-                <div className = "chart_container d-flex">
+            <div className="chart_content d-flex">
+                <div className="chart_container d-flex">
                     <div>
-                    <Pie
-                        data={state}
-                        options={{
-                            title:{
-                            display:true,
-                            text:'Patients',
-                            fontSize:20
-                            },
-                            legend:{
-                            display:true,
-                            position:'bottom'
-                            }
-                        }}
-                    />
+                        <Pie
+                            data={state}
+                            options={{
+                                title: {
+                                    display: true,
+                                    text: 'Patients',
+                                    fontSize: 20
+                                },
+                                legend: {
+                                    display: true,
+                                    position: 'bottom'
+                                }
+                            }}
+                        />
                     </div>
-                     <div className = "pie_list">
-                        <ul style = {{fontSize: 16}}>
+                    <div className="pie_list">
+                        <ul style={{ fontSize: 16 }}>
                             <li>Awaiting Patients</li>
                             <li>Won Patients</li>
                             <li>Lost Patients</li>
                             <li>New Patients</li>
                         </ul>
-                    </div> 
-                </div>
-                { 
-                res.alert.map((target,index) => (
-                   
-                
-                <div className = "alert_container col-sm-5 d-flex"  key = {index}{...target}>
-                    <div>
-                        <h1 style = {{fontSize: 54, color: "white", marginTop: "8rem", marginLeft: "12rem"}}>{target.pending}</h1>
-                        <button className = "view_patients_button">View Now</button>
-                    </div>
-                    <div className = "alert">
-                            <h1>Alert</h1><br />
-                            <h4>You have following enquiries<br />
-                            {target.pending} unattended new enquiries
-                            since {target.hours} hours and {target.minutes} minutes</h4>
                     </div>
                 </div>
-               
-                ))}
-                <div style = {{marginLeft: 20}}>
-                <button className="join_button"><Link to = "/PATIENT_FORM" style = {{color: "white"}}>ADD PATIENT</Link></button>
+                {
+                    res.alert.map((target, index) => (
+
+
+                        <div className="alert_container col-sm-5 d-flex" key={index}{...target}>
+                            <div>
+                                <h1 style={{ fontSize: 54, color: "white", marginTop: "8rem", marginLeft: "12rem" }}>{target.pending}</h1>
+                                <button className="view_patients_button">View Now</button>
+                            </div>
+                            <div className="alert">
+                                <h1>Alert</h1><br />
+                                <h4>You have following enquiries<br />
+                                    {target.pending} unattended new enquiries
+                                    since {target.hours} hours and {target.minutes} minutes</h4>
+                            </div>
+                        </div>
+
+                    ))}
+                <div style={{ marginLeft: 20 }}>
+                    <button className="join_button" onClick={()=>history.push('/PATIENT_FORM')}>ADD PATIENT</button>
                 </div>
             </div>
-            <div className = "patient_table_container">
+            <div className="patient_table_container">
                 <table>
                     <thead>
                         <th>Patient Name</th>
@@ -208,33 +232,32 @@ class ADMIN_HOSPITAL_DASHBOARD extends React.Component{
                         <th>Status</th>
                     </thead>
                     <tbody>
-                    { 
-                res.patient_table.map((target,index) => (
-                        <tr key = {index} {...target}>
-                            <td style = {{paddingLeft: "2rem"}}><Link to = "/ADMIN_PATIENT_DASHBOARD">{target.name}</Link></td>
-                            <td style = {{width: "50rem"}}>{target.query}</td>
-                            <td>{target["insurance/tpa"]}</td>
-                            <td>{target.date}</td>
-                            <td>{target.time}</td>
-                            <td>{target.speciality}</td>
-                            <td>{target.status}</td>
-                        </tr>
-                ))}    
+                        {
+                            enquries.map((target, index) => (
+                                <tr key={index} {...target} >
+                                    <td style={{ paddingLeft: "2rem" }}><button  type="submit" onClick={()=>handleSubmit(target)} >{target.patient_name}</button></td>
+                                    <td style={{ width: "50rem" }}>{target.current_diagnosis}</td>
+                                    <td>{"insurance/tpa"}</td>
+                                    <td>{target.from_date}</td>
+                                    <td>{target.to_date}</td>
+                                    <td>-</td>
+                                    <td>New</td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
-            <div className = "pagination" style = {{marginLeft: "50rem"}}>
+            <div className="pagination" style={{ marginLeft: "50rem" }}>
                 <Pagination
-                        activePage={this.state.activePage}
-                        itemsCountPerPage={10}
-                        totalItemsCount={450}
-                        pageRangeDisplayed={3}
-                        onChange={this.handlePageChange.bind(this)}
+                    activePage={activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={450}
+                    pageRangeDisplayed={3}
+                    onChange={handlePageChange}
                 />
-            </div>    
-            </>
-        );
-    }
+            </div>
+        </>
+    );
 }
 
-export default ADMIN_HOSPITAL_DASHBOARD;
+

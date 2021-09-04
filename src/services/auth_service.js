@@ -8,6 +8,10 @@ function login(data) {
   const req = instance.post('/hospital/login', data);
   return req
 }
+function loginadmin(data) { 
+  const req = instance.post('/admin/login', data);
+  return req
+}
 function enquries(login_id,data) {
   const req = instance.post(`/enquries/${login_id}/create`, data);
   return req
@@ -46,5 +50,5 @@ function sendquote(enquries_id,login_id,data) {
   return req
 }
 
-export  {login,enquries,getenquries,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility}
+export  {login,enquries,getenquries,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
 

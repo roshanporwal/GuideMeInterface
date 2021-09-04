@@ -34,7 +34,7 @@ class  App extends Component {
         <Route path='/ADMIN_HOSPITAL_DASHBOARD' component={ADMIN_HOSPITAL_DASHBOARD} />
         <Route path='/ADMIN_HOSPITAL_PROFILE' component={ADMIN_HOSPITAL_PROFILE} />
         <Route path='/ADMIN_PATIENT_DASHBOARD' component={ADMIN_PATIENT_DASHBOARD} />
-        <Route path='/ADMIN_HOME' component={ADMIN_Home} />
+        <Route path='/admin' component={ADMIN_Home} />
       </Switch>
       
     </Router>

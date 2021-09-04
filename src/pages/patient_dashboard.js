@@ -179,9 +179,9 @@ function PATIENT_DASHBOARD(props) {
         data= JSON.parse(data)
 
         setEnqurie_data([props.location.state])
+        console.log(props.location)
         console.log(props.location.state)
           const getenquries = await auth_service.getdoctorbyhospital("Al Jalilas Children Speciality Hospital",data.login_id)
-          console.log(getenquries)
          setDoctor(getenquries.payload)
          /*const getenquries1 = await auth_service.getenquriesbyhospitals()
         
@@ -222,7 +222,7 @@ function PATIENT_DASHBOARD(props) {
         setErrors(err);
 
 
-        const formData = new FormData();
+        
         formValues.select_doctor = select_doctor;
         formValues.select_anesthesiologist = select_anesthesiologist;
         formValues.status = "Done"
@@ -233,8 +233,8 @@ function PATIENT_DASHBOARD(props) {
 
         console.log(formValues)
 
-        const login = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, formValues)
-        console.log(login)
+        //const login = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, formValues)
+       // console.log(login)
     };
 
     const handleChange = e => {
@@ -322,7 +322,7 @@ function PATIENT_DASHBOARD(props) {
                             <div key={index} {...target}>
                                 <div className="d-flex mt-5">
                                     <p><b>Speciality: </b></p>
-                                    <p style={{ paddingLeft: 10 }}>{target.speciality}</p>
+                                    <p style={{ paddingLeft: 10 }}>{target.medical_history}</p>
                                 </div>
                                 <div className="d-flex">
                                     <p style={{ marginBottom: 5 }}><b>Medical History</b></p>
@@ -386,7 +386,7 @@ function PATIENT_DASHBOARD(props) {
 
                                                 doctor.map((target, index) => (
                                                 <div className="form-check"  key={index} {...target} >
-                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor", "Dr Ashiya Leo")} name={formValues.select_doctor} />
+                                                    <input type="checkbox" className="form-check-input" onChange={() => checkBox("select_doctor",target.DOCTOR_NAME)} name={formValues.select_doctor} />
                                                     <label className="form-check-label">
                                                         {target.DOCTOR_NAME}
                                                     </label>

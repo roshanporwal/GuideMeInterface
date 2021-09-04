@@ -1,10 +1,12 @@
 import React,{useState} from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-//import auth_service from "../services/auth_service";
+import  * as auth_service from "../services/auth_service";
+import { useHistory } from 'react-router-dom';
 
 //const history = useHistory();
 
 function ADMIN_Home(props) {
+  const history = useHistory();
   const [values, setValues] = useState({
    
   })
@@ -16,20 +18,19 @@ function ADMIN_Home(props) {
     }))
   }
   const handleSubmit = async (event) => {
-    console.log(values)
+   
     event.preventDefault();
-  /*  const login=await auth_service.login(values)
-    console.log(login)*/
-
-
-
-
+    const login=await auth_service.loginadmin(values)
+   if(login.payload){
+    localStorage.setItem('login', JSON.stringify(login.payload));
+    history.push({
+      pathname:'/ADMIN_HOSPITAL_DASHBOARD'
+    });
+   }
   }
 
 
   return (
-
-
     <Router>
       <div className="content d-flex" >
         <div className="col-4">
@@ -41,7 +42,7 @@ function ADMIN_Home(props) {
 
         </div>
         <div className="col-8">
-          <h2 class="login_title">Welcome Admin</h2>
+          <h2 className="login_title">Welcome Admin</h2>
           <form className="login_form">
             <div className="email_field">
               <label htmlFor="exampleInputEmail1">Email</label>
