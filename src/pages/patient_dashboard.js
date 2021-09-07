@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import { quoteSchema } from '../components/Validations/quoteValidation';
-import InputField from '../components/input';
+//import InputField from '../components/input';
 //import RadioField from '../components/radio';
 import * as auth_service from "../services/auth_service";
 import { Form } from 'react-bootstrap';
@@ -123,11 +123,12 @@ function PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [errors, setErrors] = useState({});
     const [doctor, setDoctor] = useState([])
+    const [free_annual_checkup, setFree_annual_checkup] = useState([])
     const [sendquote, setSendquote] = useState(true)
 
 
 
-    const [formErrors/* , setFormErrors */] = useState({
+    /*const [formErrors/* , setFormErrors ] = useState({
         select_doctor: "",
         select_anesthesiologist: "",
         treatment_plan: "",
@@ -136,7 +137,6 @@ function PATIENT_DASHBOARD(props) {
         exclusion: "",
         expected_length: "",
         estimate_copay: "",
-        type_of_anesthesia: "",
         type_of_room: "",
         free_room_upgrade: "",
         free_physiotherapy: "",
@@ -150,12 +150,12 @@ function PATIENT_DASHBOARD(props) {
         food_menu: "",
         confirmation: "",
         general_disclaimer: "",
-    })
-  /*   useEffect(() => {
+    })*/
+     useEffect(() => {
 
         fetchData(props);
     }, [props]);
- */
+ 
 
     async function fetchData(props) {
 
@@ -163,14 +163,20 @@ function PATIENT_DASHBOARD(props) {
         data = JSON.parse(data)
 
         setEnqurie_data([props.location.state])
-        console.log(props.location)
-        console.log(props.location.state)
-        const getenquries = await auth_service.getdoctorbyhospital(data._id, data.login_id)
-        setDoctor(getenquries.payload)
-        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
-       
-        console.log(getenquries1.payload) */
 
+        const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
+        setDoctor(getdoctor.payload)
+        console.log( props.location.state.hospitals.find(item => item.hospital_id === data._id)) 
+         const hospital_data =props.location.state.hospitals.find(item => item.hospital_id === data._id)
+         if(hospital_data!=null){
+             setFormValue(hospital_data)
+             let ahospital_data=hospital_data.select_doctor?setSelect_doctor(hospital_data.select_doctor):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.free_annual_checkup?setFree_annual_checkup(hospital_data.free_annual_checkup):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.select_anesthesiologist?setSelect_anesthesiologist(hospital_data.select_anesthesiologist):null;
+             await  ahospital_data;
+         }
     }
 
 
@@ -193,6 +199,13 @@ function PATIENT_DASHBOARD(props) {
             } else {
                 setSelect_anesthesiologist(prevArray => [...prevArray, value]);
             }
+        }else if (name === "free_annual_checkup") {
+            if (select_anesthesiologist.find(item => item === value)) {
+                setFree_annual_checkup(select_anesthesiologist.filter(item => item !== value));
+
+            } else {
+                setFree_annual_checkup(prevArray => [...prevArray, value]);
+            }
         }
     }
 
@@ -209,17 +222,20 @@ function PATIENT_DASHBOARD(props) {
 
         formValues.select_doctor = select_doctor;
         formValues.select_anesthesiologist = select_anesthesiologist;
+        formValues.free_annual_checkup=free_annual_checkup;
         formValues.status = "Done"
 
         /* formData.append('treatment_plan', treatment_plan);
          formData.append('estimate_price', estimate_price);
          formData.append('formValues', JSON.stringify(formValues))*/
 
-        console.log(formValues)
+        console.log("formValues",formValues)
         setValidated(true);
 
-        /* const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) */
-        /* console.log(formsubmit) */
+         const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
+        if(formsubmit.payload){
+            setSendquote(true)
+        }
     };
 
     const handleChange = e => {
@@ -228,7 +244,7 @@ function PATIENT_DASHBOARD(props) {
             ...prevState,
             [name]: value
         }))
-        const err = validate(formValues);
+       // const err = validate(formValues);
     } 
     /* const onchange = e => {
         const { name } = e.currentTarget
@@ -384,8 +400,8 @@ function PATIENT_DASHBOARD(props) {
                                                     type="checkbox"
                                                     name="select_doctor"
                                                     value={formValues.select_doctor}
-                                                   
-                                                    onChange={() => checkBox("select_doctor")}
+                                                    checked={select_doctor.length!==0?select_doctor.find(item => item === target.doctor_name):false}
+                                                    onChange={() => checkBox("select_doctor",target.doctor_name)}
                                                     isValid={!errors.select_doctor}
                                                 />
                                             ))}
@@ -467,7 +483,7 @@ function PATIENT_DASHBOARD(props) {
                                         required
                                         style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem" }}
                                         type="text"
-                                        name="treatment_plan"
+                                        name="exclusion"
                                         value={formValues.exclusion}
                                         onChange={handleChange}
                                         isValid={!errors.exclusion}
@@ -497,9 +513,10 @@ function PATIENT_DASHBOARD(props) {
                                     required
                                     style = {{paddingLeft: "4rem"}}
                                     type="radio"
-                                    name="types_of_anesthesia"
+                                    name="type_of_anesthesia"
                                     id = "local"
                                     value="local"
+                                    checked={formValues.type_of_anesthesia==="local"}
                                     onChange={handleChange}
                                     isValid={!errors.type_of_anesthesia}
                                 />
@@ -508,9 +525,10 @@ function PATIENT_DASHBOARD(props) {
                                         required
                                         style = {{paddingLeft: "40rem"}}
                                         type="radio"
-                                        name="types_of_anesthesia"
+                                        name="type_of_anesthesia"
                                         id = "general"
                                         value="general"
+                                        checked={formValues.type_of_anesthesia==="general"}
                                         onChange={handleChange}
                                         isValid={!errors.type_of_anesthesia}
                                     />
@@ -519,9 +537,10 @@ function PATIENT_DASHBOARD(props) {
                                         required
                                         style = {{paddingLeft: "40rem"}}
                                         type="radio"
-                                        name="types_of_anesthesia"
+                                        name="type_of_anesthesia"
                                         id = "epidural"
                                         value="epidural"
+                                        checked={formValues.type_of_anesthesia==="epidural"}
                                         onChange={handleChange}
                                         isValid={!errors.type_of_anesthesia}
                                     />
@@ -548,7 +567,7 @@ function PATIENT_DASHBOARD(props) {
                                         required
                                         style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem" }}
                                         type="text"
-                                        name="estimate_copay"
+                                        name="expected_length"
                                         value={formValues.expected_length}
                                         onChange={handleChange}
                                         isValid={!errors.expected_length}
@@ -568,6 +587,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_room_upgrade"
                                         id = "yes"
                                         value="yes"
+                                        checked={formValues.free_room_upgrade=== "yes"}
                                         onChange={handleChange}
                                         isValid={!errors.free_room_upgrade}
                                     />
@@ -579,6 +599,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_room_upgrade"
                                         id = "no"
                                         value="no"
+                                        checked={formValues.free_room_upgrade=== "no"}
                                         onChange={handleChange}
                                         isValid={!errors.free_room_upgrade}
                                     />
@@ -590,6 +611,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_room_upgrade"
                                         id = "at_discount"
                                         value="at_discount"
+                                        checked={formValues.free_room_upgrade=== "at_discount"}
                                         onChange={handleChange}
                                         isValid={!errors.free_room_upgrade}
                                     />
@@ -609,6 +631,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_physiotherapy"
                                         id = "yes"
                                         value="yes"
+                                        checked={formValues.free_physiotherapy=== "yes"}
                                         onChange={handleChange}
                                         isValid={!errors.free_physiotherapy}
                                     />
@@ -620,6 +643,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_physiotherapy"
                                         id = "no"
                                         value="no"
+                                        checked={formValues.free_physiotherapy==="no"}
                                         onChange={handleChange}
                                         isValid={!errors.free_physiotherapy}
                                     />
@@ -631,6 +655,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_physiotherapy"
                                         id = "at_discount"
                                         value="at_discount"
+                                        checked={formValues.free_physiotherapy==="at_discount"}
                                         onChange={handleChange}
                                         isValid={!errors.free_physiotherapy}
                                     />
@@ -666,6 +691,7 @@ function PATIENT_DASHBOARD(props) {
                                     name="free_telephonic_feedback"
                                     id = "yes"
                                     value="yes"
+                                    checked={formValues.free_telephonic_feedback==="yes"}
                                     onChange={handleChange}
                                     isValid={!errors.free_telephonic_feedback}
                                 />
@@ -677,6 +703,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_telephonic_feedback"
                                         id = "no"
                                         value="no"
+                                        checked={formValues.free_telephonic_feedback==="no"}
                                         onChange={handleChange}
                                         isValid={!errors.free_telephonic_feedback}
                                     />
@@ -689,6 +716,7 @@ function PATIENT_DASHBOARD(props) {
                                         id = "at_discount"
                                         value="at_discount"
                                         onChange={handleChange}
+                                        checked={formValues.free_telephonic_feedback==="at_discount"}
                                         isValid={!errors.free_telephonic_feedback}
                                     />
                                 </div>
@@ -706,6 +734,7 @@ function PATIENT_DASHBOARD(props) {
                                     name="free_annual_checkup"
                                     id = "patients"
                                     value="patients"
+                                    checked={free_annual_checkup.find(item => item === "patients")}
                                     onChange={() => checkBox("free_annual_checkup","patients" )}
                                     isValid={!errors.free_annual_checkup}
                                 />
@@ -717,6 +746,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_annual_checkup"
                                         id = "family_members"
                                         value="family_members"
+                                        checked={free_annual_checkup.find(item => item === "family_members")}
                                         onChange={() => checkBox("free_annual_checkup","family_members" )}
                                         isValid={!errors.free_annual_checkup}
                                     />
@@ -728,6 +758,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_annual_checkup"
                                         id = "at_discount"
                                         value="at_discount"
+                                        checked={free_annual_checkup.find(item => item === "at_discount")}
                                         onChange={() => checkBox("free_annual_checkup","at_discount" )}
                                         isValid={!errors.free_annual_checkup}
                                     />
@@ -749,6 +780,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="pickup_and_drop"
                                         id = "yes"
                                         value="yes"
+                                        checked={formValues.pickup_and_drop==="yes"}
                                         onChange={handleChange}
                                         isValid={!errors.pickup_and_drop}
                                     />
@@ -760,6 +792,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="pickup_and_drop"
                                         id = "no"
                                         value="no"
+                                        checked={formValues.pickup_and_drop==="no"}
                                         onChange={handleChange}
                                         isValid={!errors.pickup_and_drop}
                                     />
@@ -771,6 +804,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="pickup_and_drop"
                                         id = "at_discount"
                                         value="at_discount"
+                                        checked={formValues.pickup_and_drop==="at_discount"}
                                         onChange={handleChange}
                                         isValid={!errors.pickup_and_drop}
                                     />
@@ -790,6 +824,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_patient_dedicated_relationship"
                                         id = "yes"
                                         value="yes"
+                                        checked={formValues.free_patient_dedicated_relationship==="yes"}
                                         onChange={handleChange}
                                         isValid={!errors.free_patient_dedicated_relationship}
                                     />
@@ -801,6 +836,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_patient_dedicated_relationship"
                                         id = "no"
                                         value="no"
+                                        checked={formValues.free_patient_dedicated_relationship==="no"}
                                         onChange={handleChange}
                                         isValid={!errors.free_patient_dedicated_relationship}
                                     />
@@ -812,6 +848,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_patient_dedicated_relationship"
                                         id = "available"
                                         value="available"
+                                        checked={formValues.free_patient_dedicated_relationship==="available"}
                                         onChange={handleChange}
                                         isValid={!errors.free_patient_dedicated_relationship}
                                     />

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState,useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
@@ -6,7 +6,7 @@ import { MultiSelect } from "react-multi-select-component";
 
 
 
-const res = {
+/*const res = {
     "patient_details": [
         {
             "id": 1,
@@ -101,7 +101,7 @@ const res = {
             "meodor_annual": "for patient"
         }
     ]
-}
+}*/
 
 
 
@@ -110,23 +110,28 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
-    const [nik, setNIk] = useState([]);
-     useEffect(() => {
+    const [hopital_enq, setHopital_enq] = useState([]);
+    const [show_quota, setShow_quota] = useState(false); 
+    useEffect(() => {
        
         fetchData(props);
-      }, [props]); 
+      }, [props]);
 
-    
+
     async function fetchData(props) {
-/* 
-        const getenquries = await auth_service.getenquries()
-        setEnquries(getenquries.payload) */
+
+        //  const getenquries = await auth_service.getenquries()
+        // setEnquries(getenquries.payload)
         console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         setEnqurie_data([props.location.state])
-        const ab=props.location.state.hospitals
-        setNIk(ab)
+        const enq=props.location.state.hospitals
+        setHopital_enq(enq)
+        if(enq.length !== 0){
+            setShow_quota(true)
+
+        }
         const getenquries = await auth_service.gethospitals(data.login_id)
         console.log(getenquries)
         setHospitals(getenquries.payload)
@@ -159,10 +164,21 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        /* const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
-        console.log(getenquries.payload) */
+        console.log(selected.length)
+        if(selected.length>3){
+           return alert("pls select only 3 hospitals")
+        }else{
+            const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
+            if(getenquries.payload){
+                setShow_quota(true)
 
-        /* const login = await auth_service.enquries(formData)
+            }
+    console.log(getenquries.payload)
+        }
+        //const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
+       // console.log(getenquries.payload)
+
+       /*  const login = await auth_service.enquries(formData)
          console.log(login)*/
     };
 
@@ -176,10 +192,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             setSelecthospital(prevArray => [...prevArray, value]);
         }
     }*/
-    
-        
-         
-        
+
 
 
     return (
@@ -283,7 +296,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                             </div>
-                        ))}<div className="pt-5 pb-5">
+                        ))}
+                        { show_quota ? null:
+                            <div className="pt-5 pb-5">
                         <label>Select Hospital</label>
                         <MultiSelect
                             options={hospitals}
@@ -292,17 +307,20 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             labelledBy="Select"
                         />
                         <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={handleSubmit}>{"Submit"}</button>
-                    </div>
+                    </div>}
                 </div>
             </div>
-            {/* <div className="col-md-12" style={{ marginTop: 20 }}>
+            {show_quota?
+            <div>
+            <div className="col-md-12" style={{ marginTop: 20 }}>
+                
                 <div className="col-md-3">
 
                 </div>
                 {
-                    nik.map((target, index) => (
+                    hopital_enq.map((target, index) => (
                 <div className="col-md-3" key={index} {...target}>
-                    <p><b>Hospital {index+1}</b></p>
+                    <p><b>{target.hospital_name}</b></p>
                 </div>
                
                  ))}
@@ -312,7 +330,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 <div className="col-md-3" style={{ textAlign: "center" }}>
                     <p><b>Estimate Price</b></p>
                     <p><b>Treatment Plan</b></p>
-                    <p><b>Treatment Plan</b></p>
+                    <p><b>Inclusions</b></p>
                     <p><b>Exclusions</b></p>
                     <p><b>Copay Required</b></p>
                     <p><b>Types of Anesthesia</b></p>
@@ -325,7 +343,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     <p><b>Free Annual checkup</b></p>
                 </div>
                 {
-                    nik.map((target, index) => (
+                    hopital_enq.map((target, index) => (
                         <div className="col-md-3" key={index} {...target}>
                             {target.estimate_price ?
                                 
@@ -355,188 +373,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     ))}
                
             </div>
-             */}
-             
-<div id="table-scroll" class="table-scroll">
-  <div class="table-wrap">
-    <table class="main-table">
-      <thead>
-        <tr>
-          <th class="fixed-side" scope="col">&nbsp;</th>
-          {
-                    nik.map((target, index) => (
-          <th key = {index} {...target} scope="col">Hospital {index+1}</th>
-                    ))}
-          
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th class="fixed-side">Estimate Price</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td  key={index} {...target}>{target.estimate_price}</td>
-              
-                    
-          
-                    ))}                                                             
-        </tr>
-                    
-        <tr>
-          <th class="fixed-side">Treatment Plan</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.treatment_plan}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Exclusions</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.exclusion}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Copay Required</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.estimate_copay}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Types of Anesthesia</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.type_of_anesthesia}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Type of room</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.type_of_room}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Length of stay</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.length_of_stay}</td>
-              
-                    
-          
-                    ))}  
-         
-        </tr>
-        <tr>
-          <th class="fixed-side">Free room upgrade</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.free_room_upgrade}</td>
-              
-                    
-          
-                    ))}  
-         
-        </tr>
-        <tr>
-          <th class="fixed-side">Free Physiotherapy</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.free_physiotherapy}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Pickup and drop</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.pickup_and_drop}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-        <tr>
-          <th class="fixed-side">Other free consultation</th>
-          {
-                    nik.map((target, index) => (
-                        
-                            
-                            
-          <td key = {index} {...target}>{target.free_other_speciality_consultant}</td>
-              
-                    
-          
-                    ))}  
-          
-        </tr>
-       
-      </tbody>
-      
-    </table>
-  </div>
-</div>
-
-
             <div>
                 <button style={{ width: "100%", marginBottom: 30 }} className="join_button">Forward to Patient</button>
             </div>
-
+            </div>:null}
 
 
 

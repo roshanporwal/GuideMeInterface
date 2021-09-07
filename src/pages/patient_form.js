@@ -4,13 +4,15 @@ import 'react-bootstrap';
 import {validationSchema} from '../components/Validations/patientValidation';
 
 
-import { Form } from 'react-bootstrap';
+import { Form, Alert } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 
-//import auth_service from "../services/auth_service";
+import  * as auth_service from "../services/auth_service";
 
 function PATIENT_FORM(props) {
     const [validated, setValidated] = useState(false);
+    const history = useHistory();
     const [formValues, setFormValue] = useState({
         
         patient_name: "",
@@ -35,17 +37,19 @@ function PATIENT_FORM(props) {
         preferred_hospital_visit: "",
         proposal_date: "",
         from_date: "",
-        to_date: ""
+        to_date: "",
+        insurance_name:""
     })
     
 
     const [isSubmitting] = useState(false)
-    const [patient_document] = useState()
-    const [patient_reports] = useState()
-    const [insurance_card_copy] = useState()
+    const [patient_document, setPatient_document] = useState()
+    const [patient_reports, setPatient_reports] = useState()
+    const [insurance_card_copy, setInsurance_card_copy] = useState()
     const [proposed_treatment_plan, setProposed_treatment_plan] = useState([]);
     const [languages_spoken, setLanguages_spoken] = useState([]);
     const [errors, setErrors] = useState({});
+    const [show, setShow] = useState(false);
 
 
     const [formErrors] = useState({
@@ -71,7 +75,8 @@ function PATIENT_FORM(props) {
         preferred_hospital_visit: "",
         proposal_date: "",
         from_date: "",
-        to_date: ""
+        to_date: "",
+        insurance_name:""
     })
 
     
@@ -106,6 +111,13 @@ function PATIENT_FORM(props) {
         const err = await validate(formValues);
         /*  console.log(err) */
          setErrors(err); 
+         console.log("err")
+         console.log(err) 
+         console.log("err")
+         if(Object.keys(err).length === 0){
+             console.log(err.length)
+         
+         
 
         const formData = new FormData();
         formValues.proposed_treatment_plan = proposed_treatment_plan;
@@ -114,21 +126,35 @@ function PATIENT_FORM(props) {
         formData.append('patient_document', patient_document);
         formData.append('patient_reports', patient_reports);
         formData.append('insurance_card_copy', insurance_card_copy);
-        formData.append('values', JSON.stringify(formValues))
+        formData.append('formValues', JSON.stringify(formValues))
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
           }
+
         
-         console.log(formValues) 
+         console.log(patient_reports)
+         console.log(insurance_card_copy)
          setValidated(true);
 
 
         
 
-        /* const login = await auth_service.enquries(formData)
-         console.log(login)*/
+          auth_service.enquries("admin",formData).then((enquire_data) => {
+
+            console.log(enquire_data)
+            if(enquire_data.payload){
+              
+               history.push({
+                 pathname:'/ADMIN_HOSPITAL_DASHBOARD'
+               });
+           }else{
+               setShow(true)
+           }
+          })
+        
     };
+}
 
      const handleChange = e => {
        
@@ -137,7 +163,7 @@ function PATIENT_FORM(props) {
             ...prevState,
             [name]: value
         }))
-        const err = validate(formValues);
+        validate(formValues);
         
     } 
     /* const onchange = e => {
@@ -166,11 +192,26 @@ function PATIENT_FORM(props) {
             return errObj;
         }
     }; 
+    const onchange = e => {
+        const { name } = e.currentTarget
+
+        if (name === 'patient_document') {
+            setPatient_document(e.target.files[0])
+        } else if (name === 'patient_reports') {
+            setPatient_reports(e.target.files[0])
+        } else {
+            setInsurance_card_copy(e.target.files[0])
+        }
+
+    }
+
 
     return (
         <>
-
+          <div>{show ? (<Alert show={show} variant="danger" >
+          <Alert.Heading>error</Alert.Heading></Alert>) : null}
             <div className="patient_form_container">
+            
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <div className="col-md-4">
                      
@@ -303,8 +344,8 @@ function PATIENT_FORM(props) {
                                 style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
                                 type="file"
                                 name="patient_document"
-                                value={formValues.patient_document}
-                                onChange={handleChange}
+                                
+                                onChange={onchange}
                                 isValid={!errors.patient_document}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_document}</Form.Control.Feedback>
@@ -316,8 +357,8 @@ function PATIENT_FORM(props) {
                                 style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
                                 type="file"
                                 name="patient_reports"
-                                value={formValues.patient_reports}
-                                onChange={handleChange}
+                               
+                                onChange={onchange}
                                 isValid={!errors.patient_reports}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_reports}</Form.Control.Feedback>
@@ -339,6 +380,20 @@ function PATIENT_FORM(props) {
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
                         </Form.Group>
+
+                        <Form.Group>
+                        <Form.Label>Insurance Name</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="insurance_name"
+                                value={formValues.insurance_name}
+                                onChange={handleChange}
+                                isValid={!errors.insurance_name}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_name}</Form.Control.Feedback>
+                        </Form.Group>
                         
                        
                         <Form.Group style = {{marginTop: "2rem"}}>
@@ -348,8 +403,7 @@ function PATIENT_FORM(props) {
                                 style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
                                 type="file"
                                 name="insurance_card_copy"
-                                value={formValues.insurance_card_copy}
-                                onChange={handleChange}
+                                onChange={onchange}
                                 isValid={!errors.insurance_card_copy}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_card_copy}</Form.Control.Feedback>
@@ -783,6 +837,7 @@ function PATIENT_FORM(props) {
                     <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
                     </div>
                 </Form>
+            </div>
             </div>
         </>
     )

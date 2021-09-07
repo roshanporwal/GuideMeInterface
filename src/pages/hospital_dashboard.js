@@ -239,10 +239,10 @@ function HOSPITAL_DASHBOARD(props) {
                     <tbody>
                         {
                             enquries.map((target, index) => (
-                                <tr key={index} {...target}>
-                                    <td style={{ paddingLeft: "2rem" }}><button type="submit" onClick={() => handleSubmit(target)} >{target.patient_name}</button></td>
+                                <tr key={index} {...target} onClick={() => handleSubmit(target)}>
+                                    <td style={{ paddingLeft: "2rem" }}>{target.patient_name}</td>
                                     <td style={{ width: "50rem" }}>{target.current_diagnosis}</td>
-                                    <td>{"insurance/tpa"}</td>
+                                    <td>{target.insurance_name}</td>
                                     <td>{target.from_date}</td>
                                     <td>{target.to_date}</td>
                                     <td>-</td>
