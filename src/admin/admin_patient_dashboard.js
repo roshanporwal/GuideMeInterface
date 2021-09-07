@@ -1,4 +1,4 @@
-import React, {useState,useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
@@ -110,16 +110,16 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
     const [nik, setNIk] = useState([]);
-    useEffect(() => {
+     useEffect(() => {
        
         fetchData(props);
-      }, [props]);
+      }, [props]); 
 
 
     async function fetchData(props) {
-
-        //  const getenquries = await auth_service.getenquries()
-        // setEnquries(getenquries.payload)
+/* 
+        const getenquries = await auth_service.getenquries()
+        setEnquries(getenquries.payload) */
         console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
@@ -158,8 +158,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
-        console.log(getenquries.payload)
+        /* const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
+        console.log(getenquries.payload) */
 
         /* const login = await auth_service.enquries(formData)
          console.log(login)*/
@@ -291,7 +291,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-md-12" style={{ marginTop: 20 }}>
+            {/* <div className="col-md-12" style={{ marginTop: 20 }}>
                 <div className="col-md-3">
 
                 </div>
@@ -308,7 +308,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 <div className="col-md-3" style={{ textAlign: "center" }}>
                     <p><b>Estimate Price</b></p>
                     <p><b>Treatment Plan</b></p>
-                    <p><b>Inclusions</b></p>
+                    <p><b>Treatment Plan</b></p>
                     <p><b>Exclusions</b></p>
                     <p><b>Copay Required</b></p>
                     <p><b>Types of Anesthesia</b></p>
@@ -351,6 +351,184 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     ))}
                
             </div>
+             */}
+             
+<div id="table-scroll" class="table-scroll">
+  <div class="table-wrap">
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th class="fixed-side" scope="col">&nbsp;</th>
+          {
+                    nik.map((target, index) => (
+          <th key = {index} {...target} scope="col">Hospital {index+1}</th>
+                    ))}
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="fixed-side">Estimate Price</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td  key={index} {...target}>{target.estimate_price}</td>
+              
+                    
+          
+                    ))}                                                             
+        </tr>
+                    
+        <tr>
+          <th class="fixed-side">Treatment Plan</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.treatment_plan}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Exclusions</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.exclusion}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Copay Required</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.estimate_copay}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Types of Anesthesia</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.type_of_anesthesia}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Type of room</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.type_of_room}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Length of stay</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.length_of_stay}</td>
+              
+                    
+          
+                    ))}  
+         
+        </tr>
+        <tr>
+          <th class="fixed-side">Free room upgrade</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.free_room_upgrade}</td>
+              
+                    
+          
+                    ))}  
+         
+        </tr>
+        <tr>
+          <th class="fixed-side">Free Physiotherapy</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.free_physiotherapy}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Pickup and drop</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.pickup_and_drop}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+        <tr>
+          <th class="fixed-side">Other free consultation</th>
+          {
+                    nik.map((target, index) => (
+                        
+                            
+                            
+          <td key = {index} {...target}>{target.free_other_speciality_consultant}</td>
+              
+                    
+          
+                    ))}  
+          
+        </tr>
+       
+      </tbody>
+      
+    </table>
+  </div>
+</div>
+
+
             <div>
                 <button style={{ width: "100%", marginBottom: 30 }} className="join_button">Forward to Patient</button>
             </div>

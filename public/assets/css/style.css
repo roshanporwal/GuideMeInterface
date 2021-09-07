@@ -312,6 +312,10 @@
         border-bottom-right-radius: 10px;
     }
 
+    .reports_buttons_side{
+        height: 100% !important;
+    }
+
     
 
     
@@ -749,4 +753,76 @@ tbody{
 .select_doctor{
     overflow: hidden;
     overflow-y: scroll;
+    padding-left: 3rem;
 }
+
+.checkbox{
+    padding-left: 3rem;
+}
+
+.patient_submit{
+    border: 1px #164473;
+    border-radius: 15px;
+    background-color: #164473;
+    color: white;
+    width: 28rem;
+    height: 6rem;
+    box-shadow: 5px 10px 8px #888888;
+    justify-content: center;
+    margin-top: 20rem;
+    margin-left: 10rem;
+}
+
+.table-scroll {
+	
+	max-width:600px;
+	margin:auto;
+	overflow:hidden;
+	border:1px solid white;
+}
+.table-wrap {
+	width:100%;
+	overflow:auto;
+}
+.table-scroll table {
+	width:100%;
+	margin:auto;
+	border-collapse:separate;
+	border-spacing:0;
+}
+.table-scroll th, .table-scroll td {
+	padding:5px 10px;
+	border:1px solid white;
+	background:#fff;
+	white-space:nowrap;
+	vertical-align:top;
+    color: black;
+}
+.table-scroll thead, .table-scroll tfoot {
+	background:#f9f9f9;
+}
+.clone {
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events:none;
+}
+.clone th, .clone td {
+	visibility:hidden
+}
+.clone td, .clone th {
+	border-color:transparent
+}
+.clone tbody th {
+	visibility:visible;
+	color:red;
+}
+.clone .fixed-side {
+	border:1px solid white;
+	background:#eee;
+	visibility:visible;
+}
+.clone thead, .clone tfoot{background:white;}
+
+
+
