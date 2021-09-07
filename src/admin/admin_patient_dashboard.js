@@ -3,6 +3,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
 
+
+
+
 const res = {
     "patient_details": [
         {
@@ -103,8 +106,6 @@ const res = {
 
 
 
-
-
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hospitals, setHospitals] = useState([])
@@ -115,7 +116,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         fetchData(props);
       }, [props]); 
 
-
+    
     async function fetchData(props) {
 /* 
         const getenquries = await auth_service.getenquries()
@@ -175,7 +176,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             setSelecthospital(prevArray => [...prevArray, value]);
         }
     }*/
-
+    
+        
+         
+        
 
 
     return (
