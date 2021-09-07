@@ -109,6 +109,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
+    const [nik, setNIk] = useState([]);
     useEffect(() => {
        
         fetchData(props);
@@ -123,6 +124,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         setEnqurie_data([props.location.state])
+        const ab=props.location.state.hospitals
+        setNIk(ab)
         const getenquries = await auth_service.gethospitals(data.login_id)
         console.log(getenquries)
         setHospitals(getenquries.payload)
@@ -292,15 +295,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 <div className="col-md-3">
 
                 </div>
-                <div className="col-md-3">
-                    <p><b>Hospital 1</b></p>
+                {
+                    nik.map((target, index) => (
+                <div className="col-md-3" key={index} {...target}>
+                    <p><b>Hospital {index+1}</b></p>
                 </div>
-                <div className="col-md-3">
-                    <p><b>Hospital 2</b></p>
-                </div>
-                <div className="col-md-3">
-                    <p><b>Hospital 3</b></p>
-                </div>
+               
+                 ))}
+                
             </div>
             <div className="col-md-12" >
                 <div className="col-md-3" style={{ textAlign: "center" }}>
@@ -319,44 +321,35 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     <p><b>Free Annual checkup</b></p>
                 </div>
                 {
-                    res.quotations.map((target, index) => (
+                    nik.map((target, index) => (
                         <div className="col-md-3" key={index} {...target}>
-                            <p>{target.vital_estimate}</p>
-                            <p>{target.vital_treatment}</p>
-                            <p>{target.vital_inclusions}</p>
-                            <p>{target.vital_exclusions}</p>
-                            <p>{target.vital_copay}</p>
-                            <p>{target.vital_anesthesia}</p>
-                            <p>{target.vital_room}</p>
-                            <p>{target.vital_length}</p>
-                            <p>{target.vital_free_upgrade}</p>
-                            <p>{target.vital_physiotherapy}</p>
-                            <p>{target.vital_pickup_drop}</p>
-                            <p>{target.vital_other_fees}</p>
-                            <p>{target.vital_annual}</p>
+                            {target.estimate_price ?
+                                
+                                <div>
+                            <p>{target.estimate_price}</p>
+                            <p>{target.treatment_plan}</p>
+                            <p>{target.inclusion}</p>
+                            <p>{target.exclusion}</p>
+                            <p>{target.estimate_copay}</p>
+                            <p>{target.type_of_anesthesia}</p>
+                            <p>{target.type_of_room}</p>
+                            <p>{target.free_room_upgrade}</p>
+                            <p>{target.free_physiotherapy}</p>
+                            <p>{target.pickup_and_drop}</p>
+                            <p>{target.free_other_speciality_consultant}</p>
+                            <p>{target.free_other_speciality_consultant}</p>
+                            <p>{target.free_other_speciality_consultant}</p>
+                            </div>
+
+                            :<div className="col-md-3">
+                                <p>AWAITING FOR QUOTATION</p>
+                            
+                        </div>
+}
+
                         </div>
                     ))}
-                {
-                    res.quotations.map((target, index) => (
-                        <div className="col-md-3" key={index} {...target}>
-                            <p>{target.meodor_estimate}</p>
-                            <p>{target.meodor_treatment}</p>
-                            <p>{target.meodor_inclusions}</p>
-                            <p>{target.meodor_exclusions}</p>
-                            <p>{target.meodor_copay}</p>
-                            <p>{target.meodor_anesthesia}</p>
-                            <p>{target.meodor_room}</p>
-                            <p>{target.meodor_length}</p>
-                            <p>{target.meodor_free_upgrade}</p>
-                            <p>{target.meodor_physiotherapy}</p>
-                            <p>{target.meodor_pickup_drop}</p>
-                            <p>{target.meodor_other_fees}</p>
-                            <p>{target.meodor_annual}</p>
-                        </div>
-                    ))}
-                <div className="col-md-3">
-                    AWAITING FOR QUOTATION
-                </div>
+               
             </div>
             <div>
                 <button style={{ width: "100%", marginBottom: 30 }} className="join_button">Forward to Patient</button>
