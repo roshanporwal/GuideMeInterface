@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import 'react-bootstrap';
-import InputField from '../components/input';
-import RadioField from '../components/radio';
-import File from '../components/file_input';
+
 import {validationSchema} from '../components/Validations/patientValidation';
+
 
 import { Form } from 'react-bootstrap';
 
-import  * as auth_service from "../services/auth_service";
+
+//import auth_service from "../services/auth_service";
 
 function PATIENT_FORM(props) {
-
+    const [validated, setValidated] = useState(false);
     const [formValues, setFormValue] = useState({
+        
         patient_name: "",
         patient_email: "",
         patient_referred_by: "",
@@ -24,9 +25,11 @@ function PATIENT_FORM(props) {
         current_diagnosis: "",
         insurance_card_copy: "",
         medical_history: "",
-        proposed_treatment_plan: "",
+        proposed_treatment_plan: [],
+        other_plan: "",
         transport_support_needed: "",
-        languages_spoken: "",
+        languages_spoken: [],
+        other_languages: "",
         food_preferences: "",
         accomodation: "",
         preferred_hospital_visit: "",
@@ -34,10 +37,12 @@ function PATIENT_FORM(props) {
         from_date: "",
         to_date: ""
     })
+    
+
     const [isSubmitting] = useState(false)
-    const [patient_document, setPatient_document] = useState()
-    const [patient_reports, setPatient_reports] = useState()
-    const [insurance_card_copy, setInsurance_card_copy] = useState()
+    const [patient_document] = useState()
+    const [patient_reports] = useState()
+    const [insurance_card_copy] = useState()
     const [proposed_treatment_plan, setProposed_treatment_plan] = useState([]);
     const [languages_spoken, setLanguages_spoken] = useState([]);
     const [errors, setErrors] = useState({});
@@ -57,8 +62,10 @@ function PATIENT_FORM(props) {
         insurance_card_copy: "",
         medical_history: "",
         proposed_treatment_plan: "",
+        other_plan: "",
         transport_support_needed: "",
         languages_spoken: "",
+        other_languages: "",
         food_preferences: "",
         accomodation: "",
         preferred_hospital_visit: "",
@@ -95,39 +102,45 @@ function PATIENT_FORM(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const form = event.currentTarget;
         const err = await validate(formValues);
-       /*  console.log(err) */
-        setErrors(err); 
-        let data=localStorage.getItem("login")
-        data= JSON.parse(data)
+        /*  console.log(err) */
+         setErrors(err); 
 
         const formData = new FormData();
         formValues.proposed_treatment_plan = proposed_treatment_plan;
-        formValues.languages_spoken = languages_spoken;
-        formValues.status="new";
+        formValues.languages_spoken = languages_spoken
       
         formData.append('patient_document', patient_document);
         formData.append('patient_reports', patient_reports);
         formData.append('insurance_card_copy', insurance_card_copy);
-        formData.append('formValues', JSON.stringify(formValues))
+        formData.append('values', JSON.stringify(formValues))
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
         
-        console.log(formValues)
+         console.log(formValues) 
+         setValidated(true);
 
 
         
 
-        const patient_form = await auth_service.enquries(data.login_id, formData)
-         console.log(patient_form)
+        /* const login = await auth_service.enquries(formData)
+         console.log(login)*/
     };
 
-    const handleChange = e => {
+     const handleChange = e => {
+       
         const { name, value } = e.currentTarget
         setFormValue(prevState => ({
             ...prevState,
             [name]: value
         }))
-    }
-    const onchange = e => {
+        const err = validate(formValues);
+        
+    } 
+    /* const onchange = e => {
         const { name } = e.currentTarget
 
         if (name === 'patient_document') {
@@ -138,7 +151,7 @@ function PATIENT_FORM(props) {
             setInsurance_card_copy(e.target.files[0])
         }
 
-    }
+    } */
 
     const validate = async (values) => {
         try {
@@ -158,473 +171,617 @@ function PATIENT_FORM(props) {
         <>
 
             <div className="patient_form_container">
-                <Form onSubmit={handleSubmit}>
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <div className="col-md-4">
+                     
                         <Form.Group>
-                        <InputField
-                        label="Patient Name"
-                        className ={`form-control ${formErrors.patient_name ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="patient_name" 
-                        id="patient_name" 
-                        isInvalid={!!errors.patient_name}
-                        value={formValues.patient_name}/>
+                        <Form.Label>Patient name</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem" }}
+                                type="text"
+                                name="patient_name"
+                                value={formValues.patient_name}
+                                onChange={handleChange}
+                                isValid={!errors.patient_name}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_name}</Form.Control.Feedback>
                         </Form.Group>
-                        <span style= {{color:"red"}}>{errors?.patient_name}</span>
-                        <div>
-                          <InputField
-                        label="Patient Email"
-                        className ={`form-control ${formErrors.patient_email ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="email" 
-                        name="patient_email" 
-                        id="patient_email" 
-                        value={formValues.patient_email}/>
-                        <span style= {{color:"red"}}>{errors?.patient_email}</span>
-                        </div>
-                        <div>
-                        <InputField
-                        label="Patient Referred by"
-                        className ={`form-control ${formErrors.patient_referred_by ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="patient_referred_by" 
-                        id="patient_referred_by" 
-                        value={formValues.patient_referred_by}/>
-                        <span style= {{color:"red"}}>{errors?.patient_referred_by}</span>
-                        </div>
-                        <div>
-                        <InputField
-                        label="Patient Mobile"
-                        className ={`form-control ${formErrors.patient_mobile ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="patient_mobile" 
-                        id="patient_mobile" 
-                        value={formValues.patient_mobile}/>
-                        <span style= {{color:"red"}}>{errors?.patient_mobile}</span>
-                        </div>
-                        <div>
-                        <InputField
-                        label="Patient Age"
-                        className ={`form-control ${formErrors.patient_age ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="patient_age" 
-                        id="patient_age" 
-                        value={formValues.patient_age}/>
-                        <span style= {{color:"red"}}>{errors?.patient_age}</span>
-                        </div>
+                       
+                        
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient email</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="email"
+                                name="patient_email"
+                                value={formValues.patient_email}
+                                onChange={handleChange}
+                                isValid={!errors.patient_email}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_email}</Form.Control.Feedback>
+                        </Form.Group>
+                        
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Preferred By</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="patient_referred_by"
+                                value={formValues.patient_referred_by}
+                                onChange={handleChange}
+                                isValid={!errors.patient_referred_by}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_referred_by}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Mobile</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="patient_mobile"
+                                value={formValues.patient_mobile}
+                                onChange={handleChange}
+                                isValid={!errors.patient_mobile}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_mobile}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Age</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="patient_age"
+                                value={formValues.patient_age}
+                                onChange={handleChange}
+                                isValid={!errors.patient_age}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_age}</Form.Control.Feedback>
+                        </Form.Group>
                         
                         
-                        
-                        <div className="invalid-feedback">{formErrors.patient_gender}</div>
-                        <div className="pt-4">
+                      
+                        <div style = {{marginTop: "4rem"}}>
                             <label>Patient Gender</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
-                            <RadioField
-                                style = {{paddingLeft: 4}}
-                                label="Male"
-                                className ={`form-check-input ${formErrors.patient_gender ? "is-invalid" : ""}`}
-                                onChange={handleChange} 
-                                type="radio" 
-                                name="patient_gender" 
-                                id="patient_gender" 
-                                value={"Male"}/>
-                            <RadioField
+                            <div className = "d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <Form.Check
+                                label = "Male"
+                                required
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="patient_gender"
+                                id = "male"
+                                value="male"
+                                onChange={handleChange}
+                                isValid={!errors.patient_gender}
+                            />
+                            <Form.Check
                                 label="Female"
-                                className ={`form-check-input ${formErrors.patient_gender ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="patient_gender" 
-                                id="patient_gender" 
-                                value={"Female"}/>
-                            <RadioField
+                                id="female" 
+                                value="female"
+                                isValid={!errors.patient_gender}
+                                />
+                                
+                            <Form.Check
                                 label="Neutral"
-                                className ={`form-check-input ${formErrors.patient_gender ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="patient_gender" 
-                                id="patient_gender" 
-                                value={"Neutral"}/>
+                                id="neutral" 
+                                value="neutral"
+                                isValid = {!errors.patient_gender}/>
                             </div>
-                            <span style= {{color:"red"}}>{errors?.patient_gender}</span>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.patient_gender}</Form.Control.Feedback>
                             <div className="invalid-feedback">{formErrors.patient_gender}</div>
                         </div>
-                        <div>
-                        <InputField
-                        label="Patient Nationality"
-                        className ={`form-control ${formErrors.patient_nationality ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="patient_nationality" 
-                        id="patient_nationality" 
-                        value={formValues.patient_nationality}/>
-                        <span style= {{color:"red"}}>{errors?.patient_nationality}</span>
-                        </div>
-                        <div>
-                        <File
-                        label="Identification Document"
-                        className ={`form-control ${formErrors.patient_document ? "is-invalid" : ""}`}
-                        onChange={onchange} 
-                        type="file" 
-                        name="patient_document" 
-                        id="patient_document" 
-                        />
-                        <span style= {{color:"red"}}>{errors?.patient_document}</span>
-                        </div>
-                        <div>
-                        <File
-                        label="Patient reports(including lab, diagnosis, and prescription)"
-                        className ={`form-control ${formErrors.patient_reports ? "is-invalid" : ""}`}
-                        onChange={onchange} 
-                        type="file" 
-                        name="patient_reports" 
-                        id="patient_reports" 
-                        />
-                        <div className="invalid-feedback">{formErrors.patient_reports}</div>
-                        <span style= {{color:"red"}}>{errors?.patient_reports}</span>
-                        </div>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Nationality</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="patient_nationality"
+                                value={formValues.patient_nationality}
+                                onChange={handleChange}
+                                isValid={!errors.patient_nationality}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_nationality}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Identification Document</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="file"
+                                name="patient_document"
+                                value={formValues.patient_document}
+                                onChange={handleChange}
+                                isValid={!errors.patient_document}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_document}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Reports</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="file"
+                                name="patient_reports"
+                                value={formValues.patient_reports}
+                                onChange={handleChange}
+                                isValid={!errors.patient_reports}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_reports}</Form.Control.Feedback>
+                        </Form.Group>
                         
                         
                     </div>
                     <div className="col-md-4">
-                    <div>
-                    <InputField
-                        label="Current Diagnosis"
-                        className ={`form-control ${formErrors.current_diagnosis ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="current_diagnosis" 
-                        id="current_diagnosis" 
-                        value={formValues.current_diagnosis}/>
-                        <span style= {{color:"red"}}>{errors?.current_diagnosis}</span>
-                    </div>
+                    <Form.Group>
+                        <Form.Label>Current Diagnosis</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="current_diagnosis"
+                                value={formValues.current_diagnosis}
+                                onChange={handleChange}
+                                isValid={!errors.current_diagnosis}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
+                        </Form.Group>
                         
-                        <div className="invalid-feedback">{formErrors.current_diagnosis}</div>
-                        <div>
-                        <File
-                        label="Insurance Card Copy"
-                        className ={`form-control ${formErrors.insurance_card_copy ? "is-invalid" : ""}`}
-                        onChange={onchange} 
-                        type="file" 
-                        name="insurance_card_copy" 
-                        id="insurance_card_copy" 
-                        />
-                        <span style= {{color:"red"}}>{errors?.insurance_card_copy}</span>
-                        </div>
-                        <div className="invalid-feedback">{formErrors.insurance_card_copy}</div>
-                        <div>
-                        <InputField
-                        label="Medical History and Co Morbidities (eg. Diabetes, Hypertension, Blood Pressure, Any Respiratory illness, Previous Surgeries/Procedures if any etc.)"
-                        className ={`form-control ${formErrors.medical_history ? "is-invalid" : ""}`}
-                        onChange={handleChange} 
-                        type="text" 
-                        name="medical_history" 
-                        id="medical_history" 
-                        value={formValues.medical_history}/>
-                        <span style= {{color:"red"}}>{errors?.medical_history}</span>
-                        </div>
-                        <div className="invalid-feedback">{formErrors.medical_history}</div>
-                        <div className="pt-4 " style = {{marginLeft: 15}}>
+                       
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Insurance Card Copy</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="file"
+                                name="insurance_card_copy"
+                                value={formValues.insurance_card_copy}
+                                onChange={handleChange}
+                                isValid={!errors.insurance_card_copy}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_card_copy}</Form.Control.Feedback>
+                        </Form.Group>
+                       
+                        
+                       
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Patient Medical History</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="medical_history"
+                                value={formValues.medical_history}
+                                onChange={handleChange}
+                                isValid={!errors.medical_history}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.medical_history}</Form.Control.Feedback>
+                        </Form.Group>
+                        
+                        <div className="pt-4 ">
                             <label>Proposed Treatment plan/requirement</label>
                             <div style = {{border: "2px solid #164473", borderRadius: 10}}>
-                                <div className="d-flex ml-4">
-                                <div className="form-check" style = {{marginLeft: 20}}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "surgical_consultation")} type="checkbox" name="proposed_treatment_plan" id="surgical_consultation" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Surgical Consultation
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ marginLeft: "40px" }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "admission")} type="checkbox" name="proposed_treatment_plan" id="admission" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label">
-                                        Admission
-                                    </label>
-                                </div>
+                            <div className="d-flex ml-4">
+                                <Form.Check
+                                label = "Surgical Consultation"
+                                required
+                                style={{ marginLeft: 20}}
+                                type="checkbox"
+                                name="proposed_treatment_Plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "surgical_consultation"
+                                onChange={() => checkBox("proposed_treatment_plan", "surgical_consultation")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
+                            <Form.Check
+                            label = "Admission"
+                                required
+                                style={{marginLeft: "40px"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "admission"
+                                onChange={() => checkBox("proposed_treatment_plan", "admission")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
                             </div>
-                            <div className="form-check pt-4" style = {{marginLeft: 20}}>
-                                <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "second_opinion_of_report")} type="checkbox" name="proposed_treatment_plan" id="second_opinion_of_report" value={formValues.proposed_treatment_plan} />
-                                <label className="form-check-label" >
-                                    Second Opinion of Consultation
-                                </label>
-                            </div>
-                            <div className="form-check pt-4" style = {{marginLeft: 20}}>
-                                <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "international_expert_opinion")} type="checkbox" name="proposed_treatment_plan" id="international_expert_opinion" value={formValues.proposed_treatment_plan} />
-                                <label className="form-check-label" >
-                                    International Expert Opinion
-                                </label>
-                            </div>
-                            <div className="d-flex pt-4">
-                                <div className="form-check" style = {{marginLeft: 20}}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "home_care_services")} type="checkbox" name="proposed_treatment_plan" id="home_care_services" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Home Care Services
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ marginLeft: "50px" }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "teleconsultation")} type="checkbox" name="proposed_treatment_plan" id="teleconsultation" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Teleconsultation
-                                    </label>
-                                </div>
+
+                            <Form.Check
+                                label = "Second Opinion of Consultation"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "second_opinion_of_consultation"
+                                onChange={() => checkBox("proposed_treatment_plan", "second_opinion_of_consultation")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
+                            <Form.Check
+                                label = "International Expert Opinion"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "international_expert_opinion"
+                                onChange={() => checkBox("proposed_treatment_plan", "international_expert_opinino")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
+                            <div className="d-flex" style = {{marginTop: "1rem"}}>
+                            <Form.Check
+                                label = "Home Care Services"
+                                required
+                                style={{marginLeft: "20px"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "home_care_services"
+                                onChange={() => checkBox("proposed_treatment_plan", "home_care_services")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
+                            <Form.Check
+                                label = "Teleconsultation"
+                                required
+                                style={{marginLeft: "50px"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "teleconsultation"
+                                onChange={() => checkBox("proposed_treatment_plan", "teleconsultation")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
                                 
                             </div>
-                            <div className="form-check pt-4" style = {{marginLeft: 20}}>
-                                <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`} onChange={() => checkBox("proposed_treatment_plan", "multiple_options")} type="checkbox" name="proposed_treatment_plan" id="multiple_options" value={formValues.proposed_treatment_plan} />
-                                <label className="form-check-label" >
-                                    Need Multiple Options to choose the best
-                                </label>
-                            </div>
-                            <label>Others</label>
-                            <input 
-                                    style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }}
-                                    className ={`form-control ${formErrors.proposed_treatment_plan ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="text" 
-                                    name="proposed_treatment_plan" 
-                                    id="proposed_treatment_plan" 
-                                    value={formValues.proposed_treatment_plan}/>
+                            <Form.Check
+                                label = "Need multiple options to choos e the best"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "multiple_options"
+                                onChange={() => checkBox("proposed_treatment_plan", "multiple_options")}
+                                isValid={!errors.proposed_treatment_plan}
+                            />
+                            
+                            <Form.Label>Others</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="other_plan"
+                                value={formValues.other_plan}
+                                onChange={handleChange}
+                                isValid={!errors.other_plan}
+                            />
                                    
                                
-                            <div className="invalid-feedback">{formErrors.proposed_treatment_plan}</div>
+                            
                         </div>
-                        <span style= {{color:"red"}}>{errors?.proposed_treatment_plan}</span>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.other_plan}</Form.Control.Feedback>
                               
-                            <div className="invalid-feedback">{formErrors.proposed_treatment_plan}</div>
+                          
 
                         </div>
                         <div className="pt-4">
                             <label>Transport Facility Needed</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
-                            <RadioField
-                                style = {{paddingLeft: 4}}
-                                label="Yes"
-                                className ={`form-check-input ${formErrors.transport_support_needed ? "is-invalid" : ""}`}
-                                onChange={handleChange} 
-                                type="radio" 
-                                name="transport_support_needed" 
-                                id="yes" 
-                                value={"Yes"}/>
-                                
-                            <RadioField
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <Form.Check
+                                label = "Yes"
+                                required
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="transport_support_needed"
+                                id = "yes"
+                                value="yes"
+                                onChange={handleChange}
+                                isValid={!errors.transport_support_needed}
+                            />
+                            <Form.Check
                                 label="No"
-                                className ={`form-check-input ${formErrors.transport_support_needed ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="transport_support_needed" 
                                 id="no" 
-                                value={"No"}/>
-                            <RadioField
+                                value="no"
+                                isValid={!errors.transport_support_needed}
+                                />
+                                
+                            <Form.Check
                                 label="Maybe"
-                                className ={`form-check-input ${formErrors.transport_support_needed ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="transport_support_needed" 
                                 id="maybe" 
-                                value={"Maybe"}/>
+                                value="maybe"
+                                isValid = {!errors.transport_support_needed}/>
+                            
                             </div>
-                            <span style= {{color:"red"}}>{errors?.transport_support_needed}</span>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.transport_support_needed}</Form.Control.Feedback>
                         </div>
                         
 
 
                     </div>
                     <div className="col-md-4">
-                        <div className="pt-4" style={{ border: "1px rgb(56, 56, 121)", marginLeft: 15 }}>
+                        <div className="" style={{ border: "1px rgb(56, 56, 121)" }}>
                             <label>Language Spoken</label>
                             <div  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <div className="d-flex">
-                                <div className="form-check" style = {{marginLeft: 20}}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "English")} type="checkbox" name="languages_spoken" id="english" value={formValues.languages_spoken} />
-                                    <label className="form-check-label" >
-                                        English
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 45 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Arabic")} type="checkbox" name="languages_spoken" id="arabic" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Arabic
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 60 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Hindi")} type="checkbox" name="languages_spoken" id="hindi" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Hindi
-                                    </label>
-                                </div>
+                            <Form.Check
+                                label = "English"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "english"
+                                onChange={() => checkBox("languages_spoken", "english")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "Arabic"
+                                required
+                                style={{marginLeft: "45px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "arabic"
+                                onChange={() => checkBox("languages_spoken", "arabic")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "Hindi"
+                                required
+                                style={{marginLeft: "60px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "hindi"
+                                onChange={() => checkBox("languages_spoken", "hindi")}
+                                isValid={!errors.languages_spoken}
+                            />
                             </div>
                             <div className="d-flex pt-4">
-                                <div className="form-check" style = {{marginLeft: 20}}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Urdu")} type="checkbox" name="languages_spoken" id="urdu" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Urdu
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 59 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Tagaloug")} type="checkbox" name="languages_spoken" id="tagaloug" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Tagaloug
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 41 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "French")} type="checkbox" name="languages_spoken" id="french" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        French
-                                    </label>
-                                </div>
+                            <Form.Check
+                                label = "Urdu"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "urdu"
+                                onChange={() => checkBox("languages_spoken", "urdu")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "Tagaloug"
+                                required
+                                style={{marginLeft: "59px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "tagaloug"
+                                onChange={() => checkBox("languages_spoken", "tagaloug")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "French"
+                                required
+                                style={{marginLeft: "41px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "french"
+                                onChange={() => checkBox("languages_spoken", "french")}
+                                isValid={!errors.languages_spoken}
+                            />
                             </div>
                             <div className="d-flex pt-4">
-                                <div className="form-check" style = {{marginLeft: 20}}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Afrikaans")} type="checkbox" name="languages_spoken" id="afrikaans" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Afrikaans
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 30 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Malayalam")} type="checkbox" name="languages_spoken" id="malayalam" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Malayalam
-                                    </label>
-                                </div>
-                                <div className="form-check" style={{ paddingLeft: 30 }}>
-                                    <input style={{ borderColor: "rgb(56, 56, 121)" }} className={`form-check-input ${formErrors.languages_spoken ? "is-invalid" : ""}`} onChange={() => checkBox("languages_spoken", "Bengali")} type="checkbox" name="languages_spoken" id="bengali" value={formValues.proposed_treatment_plan} />
-                                    <label className="form-check-label" >
-                                        Bengali
-                                    </label>
-                                </div>
+                            <Form.Check
+                                label = "Afrikaans"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "afrikaans"
+                                onChange={() => checkBox("languages_spoken", "afrikaans")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "Malayalam"
+                                required
+                                style={{marginLeft: "30px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "malayalam"
+                                onChange={() => checkBox("languages_spoken", "malayalam")}
+                                isValid={!errors.languages_spoken}
+                            />
+                                <Form.Check
+                                label = "Bengali"
+                                required
+                                style={{marginLeft: "30px", marginTop: "1rem"}}
+                                type="checkbox"
+                                name="languages_spoken"
+                                value={formValues.languages_spoken}
+                                id = "bengali"
+                                onChange={() => checkBox("languages_spoken", "bengali")}
+                                isValid={!errors.languages_spoken}
+                            />
                             </div>
-                            <label>Others</label>
-                            <input 
-                                    style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }}
+                            <Form.Label>Others</Form.Label>
+                            <Form.Control 
+                                    style={{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
                                     className ={`form-control ${formErrors.languages_spoken ? "is-invalid" : ""}`}
                                     onChange={handleChange} 
                                     type="text" 
-                                    name="languages_spoken" 
-                                    id="languages_spoken" 
-                                    value={formValues.languages_spoken}/>
+                                    name="other_languages" 
+                                    id="other_languages" 
+                                    value={formValues.other_languages}
+                                    isValid = {!errors.other_languages}
+                                    />
                             </div>
-                            <span style= {{color:"red"}}>{errors?.languages_spoken}</span>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.languages_spoken}</Form.Control.Feedback>
                             
                             <div className="invalid-feedback">{formErrors.languages_spoken}</div>
                         </div>
-                        <div>
-                        <InputField
-                                    label="Food Preferences(Veg, Non Veg, Any food allergies)"
-                                    className ={`form-control ${formErrors.food_preferences ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="text" 
-                                    name="food_preferences" 
-                                    id="food_preferences" 
-                                    value={formValues.food_preferences}/>
-                                    <span style= {{color:"red"}}>{errors?.food_preferences}</span>
-                                    </div>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Food Preferences</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="food_preferences"
+                                value={formValues.food_preferences}
+                                onChange={handleChange}
+                                isValid={!errors.food_preferences}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.food_preferences}</Form.Control.Feedback>
+                        </Form.Group>
 
                         <div className="invalid-feedback">{formErrors.food_preferences}</div>
-                        <div className="pt-4" style = {{marginLeft: 15}}>
+                        <div className="pt-4">
                             <label>Accomodation / Other Logistic Support Needed</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
-                            <RadioField
-                                style = {{paddingLeft: 4}}
-                                label="Yes"
-                                className ={`form-check-input ${formErrors.accomodation ? "is-invalid" : ""}`}
-                                onChange={handleChange} 
-                                type="radio" 
-                                name="accomodation" 
-                                id="yes" 
-                                value={"yes"}/>
-                               
-                            <RadioField
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <Form.Check
+                                label = "Yes"
+                                required
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="accomodation"
+                                id = "yes"
+                                value="yes"
+                                onChange={handleChange}
+                                isValid={!errors.accomodation}
+                            />
+                            <Form.Check
                                 label="No"
-                                className ={`form-check-input ${formErrors.accomodation ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="accomodation" 
                                 id="no" 
-                                value={"no"}/>
-                            <RadioField
+                                value="no"
+                                isValid={!errors.accomodation}
+                                />
+                                
+                            <Form.Check
                                 label="Maybe"
-                                className ={`form-check-input ${formErrors.accomodation ? "is-invalid" : ""}`}
+                                style = {{paddingLeft: "10rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="accomodation" 
                                 id="maybe" 
-                                value={"maybe"}/>
-                            </div>
-                            <span style= {{color:"red"}}>{errors?.accomodation}</span>
+                                value="maybe"
+                                isValid = {!errors.accomodation}/>                            
+                                </div>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.accomodation}</Form.Control.Feedback>
                         </div>
                         
-                        <label style = {{marginTop: 5, marginLeft: 15}}>Preferred Hospital Visit Type</label>
-                        <div className="pt-4"  style = {{marginLeft: 15, border: "2px solid #164473", borderRadius: 10}}>
+                        <label style = {{marginTop: 5}}>Preferred Hospital Visit Type</label>
+                        <div className="pt-4"  style = {{ border: "2px solid #164473", borderRadius: 10}}>
                            
 
-                            <div className="form-check" style = {{marginLeft: 20}}>
-                                <input style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }} className={`form-check-input ${formErrors.preferred_hospital_visit ? "is-invalid" : ""}`} onChange={handleChange  } type="radio" name="preferred_hospital_visit" id="one_visit" value= "one_visit" />
-                                <label className="form-check-label" >
-                                    One Visit - All Services
-                                </label>
-                            </div>
-                            <div className="form-check" style = {{marginLeft: 20}}>
-                                <input style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }} className={`form-check-input ${formErrors.preferred_hospital_visit ? "is-invalid" : ""}`} onChange={handleChange  } type="radio" name="preferred_hospital_visit" id="multiple_visit" value= "multiple_visit" />
-                                <label className="form-check-label" >
-                                    Multiple Visit - but  minimal waiting
-                                </label>
-                            </div>
-                            <label>Others</label>
-                            <input 
-                                    style={{ borderColor: "rgb(56, 56, 121)", borderRadius: 10 }}
-                                    className ={`form-control ${formErrors.preferred_hospital_visit ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="text" 
-                                    name="preferred_hospital_visit" 
-                                    id="preferred_hospital_visit" 
-                                    value={formValues.preferred_hospital_visit}/>
+                            <Form.Check
+                                label="One Visit - All Services"
+                                style = {{paddingLeft: "5rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="preferred_hospital_visit" 
+                                id="one_visit" 
+                                value="one_visit"
+                                isValid={!errors.preferred_hospital_visit}
+                                />
+                            <Form.Check
+                                label="Multiple Visit - But Minimal Waiting"
+                                style = {{paddingLeft: "5rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="preferred_hospital_visit" 
+                                id="multiple_visit" 
+                                value="multiple_visit"
+                                isValid={!errors.preferred_hospital_visit}
+                                />
+                            <Form.Label>Others</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="text"
+                                name="preferred_hospital_visit"
+                                value={formValues.preferred_hospital_visit}
+                                onChange={handleChange}
+                                isValid={!errors.preferred_hospital_visit}
+                            />
                                      
-                            <div className="invalid-feedback">{formErrors.preferred_hospital_visit}</div>
+                           
                             
                         </div>
-                        <span style= {{color:"red"}}>{errors?.preferred_hospital_visit}</span>
-                        <div>
-                        <InputField
-                                    label="Proposal Date to awail the services"
-                                    className ={`form-control ${formErrors.proposal_date ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="date" 
-                                    name="proposal_date" 
-                                    id="proposal_date" 
-                                    value={formValues.proposal_date}/>
-                        <div className="invalid-feedback">{formErrors.proposal_date}</div>
-                        <span style= {{color:"red"}}>{errors?.proposal_date}</span>
-                        </div>
-                        <div>
-                        <InputField
-                                    label="Planned Duration of trip from"
-                                    className ={`form-control ${formErrors.from_date ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="date" 
-                                    name="from_date" 
-                                    id="from_date" 
-                                    value={formValues.from_date}/>
-                                     <span style= {{color:"red"}}>{errors?.from_date}</span>
-                                     </div>
-                        <div className="invalid-feedback">{formErrors.from_date}</div>
-                        <div>
-                        <InputField
-                                    label="Planned Duration of trip to"
-                                    className ={`form-control ${formErrors.to_date ? "is-invalid" : ""}`}
-                                    onChange={handleChange} 
-                                    type="date" 
-                                    name="to_date" 
-                                    id="to_date" 
-                                    value={formValues.to_date}/>
-                                     <span style= {{color:"red"}}>{errors?.to_date}</span>
-                                     </div>
-                        <div className="invalid-feedback">{formErrors.to_date}</div>
+                        <Form.Control.Feedback style= {{color:"red"}}>{errors?.preferred_hospital_visit}</Form.Control.Feedback>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Proposed Date to awail the services</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="date"
+                                name="proposal_date"
+                                value={formValues.proposal_date}
+                                onChange={handleChange}
+                                isValid={!errors.proposal_date}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.proposal_date}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Planned Duration of the trip from</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="date"
+                                name="from_date"
+                                value={formValues.from_date}
+                                onChange={handleChange}
+                                isValid={!errors.from_date}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.from_date}</Form.Control.Feedback>
+                        </Form.Group>
+                       
+                        <Form.Group style = {{marginTop: "2rem"}}>
+                        <Form.Label>Planned Duration of the trip to</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                type="date"
+                                name="to_date"
+                                value={formValues.to_date}
+                                onChange={handleChange}
+                                isValid={!errors.to_date}
+                            />
+                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.to_date}</Form.Control.Feedback>
+                        </Form.Group>
 
 
                     </div>
-                    <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                    <div className = "patient_button_div">
+                    <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                    </div>
                 </Form>
             </div>
         </>
