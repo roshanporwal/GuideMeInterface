@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState,useEffect }from 'react';
 import 'font-awesome/css/font-awesome.min.css';
+import * as auth_service from "../services/auth_service";
 
 const res = {
     "medstar":[
@@ -68,6 +69,28 @@ const res = {
 }
 
 function HOSPITAL_PROFILE(){
+    const [hospitals, setHospitals] = useState([])
+    useEffect(() => {
+       
+        fetchData();
+      }, []);
+
+
+    async function fetchData(props) {
+
+        //  const getenquries = await auth_service.getenquries()
+        // setEnquries(getenquries.payload)
+        console.log(props)
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        const getenquries = await auth_service.gethospitals(data.login_id)
+        console.log(getenquries.payload)
+        setHospitals(getenquries.payload)
+        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
+       
+        console.log(getenquries1.payload)*/
+
+    }
     
         return(
             <>
