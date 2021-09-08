@@ -20,6 +20,10 @@ function updateenquries(_id,data,login_id) {
   const req = instance.post(`/enquries/${login_id}/addhospitals?_id=${_id}`, data);
   return req
 }
+function getenquriesbyid(_id) {
+  const req = instance.get(`/sendmail/get?_id=${_id}`);
+  return req
+}
 function getdoctorbyhospital(_id,login_id) {
   const req = instance.get(`/doctor/${login_id}/forhospital?hospital_id=${_id}`);
   return req
@@ -50,5 +54,11 @@ function sendquote(enquries_id,login_id,id,data) {
   return req
 }
 
-export  {login,enquries,getenquries,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
+function sendmail(login_id,data) {
+  
+  const req = instance.post(`/sendmail/send`,data);
+  return req
+}
+
+export  {login,enquries,sendmail,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
 

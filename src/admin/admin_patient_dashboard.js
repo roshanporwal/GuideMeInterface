@@ -161,12 +161,13 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
      
        }; */
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
+        if(event==="before"){
         console.log(selected.length)
         if(selected.length>3){
-           return alert("pls select only 3 hospitals")
+           return alert(" Patient details can be shared only with three Hospitals.")
         }else{
             const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
             if(getenquries.payload){
@@ -175,6 +176,23 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             }
     console.log(getenquries.payload)
         }
+    }else{
+        console.log(enqurie_data[0])
+        const url={
+            url:"http://e57a-103-217-84-134.ngrok.io/patient_view?id="+enqurie_data[0]._id,
+            email:enqurie_data[0].patient_email   
+        }
+        console.log(url)
+        const getenquries = await auth_service.sendmail( data.login_id,url)
+        
+        console.log(getenquries)
+            if(getenquries.payload){
+                alert(getenquries.payload)
+                console.log(getenquries)
+                
+
+            }
+    }
         //const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
        // console.log(getenquries.payload)
 
@@ -299,14 +317,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         ))}
                         { show_quota ? null:
                             <div className="pt-5 pb-5">
-                        <label>Select Hospital</label>
+                        <label>Select Hospital(Please Select any 3)</label>
                         <MultiSelect
                             options={hospitals}
                             value={selected}
                             onChange={setSelected}
                             labelledBy="Select"
                         />
-                        <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={handleSubmit}>{"Submit"}</button>
+                        <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={()=>handleSubmit("before")}>{"Submit"}</button>
                     </div>}
                 </div>
             </div>
@@ -374,7 +392,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                
             </div>
             <div>
-                <button style={{ width: "100%", marginBottom: 30 }} className="join_button">Forward to Patient</button>
+                <button style={{ width: "100%", marginBottom: 30 }} className="join_button" onClick={()=>handleSubmit("after")}>Forward to Patient</button>
             </div>
             </div>:null}
 
