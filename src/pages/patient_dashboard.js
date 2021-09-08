@@ -91,8 +91,7 @@ function PATIENT_DASHBOARD(props) {
 
 
     const [validated, setValidated] = useState(false)
-    const [formValues, setFormValue] = useState({
-        
+    const [formValues, setFormValue] = useState({  
         select_doctor: "",
         select_anesthesiologist: "",
         treatment_plan: "",
@@ -118,39 +117,15 @@ function PATIENT_DASHBOARD(props) {
         })
         
     
-       const [select_doctor, setSelect_doctor] = useState([]);
+    const [select_doctor, setSelect_doctor] = useState([]);
     const [select_anesthesiologist, setSelect_anesthesiologist] = useState([]);
     const [enqurie_data, setEnqurie_data] = useState([])
     const [errors, setErrors] = useState({});
     const [doctor, setDoctor] = useState([])
     const [free_annual_checkup, setFree_annual_checkup] = useState([])
     const [sendquote, setSendquote] = useState(true)
+    const [sendquotebutton, setSendquotebutton] = useState(true)
 
-
-
-    /*const [formErrors/* , setFormErrors ] = useState({
-        select_doctor: "",
-        select_anesthesiologist: "",
-        treatment_plan: "",
-        estimate_price: "",
-        inclusion: "",
-        exclusion: "",
-        expected_length: "",
-        estimate_copay: "",
-        type_of_room: "",
-        free_room_upgrade: "",
-        free_physiotherapy: "",
-        free_other_speciality_consultant: "",
-        free_telephonic_feedback: "",
-        free_annual_checkup: "",
-        pickup_and_drop: "",
-        free_patient_dedicated_relationship: "",
-        benefits_for_patient: "",
-        benefits_for_attendent: "",
-        food_menu: "",
-        confirmation: "",
-        general_disclaimer: "",
-    })*/
      useEffect(() => {
 
         fetchData(props);
@@ -165,12 +140,17 @@ function PATIENT_DASHBOARD(props) {
         setEnqurie_data([props.location.state])
 
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
-        setDoctor(getdoctor.payload)
-        console.log( props.location.state.hospitals.find(item => item.hospital_id === data._id)) 
+        setDoctor(getdoctor.payload) 
          const hospital_data =props.location.state.hospitals.find(item => item.hospital_id === data._id)
          if(hospital_data!=null){
-             setFormValue(hospital_data)
+            
              let ahospital_data=hospital_data.select_doctor?setSelect_doctor(hospital_data.select_doctor):null;
+             await  ahospital_data;
+              ahospital_data=hospital_data.select_doctor?setSendquote(false):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.select_doctor? setFormValue(hospital_data):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.select_doctor?setSendquotebutton(false):null;
              await  ahospital_data;
              ahospital_data=hospital_data.free_annual_checkup?setFree_annual_checkup(hospital_data.free_annual_checkup):null;
              await  ahospital_data;
@@ -211,7 +191,8 @@ function PATIENT_DASHBOARD(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        let data = localStorage.getItem("login")
+        console.log(formValues)
+       /* let data = localStorage.getItem("login")
         data = JSON.parse(data)
         console.log("data", data)
         const err = await validate(formValues);
@@ -225,17 +206,32 @@ function PATIENT_DASHBOARD(props) {
         formValues.free_annual_checkup=free_annual_checkup;
         formValues.status = "Done"
 
-        /* formData.append('treatment_plan', treatment_plan);
-         formData.append('estimate_price', estimate_price);
-         formData.append('formValues', JSON.stringify(formValues))*/
 
         console.log("formValues",formValues)
         setValidated(true);
 
          const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
         if(formsubmit.payload){
-            setSendquote(true)
-        }
+            const getenquries = await auth_service.getenquriesbyid(enqurie_data[0]._id)
+            console.log(getenquries.payload)
+            setEnqurie_data(getenquries.payload)
+            const hospital_data =getenquries.payload[0].hospitals.find(item => item.hospital_id === data._id)
+         if(hospital_data!=null){
+             setFormValue(hospital_data)
+             let ahospital_data=hospital_data.select_doctor?setSelect_doctor(hospital_data.select_doctor):null;
+             await  ahospital_data;
+              ahospital_data=hospital_data.select_doctor?setSendquote(false):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.select_doctor?setSendquotebutton(false):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.free_annual_checkup?setFree_annual_checkup(hospital_data.free_annual_checkup):null;
+             await  ahospital_data;
+             ahospital_data=hospital_data.select_anesthesiologist?setSelect_anesthesiologist(hospital_data.select_anesthesiologist):null;
+             await  ahospital_data;
+         }
+        
+           
+        }*/
     };
 
     const handleChange = e => {
@@ -910,9 +906,13 @@ function PATIENT_DASHBOARD(props) {
                                 </Form.Group>
 
                         </Form>
+                        {
+                         sendquotebutton?
+                        
                         <div style={{ marginLeft: "40%", marginTop: "3%", marginBottom: "4%" }}>
                         <button className="join_button" type="submit" onClick={handleSubmit}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
-                    </div>
+                    </div>:null
+}
                     </div>
 }
 

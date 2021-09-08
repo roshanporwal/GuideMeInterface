@@ -12,7 +12,6 @@ import ADMIN_HOSPITAL_DASHBOARD from './admin/admin_hospital_dashboard';
 import ADMIN_HOSPITAL_PROFILE from './admin/admin_hospital_profile';
 import ADMIN_PATIENT_DASHBOARD from './admin/admin_patient_dashboard';
 import ADMIN_Home from './admin/admin_home.js';
-import patient_view from './admin/patient_view'
 
 
 import './App.css';
@@ -36,7 +35,6 @@ class  App extends Component {
         <Route path='/ADMIN_HOSPITAL_PROFILE' component={ADMIN_HOSPITAL_PROFILE} />
         <Route path='/ADMIN_PATIENT_DASHBOARD' component={ADMIN_PATIENT_DASHBOARD} />
         <Route path='/admin' component={ADMIN_Home} />
-        <Route path='/patient_view' component={patient_view} />
       </Switch>
       
     </Router>

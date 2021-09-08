@@ -32,6 +32,10 @@ function gethospitals(login_id) {
   const req = instance.get(`/hospital/${login_id}`);
   return req
 }
+function gethospitalsall(login_id) {
+  const req = instance.get(`/hospital/${login_id}/alldata`);
+  return req
+}
 
 function getenquries(login_id) {
   const req = instance.get(`/enquries/${login_id}`);
@@ -60,5 +64,5 @@ function sendmail(login_id,data) {
   return req
 }
 
-export  {login,enquries,sendmail,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
+export  {login,enquries,sendmail,gethospitalsall,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
 

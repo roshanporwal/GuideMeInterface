@@ -1,4 +1,4 @@
-import React, {useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
@@ -111,105 +111,74 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
     const [hopital_enq, setHopital_enq] = useState([]);
-    const [show_quota, setShow_quota] = useState(false); 
+    const [show_quota, setShow_quota] = useState(false);
     useEffect(() => {
-       
+
         fetchData(props);
-      }, [props]);
+    }, [props]);
 
 
     async function fetchData(props) {
 
-        //  const getenquries = await auth_service.getenquries()
-        // setEnquries(getenquries.payload)
+
         console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         setEnqurie_data([props.location.state])
-        const enq=props.location.state.hospitals
+        const enq = props.location.state.hospitals
+        console.log(enq)
         setHopital_enq(enq)
-        if(enq.length !== 0){
+        if (enq.length !== 0) {
             setShow_quota(true)
 
         }
         const getenquries = await auth_service.gethospitals(data.login_id)
         console.log(getenquries)
         setHospitals(getenquries.payload)
-        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
-       
-        console.log(getenquries1.payload)*/
+
 
     }
-    /* const handleSubmit = event => {
-         event.preventDefault();
-         this.setState({ isSubmitting: true });
-         const { formValues, formValidity } = this.state;
-         if (Object.values(formValidity).every(Boolean)) {
-           alert("Form is validated! Submitting the form...");
-           this.setState({ isSubmitting: false });
-         } else {
-           for (let key in formValues) {
-             let target = {
-               name: key,
-               value: formValues[key]
-             };
-             this.handleValidation(target);
-           }
-           this.setState({ isSubmitting: false });
-         }
-         console.log({formValues});
-     
-       }; */
+
     const handleSubmit = async (event) => {
         //event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        if(event==="before"){
-        console.log(selected.length)
-        if(selected.length>3){
-           return alert(" Patient details can be shared only with three Hospitals.")
-        }else{
-            const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
-            if(getenquries.payload){
-                setShow_quota(true)
+        if (event === "before") {
+            console.log(selected.length)
+            if (selected.length > 3) {
+                return alert(" Patient details can be shared only with three Hospitals.")
+            } else {
+                const updateenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
+                if (updateenquries.payload) {
+
+                    const getenquries = await auth_service.getenquriesbyid(enqurie_data[0]._id)
+                    setEnqurie_data(getenquries.payload)
+                    setHopital_enq(getenquries.payload[0].hospitals)
+                    setShow_quota(true)
+
+                }
 
             }
-    console.log(getenquries.payload)
-        }
-    }else{
-        console.log(enqurie_data[0])
-        const url={
-            url:"http://e57a-103-217-84-134.ngrok.io/patient_view?id="+enqurie_data[0]._id,
-            email:enqurie_data[0].patient_email   
-        }
-        console.log(url)
-        const getenquries = await auth_service.sendmail( data.login_id,url)
-        
-        console.log(getenquries)
-            if(getenquries.payload){
+        } else {
+            console.log(enqurie_data[0])
+            const url = {
+                url: "http://e57a-103-217-84-134.ngrok.io/patient_view?id=" + enqurie_data[0]._id,
+                email: enqurie_data[0].patient_email
+            }
+            console.log(url)
+            const getenquries = await auth_service.sendmail(data.login_id, url)
+
+            console.log(getenquries)
+            if (getenquries.payload) {
                 alert(getenquries.payload)
                 console.log(getenquries)
-                
+
 
             }
-    }
-        //const getenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
-       // console.log(getenquries.payload)
+        }
 
-       /*  const login = await auth_service.enquries(formData)
-         console.log(login)*/
     };
 
-
-    /*function checkBox(value) {
-
-        console.log(value)
-        if (selecthospital.find(item => item === value)) {
-            setSelecthospital(selecthospital.filter(item => item !== value));
-        } else {
-            setSelecthospital(prevArray => [...prevArray, value]);
-        }
-    }*/
 
 
 
@@ -315,86 +284,86 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 </div>
                             </div>
                         ))}
-                        { show_quota ? null:
-                            <div className="pt-5 pb-5">
-                        <label>Select Hospital(Please Select any 3)</label>
-                        <MultiSelect
-                            options={hospitals}
-                            value={selected}
-                            onChange={setSelected}
-                            labelledBy="Select"
-                        />
-                        <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={()=>handleSubmit("before")}>{"Submit"}</button>
-                    </div>}
+                    {show_quota ? null :
+                        <div className="pt-5 pb-5">
+                            <label>Select Hospital(Please Select any 3)</label>
+                            <MultiSelect
+                                options={hospitals}
+                                value={selected}
+                                onChange={setSelected}
+                                labelledBy="Select"
+                            />
+                            <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={() => handleSubmit("before")}>{"Submit"}</button>
+                        </div>}
                 </div>
             </div>
-            {show_quota?
-            <div>
-            <div className="col-md-12" style={{ marginTop: 20 }}>
-                
-                <div className="col-md-3">
+            {show_quota ?
+                <div>
+                    <div className="col-md-12" style={{ marginTop: 20 }}>
 
-                </div>
-                {
-                    hopital_enq.map((target, index) => (
-                <div className="col-md-3" key={index} {...target}>
-                    <p><b>{target.hospital_name}</b></p>
-                </div>
-               
-                 ))}
-                
-            </div>
-            <div className="col-md-12" >
-                <div className="col-md-3" style={{ textAlign: "center" }}>
-                    <p><b>Estimate Price</b></p>
-                    <p><b>Treatment Plan</b></p>
-                    <p><b>Inclusions</b></p>
-                    <p><b>Exclusions</b></p>
-                    <p><b>Copay Required</b></p>
-                    <p><b>Types of Anesthesia</b></p>
-                    <p><b>Type of room</b></p>
-                    <p><b>Length of stay</b></p>
-                    <p><b>Free room upgrade</b></p>
-                    <p><b>Free Physiotherapy</b></p>
-                    <p><b>Pickup and drop</b></p>
-                    <p><b>Other free consultation</b></p>
-                    <p><b>Free Annual checkup</b></p>
-                </div>
-                {
-                    hopital_enq.map((target, index) => (
-                        <div className="col-md-3" key={index} {...target}>
-                            {target.estimate_price ?
-                                
-                                <div>
-                            <p>{target.estimate_price}</p>
-                            <p>{target.treatment_plan}</p>
-                            <p>{target.inclusion}</p>
-                            <p>{target.exclusion}</p>
-                            <p>{target.estimate_copay}</p>
-                            <p>{target.type_of_anesthesia}</p>
-                            <p>{target.type_of_room}</p>
-                            <p>{target.free_room_upgrade}</p>
-                            <p>{target.free_physiotherapy}</p>
-                            <p>{target.pickup_and_drop}</p>
-                            <p>{target.free_other_speciality_consultant}</p>
-                            <p>{target.free_other_speciality_consultant}</p>
-                            <p>{target.free_other_speciality_consultant}</p>
-                            </div>
-
-                            :<div className="col-md-3">
-                                <p>AWAITING FOR QUOTATION</p>
-                            
-                        </div>
-}
+                        <div className="col-md-3">
 
                         </div>
-                    ))}
-               
-            </div>
-            <div>
-                <button style={{ width: "100%", marginBottom: 30 }} className="join_button" onClick={()=>handleSubmit("after")}>Forward to Patient</button>
-            </div>
-            </div>:null}
+                        {
+                            hopital_enq.map((target, index) => (
+                                <div className="col-md-3" key={index} {...target}>
+                                    <p><b>{target.hospital_name}</b></p>
+                                </div>
+
+                            ))}
+
+                    </div>
+                    <div className="col-md-12" >
+                        <div className="col-md-3" style={{ textAlign: "center" }}>
+                            <p><b>Estimate Price</b></p>
+                            <p><b>Treatment Plan</b></p>
+                            <p><b>Inclusions</b></p>
+                            <p><b>Exclusions</b></p>
+                            <p><b>Copay Required</b></p>
+                            <p><b>Types of Anesthesia</b></p>
+                            <p><b>Type of room</b></p>
+                            <p><b>Length of stay</b></p>
+                            <p><b>Free room upgrade</b></p>
+                            <p><b>Free Physiotherapy</b></p>
+                            <p><b>Pickup and drop</b></p>
+                            <p><b>Other free consultation</b></p>
+                            <p><b>Free Annual checkup</b></p>
+                        </div>
+                        {
+                            hopital_enq.map((target, index) => (
+                                <div className="col-md-3" key={index} {...target}>
+                                    {target.estimate_price ?
+
+                                        <div>
+                                            <p>{target.estimate_price}</p>
+                                            <p>{target.treatment_plan}</p>
+                                            <p>{target.inclusion}</p>
+                                            <p>{target.exclusion}</p>
+                                            <p>{target.estimate_copay}</p>
+                                            <p>{target.type_of_anesthesia}</p>
+                                            <p>{target.type_of_room}</p>
+                                            <p>{target.free_room_upgrade}</p>
+                                            <p>{target.free_physiotherapy}</p>
+                                            <p>{target.pickup_and_drop}</p>
+                                            <p>{target.free_other_speciality_consultant}</p>
+                                            <p>{target.free_other_speciality_consultant}</p>
+                                            <p>{target.free_other_speciality_consultant}</p>
+                                        </div>
+
+                                        : <div className="col-md-3">
+                                            <p>AWAITING FOR QUOTATION</p>
+
+                                        </div>
+                                    }
+
+                                </div>
+                            ))}
+
+                    </div>
+                    <div>
+                        <button style={{ width: "100%", marginBottom: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
+                    </div>
+                </div> : null}
 
 
 
