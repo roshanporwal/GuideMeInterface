@@ -150,7 +150,6 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             } else {
                 const updateenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
                 if (updateenquries.payload) {
-
                     const getenquries = await auth_service.getenquriesbyid(enqurie_data[0]._id)
                     setEnqurie_data(getenquries.payload)
                     setHopital_enq(getenquries.payload[0].hospitals)
@@ -162,8 +161,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         } else {
             console.log(enqurie_data[0])
             const url = {
-                url: "http://e57a-103-217-84-134.ngrok.io/patient_view?id=" + enqurie_data[0]._id,
-                email: enqurie_data[0].patient_email
+                url: "http://localhost:3000/patient_view?id=" + enqurie_data[0]._id,
+                email: enqurie_data[0].patient_email,
+                enq_id:enqurie_data[0]._id
             }
             console.log(url)
             const getenquries = await auth_service.sendmail(data.login_id, url)
@@ -178,6 +178,23 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         }
 
     };
+
+    async function wonandloss(id) {
+
+
+        console.log(props)
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        
+        const wonandloss = await auth_service.wonandloss(enqurie_data[0]._id,data.login_id,id)
+        console.log(wonandloss)
+        if(wonandloss.payload){
+            alert("update successful")
+        }
+       
+
+
+    }
 
 
 
@@ -348,6 +365,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>{target.free_other_speciality_consultant}</p>
                                             <p>{target.free_other_speciality_consultant}</p>
                                             <p>{target.free_other_speciality_consultant}</p>
+                                            {enqurie_data[0].status==="Awaiting From Patients"?
+                                            <button onClick={()=>wonandloss(target.hospital_id)}>won</button>:null
+                                    }
                                         </div>
 
                                         : <div className="col-md-3">
@@ -355,14 +375,17 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                                         </div>
                                     }
-
+                                   
+                                
                                 </div>
+                                
                             ))}
 
                     </div>
+                    {enqurie_data[0].status!=="Awaiting From Patients"?
                     <div>
                         <button style={{ width: "100%", marginBottom: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
-                    </div>
+                    </div>:null}
                 </div> : null}
 
 

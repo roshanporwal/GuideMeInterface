@@ -36,7 +36,10 @@ function gethospitalsall(login_id) {
   const req = instance.get(`/hospital/${login_id}/alldata`);
   return req
 }
-
+function uploadexcelfile(data) {
+  const req = instance.post(`/upladfile`,data);
+  return req
+}
 function getenquries(login_id) {
   const req = instance.get(`/enquries/${login_id}`);
   return req
@@ -58,11 +61,17 @@ function sendquote(enquries_id,login_id,id,data) {
   return req
 }
 
+function wonandloss(enquries_id,login_id,hospital_id) {
+  
+  const req = instance.get(`/enquries/${login_id}/hospital/wonandloss?hospital_id=${hospital_id}&enquries_id=${enquries_id}`);
+  return req
+}
+
 function sendmail(login_id,data) {
   
   const req = instance.post(`/sendmail/send`,data);
   return req
 }
 
-export  {login,enquries,sendmail,gethospitalsall,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
+export  {login,enquries,sendmail,gethospitalsall,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
 

@@ -243,7 +243,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                     <td>{target.from_date}</td>
                                     <td>{target.to_date}</td>
                                     <td>-</td>
-                                    <td>New</td>
+                                    <td>{target.status}</td>
                                 </tr>
                             ))}
                     </tbody>

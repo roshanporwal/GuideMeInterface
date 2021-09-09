@@ -192,7 +192,7 @@ function PATIENT_DASHBOARD(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formValues)
-       /* let data = localStorage.getItem("login")
+        let data = localStorage.getItem("login")
         data = JSON.parse(data)
         console.log("data", data)
         const err = await validate(formValues);
@@ -204,7 +204,7 @@ function PATIENT_DASHBOARD(props) {
         formValues.select_doctor = select_doctor;
         formValues.select_anesthesiologist = select_anesthesiologist;
         formValues.free_annual_checkup=free_annual_checkup;
-        formValues.status = "Done"
+        formValues.status = "Awaiting From Patients"
 
 
         console.log("formValues",formValues)
@@ -228,10 +228,11 @@ function PATIENT_DASHBOARD(props) {
              await  ahospital_data;
              ahospital_data=hospital_data.select_anesthesiologist?setSelect_anesthesiologist(hospital_data.select_anesthesiologist):null;
              await  ahospital_data;
+             alert("sended successful")
          }
         
            
-        }*/
+        }
     };
 
     const handleChange = e => {

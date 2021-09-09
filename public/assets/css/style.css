@@ -208,16 +208,11 @@
     }
 
     
-    .column_small{
-       
-        position: absolute;
-    }
+   .column_big{
+       margin-left: 10%;
+   }
 
-    .column_big{
-        margin-top: 600px;
-        position: absolute;
-        width: 30rem;
-    }
+   
 
     .medical_history{
         margin-top: 400px;
@@ -329,7 +324,7 @@
     margin-left: 10%;
     margin-top: 10%;
     
-    width: 24rem;
+    
     background: #f2f2f2;
     border-radius: 20px;
     cursor: pointer;
@@ -345,14 +340,14 @@
 .patient_details{
     margin-left: 5%;
     margin-top: 10%;
-    margin-bottom: 10%;
+    padding-bottom: 10%;
 }
 
 .container_patient_preferences{
     margin-left: 10%;
     margin-top: 5%;
     
-    width: 24rem;
+    
     background: #164473;
     border-radius: 20px;
     cursor: pointer;
@@ -365,6 +360,7 @@
     margin-left: 5%;
     margin-top: 10%;
     text-align: center;
+    padding-bottom: 10%;
 }
 
 .medical_history_title{
@@ -388,7 +384,7 @@
     
     margin-top: 5%;
     
-    width: 100rem;
+   
     background: #164473;
     border-radius: 20px;
     cursor: pointer;
@@ -585,10 +581,10 @@ tbody{
 }
 
 .medstar_container{
-    margin-left: 10%;
+    
     margin-top: 10%;
     height: 40rem;
-    width: 30rem;
+    
     background: #f2f2f2;
     border-radius: 5px;
     cursor: pointer;
@@ -598,7 +594,7 @@ tbody{
 .medstar_image{
     height: 100px;
     width: 100px;
-    margin-left: 30%;
+    margin-left: 35%;
     margin-top: 5%;
 }
 
@@ -632,7 +628,7 @@ tbody{
 .add_hospital_button{
     background: white;
     height: 50px;
-    width: 80px;
+    width: 160px;
     
     border-radius: 15px;
 }
@@ -646,16 +642,16 @@ tbody{
 .hospital_list_container{
     height: 10rem;
     
-    background: #f2f2f2;
+    background: white;
     border-radius: 20px;
     cursor: pointer;
-    box-shadow: 0 0 20px 8px #d0d0d0; 
-    margin-top: 9%;
+   
+    margin-top: 5%;
 }
 
 .hospital_image{
-    height: 70px;
-    width: 70px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     margin-left: 5px;
     margin-top: 15px; 
@@ -663,26 +659,42 @@ tbody{
 }
 
 .hospital_services_container{
-    margin-top: 7%;
+    margin-top: 10%;
     height: 40rem;
     width: 50rem;
     background: #f2f2f2;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0;  
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .hospital_photos_container{
     margin-top: 7%;
     height: 40rem;
-    width: 50rem;
+    
     background: #f2f2f2;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0; 
-    margin-left: 40px;
+    overflow: hidden;
+    overflow-y: scroll;
+    
 }
 
+.photos{
+    width: 38rem;
+   
+    border-radius: 15px;
+}
+
+.hospital_photos_inner{
+    padding: 10px 10px 15px 15px;
+    width: 10rem;
+    border-radius: 15%;
+    
+}
 .hospital_photos{
     height: 100px;
     width: 100px;
@@ -695,11 +707,23 @@ tbody{
     border: 1px solid black;
     border-radius: 15px;
     height: 170px;
-    width: 200px;
+   
     margin-left: 5px;
     margin-top: 5px;
 }
+.insurance_container{
+    margin-top: 7%;
+    height: 40rem;
+    width: 50rem;
+    background: #f2f2f2;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;  
+}
 
+.insurance_inner{
+    padding: 15px 15px 15px 15px;
+}
 .patient_form_container{
    
     height: 130rem;

@@ -122,6 +122,7 @@ function PATIENT_FORM(props) {
         const formData = new FormData();
         formValues.proposed_treatment_plan = proposed_treatment_plan;
         formValues.languages_spoken = languages_spoken
+        formValues.status="New"
       
         formData.append('patient_document', patient_document);
         formData.append('patient_reports', patient_reports);
