@@ -7,7 +7,7 @@ import PATIENT_DASHBOARD from './pages/patient_dashboard';
 import HOSPITAL_DASHBOARD from './pages/hospital_dashboard';
 import DOCTOR_LIST from './pages/doctor_list.js';
 import HOSPITAL_PROFILE from './pages/hospital_profile';
-import PATIENT_FORM from './pages/patient_form';
+import PATIENT_FORM from './admin/patient_form';
 import ADMIN_HOSPITAL_DASHBOARD from './admin/admin_hospital_dashboard';
 import ADMIN_HOSPITAL_PROFILE from './admin/admin_hospital_profile';
 import ADMIN_PATIENT_DASHBOARD from './admin/admin_patient_dashboard';
