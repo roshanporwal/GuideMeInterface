@@ -12,8 +12,27 @@ function loginadmin(data) {
   const req = instance.post('/admin/login', data);
   return req
 }
+function getadminstaus() { 
+  const req = instance.get('/sendmail/admin/status');
+  return req
+}
+function gethospitalstaus(id) { 
+  const req = instance.get(`/sendmail/hospitalstatus?id=${id}`);
+  return req
+}
 function enquries(login_id,data) {
   const req = instance.post(`/enquries/${login_id}/create`, data);
+  return req
+}
+function updatedoctor(login_id,_id,data) {
+ 
+  const req = instance.post(`/doctor/${login_id}/update1?login_id=${_id}`,data);
+  return req
+}
+
+function createdoctor(data) {
+ 
+  const req = instance.post(`/doctor/create`,data);
   return req
 }
 function updateenquries(_id,data,login_id) {
@@ -73,5 +92,4 @@ function sendmail(login_id,data) {
   return req
 }
 
-export  {login,enquries,sendmail,gethospitalsall,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
-
+export  {login,enquries,sendmail,gethospitalsall,gethospitalstaus,updatedoctor,createdoctor, getadminstaus,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}

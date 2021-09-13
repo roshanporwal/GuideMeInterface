@@ -85,7 +85,7 @@ export default function Hospital_Details({target}){
 
     const renderPhotos = (source) =>{
         return source.map((photo)=>{
-            return <img className = "photos" src= {photo} key = {photo} />
+            return <img className = "photos" src= {photo} key = {photo} alt = ""/>
         })
     }
     console.log(target.speciality)
@@ -172,15 +172,14 @@ export default function Hospital_Details({target}){
                                 </div>
                                 
                             </div>
-                            
-                       
-            <div className = "insurance_container ">
+                            <div className = "insurance_container ">
                   <h5 style = {{paddingLeft: 20, paddingTop: 10}}>Insurance</h5>
+                <div>
                 <div className = "insurance_inner">
-                 <div className = "d-flex">
+                 <div className = "row">
                  { 
                 res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container" key = {index} {...target}>
+                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
                         <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
                         <h4>Basic Plus: {target.basic_build}</h4>
                         <h4>General   : {target.general}</h4>
@@ -189,7 +188,7 @@ export default function Hospital_Details({target}){
                 ))}
                 { 
                 res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container" key = {index} {...target}>
+                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
                         <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
                         <h4>Basic Plus: {target.basic_build}</h4>
                         <h4>General   : {target.general}</h4>
@@ -197,10 +196,11 @@ export default function Hospital_Details({target}){
                     </div>
                 ))}
                  </div>
-                 <div className = "d-flex">
+                
+                 <div className = "row">
                  { 
                 res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container" key = {index} {...target}>
+                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
                         <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
                         <h4>Basic Plus: {target.basic_build}</h4>
                         <h4>General   : {target.general}</h4>
@@ -209,19 +209,20 @@ export default function Hospital_Details({target}){
                 ))}
                 { 
                 res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container" key = {index} {...target}>
+                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
                         <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
                         <h4>Basic Plus: {target.basic_build}</h4>
                         <h4>General   : {target.general}</h4>
                         <h4>Premium   : {target.premium}</h4>
                     </div>
                 ))}
-                    
+               </div>     
                  </div>
                 </div>
               </div>
-              
-            </div>
+                       
+                       
+                </div>
              
               
     

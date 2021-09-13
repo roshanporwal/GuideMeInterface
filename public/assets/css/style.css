@@ -82,7 +82,7 @@
  }
  
  .login_image{
-     height: 580px;
+     height: fit-content;
      
  }
  
@@ -189,7 +189,7 @@
       height: 63rem;
   }
 
-  @media only screen and (max-width: 980px) {
+  @media only screen and (max-width: 768px) {
     .login_form{
         margin-top: 5%;
         margin-left: -40%;
@@ -208,9 +208,9 @@
     }
 
     
-   .column_big{
+   /* .column_big{
        margin-left: 10%;
-   }
+   } */
 
    
 
@@ -222,34 +222,29 @@
     .med_history{
         max-width: 30%;
     }
-    .query_container{
-        max-width: 38rem;
-        min-height: 90rem;
-    }
+    
 
-    .container_patient_details{
-        max-width: 50rem;
-    }
-
+    
+ 
     .download_button{
-       max-width: 140px;
+       max-width: 180px;
     }
 
     .view_button{
-        max-width: 140px;
-        margin-right: -100px;
-    }
+        max-width: 180px;
+        
+    } 
 
     .status{
         margin-top: 2%;
     }
 
-    .buttons{
+    /* .buttons{
         max-width: 50%;
-    }
+    } */
 
     .hospital_dashboard_title{
-        margin-left: 24rem;
+       
         margin-top: 2rem;
     }
 
@@ -272,26 +267,34 @@
     
 
     .chart_content{
-        width: 200%;
+        width: 100%;
             
     }
 
-    .chart_container{
-        max-height: 40rem;
+    .pie_list{
+        display: none !important
     }
 
+     .chart_container{
+        height: 60rem!important;
+        margin-top: 10rem;
+    }
+ 
     .alert_container{
        
-        
+        margin-top: 2rem;
         min-height: 50rem;
         font-size: 12px;
-       
+        height: 40rem!important;
     }
-
+ 
     .alert{
         font-size: 0px;
     }
-
+    
+    .alphabets_container{
+        display: none !important;
+    }
     
 
     .table{
@@ -311,11 +314,62 @@
         height: 100% !important;
     }
 
+   /*  .total_enquiries{
+        min-width: 10rem !important;
+    }
+
+    .new_enquiries{
+        margin-top: 20rem !important;
+        margin-left: -18rem !important;
+    }
+ */
+    /* .new_enquiries .fa-plus, .new_enquiries h1{
+        display: inline-block;
+    } */
+
     
+
+    /* .awaiting_enquiries{
+        margin-top: 40rem !important;
+        margin-left: -10rem;
+    } 
+
+    .won_enquiries{
+        margin-left: -50px;
+    }
+
+    .lost_enquiries{
+        margin-top: 20rem ;
+        margin-left: -200px !important;
+    }
+
+    .hospital_dashboard_title{
+        margin-left: -7rem;
+    }
+
+    .sent_quote{
+
+    }
+ */
+
+    
+  .enquiries .total_enquiries, .enquiries .new_enquiries,  .enquiries .awaiting_enquiries, .enquiries .won_enquiries,  .enquiries .lost_enquiries, .enquiries .sent_quote{
+      width: 50%!important;
+      display: inline-block;
+  }  
 
     
     
   }
+
+  .new_enquiries .fa-plus, .new_enquiries h1, .total_enquiries .fa-file, .total_enquiries h1, .awaiting_enquiries .fa-pause, .awaiting_enquiries h1,
+  .won_enquiries .fa-smile-o, .won_enquiries h1, .lost_enquiries .fa-frown-o,  .lost_enquiries h1, .sent_quote .fa-frown-o, .sent_quote h1 {
+    display: inline-block;
+}
+
+
+
+
 
 
 .container_patient_details  {
@@ -359,9 +413,11 @@
 .patient_prefernces_details{
     margin-left: 5%;
     margin-top: 10%;
+    margin-right: 5%;
     text-align: center;
     padding-bottom: 10%;
 }
+
 
 .medical_history_title{
     margin-top: 7%;
@@ -392,6 +448,17 @@
     color: white;
     
 }
+.diagnosis_container{
+    margin-top: 2%;
+    
+   
+    background: #164473;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    color: white;
+     
+}
 
 .query_title{
     margin-left: 2rem;
@@ -409,11 +476,11 @@
        border-radius: 10px;
        background-color: #E3E3E3;
        color: black;
-       width: 28rem;
-       height: 5rem;
+       width: 40rem;
+       height: 7rem;
        box-shadow: 5px 10px 8px #888888;
        margin-top: 5%;
-       margin-left: 10%;
+      
 }
 
 .download_button:hover{
@@ -425,10 +492,10 @@
        border-radius: 10px;
        background-color: #E3E3E3;
        color: black;
-       width: 28rem;
-       height: 5rem;
+       width: 40rem;
+       height: 7rem;
        box-shadow: 5px 10px 8px #888;
-       margin-left: 150%;
+        margin-right: 10px;
        margin-top: 5%;
 }
 
@@ -442,14 +509,14 @@ p{
 }
 
 .hospital_dashboard_title{
-    text-align: center;
-    margin-top: 2rem;;
+   
+    margin-top: 2rem;
 }
 
 .chart_container{
     height: 30rem;
-    width: 70rem;
-    margin-left: 35px;
+   
+    
     background: #f2f2f2;
     border-radius: 20px;
     cursor: pointer;
@@ -462,19 +529,24 @@ p{
     padding-left: 3rem;
 }
 
+.buttons{
+    margin-right: 25px;
+}
+
 .alert_container{
     height: 30rem;
-    width: 70rem;
+    
     background: #164473;
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 0 20px 8px #d0d0d0; 
-    margin-left: 2rem; 
+    
 }
 
 .chart_content{
     
-    margin-top: 5rem;
+    
+    margin-left: 25px;
     
 }
 
@@ -490,7 +562,7 @@ p{
     width: 14rem;
     height: 4rem;
     box-shadow: 5px 10px 8px #888888;
-    margin-left: 8rem;
+   
     margin-top: 3rem;
     font-size: 16px;
 }
@@ -498,7 +570,7 @@ p{
 .alert{
     color: white;
     margin-top: 2rem;
-    margin-left: 3rem;
+   
 }
 
 thead{
@@ -562,6 +634,10 @@ tbody{
     
 }
 
+.languages{
+    width: 23rem;
+}
+
 .new_doctor{
        border: 1px white;
        border-radius: 10px;
@@ -569,6 +645,15 @@ tbody{
        
        
       
+}
+
+.update_doctor{
+    border: 1px white;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    
+    
+   
 }
 
 .doctor_detail_container{
@@ -794,7 +879,7 @@ tbody{
     box-shadow: 5px 10px 8px #888888;
     justify-content: center;
     margin-top: 20rem;
-    margin-left: 10rem;
+    
 }
 
 .table-scroll {
@@ -852,6 +937,12 @@ tbody{
 
 .navlinks{
     color: black;
+}
+
+.data_table{
+    width: 95%;
+    margin-left: 2%;
+    padding-top: 5%;
 }
 
 

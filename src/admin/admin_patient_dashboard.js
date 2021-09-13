@@ -124,8 +124,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        setEnqurie_data([props.location.state])
-        const enq = props.location.state.hospitals
+        const getenquriesbyid = await auth_service.getenquriesbyid(props.location.state)
+       console.log(getenquriesbyid.payload)
+        setEnqurie_data(getenquriesbyid.payload)
+        const enq = getenquriesbyid.payload[0].hospitals
         console.log(enq)
         setHopital_enq(enq)
         if (enq.length !== 0) {
@@ -154,6 +156,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     setEnqurie_data(getenquries.payload)
                     setHopital_enq(getenquries.payload[0].hospitals)
                     setShow_quota(true)
+                    window.location.reload();
 
                 }
 
@@ -170,9 +173,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
             console.log(getenquries)
             if (getenquries.payload) {
+                window.location.reload();
                 alert(getenquries.payload)
                 console.log(getenquries)
-
+               
 
             }
         }
@@ -196,14 +200,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     }
 
-
-
-
     return (
         <>
 
-            <div className="d-flex">
-                <div className="col-3 column_small">
+            <div className>
+                <div className="col-md-3 column_small">
                     {
                         enqurie_data.map((target, index) => (
                             <div key={index} {...target}>
@@ -217,7 +218,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <p className="card-text">Age: {target.patient_age}</p>
                                         <p className="card-text">Gender: {target.patient_gender}</p>
                                         <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                        <p className="card-text">Language: {target.languages_spoken}</p>
+                                        <p className="card-text"><div className = "languages">Language: {target.languages_spoken.join(', ')}</div><br/> </p>
                                     </div>
                                 </div>
 
@@ -229,24 +230,26 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             <div key={index} {...target}>
                                 <div className="container_patient_preferences">
                                     <div className="patient_name">
-                                        <h5><b>Patient Preferences</b></h5>
+                                        <h4><b>Patient Preferences</b></h4>
                                     </div>
 
                                     <div className="patient_prefernces_details">
-                                        <p className="card-text"><b>Patient Requirement:</b><br />{target.proposed_treatment_plan}</p>
+                                        
+                                        <p className="card-text2" ><b>Patient Requirement:</b><br /><div className = "proposed_plans">{target.proposed_treatment_plan.join(', ')}</div></p>
+                                      
                                         <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
                                         <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>
                                         <p className="card-text"><b>Transport Support Needed:</b><br />{target.transport_support_needed}</p>
                                         <p className="card-text"><b>Accomodation / Other Logistic:</b><br />{target.accomodation}</p>
                                         <p className="card-text"><b>Preferred Hospital Visit Type:</b><br />{target.preferred_hospital_visit}</p>
-                                        <p className="card-text"><b>Food Preferences:</b><br />{target.food_preferences}</p>
+                                        <p className="card-text" ><b>Food Preferences:</b><br />{target.food_preferences} </p>
                                     </div>
                                 </div>
                             </div>
                         ))}
                 </div>
 
-                <div className="col-9 column_big">
+                <div className="col-md-9 column_big">
                     {
                         enqurie_data.map((target, index) => (
                             <div key={index} {...target}>
@@ -280,18 +283,21 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div>
                         ))
                     }
-                    <div className="buttons d-flex">
-                        <div>
+                    <div className="buttons">
+                        <div className = "row">
+                        <div className = "col-md-4">
                             <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
                         </div>
-                        <div>
+                        <div className = "col-md-3"></div>
+                        <div className = "col-md-4">
                             <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
+                        </div>
                         </div>
                     </div>
                     {
                         enqurie_data.map((target, index) => (
                             <div key={index} {...target}>
-                                <div className="query_container">
+                                <div className="diagnosis_container">
                                     <div className="query_title">
                                         <h2>Current Diagnosis</h2>
                                     </div>
@@ -310,7 +316,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 onChange={setSelected}
                                 labelledBy="Select"
                             />
-                            <button style={{ marginTop: 2, marginLeft: 600 }} className="join_button" type="submit" onClick={() => handleSubmit("before")}>{"Submit"}</button>
+                            <button style={{ marginTop: 100}} className="join_button" type="submit" onClick={() => handleSubmit("before")}>{"Submit"}</button>
                         </div>}
                 </div>
             </div>
@@ -321,13 +327,13 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         <div className="col-md-3">
 
                         </div>
-                        {
+                         {
                             hopital_enq.map((target, index) => (
                                 <div className="col-md-3" key={index} {...target}>
                                     <p><b>{target.hospital_name}</b></p>
                                 </div>
 
-                            ))}
+                            ))} 
 
                     </div>
                     <div className="col-md-12" >
@@ -366,7 +372,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>{target.free_other_speciality_consultant}</p>
                                             <p>{target.free_other_speciality_consultant}</p>
                                             {enqurie_data[0].status==="Awaiting From Patients"?
-                                            <button onClick={()=>wonandloss(target.hospital_id)}>won</button>:null
+                                            <button style = {{background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "7rem"}} onClick={()=>wonandloss(target.hospital_id)}>Won</button>:null
                                     }
                                         </div>
 
@@ -375,17 +381,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                                         </div>
                                     }
-                                   
-                                
+
                                 </div>
-                                
                             ))}
 
-                    </div>
-                    {enqurie_data[0].status!=="Awaiting From Patients"?
+                    </div> 
                     <div>
-                        <button style={{ width: "100%", marginBottom: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
-                    </div>:null}
+                        <button style={{ width: "100%", marginBottom: 30, marginTop: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
+                    </div>
                 </div> : null}
 
 

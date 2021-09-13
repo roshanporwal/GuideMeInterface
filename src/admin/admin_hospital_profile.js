@@ -1,6 +1,7 @@
 import React, {useState,useEffect }from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
+import ADMIN_NAVBAR from '../admin/admin_navbar';
 import Hospital_Details from '../components/hospital_details';
 import HOSPITAL_LIST from '../components/hospital_list';
 
@@ -19,21 +20,29 @@ function HOSPITAL_PROFILE(){
       const showInfo = (target) =>{
             setIsHospitalSelected(true)
             setHospitalItem(target);
-           // console.log(hospitalItem)
-          
+            console.log(hospitalItem)
       }
 
 
     async function fetchData(props) {
+
+        //  const getenquries = await auth_service.getenquries()
+        // setEnquries(getenquries.payload)
+        console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const gethospitalsall = await auth_service.gethospitalsall(data.login_id)
-        setHospitals(gethospitalsall.payload.sort((a, b) => a.hospital_name.localeCompare(b.hospital_name)))   
+        const getenquries = await auth_service.gethospitalsall(data.login_id)
+        console.log(getenquries.payload)
+        setHospitals(getenquries.payload)
+        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
+       
+        console.log(getenquries1.payload)*/
+
     }
     if(IsHospitalSelected)
         return(
             <>
-           
+            <ADMIN_NAVBAR/>
             <HOSPITAL_LIST
             hospitals = {hospitals}
             showInfo = {(target) => showInfo(target)}
@@ -56,7 +65,7 @@ function HOSPITAL_PROFILE(){
         else
         return(
             <>
-            
+            <ADMIN_NAVBAR/>
             <HOSPITAL_LIST
             hospitals = {hospitals}
             showInfo = {(target) => showInfo(target)}

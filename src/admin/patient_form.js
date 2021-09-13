@@ -12,6 +12,25 @@ import  * as auth_service from "../services/auth_service";
 
 function PATIENT_FORM(props) {
     const [validated, setValidated] = useState(false);
+    const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
+    const [show2, setShow2] = useState(false);
+   /*  const hiddenFileInput = React.useRef(null); */
+    const handleOthersField =()=> {
+        setShow(!show)
+        console.log("clicked")
+        console.log(show)
+    }
+    const handleOthersField1 =()=> {
+        setShow1(!show1)
+        console.log("clicked")
+        console.log(show)
+    }
+    const handleOthersField2 =()=> {
+        setShow2(!show2)
+        console.log("clicked")
+        console.log(show)
+    }
     const history = useHistory();
     const [formValues, setFormValue] = useState({
         
@@ -49,8 +68,7 @@ function PATIENT_FORM(props) {
     const [proposed_treatment_plan, setProposed_treatment_plan] = useState([]);
     const [languages_spoken, setLanguages_spoken] = useState([]);
     const [errors, setErrors] = useState({});
-    const [show, setShow] = useState(false);
-
+    
 
     const [formErrors] = useState({
         patient_name: "",
@@ -169,7 +187,6 @@ function PATIENT_FORM(props) {
     } 
     /* const onchange = e => {
         const { name } = e.currentTarget
-
         if (name === 'patient_document') {
             setPatient_document(e.target.files[0])
         } else if (name === 'patient_reports') {
@@ -177,7 +194,6 @@ function PATIENT_FORM(props) {
         } else {
             setInsurance_card_copy(e.target.files[0])
         }
-
     } */
 
     const validate = async (values) => {
@@ -205,8 +221,6 @@ function PATIENT_FORM(props) {
         }
 
     }
-
-
     return (
         <>
           <div>{show ? (<Alert show={show} variant="danger" >
@@ -216,11 +230,11 @@ function PATIENT_FORM(props) {
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <div className="col-md-4">
                      
-                        <Form.Group>
+                        <Form.Group >
                         <Form.Label>Patient name</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem" }}
+                                style={{ border: "2px solid #164473", borderRadius: 10 }}
                                 type="text"
                                 name="patient_name"
                                 value={formValues.patient_name}
@@ -235,7 +249,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Patient email</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="email"
                                 name="patient_email"
                                 value={formValues.patient_email}
@@ -249,7 +263,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Patient Preferred By</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="patient_referred_by"
                                 value={formValues.patient_referred_by}
@@ -262,7 +276,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Patient Mobile</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="patient_mobile"
                                 value={formValues.patient_mobile}
@@ -275,7 +289,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Patient Age</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="patient_age"
                                 value={formValues.patient_age}
@@ -289,7 +303,7 @@ function PATIENT_FORM(props) {
                       
                         <div style = {{marginTop: "4rem"}}>
                             <label>Patient Gender</label>
-                            <div className = "d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <div className = "d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "3rem"}}>
                             <Form.Check
                                 label = "Male"
                                 required
@@ -303,7 +317,7 @@ function PATIENT_FORM(props) {
                             />
                             <Form.Check
                                 label="Female"
-                                style = {{paddingLeft: "10rem"}}
+                                style = {{paddingLeft: "7rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="patient_gender" 
@@ -314,7 +328,7 @@ function PATIENT_FORM(props) {
                                 
                             <Form.Check
                                 label="Neutral"
-                                style = {{paddingLeft: "10rem"}}
+                                style = {{paddingLeft: "7rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="patient_gender" 
@@ -329,7 +343,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Patient Nationality</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="patient_nationality"
                                 value={formValues.patient_nationality}
@@ -342,29 +356,31 @@ function PATIENT_FORM(props) {
                         <Form.Label>Identification Document</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="file"
                                 name="patient_document"
-                                
+                               /*  ref = {hiddenFileInput} */
                                 onChange={onchange}
                                 isValid={!errors.patient_document}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_document}</Form.Control.Feedback>
                         </Form.Group>
+                        {/* <button onClick = {handleChange} className = "join_button">Upload<i className="fa fa-upload" aria-hidden="true" style = {{fontSize: 18, paddingLeft: 10}}></i></button> */}
                         <Form.Group style = {{marginTop: "2rem"}}>
                         <Form.Label>Patient Reports</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="file"
                                 name="patient_reports"
-                               
+                              /*   ref={hiddenFileInput} */
                                 onChange={onchange}
                                 isValid={!errors.patient_reports}
                             />
+                            
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_reports}</Form.Control.Feedback>
                         </Form.Group>
-                        
+                       {/*  <button onClick = {handleChange} className = "join_button">Upload<i className="fa fa-upload" aria-hidden="true" style = {{fontSize: 18, paddingLeft: 10}}></i></button> */}
                         
                     </div>
                     <div className="col-md-4">
@@ -372,7 +388,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Current Diagnosis</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="current_diagnosis"
                                 value={formValues.current_diagnosis}
@@ -382,11 +398,11 @@ function PATIENT_FORM(props) {
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group>
+                        <Form.Group style = {{marginTop: "2rem"}}>
                         <Form.Label>Insurance Name</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="insurance_name"
                                 value={formValues.insurance_name}
@@ -401,22 +417,23 @@ function PATIENT_FORM(props) {
                         <Form.Label>Insurance Card Copy</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="file"
                                 name="insurance_card_copy"
+                               /*  ref = {hiddenFileInput} */
                                 onChange={onchange}
                                 isValid={!errors.insurance_card_copy}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_card_copy}</Form.Control.Feedback>
                         </Form.Group>
-                       
+                        {/* <button onClick = {handleChange} className = "join_button">Upload<i className="fa fa-upload" aria-hidden="true" style = {{fontSize: 18, paddingLeft: 10}}></i></button> */}
                         
                        
                         <Form.Group style = {{marginTop: "2rem"}}>
                         <Form.Label>Patient Medical History</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="medical_history"
                                 value={formValues.medical_history}
@@ -511,18 +528,31 @@ function PATIENT_FORM(props) {
                                 id = "multiple_options"
                                 onChange={() => checkBox("proposed_treatment_plan", "multiple_options")}
                                 isValid={!errors.proposed_treatment_plan}
+                                
                             />
-                            
-                            <Form.Label>Others</Form.Label>
-                            <Form.Control
+                            <Form.Check
+                                label = "Others"
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                onChange = {handleOthersField}
+                                value = {formValues.proposed_treatment_plan}
+                                
+                                
+                            />
+                            {show?
+                           
+                            <Form.Control
+
+                                required
+                                style={{ border: "2px solid #164473", borderRadius:10,  marginBottom: "10px", }}
                                 type="text"
+                                placeholder = "Please specify"
                                 name="other_plan"
                                 value={formValues.other_plan}
                                 onChange={handleChange}
                                 isValid={!errors.other_plan}
-                            />
+                            /> : ""}
                                    
                                
                             
@@ -534,7 +564,7 @@ function PATIENT_FORM(props) {
                         </div>
                         <div className="pt-4">
                             <label>Transport Facility Needed</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10}}>
                             <Form.Check
                                 label = "Yes"
                                 required
@@ -682,18 +712,30 @@ function PATIENT_FORM(props) {
                                 onChange={() => checkBox("languages_spoken", "bengali")}
                                 isValid={!errors.languages_spoken}
                             />
-                            </div>
-                            <Form.Label>Others</Form.Label>
+                             </div>
+                             <div className=" pt-4">
+                            <Form.Check
+                                label = "Others"
+                                required
+                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                type="checkbox"
+                                onChange = {handleOthersField1}
+                                value = {formValues.languages_spoken}
+                                
+                            />
+                           </div>
+                            {show1?
                             <Form.Control 
-                                    style={{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                    style={{border: "2px solid #164473", borderRadius: 10,   marginBottom: "10px"}}
                                     className ={`form-control ${formErrors.languages_spoken ? "is-invalid" : ""}`}
                                     onChange={handleChange} 
                                     type="text" 
                                     name="other_languages" 
                                     id="other_languages" 
+                                    placeholder = "Please specify"
                                     value={formValues.other_languages}
                                     isValid = {!errors.other_languages}
-                                    />
+                                    />:""}
                             </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.languages_spoken}</Form.Control.Feedback>
                             
@@ -703,7 +745,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Food Preferences</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="text"
                                 name="food_preferences"
                                 value={formValues.food_preferences}
@@ -716,7 +758,7 @@ function PATIENT_FORM(props) {
                         <div className="invalid-feedback">{formErrors.food_preferences}</div>
                         <div className="pt-4">
                             <label>Accomodation / Other Logistic Support Needed</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "5rem"}}>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "3rem"}}>
                             <Form.Check
                                 label = "Yes"
                                 required
@@ -776,16 +818,24 @@ function PATIENT_FORM(props) {
                                 value="multiple_visit"
                                 isValid={!errors.preferred_hospital_visit}
                                 />
-                            <Form.Label>Others</Form.Label>
+                                <Form.Check
+                                label="Others"
+                                style = {{paddingLeft: "5rem"}}
+                                onChange={handleOthersField2} 
+                                type="radio" 
+                                
+                                />
+                           {show2?
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10,  marginBottom: "10px"}}
                                 type="text"
                                 name="preferred_hospital_visit"
+                                placeholder = "Please specify"
                                 value={formValues.preferred_hospital_visit}
                                 onChange={handleChange}
                                 isValid={!errors.preferred_hospital_visit}
-                            />
+                            />: ""}
                                      
                            
                             
@@ -795,7 +845,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Proposed Date to awail the services</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="date"
                                 name="proposal_date"
                                 value={formValues.proposal_date}
@@ -808,7 +858,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Planned Duration of the trip from</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="date"
                                 name="from_date"
                                 value={formValues.from_date}
@@ -822,7 +872,7 @@ function PATIENT_FORM(props) {
                         <Form.Label>Planned Duration of the trip to</Form.Label>
                             <Form.Control
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10, height: "5rem"}}
+                                style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="date"
                                 name="to_date"
                                 value={formValues.to_date}
@@ -831,11 +881,11 @@ function PATIENT_FORM(props) {
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.to_date}</Form.Control.Feedback>
                         </Form.Group>
-
+                        <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
 
                     </div>
                     <div className = "patient_button_div">
-                    <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                   
                     </div>
                 </Form>
             </div>

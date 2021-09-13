@@ -5,6 +5,7 @@ import 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import { useHistory } from 'react-router-dom';
 import  * as auth_service from "../services/auth_service";
+import DataTable from "react-data-table-component";
 
 
 const res = {
@@ -59,6 +60,38 @@ const res = {
     ]
 }
 
+const columns = [
+    {
+      name: 'Patient_Name',
+      selector: row => row['patient_name'],
+      sortable: true,
+     
+    },
+    {
+      name: 'Diagnosis',
+      selector: row => row['current_diagnosis'],
+      sortable: true,
+    },
+    {
+      name: 'Insurance/TPA',
+      selector: row => row['insurance_name'],
+      sortable: true,
+    },
+    {
+      name: 'From',
+      selector: row => row['from_date'],
+    },
+    {
+        name: 'To',
+        selector: row => row['to_date'],
+    },
+    {
+        name: 'Status',
+        selector: row => row['status'],
+    },
+  ];
+
+
 const state = {
     labels: ['Awaiting Patients', 'Won Patients', 'Lost Patients',
         'New Patients'],
@@ -86,6 +119,7 @@ function HOSPITAL_DASHBOARD(props) {
 
     const history = useHistory();
     const [enquries, setEnquries] = useState([])
+    const [enquriesstatus,setEnquriesstatus] = useState([ ])
 
 
     useEffect(() => {
@@ -97,7 +131,8 @@ function HOSPITAL_DASHBOARD(props) {
     async function fetchData() {
         let data=localStorage.getItem("login")
         data= JSON.parse(data)
-        //console.log("data",data)
+        const gethospitalstaus = await auth_service.gethospitalstaus(data._id)
+        setEnquriesstatus(gethospitalstaus.payload)
         const getenquries = await auth_service.getenquriesbyhospitals(data.login_id,data._id);
         console.log(getenquries)
         
@@ -118,7 +153,7 @@ function HOSPITAL_DASHBOARD(props) {
        
         history.push({
              pathname:'/patient',
-             state:event
+             state:event._id
            });
  
         
@@ -130,55 +165,94 @@ function HOSPITAL_DASHBOARD(props) {
 
     return (
         <>
-            <div className="hospital_dashboard_title">
+            <div className="text-center">
                 <h1>Hospital Dashboard</h1>
             </div>
             {
-                res.enquiries.map((target, index) => (
+                enquriesstatus.map((target, index) => (
 
                     <div key={index}{...target}>
-                        <div style={{ justifyContent: "center", paddingTop: "2rem" }} className="enquiries  d-flex">
-                            <div className="total_enquiries">
+                        {/* <div style={{ justifyContent: "center", paddingTop: "2rem" }} className="enquiries  d-flex">
+                            <div style={{ paddingLeft: "3rem" }} className="total_enquiries">
                                 <div className="d-flex">
                                     <i style={{ fontSize: 32, paddingLeft: "1rem", marginTop: "25px" }} className="fa fa-file"></i>
                                     <h1 style={{ paddingLeft: "1rem" }}>{target.total}</h1>
                                 </div>
                                 <h3>Total Enquiries</h3>
                             </div>
-                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                            <div style={{ paddingLeft: "2rem" }} className="new_enquiries">
                                 <div className="d-flex">
                                     <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-plus"></i>
                                     <h1 style={{ paddingLeft: "1rem" }}>{target.new}</h1>
                                 </div>
                                 <h3 style={{ paddingLeft: "5rem" }}>New Enquiries</h3>
                             </div>
-                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                            <div style={{ paddingLeft: "2rem" }} className="awaiting_enquiries">
                                 <div className="d-flex">
                                     <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-pause"></i>
                                     <h1 style={{ paddingLeft: "1rem" }}>{target.awaiting}</h1>
                                 </div>
                                 <h3 style={{ paddingLeft: "5rem" }}>Awaiting Enquiries</h3>
                             </div>
-                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                            <div style={{ paddingLeft: "2rem" }} className="won_enquiries">
                                 <div className="d-flex">
                                     <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className=" fa fa-smile-o "></i>
                                     <h1 style={{ paddingLeft: "1rem" }}>{target.won}</h1>
                                 </div>
                                 <h3 style={{ paddingLeft: "5rem" }}>Won Enquiries</h3>
                             </div>
-                            <div style={{ paddingLeft: "3rem" }} className="new_enquiries">
+                            <div style={{ paddingLeft: "2rem" }} className="lost_enquiries">
                                 <div className="d-flex">
                                     <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-frown-o"></i>
                                     <h1 style={{ paddingLeft: "1rem" }}>{target.lost}</h1>
                                 </div>
                                 <h3 style={{ paddingLeft: "5rem" }}>Lost Enquiries</h3>
                             </div>
+                        </div> */}
+                        <div  className="enquiries offset-1">
+                            <div className="col-md-2 col-sm-6 total_enquiries text-center">
+                                <div className="text-center" >
+                                    <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-file"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.total}</h1>
+                                </div>
+                                <h3>Total Enquiries</h3>
+                            </div>
+                            <div  className="col-md-2 col-sm-6 new_enquiries text-center">
+                                <div className=" text-center"  >
+                                    <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-plus"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.new}</h1>
+                                </div>
+                                <h3 >New Enquiries</h3>
+                            </div>
+                            <div  className="col-md-3 col-sm-6 awaiting_enquiries text-center">
+                                <div className="text-center" >
+                                    <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-pause"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.awaiting}</h1>
+                                </div>
+                                <h3>Awaiting Enquiries</h3>
+                            </div>
+                            <div  className="col-md-2 col-sm-6 won_enquiries text-center">
+                                <div className="text-center">
+                                    <i style={{ fontSize: 32, marginTop: "25px" }} className=" fa fa-smile-o "></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.won}</h1>
+                                </div>
+                                <h3>Won Enquiries</h3>
+                            </div>
+                            <div  className="col-md-2 col-sm-6 lost_enquiries text-center">
+                                <div className="text-center" >
+                                    <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-frown-o"></i>
+                                    <h1 style={{ paddingLeft: "1rem" }}>{target.lost}</h1>
+                                </div>
+                                <h3>Lost Enquiries</h3>
+                            </div>
+                            
                         </div>
                     </div>
                 ))}
-            <div className="chart_content d-flex pl-5">
-                <div className="chart_container d-flex">
-                    <div>
+            <div className="chart_content offset-1">
+                <div className="chart_container col-sm-5 mt-5 mb-5">
+                    <div className = "row">
+                        <div className = "col-sm-7 ">
                         <Pie
                             data={state}
                             options={{
@@ -189,42 +263,48 @@ function HOSPITAL_DASHBOARD(props) {
                                 },
                                 legend: {
                                     display: true,
-                                    position: 'right'
+                                    position: 'bottom'
                                 }
                             }}
                         />
-                    </div>
-                    <div className="pie_list">
-                        <ul>
+                        </div>
+                        <div className = "col-sm-5 ">
+                        <ul style={{ fontSize: 20 }}>
                             <li>Awaiting Patients</li>
                             <li>Won Patients</li>
                             <li>Lost Patients</li>
                             <li>New Patients</li>
                         </ul>
+                        </div>
                     </div>
+                    
+                    
+                    
                 </div>
-                {
+                 {
                     res.alert.map((target, index) => (
 
 
-                        <div className="alert_container d-flex" key={index}{...target}>
-                            <div>
-                                <h1 style={{ fontSize: 54, color: "white", marginTop: "8rem", marginLeft: "12rem" }}>{target.pending}</h1>
+                        <div style = {{marginLeft: "30px"}} className="alert_container col-sm-6 mt-5" key={index}{...target}>
+                        <div className="row">
+                            <div className = "col-sm-6 text-center">
+                                <h1 style={{ fontSize: 42, color: "white", marginTop: "8rem"}}>{target.pending}</h1>
                                 <button className="view_patients_button">View Now</button>
                             </div>
-                            <div className="alert">
+                            <div className="alert col-sm-6 text-center" style = {{paddingTop: "60px"}}>
                                 <h1>Alert</h1><br />
-                                <h3>You have following enquiries<br />
+                                <h4>You have following enquiries<br />
                                     {target.pending} unattended new enquiries
-                                    since {target.hours} hours and {target.minutes} minutes</h3>
+                                    since {target.hours} hours and {target.minutes} minutes</h4>
                             </div>
+                        </div>
+                        
                         </div>
 
                     ))}
-
-            </div>
-            <div className="patient_table_container">
-                <table>
+                
+            </div><div className="patient_table_container">
+                  {/* <table>
                     <thead style={{ height: "5rem" }}>
                         <tr>
                         <th style={{ paddingLeft: "2rem" }}>Patient Name</th>
@@ -250,8 +330,28 @@ function HOSPITAL_DASHBOARD(props) {
                                 </tr>
                             ))}
                     </tbody>
-                </table>
-            </div>
+                            </table> 
+                   */}          {
+                            enquries.map((target, index) => (
+    <div className = "data_table">
+    <DataTable
+        key = {index} {...target}  
+        onRowClicked = {() => handleSubmit(target)}                      
+        columns={columns}
+        data={enquries}
+        highlightOnHover
+        pagination
+        paginationPerPage={5}
+        paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+        paginationComponentOptions={{
+          rowsPerPageText: 'Records per page:',
+          rangeSeparatorText: 'out of',
+        }}
+      />
+       </div>
+                            ))}
+                           
+             </div>
 
         </>
     );
