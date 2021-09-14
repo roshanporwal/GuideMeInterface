@@ -945,5 +945,16 @@ tbody{
     padding-top: 5%;
 }
 
+.rate{
+    border-radius: 15px;
+   
+    background-color: biege;
+}
+
+.heading{
+   padding : 5px;
+}
+
+
 
 

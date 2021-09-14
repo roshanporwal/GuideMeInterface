@@ -355,7 +355,7 @@ function DOCTOR_LIST(props) {
                   <h5 style={{ padding: 10, marginTop: "2rem" }}>
                     {target.doctor_bio}
                   </h5>
-                  <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} onClick={() => { setFormValue({}); setFormValue(target) }} type="submit" className="update_doctor"><i style={{ fontSize: 20, marginLeft: "80rem" }} className="fa fa-pencil"></i></button>
+                  <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} onClick={() => { setFormValue({}); setFormValue(target) }} type="submit" className="update_doctor"><i style={{ fontSize: 20}} className="fa fa-pencil"></i></button>
                 </div>
               </div>
             </div>

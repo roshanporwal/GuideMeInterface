@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
+import ReactStars from "react-rating-stars-component";
+import {Form} from "react-bootstrap";
 import './style.css'
 
 
@@ -109,10 +111,34 @@ import './style.css'
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
+   
+    const [show, setShow] = useState(false);
+    const handleOthersField =()=> {
+        setShow(!show)
+       
+        console.log(show)
+    }
+    const [rating, setRating] = useState(5)
+    const [islowrating, setIsLowRating] = useState(null);
     const [hospitals, setHospitals] = useState([])
     const [selected, setSelected] = useState([]);
     const [hopital_enq, setHopital_enq] = useState([]);
     const [show_quota, setShow_quota] = useState(false);
+    const [formValues, setFormValue] =  useState({
+        value: "",
+        transaction: "",
+        
+    })
+    const [isSubmitting] = useState(false)
+    const handleChange = e => {
+        const { name, value } = e.currentTarget
+        setFormValue(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+       
+    }
+   
     useEffect(() => {
 
         fetchData(props);
@@ -200,9 +226,72 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
 
     }
+    const ratingChanged = (newRating) => {
+        setRating(newRating)
+      
+        
+       
+        
+      };
 
+      const checklowRating = () => {
+          if(rating < 4 ){
+               setIsLowRating(true) 
+          }
+          else
+          setIsLowRating(false)
+      }
     return (
         <>
+        <div className="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-sm" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Transaction</h5>
+        
+      </div>
+      <div className="modal-body">
+      <Form  onSubmit = {handleSubmit}>
+            <Form.Group>
+            
+            <Form.Control
+            style={{ border: "2px solid #164473", borderRadius: 10, width: "27rem" }}
+                        placeholder="Transaction Value"
+                        className = "form-control"
+                        onChange={handleChange} 
+                        type="text" 
+                        name="value" 
+                        id="value" 
+                        
+                        value = {formValues.value}
+                        />
+                      
+            </Form.Group>
+            <Form.Group style = {{marginTop: "2rem"}}>
+            
+            <Form.Control
+            style={{ border: "2px solid #164473", borderRadius: 10, width: "27rem" }}
+                        placeholder="Commision Value"
+                        className = "form-control"
+                        onChange={handleChange} 
+                        type="text" 
+                        name="transaction" 
+                        id="transaction" 
+                      
+                        value = {formValues.transaction}
+                        />
+                       
+            </Form.Group>
+                       </Form>
+
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button data-toggle="modal" data-target="#exampleModal"  disabled={isSubmitting} type="submit" className="btn btn-primary" onClick = {handleSubmit}>Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 
             <div className>
                 <div className="col-md-3 column_small">
@@ -250,10 +339,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         ))}
                 </div>
 
-                <div className="col-md-9 column_big">
+                <div className="col-md-9 row">
                     {
                         enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
+                            <div key={index} {...target} className = "col-md-5">
                                 <div className="d-flex mt-5">
                                     <p><b>Speciality: </b></p>
                                     <p style={{ paddingLeft: 10 }}>{target.speciality}</p>
@@ -270,6 +359,114 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 </div>
                             </div>
                         ))}
+                        <div className = "col-md-5 pt-4">
+                         <h4>Please rate us!</h4>
+                       
+                         <ReactStars
+                            count={5}
+                            onChange = {ratingChanged}
+                            size={42}
+                            activeColor="#ffd700"
+                           
+                        />
+                         
+                         {islowrating  ? 
+                        <div className = "rate" style = {{borderRadius: "15px", backgroundColor: "beige"}}>
+                            <div className = " heading text-center">
+                                <h4>We understand that there are certain areas where we need to improve our level of services further. 
+                Please let us know where you would want to focus the most.</h4>
+                            </div>
+                            <hr />
+                            <div style = {{paddingLeft: "5px"}}>
+                            <form>
+                               <div class="form-check">
+                                    <input className="form-check-input" type="radio"  name = "rating" value=" Communication Skills of Professionals" id="communication_skills" />
+                                    <label className="form-check-label">
+                                        Communication Skills of Professionals
+                                    </label>
+                                    
+                               </div>
+                             
+                                  <div className = "form-check">
+                                  <label>Care and Hospitality of other professionals</label>
+                                      <input
+                                          type = "radio"
+                                          name = "rating"
+                                          id = "care_and_hospitality"
+                                          value = "Care and Hospitality of other professionals"
+                                          className = "form-check-input"
+                                      />
+                                     
+                                  </div>
+                                  <div className = "form-check">
+                                      <label>Hospital Infrastructure</label>
+                                      <input
+                                          type = "radio"
+                                          name = "rating"
+                                          id = "hospital_infrastructure"
+                                          value = "Hospital Infrastructure"
+                                          className = "form-check-input"
+                                      />
+                                  </div>
+                                  <div className = "form-check">
+                                  <label>Transparency in Communication</label>
+                                      <input
+                                          type = "radio"
+                                          label = "Transparency in Communication"
+                                          id = "transparency"
+                                          value = "Transparency in Communication"
+                                          className ="form-check-input"
+                                          name = "rating"
+                                      />
+                                  </div>
+                                  <div className = "form-check">
+                                      <label>Overall outcome of treatment</label>
+                                      <input
+                                          type = "radio"
+                                          name = "rating"
+                                          id = "overall_outcome"
+                                          value = "Overall outcome of treatment"
+                                            className = "form-check-input"
+                                      />
+                                  </div>
+                                  <div className = "form-check">
+                                      <label>Other</label>
+                                      <input
+                                          type = "radio"
+                                          label = "Other"
+                                          id = "other_text"
+                                          name = "other_text"
+                                          value = "Other_text"
+                                          onChange = {handleOthersField}
+                                          className = "form-check-input"
+                                      />
+                                  </div>
+                                  {show?
+                                             
+                                  <div className = "form-check">
+                                      <input
+                                          type = "text"
+                                          label = "Other"
+                                          id = "other"
+                                          name = "rating"
+                                          className = "form-control"
+                                          style = {{width: "32rem"}}
+                                      />
+                                  </div> 
+                                  :"" }
+                                  
+                  
+                              </form>
+                            </div>
+                        </div> :islowrating == null?"": <div>
+                                      <h3>Thankyou!</h3>
+                                      </div>}
+                       
+                        <button onClick = {checklowRating} type = "submit" className = "btn btn-warning">Send</button>
+                        
+                       
+                         </div>
+                        
                     {
                         enqurie_data.map((target, index) => (
                             <div key={index} {...target}>
@@ -326,7 +523,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     <div className="col-md-12" style={{ marginTop: 20 }}>
 
                         <div className="col-md-3">
-
+                        <button data-toggle="modal" data-target="#exampleModal">Click here</button>
                         </div>
                          {
                             hopital_enq.map((target, index) => (
@@ -373,7 +570,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>{target.free_other_speciality_consultant}</p>
                                             <p>{target.free_other_speciality_consultant}</p>
                                             {enqurie_data[0].status==="Awaiting From Patients"?
-                                            <button style = {{background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "7rem"}} onClick={()=>wonandloss(target.hospital_id)}>Won</button>:null
+                                            <button data-toggle="modal" data-target="#exampleModal" style = {{background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "7rem"}} onClick={()=>wonandloss(target.hospital_id)}>Won</button>:null
                                     }
                                         </div>
 
@@ -387,6 +584,18 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             ))}
 
                     </div> 
+                    <div className = "col-md-12 mt-4" >
+                        <div className = "col-md-3">
+                            <p><b>Won: </b></p>
+                            <p><b>Transaction Value: </b></p>
+                            <p><b>Commission Value:</b></p>
+                        </div>
+                        <div className = "col-md-9">
+                            <p>Medstar Hospital </p>
+                            <p>50,000 AED </p>
+                            <p>abcd</p>
+                        </div>
+                    </div>
                     <div>
                         <button style={{ width: "100%", marginBottom: 30, marginTop: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
                     </div>
