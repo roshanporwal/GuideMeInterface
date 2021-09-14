@@ -26,7 +26,7 @@ function ADMIN_Home(props) {
    if(login.payload){
     localStorage.setItem('login', JSON.stringify(login.payload));
     history.push({
-      pathname:'/ADMIN_HOSPITAL_DASHBOARD'
+      pathname:'/admin/dashboard'
     });
    }
   }

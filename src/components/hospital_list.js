@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as auth_service from "../services/auth_service";
 export default function HOSPITAL_LIST({ hospitals, showInfo }) {
   const fileInputRef = useRef();
-  const [loading, setLoading] = useState(false)
+  const [/*loading,*/ ,setLoading] = useState(false)
 
   const [hospital, setHospital] = useState([])
   useEffect(() => {
@@ -27,8 +27,9 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
 
     const formData = new FormData();
     if (e.target.files.length === 0) {
-      return
       setLoading(false)
+      return 
+      
     }
     
     console.log(e)

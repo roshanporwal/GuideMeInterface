@@ -1,14 +1,15 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-import  * as auth_service from "../services/auth_service";
+import * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
+import './style.css'
 
 
 
 function Home(props) {
   const [values, setValues] = useState({
-    login_id:"",
-    password:""
+    login_id: "",
+    password: ""
   })
   const history = useHistory();
   const handleChange = e => {
@@ -21,13 +22,13 @@ function Home(props) {
   const handleSubmit = async (event) => {
     console.log(values)
     event.preventDefault();
-   const login=await auth_service.login(values)
-   if(login.payload){
-    localStorage.setItem('login', JSON.stringify(login.payload));
-    history.push({
-      pathname:'/HOSPITAL_DASHBOARD'
-    });
-   }
+    const login = await auth_service.login(values)
+    if (login.payload) {
+      localStorage.setItem('login', JSON.stringify(login.payload));
+      history.push({
+        pathname: '/hospital/dashboard'
+      });
+    }
 
 
 
@@ -56,7 +57,7 @@ function Home(props) {
             </div>
             <div className="password_field">
               <label htmlFor="exampleInputEmail1">Password</label>
-              <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password"  value={values.password}  onChange={handleChange} placeholder="**********" />
+              <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password" value={values.password} onChange={handleChange} placeholder="**********" />
             </div>
             <div className="submit_btn">
 

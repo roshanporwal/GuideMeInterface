@@ -1,0 +1,949 @@
+.display-4{
+    font-size: 46px!important;
+    
+ }
+ 
+ 
+ .logo{
+     height: 100px;
+     width: 100px;
+     border: 1px;
+     border-radius: 50%;
+     padding-left: 5px;
+ }
+ 
+ 
+ .top{
+     background-color: rgb(135, 135, 236);
+ }
+ 
+ .navbar-nav{
+     font-size: 14px;
+     border: 1px;
+     border-radius: 50%!important;
+    
+ }
+ 
+ .nav-item{
+     padding-left: 20px;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     
+     
+ }
+ 
+ .nav-link{
+     color: beige!important;
+     text-decoration: none!important;
+ }
+ 
+ .nav-link:hover{
+     transition: 0.5s!important;
+     background-color:rgb(135, 135, 236)!important;
+     border: 1px rgb(135, 135, 236)!important;
+     border-radius: 35px;
+ }
+ 
+ .image{
+     width: 50%;
+     margin-left: 250px;
+ }
+ 
+ .navigation{
+     background-color: rgb(61, 34, 61);
+     border-radius: 35px;
+ }
+ 
+ .track{
+     margin-left: 330px;
+   }
+ 
+ .title{
+     margin-left:20px;
+ }
+ 
+ .welcome{
+     margin-left:40px;
+     margin-top:30px;
+     overflow: hidden;
+     animation-name: example;
+   animation-duration: 0.5s;
+ }
+ 
+ .content2{
+     text-align: justify;
+     font-size: medium;
+     margin-right: 80px;
+ }
+ 
+ .mce_desc{
+     text-align: justify;
+     font-size: medium;
+     margin-left: 40px;
+ }
+ 
+ .login_image{
+     height: fit-content;
+     
+ }
+ 
+ .about{
+     width: 450px;
+     margin-left: 60px;
+ }
+ 
+ .about_text{
+     text-align: justify;
+     margin-top: 40px;
+     font-size: large;
+     padding-right: 30px;
+ }
+ 
+ @keyframes example {
+    25%  { left:-20px; left:20px;}
+     /* 25%  {background-color:yellow; left:200px; top:0px;}
+     50%  {background-color:blue; left:200px; top:200px;}
+     75%  {background-color:green; left:0px; top:200px;}
+     100% {background-color:red; left:0px; top:0px;}
+  */
+ }
+ 
+ .cred-card:hover{
+     box-shadow:  10px 10px 10px 5px grey;
+     margin: 10px;
+   }
+   .cred-card:hover > .cred-body img{
+     padding: 35px;
+   }
+   
+   .cred-body{
+     background-color: white;
+   }
+ 
+   #credentials{
+       
+       padding-left: 4rem;
+       padding-right: 4rem;
+   }
+ 
+   .join_button{
+       border: 1px #164473;
+       border-radius: 10px;
+       background-color: #164473;
+       color: white;
+       width: 14rem;
+       height: 3rem;
+       box-shadow: 5px 10px 8px #888888;
+   }
+ 
+   .join_button:hover{
+       background-color: rgb(58, 49, 97);
+       transition: 0.5s;
+   }
+ 
+   .footer{
+     background-color: rgb(61, 34, 61);
+     width: 100%;
+   }
+ 
+   .footer_content{
+       color: white;
+   }
+   
+   .about_content{
+       padding-left: 80px;
+         padding-top: 20px;
+         padding-bottom: 50px;
+   }
+ 
+   .copyright{
+     background-color: rgb(86, 86, 126)
+   }
+  .copyright_content{
+      color: black;
+      text-align: center;
+      height: 4rem;
+  }
+
+  .login_title{
+      margin-top: 15%;
+  }
+
+  .login_form{
+      width: 60%;
+  }
+  .email_field{
+      padding-top: 10%;
+      border: 1px rgb(49, 49, 92);
+      border-radius: 35px;
+  }
+
+  .password_field{
+      padding-top: 5%;
+  }
+
+  .submit_btn{
+      padding-top: 10%;
+  }
+
+  .login_image{
+      height: 63rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .login_form{
+        margin-top: 5%;
+        margin-left: -40%;
+        width: 100%;
+        margin-bottom: 10%;
+    }
+
+    .login_title{
+        margin-top: 208%;
+        margin-left: -40%;
+    }
+    
+    .login_image{
+        width: 33rem;
+        height: 600px;
+    }
+
+    
+   /* .column_big{
+       margin-left: 10%;
+   } */
+
+   
+
+    .medical_history{
+        margin-top: 400px;
+        max-width: 70px;
+    }
+
+    .med_history{
+        max-width: 30%;
+    }
+    
+
+    
+ 
+    .download_button{
+       max-width: 180px;
+    }
+
+    .view_button{
+        max-width: 180px;
+        
+    } 
+
+    .status{
+        margin-top: 2%;
+    }
+
+    /* .buttons{
+        max-width: 50%;
+    } */
+
+    .hospital_dashboard_title{
+       
+        margin-top: 2rem;
+    }
+
+    .enquiries{
+        min-width: fit-content;
+        padding: 2px;
+        font-size: 12px;
+        
+        
+    }
+    .doctor_container{
+        width: 100% !important;
+        
+    }
+
+    .doctor_detail_container{
+        width: 70% !important;
+    }
+
+    
+
+    .chart_content{
+        width: 100%;
+            
+    }
+
+    .pie_list{
+        display: none !important
+    }
+
+     .chart_container{
+        height: 60rem!important;
+        margin-top: 10rem;
+    }
+ 
+    .alert_container{
+       
+        margin-top: 2rem;
+        min-height: 50rem;
+        font-size: 12px;
+        height: 40rem!important;
+    }
+ 
+    .alert{
+        font-size: 0px;
+    }
+    
+    .alphabets_container{
+        display: none !important;
+    }
+    
+
+    .table{
+        max-width: 150%;
+        
+    }
+
+    table tr:last-child td:first-child {
+        border-bottom-left-radius: 10px;
+    }
+    
+    table tr:last-child td:last-child {
+        border-bottom-right-radius: 10px;
+    }
+
+    .reports_buttons_side{
+        height: 100% !important;
+    }
+
+   /*  .total_enquiries{
+        min-width: 10rem !important;
+    }
+
+    .new_enquiries{
+        margin-top: 20rem !important;
+        margin-left: -18rem !important;
+    }
+ */
+    /* .new_enquiries .fa-plus, .new_enquiries h1{
+        display: inline-block;
+    } */
+
+    
+
+    /* .awaiting_enquiries{
+        margin-top: 40rem !important;
+        margin-left: -10rem;
+    } 
+
+    .won_enquiries{
+        margin-left: -50px;
+    }
+
+    .lost_enquiries{
+        margin-top: 20rem ;
+        margin-left: -200px !important;
+    }
+
+    .hospital_dashboard_title{
+        margin-left: -7rem;
+    }
+
+    .sent_quote{
+
+    }
+ */
+
+    
+  .enquiries .total_enquiries, .enquiries .new_enquiries,  .enquiries .awaiting_enquiries, .enquiries .won_enquiries,  .enquiries .lost_enquiries, .enquiries .sent_quote{
+      width: 50%!important;
+      display: inline-block;
+  }  
+
+    
+    
+  }
+
+  .new_enquiries .fa-plus, .new_enquiries h1, .total_enquiries .fa-file, .total_enquiries h1, .awaiting_enquiries .fa-pause, .awaiting_enquiries h1,
+  .won_enquiries .fa-smile-o, .won_enquiries h1, .lost_enquiries .fa-frown-o,  .lost_enquiries h1, .sent_quote .fa-frown-o, .sent_quote h1 {
+    display: inline-block;
+}
+
+
+
+
+
+
+.container_patient_details  {
+   
+    
+    margin-left: 10%;
+    margin-top: 10%;
+    
+    
+    background: #f2f2f2;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+  }
+
+.patient_name{
+    text-align: center;
+    padding-top: 2rem;
+    
+}
+
+.patient_details{
+    margin-left: 5%;
+    margin-top: 10%;
+    padding-bottom: 10%;
+}
+
+.container_patient_preferences{
+    margin-left: 10%;
+    margin-top: 5%;
+    
+    
+    background: #164473;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    color: white;
+}
+
+
+.patient_prefernces_details{
+    margin-left: 5%;
+    margin-top: 10%;
+    margin-right: 5%;
+    text-align: center;
+    padding-bottom: 10%;
+}
+
+
+.medical_history_title{
+    margin-top: 7%;
+}
+
+.med_history_points{
+    margin-left: 10%;
+}
+
+.med_history{
+    margin-top: 7%;
+}
+
+.status{
+    margin-left: 60%;
+    margin-top: 3%;
+}
+
+.query_container{
+    
+    margin-top: 5%;
+    
+   
+    background: #164473;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    color: white;
+    
+}
+.diagnosis_container{
+    margin-top: 2%;
+    
+   
+    background: #164473;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    color: white;
+     
+}
+
+.query_title{
+    margin-left: 2rem;
+    padding-top: 2rem;  
+}
+
+.query_content{
+    padding: 2%;
+    margin-top: 1%;
+    text-align: justify;
+}
+
+.download_button{
+    border: 1px #E3E3E3;
+       border-radius: 10px;
+       background-color: #E3E3E3;
+       color: black;
+       width: 40rem;
+       height: 7rem;
+       box-shadow: 5px 10px 8px #888888;
+       margin-top: 5%;
+      
+}
+
+.download_button:hover{
+    background-color: rgb(71, 71, 73);
+    transition: 0.5s;
+}
+.view_button{
+    border: 1px #E3E3E3;
+       border-radius: 10px;
+       background-color: #E3E3E3;
+       color: black;
+       width: 40rem;
+       height: 7rem;
+       box-shadow: 5px 10px 8px #888;
+        margin-right: 10px;
+       margin-top: 5%;
+}
+
+.view_button:hover{
+    background-color: rgb(71, 71, 73);
+    transition: 0.5s;  
+}
+
+p{
+    font-size: 16px;
+}
+
+.hospital_dashboard_title{
+   
+    margin-top: 2rem;
+}
+
+.chart_container{
+    height: 30rem;
+   
+    
+    background: #f2f2f2;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;  
+}
+  
+.pie_list{
+    font-size: 26px;
+    padding-top: 5rem;
+    padding-left: 3rem;
+}
+
+.buttons{
+    margin-right: 25px;
+}
+
+.alert_container{
+    height: 30rem;
+    
+    background: #164473;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    
+}
+
+.chart_content{
+    
+    
+    margin-left: 25px;
+    
+}
+
+.pie_list{
+    margin-left: 1rem;
+}
+
+.view_patients_button{
+    border: 1px #164473;
+    border-radius: 10px;
+    background-color: rgb(236, 236, 245);
+    color: black;
+    width: 14rem;
+    height: 4rem;
+    box-shadow: 5px 10px 8px #888888;
+   
+    margin-top: 3rem;
+    font-size: 16px;
+}
+
+.alert{
+    color: white;
+    margin-top: 2rem;
+   
+}
+
+thead{
+    background: #164473; 
+   
+    color: white;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 5%;
+    height: 5rem;
+    vertical-align: text-center;
+}
+
+table{
+    margin-top: 5rem;
+    border: 1px solid black;
+    
+    align-items: center;
+    width: 95%;
+    margin-left: 5rem;
+    margin-right: 20rem;
+    
+} 
+
+
+
+.patient_table_container{
+    justify-content: center;
+}
+
+tbody{
+    font-size: 14px;
+    background-color: rgb(204, 197, 197);
+    height: 20rem;
+}
+
+
+.doctor_list_title{
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+.doctor_container{
+   
+    
+  
+        background: #f2f2f2;
+        border-radius: 20px;
+        box-shadow: 0 0 20px 8px #d0d0d0;
+        text-align: left;
+        margin-top: 4rem;
+        padding: 30px 15px;
+}
+
+.doctor_image{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin-top: 2rem;
+    
+}
+
+.languages{
+    width: 23rem;
+}
+
+.new_doctor{
+       border: 1px white;
+       border-radius: 10px;
+       background-color: white;
+       
+       
+      
+}
+
+.update_doctor{
+    border: 1px white;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    
+    
+   
+}
+
+.doctor_detail_container{
+    padding-left: 2rem;
+}
+
+.hospital_profile_title{
+    text-align: center;
+
+}
+
+.medstar_container{
+    
+    margin-top: 10%;
+    height: 40rem;
+    
+    background: #f2f2f2;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 8px 8px #e0dddd;  
+}
+
+.medstar_image{
+    height: 100px;
+    width: 100px;
+    margin-left: 35%;
+    margin-top: 5%;
+}
+
+.alphabets_container{
+    /* width: 85%; */
+    background-color: rgb(56, 56, 121);
+    height: 50px;
+    border: 1px #164473;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.alphabets{
+    background-color: white;
+    color: black;
+    padding: 4px;
+    width: 45px;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 5px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.alphabets:hover{
+    transition: 0.5s;
+    background-color: rgb(126, 126, 173);
+    color: white;
+}
+
+.add_hospital_button{
+    background: white;
+    height: 50px;
+    width: 160px;
+    
+    border-radius: 15px;
+}
+
+.add_hospital_button:hover{
+    transition: 0.5s;
+    background-color: #164473;
+    color: white;
+}
+
+.hospital_list_container{
+    height: 10rem;
+    
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+   
+    margin-top: 5%;
+}
+
+.hospital_image{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-top: 15px; 
+       
+}
+
+.hospital_services_container{
+    margin-top: 10%;
+    height: 40rem;
+    width: 50rem;
+    background: #f2f2f2;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;  
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.hospital_photos_container{
+    margin-top: 7%;
+    height: 40rem;
+    
+    background: #f2f2f2;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0; 
+    overflow: hidden;
+    overflow-y: scroll;
+    
+}
+
+.photos{
+    width: 38rem;
+   
+    border-radius: 15px;
+}
+
+.hospital_photos_inner{
+    padding: 10px 10px 15px 15px;
+    width: 10rem;
+    border-radius: 15%;
+    
+}
+.hospital_photos{
+    height: 100px;
+    width: 100px;
+    border-radius: 15px;
+    margin-left: 1px;
+    margin-top: 15px;
+}
+
+.insurance_detail_container{
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 170px;
+   
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.insurance_container{
+    margin-top: 7%;
+    height: 40rem;
+    width: 50rem;
+    background: #f2f2f2;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;  
+}
+
+.insurance_inner{
+    padding: 15px 15px 15px 15px;
+}
+.patient_form_container{
+   
+    height: 130rem;
+    
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    
+}
+
+.all_container{
+    border: 1px solid #164473;
+    border-radius: 10px;
+}
+
+.reports_blue_side{
+    background-color: #164473;
+    margin-top: 10px;
+    border: 1px solid #164473;
+    border-radius: 15px;
+    height: 60rem;
+}
+
+.guidemedoc{
+    height: 20px;
+    margin-left: 45px;
+    margin-top: 50px;
+}
+
+.reports_buttons_side{
+    background-color: #42B3CE;
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid #42B3CE;
+    border-radius: 15px;
+    height: 53rem;
+}
+
+.doctor_form{
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    width: 100rem;
+    justify-self: center;
+    justify-content: center;
+   
+    margin-top: 5rem;
+}
+
+.select_doctor{
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-left: 3rem;
+}
+
+.checkbox{
+    padding-left: 3rem;
+}
+
+.patient_submit{
+    border: 1px #164473;
+    border-radius: 15px;
+    background-color: #164473;
+    color: white;
+    width: 28rem;
+    height: 6rem;
+    box-shadow: 5px 10px 8px #888888;
+    justify-content: center;
+    margin-top: 20rem;
+    
+}
+
+.table-scroll {
+	
+	max-width:1200px;
+	margin:auto;
+	overflow:hidden;
+	border:1px solid white;
+}
+.table-wrap {
+	width:100%;
+	overflow:auto;
+}
+.table-scroll table {
+	width:150%;
+	margin:auto;
+	border-collapse:separate;
+	border-spacing:0;
+    margin-top: 10rem;
+}
+.table-scroll th, .table-scroll td {
+	padding:5px 10px;
+	border:1px solid white;
+	background:#fff;
+	white-space:nowrap;
+	vertical-align:top;
+    color: black;
+}
+.table-scroll thead, .table-scroll tfoot {
+	background:#f9f9f9;
+}
+.clone {
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events:none;
+}
+.clone th, .clone td {
+	visibility:hidden
+}
+.clone td, .clone th {
+	border-color:transparent
+}
+.clone tbody th {
+	visibility:visible;
+	color:red;
+}
+.clone .fixed-side {
+	border:1px solid white;
+	background:#eee;
+	visibility:visible;
+}
+.clone thead, .clone tfoot{background:white;}
+
+
+.navlinks{
+    color: black;
+}
+
+.data_table{
+    width: 95%;
+    margin-left: 2%;
+    padding-top: 5%;
+}
+
+
+

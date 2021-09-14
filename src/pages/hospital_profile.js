@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import PATIENT_NAVBAR from './patient_navbar';
 import { Form } from 'react-bootstrap';
+import './style.css'
 
 import { hospitalSchema } from '../components/Validations/hospitalValidation';
 

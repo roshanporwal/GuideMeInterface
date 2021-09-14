@@ -6,6 +6,7 @@ import { Pie } from 'react-chartjs-2';
 import  * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
 import DataTable from "react-data-table-component";
+import './style.css'
 const res = {
     "enquiries": [
         {
@@ -137,19 +138,10 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
       }
 
       const handleSubmit = async (event) => {
-        
-       // history.push(,{params:event});
         history.push({
-            pathname:'/ADMIN_PATIENT_DASHBOARD',
+            pathname:'/admin/sendquota',
             state:event._id
-          });
-
-       
-        console.log("formValues")
-        console.log(enquries);
-
-        /* const login = await auth_service.enquries(formData)
-         console.log(login)*/
+          })    
     };
 
   
@@ -274,8 +266,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                
               
     <div className = "data_table mt-5">
-    {
-                            enquries.map((target) => (
+    
   <DataTable
         
         style = {{paddingTop: "30px"}}
@@ -284,7 +275,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         highlightOnHover
         pagination
         paginationPerPage={5}
-        onRowClicked = {() => handleSubmit(target)}
+        onRowClicked = {(target) => handleSubmit(target)}
         paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
         paginationComponentOptions={{
         rowsPerPageText: 'Records per page:',
@@ -293,7 +284,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         }}
         />
         
-        ))}
+       
          
         </div>
                               

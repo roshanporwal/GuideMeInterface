@@ -6,6 +6,7 @@ import {validationSchema} from '../components/Validations/patientValidation';
 
 import { Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import './style.css'
 
 
 import  * as auth_service from "../services/auth_service";

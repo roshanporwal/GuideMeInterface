@@ -6,6 +6,7 @@ import { Pie } from 'react-chartjs-2';
 import { useHistory } from 'react-router-dom';
 import  * as auth_service from "../services/auth_service";
 import DataTable from "react-data-table-component";
+import './style.css'
 
 
 const res = {
@@ -92,7 +93,7 @@ const columns = [
   ];
 
 
-const state = {
+let pie = {
     labels: ['Awaiting Patients', 'Won Patients', 'Lost Patients',
         'New Patients'],
     datasets: [
@@ -133,6 +134,11 @@ function HOSPITAL_DASHBOARD(props) {
         data= JSON.parse(data)
         const gethospitalstaus = await auth_service.gethospitalstaus(data._id)
         setEnquriesstatus(gethospitalstaus.payload)
+        console.log(gethospitalstaus.payload)
+        pie.datasets[0].data.push(gethospitalstaus.payload[0].new)
+        pie.datasets[0].data.push(gethospitalstaus.payload[0].awaiting)
+        pie.datasets[0].data.push(gethospitalstaus.payload[0].won)
+        pie.datasets[0].data.push(gethospitalstaus.payload[0].lost)
         const getenquries = await auth_service.getenquriesbyhospitals(data.login_id,data._id);
         console.log(getenquries)
         
@@ -146,21 +152,11 @@ function HOSPITAL_DASHBOARD(props) {
         
     }
    
-    const handleSubmit = async (event) => {
-        
-        // history.push(,{params:event});
-      
-       
+    const handleSubmit = async (event) => {  
         history.push({
-             pathname:'/patient',
+             pathname:'/hospital/sendquota',
              state:event._id
-           });
- 
-        
-         console.log("formValues")
- 
-         /* const login = await auth_service.enquries(formData)
-          console.log(login)*/
+           });  
      };
 
     return (
@@ -254,7 +250,7 @@ function HOSPITAL_DASHBOARD(props) {
                     <div className = "row">
                         <div className = "col-sm-7 ">
                         <Pie
-                            data={state}
+                            data={pie}
                             options={{
                                 title: {
                                     display: true,
@@ -331,12 +327,12 @@ function HOSPITAL_DASHBOARD(props) {
                             ))}
                     </tbody>
                             </table> 
-                   */}          {
-                            enquries.map((target, index) => (
+                   */}        
+                            
     <div className = "data_table">
     <DataTable
-        key = {index} {...target}  
-        onRowClicked = {() => handleSubmit(target)}                      
+       
+        onRowClicked = {(target) => handleSubmit(target)}                      
         columns={columns}
         data={enquries}
         highlightOnHover
@@ -349,7 +345,7 @@ function HOSPITAL_DASHBOARD(props) {
         }}
       />
        </div>
-                            ))}
+                           
                            
              </div>
 

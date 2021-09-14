@@ -69,7 +69,7 @@ const res = {
 }
 
 
-export default function Hospital_Details({target}){
+export default function HospitalDetails({target}){
     const [selectedImages, setSelectedImage] = useState([])
 
     const imageHandleChange = (e) => {

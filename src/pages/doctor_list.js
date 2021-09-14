@@ -4,7 +4,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import { Form } from 'react-bootstrap'
 import { doctorSchema } from "../components/Validations/doctorValidation";
 import * as auth_service from "../services/auth_service";
-
+import './style.css'
 
 
 

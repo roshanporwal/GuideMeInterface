@@ -1,9 +1,10 @@
 import React, {useState,useEffect }from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
-import ADMIN_NAVBAR from '../admin/admin_navbar';
-import Hospital_Details from '../components/hospital_details';
+
+import HospitalDetails from '../components/hospital_details';
 import HOSPITAL_LIST from '../components/hospital_list';
+import './style.css'
 
 
 function HOSPITAL_PROFILE(){
@@ -42,7 +43,7 @@ function HOSPITAL_PROFILE(){
     if(IsHospitalSelected)
         return(
             <>
-            <ADMIN_NAVBAR/>
+            
             <HOSPITAL_LIST
             hospitals = {hospitals}
             showInfo = {(target) => showInfo(target)}
@@ -50,7 +51,7 @@ function HOSPITAL_PROFILE(){
               
               
               
-                    <Hospital_Details
+                    <HospitalDetails
                     target = {hospitalItem}
 
                     />
@@ -65,7 +66,6 @@ function HOSPITAL_PROFILE(){
         else
         return(
             <>
-            <ADMIN_NAVBAR/>
             <HOSPITAL_LIST
             hospitals = {hospitals}
             showInfo = {(target) => showInfo(target)}

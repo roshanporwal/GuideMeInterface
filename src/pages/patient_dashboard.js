@@ -5,6 +5,7 @@ import { quoteSchema } from '../components/Validations/quoteValidation';
 //import RadioField from '../components/radio';
 import * as auth_service from "../services/auth_service";
 import { Form } from 'react-bootstrap';
+import './style.css'
 
 
 const res = {
