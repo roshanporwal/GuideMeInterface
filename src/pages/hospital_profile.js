@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-import PATIENT_NAVBAR from './patient_navbar';
+
 import { Form } from 'react-bootstrap';
 import './style.css'
 
@@ -257,7 +257,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
     </div>
   </div>
 </div>
-            <PATIENT_NAVBAR/>
+           
               <div className = "hospital_profile_title">
                     <h1>HOSPITAL PROFILE</h1>
               </div>

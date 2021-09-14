@@ -1,6 +1,4 @@
 import React , {useState} from 'react';
-
-import PATIENT_NAVBAR from './patient_navbar';
 import {Form } from 'react-bootstrap';
 import { doctorSchema } from '../components/Validations/doctorValidation';
 
