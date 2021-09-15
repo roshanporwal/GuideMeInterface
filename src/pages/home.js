@@ -13,30 +13,31 @@ function Home(props) {
   })
   const history = useHistory();
   useEffect(() => {
-       
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    let data = localStorage.getItem("login")
-   if(data===null){
-     return 
-   }
-    data = JSON.parse(data)
-    if(Object.keys(data).length !== 0){
-      if(data.admin){
-       history.push({
-        pathname: '/admin/dashboard'
-      });
-      }else{
-        history.push({
-          pathname: '/hospital/dashboard'
+    async function fetchData() {
+      let data = localStorage.getItem("login")
+     if(data===null){
+       return 
+     }
+     const  islogin = JSON.parse(data)
+     
+        if(islogin.admin){
+         history.push({
+          pathname: '/admin/dashboard'
         });
+        }else{
+          history.push({
+            pathname: '/hospital/dashboard'
+          });
+       
       }
-    }
+      
     
+    }
+       
+    fetchData()
+  }, [history]);
+
   
-  }
   const handleChange = e => {
     const { name, value } = e.currentTarget
     setValues(prevState => ({
