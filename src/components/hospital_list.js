@@ -82,7 +82,7 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
           <button className="alphabets" onClick={() => search("X")}>X</button>
           <button className="alphabets" onClick={() => search("Y")}>Y</button>
           <button className="alphabets" onClick={() => search("Z")}>Z</button>
-          <button className="alphabets" onClick={() => search("Reset")}>Reset</button>
+          <button style = {{width: "10rem"}} className="alphabets" onClick={() => search("Reset")}>Reset</button>
         </div>
         <div className="add_hospital col-md-2">
           
@@ -94,7 +94,7 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
         </div>
       </div>
 
-      <div className="hospital_list col-md-3" >
+      <div style = {{overflow: "hidden", overflowY: "scroll", height: "90rem"}} className="hospital_list col-md-3" >
         {
           hospital.map((target, index) => (
             <div className="hospital_list_container d-flex" key={index} {...target} onClick={() => showInfo(target)}>

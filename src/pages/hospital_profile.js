@@ -36,8 +36,9 @@ function ADMIN_HOSPITAL_PROFILE (props){
         console.log(data.insurance)
         setHospital_data([data])
         setSpeciality(data.speciality)
+        if(data.insurance){
         setInsurance(data.insurance)
-
+        }
        
     }
 
@@ -284,7 +285,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
               </div>
               <div className = "col-md-7 ">
 
-              <div className = "hospital_services_container">
+              <div style = {{height: "45rem", overflow: "hidden", overflowY: "scroll"}}>
                                 <h4 style = {{marginLeft: 30}}>Our Specialities</h4>
                                 <div className = "d-flex">
                                     <div style = {{marginLeft: 30, marginTop: 10}}>
@@ -300,7 +301,8 @@ function ADMIN_HOSPITAL_PROFILE (props){
                                 </div>
                                 
                             </div>
-    <div style = {{marginLeft: "20px"}}>
+    <div style = {{marginLeft: "5rem", paddingLeft: "1rem", marginTop: "2rem", height: "45rem", overflow: "hidden", overflowY: "scroll"}}>
+        <h4>Insurance</h4>
         <div className = "row">
             
                  { 

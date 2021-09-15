@@ -114,7 +114,7 @@ export default function HospitalDetails({target}){
                                 </div>
                                 
                             </div>
-                            <div className = "insurance_container ">
+                            <div style = {{overflow: "hidden", overflowY: "scroll"}} className = "insurance_container ">
                   <h5 style = {{paddingLeft: 20, paddingTop: 10}}>Insurance</h5>
                 <div>
                 <div className = "insurance_inner">

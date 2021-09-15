@@ -35,15 +35,14 @@ function ADMIN_Home(props) {
   return (
     <Router>
       <div className="content d-flex" >
-        <div className="col-4">
-          <div className="d-flex">
+        <div className="col-md-4">
           
-            <img className="login_image" src="assets\images\admin_login.jpg" alt="" />
+          
+            <img className="login_image img-fluid" src="assets\images\admin_login.jpg" alt="" />
 
-          </div>
-
+        
         </div>
-        <div className="col-8">
+        <div className="col-md-8" style = {{marginLeft: "5rem"}}>
           <h2 className="login_title">Welcome Admin</h2>
           <form className="login_form">
             <div className="email_field">

@@ -39,7 +39,7 @@ export default function HospitalNavbar(props) {
         {/* <FontAwesomeIcon icon={faUser}  style ={{fontSize: 22, marginLeft: "20px"}} />
         <Nav.Link  className = "text-dark"as={Link} to= '/admin'><p style = {{color: "black", marginLeft: "5px"}}>Admin</p></Nav.Link>
         <FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20px"}} />*/}
-        <Nav.Link  className = "text-dark"as={Link} to= '/admin/hospital/profile'><p style = {{color: "black", paddingLeft: "35rem"}}><FontAwesomeIcon icon={faUser} style = {{fontSize: 22, marginLeft: "20px"}} /></p></Nav.Link> 
+        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/profile'><p style = {{color: "black", paddingLeft: "35rem"}}><FontAwesomeIcon icon={faUser} style = {{fontSize: 22, marginLeft: "20px"}} /></p></Nav.Link> 
         <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "black", marginLeft: "1rem"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20px"}} /></p></Nav.Link> 
        
       </Nav>

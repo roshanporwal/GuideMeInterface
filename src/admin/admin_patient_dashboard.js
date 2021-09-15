@@ -27,6 +27,13 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         commission: "",
         transaction: "",
         id: '',
+        communication_skills: "",
+        care_and_hospitality: "",
+        hospital_infrastructure: "",
+        transparency: "",
+        overall_outcome: "",
+        other_rating: "",
+
 
     })
     const [feedbackmessage, setFeedbackmessgae] = useState('');
@@ -283,7 +290,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     activeColor="#ffd700"
 
                                 />
-
+                                <button onClick={checklowRating} type="submit" className="btn btn-warning">Send</button>
                                 {islowrating ?
                                     <div className="rate" style={{ borderRadius: "15px", backgroundColor: "beige" }}>
                                         <div className=" heading text-center">
@@ -377,7 +384,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                         />
                                                     </div>
                                                     : ""}
-
+                                                     
 
                                             </form>
                                         </div>
@@ -385,7 +392,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <h3>Thankyou!</h3>
                                     </div>}
 
-                                <button onClick={checklowRating} type="submit" className="btn btn-warning">Send</button>
+                               
 
 
                             </div> 
@@ -408,11 +415,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     }
                     <div className="buttons">
                         <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-5">
                                 <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
                             </div>
-                            <div className="col-md-3"></div>
-                            <div className="col-md-4">
+                            <div className="col-md-2"></div>
+                            <div className="col-md-5">
                                 <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
                             </div>
                         </div>

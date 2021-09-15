@@ -36,12 +36,7 @@
      text-decoration: none!important;
  }
  
- .nav-link:hover{
-     transition: 0.5s!important;
-     background-color:rgb(135, 135, 236)!important;
-     border: 1px rgb(135, 135, 236)!important;
-     border-radius: 35px;
- }
+ 
  
  .image{
      width: 50%;
@@ -81,10 +76,10 @@
      margin-left: 40px;
  }
  
- .login_image{
+ /* .login_image{
      height: fit-content;
      
- }
+ } */
  
  .about{
      width: 450px;
@@ -190,14 +185,14 @@
   }
 
   @media only screen and (max-width: 768px) {
-    .login_form{
+    /* .login_form{
         margin-top: 5%;
         margin-left: -40%;
         width: 100%;
         margin-bottom: 10%;
     }
-
-    .login_title{
+ */
+    /* .login_title{
         margin-top: 208%;
         margin-left: -40%;
     }
@@ -205,7 +200,7 @@
     .login_image{
         width: 33rem;
         height: 600px;
-    }
+    } */
 
     
    /* .column_big{
@@ -769,7 +764,7 @@ tbody{
 }
 
 .photos{
-    width: 38rem;
+   
    
     border-radius: 15px;
 }

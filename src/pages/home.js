@@ -40,15 +40,15 @@ function Home(props) {
 
 
     <Router>
-      <div className="content d-flex" >
-        <div className="col-4">
-          <div className="d-flex">
-            <img className="login_image" src="assets\images\login_img.png" alt="" />
+      <div className="content row" >
+        <div className="col-md-4">
+          
+            <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\login_img.png" alt="" img-fluid />
 
-          </div>
+         
 
         </div>
-        <div className="col-8">
+        <div className="col-md-8">
           <h2 className="login_title">Hospital/Doctor Login</h2>
           <form className="login_form">
             <div className="email_field">

@@ -36,12 +36,7 @@
      text-decoration: none!important;
  }
  
- .nav-link:hover{
-     transition: 0.5s!important;
-     background-color:rgb(135, 135, 236)!important;
-     border: 1px rgb(135, 135, 236)!important;
-     border-radius: 35px;
- }
+ 
  
  .image{
      width: 50%;
@@ -192,7 +187,7 @@
   @media only screen and (max-width: 768px) {
     .login_form{
         margin-top: 5%;
-        margin-left: -40%;
+        margin-left: 40%;
         width: 100%;
         margin-bottom: 10%;
     }
