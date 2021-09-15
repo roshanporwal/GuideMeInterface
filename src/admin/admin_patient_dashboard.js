@@ -211,7 +211,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     </div>
                 </div>
             </div>
-            <div className>
+            <div >
                 <div className="col-md-3 column_small">
                     {
                         enqurie_data.map((target, index) => (

@@ -22,24 +22,19 @@ function HOSPITAL_PROFILE(){
       const showInfo = (target) =>{
             setIsHospitalSelected(true)
             setHospitalItem(target);
-            console.log(hospitalItem)
+           
       }
 
 
     async function fetchData(props) {
 
-        //  const getenquries = await auth_service.getenquries()
-        // setEnquries(getenquries.payload)
-        console.log(props)
+        
+       
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         const getenquries = await auth_service.gethospitalsall(data.login_id)
-        console.log(getenquries.payload)
         setHospitals(getenquries.payload)
-        /*const getenquries1 = await auth_service.getenquriesbyhospitals()
-       
-        console.log(getenquries1.payload)*/
-
+        
     }
     if(IsHospitalSelected)
         return(

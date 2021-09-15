@@ -30,7 +30,7 @@ export default function HospitalDetails({target}){
             return <img className = "photos" src= {photo} key = {photo} alt = ""/>
         })
     }
-    console.log(target.speciality)
+    
     return(
         <>
         <div className = "hospital-info col-md-4">

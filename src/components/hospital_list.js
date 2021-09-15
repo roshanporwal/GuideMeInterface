@@ -15,9 +15,9 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       setHospital(hospitals)
       return
     }
-    console.log(char)
+    
     const hp = hospitals.filter((data) => data.hospital_name.charAt(0) === char)
-    console.log(hp)
+    
     setHospital(hp)
 
 
@@ -32,7 +32,7 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       
     }
     
-    console.log(e)
+    
     for (const fi of e.target.files) {
       if (e.target.files.length === 1) {
         formData.append('blogimage', fi);
