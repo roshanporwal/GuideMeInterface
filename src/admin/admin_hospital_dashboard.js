@@ -7,6 +7,7 @@ import  * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import './style.css'
+import ADMIN_NAVBAR from "../Navbar/admin_navbar"
 const res = {
     "enquiries": [
         {
@@ -160,6 +161,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
 
     return (
         <>
+        <ADMIN_NAVBAR/>
             <div className="text-center">
                 <h1>Admin Dashboard</h1>
             </div>

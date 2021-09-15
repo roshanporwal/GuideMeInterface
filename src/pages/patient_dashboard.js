@@ -5,6 +5,7 @@ import { quoteSchema } from '../components/Validations/quoteValidation';
 //import RadioField from '../components/radio';
 import * as auth_service from "../services/auth_service";
 import { Form } from 'react-bootstrap';
+import HospitalNavbar from "../Navbar/hospital_navbar";
 import './style.css'
 
 
@@ -268,7 +269,7 @@ function PATIENT_DASHBOARD(props) {
 
     return (
         <>
-
+         <HospitalNavbar/>
             <div>
                 <div className="col-md-3 column_small">
                     {

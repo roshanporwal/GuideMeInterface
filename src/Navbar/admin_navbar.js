@@ -15,9 +15,11 @@ export default function ADMIN_NAVBAR(props) {
   function logout() {
    
      localStorage.removeItem("login")
+     
      history.push({
       pathname:'/'
     });
+    
 
    
   

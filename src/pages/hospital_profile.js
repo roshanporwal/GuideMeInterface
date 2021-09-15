@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import './style.css'
 
 import { hospitalSchema } from '../components/Validations/hospitalValidation';
+import HospitalNavbar from "../Navbar/hospital_navbar";
 
 
 function ADMIN_HOSPITAL_PROFILE (props){
@@ -81,6 +82,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
         return(
             
             <>
+            <HospitalNavbar/>
           
             {/* <Modal show={show} onHide={handleClose} style = {{opacity: 1, marginTop: "10rem"}}>
         <Modal.Header closeButton>

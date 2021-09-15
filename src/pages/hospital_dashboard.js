@@ -6,7 +6,8 @@ import { Pie } from 'react-chartjs-2';
 import { useHistory } from 'react-router-dom';
 import  * as auth_service from "../services/auth_service";
 import DataTable from "react-data-table-component";
-import './style.css'
+import './style.css';
+import HospitalNavbar from "../Navbar/hospital_navbar";
 
 
 const res = {
@@ -166,6 +167,7 @@ function HOSPITAL_DASHBOARD(props) {
 
     return (
         <>
+        <HospitalNavbar/>
             <div className="text-center">
                 <h1>Hospital Dashboard</h1>
             </div>

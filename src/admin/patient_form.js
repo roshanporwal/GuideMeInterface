@@ -7,6 +7,7 @@ import {validationSchema} from '../components/Validations/patientValidation';
 import { Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import './style.css'
+import ADMIN_NAVBAR from "../Navbar/admin_navbar"
 
 
 import  * as auth_service from "../services/auth_service";
@@ -224,6 +225,7 @@ function PATIENT_FORM(props) {
     }
     return (
         <>
+        <ADMIN_NAVBAR/>
           <div>{show ? (<Alert show={show} variant="danger" >
           <Alert.Heading>error</Alert.Heading></Alert>) : null}
             <div className="patient_form_container">

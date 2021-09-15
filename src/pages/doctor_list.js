@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap'
 import { doctorSchema } from "../components/Validations/doctorValidation";
 import * as auth_service from "../services/auth_service";
 import './style.css'
+import HospitalNavbar from "../Navbar/hospital_navbar";
 
 
 
@@ -132,6 +133,7 @@ function DOCTOR_LIST(props) {
 
   return (
     <>
+    <HospitalNavbar/>
       <div>
 
         <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

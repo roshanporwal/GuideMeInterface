@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
  import Home from './pages/home';
@@ -12,21 +12,24 @@ import ADMIN_HOSPITAL_DASHBOARD from './admin/admin_hospital_dashboard';
 import ADMIN_HOSPITAL_PROFILE from './admin/admin_hospital_profile';
 import ADMIN_PATIENT_DASHBOARD from './admin/admin_patient_dashboard';
 import ADMIN_Home from './admin/admin_home.js';
-import HospitalNavbar from './Navbar/hospital_navbar';
-import ADMIN_NAVBAR from './Navbar/admin_navbar';
+//import HospitalNavbar from './Navbar/hospital_navbar';
+//import ADMIN_NAVBAR from './Navbar/admin_navbar';
+import PATIENT_VIEW from './admin/patient_view';
 
 
 import './App.css';
 import 'react-bootstrap';
 
 
-class  App extends Component {
+export default function App(props) {
+ 
   
-  render(){
+ 
+  
 
   return (
     <Router>
-      {islogin() ?isadmin() ? <ADMIN_NAVBAR/> : <HospitalNavbar/>:null}
+      {/*doctor ?isadmin() ? <ADMIN_NAVBAR/> : <HospitalNavbar/>:null*/}
     
       <Switch>
       <Route path='/' exact  component={Home} />
@@ -45,29 +48,18 @@ class  App extends Component {
         <Route path='/admin/hospital/profile' exact component={ADMIN_HOSPITAL_PROFILE} />
         <Route path='/admin/sendquota' exact component={ADMIN_PATIENT_DASHBOARD} />
       
+
+        <Route path='/patient_view' exact component={PATIENT_VIEW} />
       </Switch>
       
     </Router>
   );
 };
   
-}
-function islogin() {
-  let data = localStorage.getItem("login")
- if(data===null){
-   return false
- }
-  data = JSON.parse(data)
-  if(Object.keys(data).length !== 0){
-    return true
-  }
-    console.log("false fadvsdfsdsfsdvdsv")
-    return false
-  
 
-}
 
-function isadmin() {
+
+/* function isadmin() {
   let data = localStorage.getItem("login")
   data = JSON.parse(data)
   if(data.admin){
@@ -76,5 +68,4 @@ function isadmin() {
     return false
   }
 
-}
-export default App;
+} */

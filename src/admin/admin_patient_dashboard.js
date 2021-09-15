@@ -4,7 +4,8 @@ import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
 import ReactStars from "react-rating-stars-component";
 import { Form } from "react-bootstrap";
-import './style.css'
+import './style.css';
+import ADMIN_NAVBAR from "../Navbar/admin_navbar"
 
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
@@ -126,7 +127,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         const wonandloss = await auth_service.wonandloss(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
         console.log(wonandloss)
         if (wonandloss.payload) {
-            alert("update successful")
+            window.location.reload();
         }
 
 
@@ -160,7 +161,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     }
     return (
         <>
-            <div className="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <ADMIN_NAVBAR/>
+            <div className="modal fade bd-example-modal-sm" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-sm" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -290,7 +292,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     activeColor="#ffd700"
 
                                 />
-                                <button onClick={checklowRating} type="submit" className="btn btn-warning">Send</button>
+                               
                                 {islowrating ?
                                     <div className="rate" style={{ borderRadius: "15px", backgroundColor: "beige" }}>
                                         <div className=" heading text-center">
@@ -392,7 +394,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <h3>Thankyou!</h3>
                                     </div>}
 
-                               
+                                    <button onClick={checklowRating} type="submit" className="btn btn-warning">Send</button>
 
 
                             </div> 

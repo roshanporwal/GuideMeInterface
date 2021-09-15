@@ -3,7 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import {useLocation} from "react-router-dom";
 
-export default function ADMIN_PATIENT_DASHBOARD(props) {
+export default function PATIENT_VIEW(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
     const [hopital_enq, setHopital_enq] = useState([]);
     const [show_quota, setShow_quota] = useState(false); 
