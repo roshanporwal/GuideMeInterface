@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 
 import { Form } from 'react-bootstrap';
@@ -6,75 +6,13 @@ import './style.css'
 
 import { hospitalSchema } from '../components/Validations/hospitalValidation';
 
-const res = {
-    "medstar":[
-        {
-            "hospital_name":"MEDSTAR AESTHETICS & MULTI SPECIALITY CENTRE",
-            "hospital_location":"Dubai, UAE",
-            "hospital_address":"GROUND FLOOR, GULF TOWER, OUD METHA P.O BOX: 117084, DUBAI, UAE",
-            "hospital_mobile":"800 22 33",
-            "hospital_email":"talktous@medstarhhc.com"
-        },
-        
-    ],
-    "hospital_names":[
-        {
-            "name":"MEDSTAR AESTHETICS & MULTI SPECIALITY CENTRE",
-            "location":"Dubai, UAE"
-        },
-        {
-            "name":"Abcd",
-            "location":"Abu Dhabi, UAE"
-        },
-        {
-            "name":"Efgh",
-            "location":"Reading, UK"
-        },
-    ],
-    "services":[
-        {
-            "list1":"Breast Clinic",
-            "list2":"Fistula",
-            "list3":"Face Lift",
-            "list4":"Gynecomastia",
-            "list5":"Liposuction",
-            "list6":"Mommy Makeover",
-            "list7":"Tummy Tuck",
-            "list8":"Circumsision",
-            "list9":"Contipation",
-            "list10":"Fistula",
-            "list11":"Hemorrhoids(Piles)",
-            "list12":"Hernia",
-            "list13":"Pilonidal Sinus",
-            "list14":"Fillers",
-            "list15":"Laser and body contering",
-            "list16":"Laser Procedure",
-            "list17":"Skin Care",
-            "list18":"Gastric Pill Balloon",
-            "list19":"Endoscopic Procedures",
-            "list20":"Weight loss clinic",
-            "list21":"Gastric Pill Balloon",
-            "list22":"Endoscopic Procedures",
-            "list23":"Weight loss Clinic",
-            "list24":"Cosmetic Gynaecology",
-            "list25":"Back Pain"
 
-        }
-    ],
-    "khazna":[
-        {
-            "company_name":"AL Khazna Insurance Company",
-            "basic_build":"yes",
-            "general":"yes",
-            "premium":"yes"
-        }
-    ]
-
-}
 function ADMIN_HOSPITAL_PROFILE (props){
     
     const [errors, setErrors] = useState({});
-   
+    const [hospital_data, setHospital_data] = useState([]);
+    const [speciality, setSpeciality] = useState([]);
+    const [insurance, setInsurance] = useState([]);
     const [validated, setValidated] = useState(false);
     const [formValues, setFormValue] = useState({
         hospital_address: "",
@@ -82,7 +20,27 @@ function ADMIN_HOSPITAL_PROFILE (props){
         hospital_email: "",
         
     })
+    
     const [isSubmitting] = useState(false)
+
+    useEffect(() => {
+
+        fetchData();
+    }, []);
+    async function fetchData(props) {
+
+
+        console.log(props)
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        console.log(data.insurance)
+        setHospital_data([data])
+        setSpeciality(data.speciality)
+        setInsurance(data.insurance)
+
+       
+    }
+
     const handleChange = e => {
         const { name, value } = e.currentTarget
         setFormValue(prevState => ({
@@ -191,7 +149,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
           </Button>
         </Modal.Footer>
       </Modal> */}
-      <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog" role="document">
     <div className="modal-content">
       <div className="modal-header">
@@ -266,22 +224,22 @@ function ADMIN_HOSPITAL_PROFILE (props){
          <div className = "hospital-info col-md-12">
               <div className = "col-md-4">
               { 
-                res.medstar.map((target,index) => (
+                hospital_data.map((target,index) => (
                     <div className = "medstar_container" key = {index} {...target}>
                         <img className = "medstar_image"  src = "assets\images\Medstar-Healthcare-Jobs.png" alt = ""/>  
                         <h5 style = {{textAlign: "center", padding: 5}}>{target.hospital_name}</h5>
-                        <h6 style = {{textAlign: "center", padding: 5}}>{target.hospital_location}</h6>
+                        <h6 style = {{textAlign: "center", padding: 5}}>{target.google_location}</h6>
                         <div className = "d-flex p-4">
                             <i style = {{fontSize: 22}} className = "fa fa-map-marker"></i>
-                            <h6 style = {{paddingLeft: 4}}>{target.hospital_address}</h6>
-                            <button  data-toggle="modal" data-target="#exampleModal" /* onClick= {handleShow} */ disabled={isSubmitting} type = "submit" className = "update_doctor"><i style = {{fontSize: 20}} class = "fa fa-pencil"></i></button>
+                            <h6 style = {{paddingLeft: 4}}>{target.address}</h6>
+                            <button  data-toggle="modal" data-target="#exampleModal" /* onClick= {handleShow} */ disabled={isSubmitting} type = "submit" className = "update_doctor"><i style = {{fontSize: 20}} className= "fa fa-pencil"></i></button>
                         </div>
                         <div className = "d-flex p-4">
                             <i style = {{fontSize: 22}} className = "fa fa-phone"></i>
-                            <h6 style = {{paddingLeft: 4}}>{target.hospital_mobile}</h6>
+                            <h6 style = {{paddingLeft: 4}}>{target.phno}</h6>
                             
 
-                            
+   
                         </div>
                         <div className = "d-flex p-4">
                             <i style = {{fontSize: 22}} className = "fa fa-map-marker"></i>
@@ -325,110 +283,35 @@ function ADMIN_HOSPITAL_PROFILE (props){
               </div>
               </div>
               <div className = "col-md-7 ">
-              { 
-                res.services.map((target,index) => (
-                  <div style = {{marginTop: 40}} key = {index}{...target}>
-                      <h4 style = {{marginLeft: 30}}>Services</h4>
-                      <div className = "d-flex">
-                          <div style = {{marginLeft: 30, marginTop: 10}}>
-                              <ul>
-                                    <li>{target.list1}</li>
-                                    <li>{target.list2}</li>
-                                    <li>{target.list3}</li>
-                                    <li>{target.list4}</li>
-                                    <li>{target.list5}</li>
-                                    <li>{target.list6}</li>
-                                    <li>{target.list7}</li>
-                                    <li>{target.list8}</li>
-                                    <li>{target.list9}</li>
-                              </ul>
-                          </div>
-                          <div style = {{marginLeft: 30, marginTop: 10}}>
-                              <ul>
-                                    <li>{target.list10}</li>
-                                    <li>{target.list11}</li>
-                                    <li>{target.list12}</li>
-                                    <li>{target.list13}</li>
-                                    <li>{target.list14}</li>
-                                    <li>{target.list15}</li>
-                                    <li>{target.list16}</li>
-                                    <li>{target.list17}</li>
-                                    <li>{target.list18}</li>
-                              </ul>
-                          </div>
-                      </div>
-                      <div style = {{marginLeft: 30,  marginTop: 10}}>
-                        <ul>
-                            <li>{target.list19}</li>
-                            <li>{target.list20}</li>
-                            <li>{target.list22}</li>
-                            <li>{target.list23}</li>
-                            <li>{target.list24}</li>
-                            <li>{target.list25}</li>
-                        </ul>
-                      </div>
-                  </div>
-                ))
-    }
+
+              <div className = "hospital_services_container">
+                                <h4 style = {{marginLeft: 30}}>Our Specialities</h4>
+                                <div className = "d-flex">
+                                    <div style = {{marginLeft: 30, marginTop: 10}}>
+                                        <ul>
+                                         { 
+                            speciality.map((item,index) => (
+                                                <li key = {index}>{item}</li>
+                            ))}
+                                               
+                                        </ul>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
     <div style = {{marginLeft: "20px"}}>
         <div className = "row">
             
                  { 
-                res.khazna.map((target,index) => (
+                insurance.map((target,index) => (
                     <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
+                        <h4 style = {{textAlign: "center"}}>{target.insurance_company_name}</h4>
+                        <h4>Type: {target.type}</h4>
+                        
                     </div>
                 ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                 </div>
-                 <div className = "row">
-                 { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
+               
                     
                  </div>
               

@@ -1,77 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 
 
-const res = {
-    "medstar":[
-        {
-            "hospital_name":"MEDSTAR AESTHETICS & MULTI SPECIALITY CENTRE",
-            "hospital_location":"Dubai, UAE",
-            "hospital_address":"GROUND FLOOR, GULF TOWER, OUD METHA P.O BOX: 117084, DUBAI, UAE",
-            "hospital_mobile":"800 22 33",
-            "hospital_email":"talktous@medstarhhc.com"
-        },
-        
-    ],
-    "hospital_names":[
-        {
-            "name":"MEDSTAR AESTHETICS & MULTI SPECIALITY CENTRE",
-            "location":"Dubai, UAE"
-        },
-        {
-            "name":"Abcd",
-            "location":"Abu Dhabi, UAE"
-        },
-        {
-            "name":"Efgh",
-            "location":"Reading, UK"
-        },
-    ],
-    "services":[
-        {
-            "list1":"Breast Clinic",
-            "list2":"Fistula",
-            "list3":"Face Lift",
-            "list4":"Gynecomastia",
-            "list5":"Liposuction",
-            "list6":"Mommy Makeover",
-            "list7":"Tummy Tuck",
-            "list8":"Circumsision",
-            "list9":"Contipation",
-            "list10":"Fistula",
-            "list11":"Hemorrhoids(Piles)",
-            "list12":"Hernia",
-            "list13":"Pilonidal Sinus",
-            "list14":"Fillers",
-            "list15":"Laser and body contering",
-            "list16":"Laser Procedure",
-            "list17":"Skin Care",
-            "list18":"Gastric Pill Balloon",
-            "list19":"Endoscopic Procedures",
-            "list20":"Weight loss clinic",
-            "list21":"Gastric Pill Balloon",
-            "list22":"Endoscopic Procedures",
-            "list23":"Weight loss Clinic",
-            "list24":"Cosmetic Gynaecology",
-            "list25":"Back Pain"
 
-        }
-    ],
-    "khazna":[
-        {
-            "company_name":"AL Khazna Insurance Company",
-            "basic_build":"yes",
-            "general":"yes",
-            "premium":"yes"
-        }
-    ]
-
-}
 
 
 export default function HospitalDetails({target}){
     const [selectedImages, setSelectedImage] = useState([])
 
+    const [insurance, setInsurance] = useState([]);
+
+    useEffect(() => {
+
+       setInsurance(target.insurance)
+    }, [target]);
     const imageHandleChange = (e) => {
         if(e.target.files){
             const fileArray = Array.from(e.target.files).map((file)=> URL.createObjectURL(file))
@@ -178,44 +120,14 @@ export default function HospitalDetails({target}){
                 <div className = "insurance_inner">
                  <div className = "row">
                  { 
-                res.khazna.map((target,index) => (
+                insurance.map((target,index) => (
                     <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
+                        <h4 style = {{textAlign: "center"}}>{target.insurance_company_name}</h4>
+                        <h4>Type: {target.type}</h4>
+                        
                     </div>
                 ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                 </div>
-                
-                 <div className = "row">
-                 { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
-                { 
-                res.khazna.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-4" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.company_name}</h4>
-                        <h4>Basic Plus: {target.basic_build}</h4>
-                        <h4>General   : {target.general}</h4>
-                        <h4>Premium   : {target.premium}</h4>
-                    </div>
-                ))}
+               
                </div>     
                  </div>
                 </div>

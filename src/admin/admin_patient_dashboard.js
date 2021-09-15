@@ -137,7 +137,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             setIsLowRating(true)
         }
         else {
-            setIsLowRating(false)
+           
             const res = {
                 feedbackmessage: feedbackmessage,
                 feedbackrating: rating
@@ -145,10 +145,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             const feedback = await auth_service.feedback(enqurie_data[0]._id, data.login_id, res)
             console.log(feedback)
             if (feedback.payload) {
-                alert("update successful")
+                setIsLowRating(false)
             }
 
-            console.log("feedbackmessage", feedbackmessage)
+            
         }
     }
     return (
@@ -293,7 +293,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <hr />
                                         <div style={{ paddingLeft: "5px" }}>
                                             <form>
-                                                <div class="form-check">
+                                                <div className="form-check">
                                                     <input className="form-check-input"
                                                         type="radio" name="rating"
                                                         value=" Communication Skills of Professionals"
@@ -448,7 +448,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     <div className="col-md-12" style={{ marginTop: 20 }}>
 
                         <div className="col-md-3">
-                            <button data-toggle="modal" data-target="#exampleModal">Click here</button>
+                            
                         </div>
                         {
                             hopital_enq.map((target, index) => (
