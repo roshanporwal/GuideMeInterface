@@ -93,34 +93,15 @@ const columns = [
   ];
 
 
-let pie = {
-    labels: ['Awaiting Patients', 'Won Patients', 'Lost Patients',
-        'New Patients'],
-    datasets: [
-        {
-            label: 'Patients',
-            backgroundColor: [
-                'rgb(119, 136, 153)',
-                'rgb(65, 105, 625)',
-                'rgb(0, 0, 225)',
-                'rgb(56, 56, 121)'
-            ],
-            hoverBackgroundColor: [
-                '#501800',
-                '#4B5000',
-                '#175000',
-                '#003350',
-            ],
-            data: [65, 59, 80, 81]
-        }
-    ]
-}
+
 
 function HOSPITAL_DASHBOARD(props) {
 
     const history = useHistory();
     const [enquries, setEnquries] = useState([])
     const [enquriesstatus,setEnquriesstatus] = useState([ ])
+    const [pie,setPie] = useState()
+
 
 
     useEffect(() => {
@@ -135,10 +116,34 @@ function HOSPITAL_DASHBOARD(props) {
         const gethospitalstaus = await auth_service.gethospitalstaus(data._id)
         setEnquriesstatus(gethospitalstaus.payload)
         console.log(gethospitalstaus.payload)
-        pie.datasets[0].data.push(gethospitalstaus.payload[0].new)
-        pie.datasets[0].data.push(gethospitalstaus.payload[0].awaiting)
-        pie.datasets[0].data.push(gethospitalstaus.payload[0].won)
-        pie.datasets[0].data.push(gethospitalstaus.payload[0].lost)
+        let data_pie=[]
+        data_pie.push(gethospitalstaus.payload[0].awaiting)
+        data_pie.push(gethospitalstaus.payload[0].won)
+        data_pie.push(gethospitalstaus.payload[0].lost)
+        data_pie.push(gethospitalstaus.payload[0].new)
+        setPie( {
+            labels: ['Awaiting Enquiries', 'Won Enquiries', 'Lost Enquiries',
+                'New Enquiries'],
+            datasets: [
+                {
+                    label: 'Patients',
+                    backgroundColor: [
+                        'rgb(119, 136, 153)',
+                        'rgb(65, 105, 625)',
+                        'rgb(0, 0, 225)',
+                        'rgb(56, 56, 121)'
+                    ],
+                    hoverBackgroundColor: [
+                        '#501800',
+                        '#4B5000',
+                        '#175000',
+                        '#003350',
+                    ],
+                    data: data_pie
+                }
+            ]
+        })
+      
         const getenquries = await auth_service.getenquriesbyhospitals(data.login_id,data._id);
         console.log(getenquries)
         

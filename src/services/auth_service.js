@@ -80,11 +80,18 @@ function sendquote(enquries_id,login_id,id,data) {
   return req
 }
 
-function wonandloss(enquries_id,login_id,hospital_id) {
+function wonandloss(enquries_id,login_id,hospital_id,data) {
   
-  const req = instance.get(`/enquries/${login_id}/hospital/wonandloss?hospital_id=${hospital_id}&enquries_id=${enquries_id}`);
+  const req = instance.post(`/enquries/${login_id}/hospital/wonandloss?hospital_id=${hospital_id}&enquries_id=${enquries_id}`,data);
   return req
 }
+
+function feedback(enquries_id,login_id,data) {
+  
+  const req = instance.post(`/enquries/${login_id}/feedback?enquries_id=${enquries_id}`,data);
+  return req
+}
+
 
 function sendmail(login_id,data) {
   
@@ -92,4 +99,4 @@ function sendmail(login_id,data) {
   return req
 }
 
-export  {login,enquries,sendmail,gethospitalsall,gethospitalstaus,updatedoctor,createdoctor, getadminstaus,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
+export  {login,enquries,sendmail,gethospitalsall,gethospitalstaus,feedback,updatedoctor,createdoctor, getadminstaus,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}

@@ -166,7 +166,7 @@ function PATIENT_FORM(props) {
             if(enquire_data.payload){
               
                history.push({
-                 pathname:'/ADMIN_HOSPITAL_DASHBOARD'
+                 pathname:'/admin/dashboard'
                });
            }else{
                setShow(true)

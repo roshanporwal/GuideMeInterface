@@ -90,28 +90,7 @@ const columns = [
     },
   ];
 
-const state = {
-    labels: ['Awaiting Patients', 'Won Patients', 'Lost Patients',
-        'New Patients'],
-    datasets: [
-        {
-            label: 'Patients',
-            backgroundColor: [
-                '#EAF2F6',
-                '#42B3CE',
-                '#164473',
-                '#5899BD'
-            ],
-            hoverBackgroundColor: [
-                '#501800',
-                '#4B5000',
-                '#175000',
-                '#003350',
-            ],
-            data: [65, 59, 80, 81]
-        }
-    ]
-}
+
 
 export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const history = useHistory();
@@ -119,6 +98,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const [enquriesstatus,setEnquriesstatus] = useState([ ])
    
     const [enquries, setEnquries] = useState([])
+    const [pie,setPie] = useState()
 
     useEffect(() => {
        
@@ -132,6 +112,34 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         console.log(data.token)
         const getadminstaus = await auth_service.getadminstaus()
         setEnquriesstatus(getadminstaus.payload)
+        console.log(getadminstaus.payload)
+        let data_pie=[]
+        data_pie.push(getadminstaus.payload[0].awaiting)
+        data_pie.push(getadminstaus.payload[0].won)
+        data_pie.push(getadminstaus.payload[0].lost)
+        data_pie.push(getadminstaus.payload[0].new)
+        setPie( {
+            labels: ['Awaiting Enquiries', 'Won Enquiries', 'Lost Enquiries',
+                'New Enquiries'],
+            datasets: [
+                {
+                    label: 'Patients',
+                    backgroundColor: [
+                        'rgb(119, 136, 153)',
+                        'rgb(65, 105, 625)',
+                        'rgb(0, 0, 225)',
+                        'rgb(56, 56, 121)'
+                    ],
+                    hoverBackgroundColor: [
+                        '#501800',
+                        '#4B5000',
+                        '#175000',
+                        '#003350',
+                    ],
+                    data: data_pie
+                }
+            ]
+        })
         const getenquries = await auth_service.getenquries(data.login_id)
         setEnquries(getenquries.payload)
         
@@ -210,7 +218,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                     <div className = "row">
                         <div className = "col-sm-7 ">
                         <Pie
-                            data={state}
+                            data={pie}
                             options={{
                                 title: {
                                     display: true,
@@ -259,7 +267,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
 
                     ))}
                 <div style={{ marginLeft: 20 }} className = "col-sm-1 mt-5">
-                    <button style = {{backgroundColor: "#164473",color: "white", borderRadius: 10, boxShadow: "5px 10px 8px #888888", width: "14rem", height: "3rem", marginLeft: "-2rem"}} onClick={()=>history.push('/PATIENT_FORM')}>ADD PATIENT</button>
+                    <button style = {{backgroundColor: "#164473",color: "white", borderRadius: 10, boxShadow: "5px 10px 8px #888888", width: "14rem", height: "3rem", marginLeft: "-2rem"}} onClick={()=>history.push('/admin/enqurie_form')}>ADD PATIENT</button>
                 </div> 
             </div>
             <div className="patient_table_container" style = {{marginTop: 40}}>
