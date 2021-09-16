@@ -1,5 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
+import SPECIALITY_DELETE from '../components/speciality_delete';
+import INSURANCE_UPDATE from '../components/insurance_update';
 
 import { Form } from 'react-bootstrap';
 import './style.css'
@@ -19,6 +21,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
         hospital_address: "",
         hospital_mobile: "",
         hospital_email: "",
+        hospital_image: ""
         
     })
     
@@ -83,6 +86,8 @@ function ADMIN_HOSPITAL_PROFILE (props){
             
             <>
             <HospitalNavbar/>
+            <SPECIALITY_DELETE />
+          <INSURANCE_UPDATE />
           
             {/* <Modal show={show} onHide={handleClose} style = {{opacity: 1, marginTop: "10rem"}}>
         <Modal.Header closeButton>
@@ -206,6 +211,21 @@ function ADMIN_HOSPITAL_PROFILE (props){
                         />
                         <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_email}</Form.Control.Feedback>
             </Form.Group>
+            <Form.Group  style = {{marginTop: "2rem"}}>
+            
+            <Form.Control
+            style={{ border: "2px solid #164473", borderRadius: 10 }}
+                        placeholder="Hospital Email"
+                        className = "form-control"
+                        onChange={handleChange} 
+                        type="file" 
+                        name="hospital_image" 
+                        id="hospital_image" 
+                        isValid = {!errors.hospital_image}
+                        value = {formValues.hospital_image}
+                        />
+                        <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_image}</Form.Control.Feedback>
+            </Form.Group>
            
           
             </Form>
@@ -229,23 +249,23 @@ function ADMIN_HOSPITAL_PROFILE (props){
               { 
                 hospital_data.map((target,index) => (
                     <div className = "medstar_container" key = {index} {...target}>
-                        <img className = "medstar_image"  src = "assets\images\Medstar-Healthcare-Jobs.png" alt = ""/>  
-                        <h5 style = {{textAlign: "center", padding: 5}}>{target.hospital_name}</h5>
+                        <img className = "medstar_image"  src = "assets\images\Medstar-Healthcare-Jobs.png" alt = ""/> 
+                        <button  data-toggle="modal" data-target="#exampleModal" /* onClick= {handleShow} */ disabled={isSubmitting} type = "submit" className = "update_doctor" style = {{marginLeft: "10rem"}}><i style = {{fontSize: 20}} className= "fa fa-pencil"></i></button> 
                         <h6 style = {{textAlign: "center", padding: 5}}>{target.google_location}</h6>
                         <div className = "d-flex p-4">
-                            <i style = {{fontSize: 22}} className = "fa fa-map-marker"></i>
+                            <i style = {{fontSize: 22, marginTop: "1rem"}} className = "fa fa-map-marker" ></i>
                             <h6 style = {{paddingLeft: 4}}>{target.address}</h6>
-                            <button  data-toggle="modal" data-target="#exampleModal" /* onClick= {handleShow} */ disabled={isSubmitting} type = "submit" className = "update_doctor"><i style = {{fontSize: 20}} className= "fa fa-pencil"></i></button>
+                            
                         </div>
                         <div className = "d-flex p-4">
-                            <i style = {{fontSize: 22}} className = "fa fa-phone"></i>
+                            <i style = {{fontSize: 22,  marginTop: "1rem"}} className = "fa fa-phone"></i>
                             <h6 style = {{paddingLeft: 4}}>{target.phno}</h6>
                             
 
    
                         </div>
                         <div className = "d-flex p-4">
-                            <i style = {{fontSize: 22}} className = "fa fa-map-marker"></i>
+                            <i style = {{fontSize: 22}} className = "fa fa-email"></i>
                             <h6 style = {{paddingLeft: 4}}>{target.hospital_email}</h6>
                             
                         </div>
@@ -253,6 +273,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
                     
                 ))
     }
+
               <div>
               <div className = "row">
                   <div className = "col-sm-3">
@@ -288,7 +309,17 @@ function ADMIN_HOSPITAL_PROFILE (props){
               <div className = "col-md-7 ">
 
               <div style = {{height: "45rem", overflow: "hidden", overflowY: "scroll"}}>
-                                <h4 style = {{marginLeft: 30}}>Our Specialities</h4>
+              <div className = "row">
+                                    <div className = "col-md-8">
+                                        <h4 style = {{marginLeft: 30}}>Our Specialities</h4>
+                                    </div>
+                                    <div className = "col-md-2">
+                                        <h4><button  data-toggle="modal" data-target="#exampleModal1" className = "update_doctor"><i className = "fa fa-trash"></i></button></h4>
+                                    </div>
+                                    <div className = "col-md-2">
+                                        <h4><button  data-toggle="modal" data-target="#exampleModal2" className = "update_doctor"><i className = "fa fa-pencil"></i></button></h4>
+                                    </div>
+                                </div>
                                 <div className = "d-flex">
                                     <div style = {{marginLeft: 30, marginTop: 10}}>
                                         <ul>
@@ -304,7 +335,17 @@ function ADMIN_HOSPITAL_PROFILE (props){
                                 
                             </div>
     <div style = {{marginLeft: "5rem", paddingLeft: "1rem", marginTop: "2rem", height: "45rem", overflow: "hidden", overflowY: "scroll"}}>
-        <h4>Insurance</h4>
+    <div className = "row">
+                                    <div className = "col-md-8">
+                                        <h4 style = {{marginLeft: 30}}>Insurance</h4>
+                                    </div>
+                                    <div className = "col-md-2">
+                                        <h4><button  data-toggle="modal" data-target="#exampleModal3" className = "update_doctor"><i className = "fa fa-trash"></i></button></h4>
+                                    </div>
+                                    <div className = "col-md-2">
+                                        <h4><button  data-toggle="modal" data-target="#exampleModal4" className = "update_doctor"><i className = "fa fa-pencil"></i></button></h4>
+                                    </div>
+                                </div>
         <div className = "row">
             
                  { 
