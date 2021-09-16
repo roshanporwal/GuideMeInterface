@@ -2,18 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { MultiSelect } from "react-multi-select-component";
 import 'font-awesome/css/font-awesome.min.css';
 import {Form} from "react-bootstrap";
+import * as auth_service from "../services/auth_service";
 
 
 
 
  function INSURANCE_UPDATE(){
     const [selected, setSelected] = useState([]);
-    const [speciality, setSpeciality] = useState([]);
     const [insurance, setInsurance] = useState([]);
-    const [type, setType] = useState()
-    const [hospital_data, setHospital_data] = useState([]);
+    const [type, setType] = useState([])
     const [formValues, setFormValue] = useState({
-        insurance: "",
+        insurance_company_name: "",
         type: [],
         network: "",
        
@@ -26,18 +25,74 @@ import {Form} from "react-bootstrap";
     async function fetchData(props) {
 
 
-        console.log(props)
+       
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        console.log(data.insurance)
-        setHospital_data([data])
-        setSpeciality(data.speciality)
+        let temp = []
         if(data.insurance){
-        setInsurance(data.insurance)
-        console.log(speciality)
+            for (const sp of data.insurance) {
+                temp.push({
+                  label: sp.insurance_company_name,
+                  value: sp.insurance_company_name
+                })
+              }
+        setInsurance(temp)
         }
        
     }
+    async function remove() {
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+    
+        for (const se of selected) {
+          if (insurance.find(item => item.value === se.value)) {
+            setInsurance(insurance.filter(item => item.value !== se.value));
+            data.insurance = data.insurance.filter(item => item.insurance_company_name !== se.value)
+    
+          }
+        }
+        const values = {
+            insurance: data.insurance
+        }
+        const updatehospital = await auth_service.updatehospital(data.login_id, values)
+        if (updatehospital.payload) {
+          localStorage.setItem('login', JSON.stringify(updatehospital.payload));
+          window.location.reload();
+        } else if (!updatehospital.payload) {
+          window.location.reload();
+        }
+      }
+    
+      async function addinsurence() {
+          formValues.type=type.toString()
+         
+          
+          
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        if(!data.insurance){
+            data.insurance=[]
+        }
+        if(formValues.insurance_company_name === ''){
+           
+          window.location.reload();
+          return
+        }
+        data.insurance.push(formValues)
+        
+    
+        const values = {
+            insurance: data.insurance
+        }
+        
+        const updatehospital = await auth_service.updatehospital(data.login_id, values)
+        if (updatehospital.payload) {
+          localStorage.setItem('login', JSON.stringify(updatehospital.payload));
+          window.location.reload();
+        } else if (!updatehospital.payload) {
+          window.location.reload();
+        }
+      }
     function checkBox(name, value) {
 
         if (name === "type") {
@@ -75,10 +130,10 @@ import {Form} from "react-bootstrap";
                             <Form.Label>Insurance Name</Form.Label>
                             <Form.Control
                                 type = "text"
-                                name = "insurance"
-                                id = "speciality"
+                                name = "insurance_company_name"
+                                id = "insurance_company_name"
                                 onChange={handleChange}
-                                value = {formValues.insurance}
+                                value = {formValues.insurance_company_name}
                                 
                             />
                             </Form.Group>
@@ -114,7 +169,7 @@ import {Form} from "react-bootstrap";
                                 
                             />
                             </Form.Group>
-                            <button style={{ marginTop: 100 }} className="join_button" type="submit" >Add</button>
+                            <button style={{ marginTop: 100 }} className="join_button" type="button" onClick={addinsurence}>Add</button>
                            
                             </Form>
                             
@@ -145,11 +200,11 @@ import {Form} from "react-bootstrap";
                                 onChange={setSelected}
                                 labelledBy="Select"
                             />
-                            <button style={{ marginTop: 100 }} className="join_button" type="submit" ><i className = "fa fa-trash"></i></button>
+                            <button style={{ marginTop: 100 }} className="join_button" type="button"  onClick={remove}><i className = "fa fa-trash"></i></button>
             </div>
        </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" className="btn btn-secondary" data-dismiss="modal" >Close</button>
         
       </div>
     </div>

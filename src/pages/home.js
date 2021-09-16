@@ -51,9 +51,13 @@ function Home(props) {
     const login = await auth_service.login(values)
     if (login.payload) {
       localStorage.setItem('login', JSON.stringify(login.payload));
+      
       history.push({
         pathname: '/hospital/dashboard'
       });
+    }else{
+      console.log(login)
+      alert(login.message)
     }
 
 
@@ -69,7 +73,7 @@ function Home(props) {
       <div className="content row" >
         <div className="col-md-4">
           
-            <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\login_img.png" alt="" img-fluid />
+            <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\login_img.png" alt=""  />
 
          
 

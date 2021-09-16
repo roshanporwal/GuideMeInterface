@@ -29,6 +29,11 @@ function updatedoctor(login_id,_id,data) {
   const req = instance.post(`/doctor/${login_id}/update1?login_id=${_id}`,data);
   return req
 }
+function updatehospital(login_id,data) {
+ 
+  const req = instance.post(`/hospital/${login_id}/update?login_id=${login_id}`,data);
+  return req
+}
 
 function createdoctor(data) {
  
@@ -99,4 +104,4 @@ function sendmail(login_id,data) {
   return req
 }
 
-export  {login,enquries,sendmail,gethospitalsall,gethospitalstaus,feedback,updatedoctor,createdoctor, getadminstaus,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}
+export  {login,enquries,sendmail,gethospitalsall,gethospitalstaus,feedback,updatehospital,updatedoctor,createdoctor, getadminstaus,wonandloss,uploadexcelfile,getenquries,getenquriesbyid,gethospitals,updateenquries,getdoctorbyhospital,getenquriesbyhospitals,sendquote,specility,loginadmin}

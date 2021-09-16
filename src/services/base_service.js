@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 
+
 const instance = axios.create({
   baseURL: `http://localhost:8080`,
   //"http://localhost:8080"
@@ -21,11 +22,14 @@ instance.interceptors.request.use(
     return config;
   },
   error => {
+    //localStorage.removeItem("login")
+   // window.location = '/';
     if(error.message ==="Network Error"){
       return "Network Error";
     }
-    else{
-      console.log(`Error requesting url ${error.config.url}: `, error.message);
+    else  {
+      //console.log(`Error requesting url ${error.config.url}: `, error.message);
+      
       throw error;
     }
    
@@ -37,20 +41,32 @@ instance.interceptors.response.use(
     return resp.data;
   },
   error => {
+    console.log("error",error.response.status)
+    console.log(error)
+   // localStorage.removeItem("login")
+   
+   // window.location = '/';
     if(error.message  ==="Network Error"){
       return "Network Error";
-    
     }
-
-    
-    else{
+    else if(error.response.status===401){
+      localStorage.removeItem("login")
+   
+       window.location = '/';
+      console.log(error.status)
+    }else { 
       
-      console.log(`Error requesting url ${error.config.url}: `, error.message);
-      throw error?.response?.data;
+      //console.log(`Error requesting url ${error.config.url}: `, error.staus);
+      return error?.response?.data;
     }
 
    
   },
 );
+
+
+
+ 
+    
 
 export { instance };
