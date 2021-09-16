@@ -807,8 +807,8 @@ tbody{
 }
 .patient_form_container{
    
-    height: 130rem;
-    
+    height: auto;
+    padding:15px;
     background: white;
     border-radius: 20px;
     cursor: pointer;
@@ -874,8 +874,12 @@ tbody{
     height: 6rem;
     box-shadow: 5px 10px 8px #888888;
     justify-content: center;
-    margin-top: 20rem;
-    
+    margin-top: 5rem;
+}
+
+.navbar-nav svg, .navbar-nav a{
+    display:inline-block;
+
 }
 
 .table-scroll {

@@ -226,7 +226,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <p className="card-text">Age: {target.patient_age}</p>
                                         <p className="card-text">Gender: {target.patient_gender}</p>
                                         <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                        <p className="card-text"><div className="languages">Language: {target.languages_spoken.join(', ')}</div><br /> </p>
+                                        <div className="card-text"><h5 className="languages">Language: {target.languages_spoken.join(', ')}</h5><br /> </div>
                                     </div>
                                 </div>
 
@@ -243,7 +243,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                                     <div className="patient_prefernces_details">
 
-                                        <p className="card-text2" ><b>Patient Requirement:</b><br /><div className="proposed_plans">{target.proposed_treatment_plan.join(', ')}</div></p>
+                                        <div className="card-text2" ><b>Patient Requirement:</b><br /><h5 className="proposed_plans">{target.proposed_treatment_plan.join(', ')}</h5></div>
 
                                         <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
                                         <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>

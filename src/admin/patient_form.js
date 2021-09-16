@@ -156,7 +156,7 @@ function PATIENT_FORM(props) {
         
          console.log(patient_reports)
          console.log(insurance_card_copy)
-         setValidated(true);
+         setValidated(false);
 
 
         
@@ -228,6 +228,8 @@ function PATIENT_FORM(props) {
         <ADMIN_NAVBAR/>
           <div>{show ? (<Alert show={show} variant="danger" >
           <Alert.Heading>error</Alert.Heading></Alert>) : null}
+            <div className="container">
+                <div className="row">
             <div className="patient_form_container">
             
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -242,7 +244,7 @@ function PATIENT_FORM(props) {
                                 name="patient_name"
                                 value={formValues.patient_name}
                                 onChange={handleChange}
-                                isValid={!errors.patient_name}
+                                isInvalid={!!errors.patient_name}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_name}</Form.Control.Feedback>
                         </Form.Group>
@@ -257,7 +259,7 @@ function PATIENT_FORM(props) {
                                 name="patient_email"
                                 value={formValues.patient_email}
                                 onChange={handleChange}
-                                isValid={!errors.patient_email}
+                                isInvalid={!!errors.patient_email}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_email}</Form.Control.Feedback>
                         </Form.Group>
@@ -271,7 +273,7 @@ function PATIENT_FORM(props) {
                                 name="patient_referred_by"
                                 value={formValues.patient_referred_by}
                                 onChange={handleChange}
-                                isValid={!errors.patient_referred_by}
+                                isInvalid={!!errors.patient_referred_by}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_referred_by}</Form.Control.Feedback>
                         </Form.Group>
@@ -284,7 +286,7 @@ function PATIENT_FORM(props) {
                                 name="patient_mobile"
                                 value={formValues.patient_mobile}
                                 onChange={handleChange}
-                                isValid={!errors.patient_mobile}
+                                isInvalid={!!errors.patient_mobile}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_mobile}</Form.Control.Feedback>
                         </Form.Group>
@@ -297,14 +299,14 @@ function PATIENT_FORM(props) {
                                 name="patient_age"
                                 value={formValues.patient_age}
                                 onChange={handleChange}
-                                isValid={!errors.patient_age}
+                                isInvalid={!!errors.patient_age}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_age}</Form.Control.Feedback>
                         </Form.Group>
                         
                         
                       
-                        <div style = {{marginTop: "4rem"}}>
+                        <div style = {{marginTop: "2rem"}}>
                             <label>Patient Gender</label>
                             <div className = "d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "3rem"}}>
                             <Form.Check
@@ -316,7 +318,7 @@ function PATIENT_FORM(props) {
                                 id = "male"
                                 value="male"
                                 onChange={handleChange}
-                                isValid={!errors.patient_gender}
+                                isInvalid={!!errors.patient_gender}
                             />
                             <Form.Check
                                 label="Female"
@@ -326,7 +328,7 @@ function PATIENT_FORM(props) {
                                 name="patient_gender" 
                                 id="female" 
                                 value="female"
-                                isValid={!errors.patient_gender}
+                                isInvalid={!!errors.patient_gender}
                                 />
                                 
                             <Form.Check
@@ -337,7 +339,7 @@ function PATIENT_FORM(props) {
                                 name="patient_gender" 
                                 id="neutral" 
                                 value="neutral"
-                                isValid = {!errors.patient_gender}/>
+                                isInvalid = {!!errors.patient_gender}/>
                             </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.patient_gender}</Form.Control.Feedback>
                             <div className="invalid-feedback">{formErrors.patient_gender}</div>
@@ -351,7 +353,7 @@ function PATIENT_FORM(props) {
                                 name="patient_nationality"
                                 value={formValues.patient_nationality}
                                 onChange={handleChange}
-                                isValid={!errors.patient_nationality}
+                                isInvalid={!!errors.patient_nationality}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_nationality}</Form.Control.Feedback>
                         </Form.Group>
@@ -364,7 +366,7 @@ function PATIENT_FORM(props) {
                                 name="patient_document"
                                /*  ref = {hiddenFileInput} */
                                 onChange={onchange}
-                                isValid={!errors.patient_document}
+                                isInvalid={!!errors.patient_document}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_document}</Form.Control.Feedback>
                         </Form.Group>
@@ -378,7 +380,7 @@ function PATIENT_FORM(props) {
                                 name="patient_reports"
                               /*   ref={hiddenFileInput} */
                                 onChange={onchange}
-                                isValid={!errors.patient_reports}
+                                isInvalid={!!errors.patient_reports}
                             />
                             
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_reports}</Form.Control.Feedback>
@@ -396,7 +398,7 @@ function PATIENT_FORM(props) {
                                 name="current_diagnosis"
                                 value={formValues.current_diagnosis}
                                 onChange={handleChange}
-                                isValid={!errors.current_diagnosis}
+                                isInvalid={!!errors.current_diagnosis}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
                         </Form.Group>
@@ -410,7 +412,7 @@ function PATIENT_FORM(props) {
                                 name="insurance_name"
                                 value={formValues.insurance_name}
                                 onChange={handleChange}
-                                isValid={!errors.insurance_name}
+                                isInvalid={!!errors.insurance_name}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_name}</Form.Control.Feedback>
                         </Form.Group>
@@ -425,7 +427,7 @@ function PATIENT_FORM(props) {
                                 name="insurance_card_copy"
                                /*  ref = {hiddenFileInput} */
                                 onChange={onchange}
-                                isValid={!errors.insurance_card_copy}
+                                isInvalid={!!errors.insurance_card_copy}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_card_copy}</Form.Control.Feedback>
                         </Form.Group>
@@ -441,102 +443,102 @@ function PATIENT_FORM(props) {
                                 name="medical_history"
                                 value={formValues.medical_history}
                                 onChange={handleChange}
-                                isValid={!errors.medical_history}
+                                isInvalid={!!errors.medical_history}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.medical_history}</Form.Control.Feedback>
                         </Form.Group>
                         
                         <div className="pt-4 ">
                             <label>Proposed Treatment plan/requirement</label>
-                            <div style = {{border: "2px solid #164473", borderRadius: 10}}>
+                            <div style = {{border: "2px solid #164473", padding:10, borderRadius: 10}}>
                             <div className="d-flex ml-4">
                                 <Form.Check
                                 label = "Surgical Consultation"
                                 required
-                                style={{ marginLeft: 20}}
+                                style={{ marginLeft: 0}}
                                 type="checkbox"
                                 name="proposed_treatment_Plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "surgical_consultation"
                                 onChange={() => checkBox("proposed_treatment_plan", "surgical_consultation")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                             <Form.Check
                             label = "Admission"
                                 required
-                                style={{marginLeft: "40px"}}
+                                style={{marginLeft: "20px"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "admission"
                                 onChange={() => checkBox("proposed_treatment_plan", "admission")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                             </div>
 
                             <Form.Check
                                 label = "Second Opinion of Consultation"
                                 required
-                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                style={{marginLeft: "0px", marginTop: "1rem"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "second_opinion_of_consultation"
                                 onChange={() => checkBox("proposed_treatment_plan", "second_opinion_of_consultation")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                             <Form.Check
                                 label = "International Expert Opinion"
                                 required
-                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                style={{marginLeft: "0px", marginTop: "1rem"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "international_expert_opinion"
                                 onChange={() => checkBox("proposed_treatment_plan", "international_expert_opinino")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                             <div className="d-flex" style = {{marginTop: "1rem"}}>
                             <Form.Check
                                 label = "Home Care Services"
                                 required
-                                style={{marginLeft: "20px"}}
+                                style={{marginLeft: "0px"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "home_care_services"
                                 onChange={() => checkBox("proposed_treatment_plan", "home_care_services")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                             <Form.Check
                                 label = "Teleconsultation"
                                 required
-                                style={{marginLeft: "50px"}}
+                                style={{marginLeft: "20px"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "teleconsultation"
                                 onChange={() => checkBox("proposed_treatment_plan", "teleconsultation")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                             />
                                 
                             </div>
                             <Form.Check
                                 label = "Need multiple options to choos e the best"
                                 required
-                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                style={{marginLeft: "0px", marginTop: "1rem"}}
                                 type="checkbox"
                                 name="proposed_treatment_plan"
                                 value={formValues.proposed_treatment_plan}
                                 id = "multiple_options"
                                 onChange={() => checkBox("proposed_treatment_plan", "multiple_options")}
-                                isValid={!errors.proposed_treatment_plan}
+                                isInvalid={!!errors.proposed_treatment_plan}
                                 
                             />
                             <Form.Check
                                 label = "Others"
                                 required
-                                style={{marginLeft: "20px", marginTop: "1rem"}}
+                                style={{marginLeft: "0px", marginTop: "1rem"}}
                                 type="checkbox"
                                 onChange = {handleOthersField}
                                 value = {formValues.proposed_treatment_plan}
@@ -554,7 +556,7 @@ function PATIENT_FORM(props) {
                                 name="other_plan"
                                 value={formValues.other_plan}
                                 onChange={handleChange}
-                                isValid={!errors.other_plan}
+                                isInvalid={!!errors.other_plan}
                             /> : ""}
                                    
                                
@@ -577,7 +579,7 @@ function PATIENT_FORM(props) {
                                 id = "yes"
                                 value="yes"
                                 onChange={handleChange}
-                                isValid={!errors.transport_support_needed}
+                                isInvalid={!!errors.transport_support_needed}
                             />
                             <Form.Check
                                 label="No"
@@ -587,7 +589,7 @@ function PATIENT_FORM(props) {
                                 name="transport_support_needed" 
                                 id="no" 
                                 value="no"
-                                isValid={!errors.transport_support_needed}
+                                isInvalid={!!errors.transport_support_needed}
                                 />
                                 
                             <Form.Check
@@ -598,7 +600,7 @@ function PATIENT_FORM(props) {
                                 name="transport_support_needed" 
                                 id="maybe" 
                                 value="maybe"
-                                isValid = {!errors.transport_support_needed}/>
+                                isInvalid = {!!errors.transport_support_needed}/>
                             
                             </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.transport_support_needed}</Form.Control.Feedback>
@@ -621,7 +623,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "english"
                                 onChange={() => checkBox("languages_spoken", "english")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "Arabic"
@@ -632,7 +634,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "arabic"
                                 onChange={() => checkBox("languages_spoken", "arabic")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "Hindi"
@@ -643,10 +645,10 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "hindi"
                                 onChange={() => checkBox("languages_spoken", "hindi")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                             </div>
-                            <div className="d-flex pt-4">
+                            <div className="d-flex">
                             <Form.Check
                                 label = "Urdu"
                                 required
@@ -656,7 +658,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "urdu"
                                 onChange={() => checkBox("languages_spoken", "urdu")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "Tagaloug"
@@ -667,7 +669,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "tagaloug"
                                 onChange={() => checkBox("languages_spoken", "tagaloug")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "French"
@@ -678,10 +680,10 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "french"
                                 onChange={() => checkBox("languages_spoken", "french")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                             </div>
-                            <div className="d-flex pt-4">
+                            <div className="d-flex">
                             <Form.Check
                                 label = "Afrikaans"
                                 required
@@ -691,7 +693,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "afrikaans"
                                 onChange={() => checkBox("languages_spoken", "afrikaans")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "Malayalam"
@@ -702,7 +704,7 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "malayalam"
                                 onChange={() => checkBox("languages_spoken", "malayalam")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                                 <Form.Check
                                 label = "Bengali"
@@ -713,10 +715,10 @@ function PATIENT_FORM(props) {
                                 value={formValues.languages_spoken}
                                 id = "bengali"
                                 onChange={() => checkBox("languages_spoken", "bengali")}
-                                isValid={!errors.languages_spoken}
+                                isInvalid={!!errors.languages_spoken}
                             />
                              </div>
-                             <div className=" pt-4">
+                             <div className="">
                             <Form.Check
                                 label = "Others"
                                 required
@@ -737,7 +739,7 @@ function PATIENT_FORM(props) {
                                     id="other_languages" 
                                     placeholder = "Please specify"
                                     value={formValues.other_languages}
-                                    isValid = {!errors.other_languages}
+                                    isInvalid = {!!errors.other_languages}
                                     />:""}
                             </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.languages_spoken}</Form.Control.Feedback>
@@ -753,7 +755,7 @@ function PATIENT_FORM(props) {
                                 name="food_preferences"
                                 value={formValues.food_preferences}
                                 onChange={handleChange}
-                                isValid={!errors.food_preferences}
+                                isInvalid={!!errors.food_preferences}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.food_preferences}</Form.Control.Feedback>
                         </Form.Group>
@@ -761,44 +763,45 @@ function PATIENT_FORM(props) {
                         <div className="invalid-feedback">{formErrors.food_preferences}</div>
                         <div className="pt-4">
                             <label>Accomodation / Other Logistic Support Needed</label>
-                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, height: "3rem"}}>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, padding:5}}>
                             <Form.Check
                                 label = "Yes"
                                 required
+                                className="mb-0"
                                 style = {{paddingLeft: "4rem"}}
                                 type="radio"
                                 name="accomodation"
                                 id = "yes"
                                 value="yes"
                                 onChange={handleChange}
-                                isValid={!errors.accomodation}
+                                isInvalid={!!errors.accomodation}
                             />
                             <Form.Check
                                 label="No"
-                                style = {{paddingLeft: "10rem"}}
+                                style = {{paddingLeft: "8rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="accomodation" 
                                 id="no" 
                                 value="no"
-                                isValid={!errors.accomodation}
+                                isInvalid={!!errors.accomodation}
                                 />
                                 
                             <Form.Check
                                 label="Maybe"
-                                style = {{paddingLeft: "10rem"}}
+                                style = {{paddingLeft: "7rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
                                 name="accomodation" 
                                 id="maybe" 
                                 value="maybe"
-                                isValid = {!errors.accomodation}/>                            
+                                isInvalid = {!!errors.accomodation}/>                            
                                 </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.accomodation}</Form.Control.Feedback>
                         </div>
                         
                         <label style = {{marginTop: 5}}>Preferred Hospital Visit Type</label>
-                        <div className="pt-4"  style = {{ border: "2px solid #164473", borderRadius: 10}}>
+                        <div className="pt-2"  style = {{ border: "2px solid #164473", borderRadius: 10}}>
                            
 
                             <Form.Check
@@ -809,7 +812,7 @@ function PATIENT_FORM(props) {
                                 name="preferred_hospital_visit" 
                                 id="one_visit" 
                                 value="one_visit"
-                                isValid={!errors.preferred_hospital_visit}
+                                isInvalid={!!errors.preferred_hospital_visit}
                                 />
                             <Form.Check
                                 label="Multiple Visit - But Minimal Waiting"
@@ -819,7 +822,7 @@ function PATIENT_FORM(props) {
                                 name="preferred_hospital_visit" 
                                 id="multiple_visit" 
                                 value="multiple_visit"
-                                isValid={!errors.preferred_hospital_visit}
+                                isInvalid={!!errors.preferred_hospital_visit}
                                 />
                                 <Form.Check
                                 label="Others"
@@ -837,7 +840,7 @@ function PATIENT_FORM(props) {
                                 placeholder = "Please specify"
                                 value={formValues.preferred_hospital_visit}
                                 onChange={handleChange}
-                                isValid={!errors.preferred_hospital_visit}
+                                isInvalid={!!errors.preferred_hospital_visit}
                             />: ""}
                                      
                            
@@ -853,7 +856,7 @@ function PATIENT_FORM(props) {
                                 name="proposal_date"
                                 value={formValues.proposal_date}
                                 onChange={handleChange}
-                                isValid={!errors.proposal_date}
+                                isInvalid={!!errors.proposal_date}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.proposal_date}</Form.Control.Feedback>
                         </Form.Group>
@@ -866,7 +869,7 @@ function PATIENT_FORM(props) {
                                 name="from_date"
                                 value={formValues.from_date}
                                 onChange={handleChange}
-                                isValid={!errors.from_date}
+                                isInvalid={!!errors.from_date}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.from_date}</Form.Control.Feedback>
                         </Form.Group>
@@ -880,19 +883,21 @@ function PATIENT_FORM(props) {
                                 name="to_date"
                                 value={formValues.to_date}
                                 onChange={handleChange}
-                                isValid={!errors.to_date}
+                                isInvalid={!!errors.to_date}
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.to_date}</Form.Control.Feedback>
                         </Form.Group>
-                        <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                       
 
                     </div>
-                    <div className = "patient_button_div">
-                   
+                    <div className = "offset-col-md-4 col-md-4">
+                         <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
                     </div>
                 </Form>
             </div>
             </div>
+            </div>
+            </div><br /><br /><br /><br />
         </>
     )
 }

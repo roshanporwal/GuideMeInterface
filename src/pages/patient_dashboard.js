@@ -108,7 +108,7 @@ function PATIENT_DASHBOARD(props) {
         free_physiotherapy: "",
         free_other_speciality_consultant: "",
         free_telephonic_feedback: "",
-        free_annual_checkup: "",
+        free_annual_checkup:[],
         pickup_and_drop: "",
         free_patient_dedicated_relationship: "",
         benefits_for_patient: "",
@@ -285,7 +285,7 @@ function PATIENT_DASHBOARD(props) {
                                         <p className="card-text">Age: {target.patient_age}</p>
                                         <p className="card-text">Gender: {target.patient_gender}</p>
                                         <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                        <p className="card-text"><div className = "languages">Language: {target.languages_spoken.join(', ')}</div></p>
+                                        <div className="card-text"><h5 className = "languages">Language: {target.languages_spoken.join(', ')}</h5></div>
                                     </div>
                                 </div>
 
@@ -301,7 +301,7 @@ function PATIENT_DASHBOARD(props) {
                                     </div>
 
                                     <div className="patient_prefernces_details">
-                                        <p className="card-text"><b>Patient Requirement:</b><br /><div className = "proposed_plans">{target.proposed_treatment_plan.join(', ')}</div></p>
+                                        <div className="card-text"><b>Patient Requirement:</b><br /><h5 className = "proposed_plans">{target.proposed_treatment_plan.join(', ')}</h5></div>
                                         <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
                                         <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>
                                         <p className="card-text"><b>Transport Support Needed:</b><br />{target.transport_support_needed}</p>
@@ -508,11 +508,12 @@ function PATIENT_DASHBOARD(props) {
 
                             <div className="pt-4">
                                 <Form.Label>Types of Anesthesia</Form.Label>
-                                <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
+                                <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
+                                    <div className = "col-md-5">
                                 <Form.Check
                                     label = "Local"
                                     required
-                                    style = {{paddingLeft: "4rem"}}
+                                   
                                     type="radio"
                                     name="type_of_anesthesia"
                                     id = "local"
@@ -521,10 +522,12 @@ function PATIENT_DASHBOARD(props) {
                                     onChange={handleChange}
                                     isValid={!errors.type_of_anesthesia}
                                 />
+                                </div>
+                                <div className = "col-md-5">
                                     <Form.Check
                                         label = "General"
                                         required
-                                        style = {{paddingLeft: "40rem"}}
+                                       
                                         type="radio"
                                         name="type_of_anesthesia"
                                         id = "general"
@@ -533,10 +536,12 @@ function PATIENT_DASHBOARD(props) {
                                         onChange={handleChange}
                                         isValid={!errors.type_of_anesthesia}
                                     />
+                                    </div>
+                                    <div className = "col-md-2">
                                     <Form.Check
                                         label = "Epidural"
                                         required
-                                        style = {{paddingLeft: "35rem"}}
+                                        
                                         type="radio"
                                         name="type_of_anesthesia"
                                         id = "epidural"
@@ -545,6 +550,7 @@ function PATIENT_DASHBOARD(props) {
                                         onChange={handleChange}
                                         isValid={!errors.type_of_anesthesia}
                                     />
+                                    </div>
                                 </div>
                                 <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
                             </div>
@@ -688,7 +694,7 @@ function PATIENT_DASHBOARD(props) {
                                 <div className="pt-4">
                                 <Form.Label>Free Telephonic Feedback from other patients / attendants who have undergone similar treatment</Form.Label>
                                 <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
-                                    <div className = "col-sm-4">
+                                    <div className = "col-sm-5">
                                 <Form.Check
                                     label = "Yes"
                                     required
@@ -702,7 +708,7 @@ function PATIENT_DASHBOARD(props) {
                                     isValid={!errors.free_telephonic_feedback}
                                 />
                                 </div>
-                                <div className = "col-sm-4">
+                                <div className = "col-sm-5">
                                 
                                     <Form.Check
                                         label = "No"
@@ -717,7 +723,7 @@ function PATIENT_DASHBOARD(props) {
                                         isValid={!errors.free_telephonic_feedback}
                                     />
                                     </div>
-                                    <div className = "col-sm-4">
+                                    <div className = "col-sm-2">
                                     <Form.Check
                                         label = "At Discount"
                                         required
@@ -738,7 +744,7 @@ function PATIENT_DASHBOARD(props) {
                             <div className="pt-4">
                                 <Form.Label>Free Annual Checkup</Form.Label>
                                 <div className="row" style={{ border: "2px solid #164473", borderRadius: 10,  marginLeft: "4px", marginRight: "4px" }}>
-                                    <div className = "col-sm-4">
+                                    <div className = "col-sm-5">
                                 <Form.Check
                                     label = "Patients"
                                     required
@@ -752,7 +758,7 @@ function PATIENT_DASHBOARD(props) {
                                     isValid={!errors.free_annual_checkup}
                                 />
                                 </div>
-                                <div className = "col-sm-4">
+                                <div className = "col-sm-5">
                                     <Form.Check
                                         label = "Family Members"
                                         required
@@ -766,7 +772,7 @@ function PATIENT_DASHBOARD(props) {
                                         isValid={!errors.free_annual_checkup}
                                     />
                                     </div>
-                                    <div className = "col-sm-4">
+                                    <div className = "col-sm-2">
                                     <Form.Check
                                         label = "At Discount"
                                         required
@@ -785,8 +791,8 @@ function PATIENT_DASHBOARD(props) {
                             </div>
                             
                             
-                            <div className=" pt-4">
-                            <div classname = "row">
+                            <div style = {{marginTop: "2rem"}}>
+                            <div className = "row">
                                 <div className = "col-sm-6">
                                 <label>Pickup and Drop</label>
                                 <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
@@ -828,9 +834,10 @@ function PATIENT_DASHBOARD(props) {
                                         isValid={!errors.pickup_and_drop}
                                     />
                                     </div>
+                                     <Form.Control.Feedback style={{ color: "red" }}>{errors?.pickup_and_drop}</Form.Control.Feedback>
                                     </div>
-                                </div>
-                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.pickup_and_drop}</Form.Control.Feedback>
+                                
+                               
                             <div className = "col-sm-1"></div>
                             <div className = "col-sm-5">
                            
@@ -878,7 +885,7 @@ function PATIENT_DASHBOARD(props) {
                                 <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_patient_dedicated_relationship}</Form.Control.Feedback>
                             </div>
                             </div>
-
+                            </div>
                             <Form.Group style = {{marginTop: "2rem"}}>
                                 <Form.Label>Other Benefits For Patient</Form.Label>
                                     <Form.Control
