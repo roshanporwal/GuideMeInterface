@@ -55,6 +55,9 @@ function PATIENT_FORM(props) {
         other_languages: "",
         food_preferences: "",
         accomodation: "",
+        airport_transfer_needed: "",
+        ambulance_support_needed: "",
+        Medical_visa_arrangements: "",
         preferred_hospital_visit: "",
         proposal_date: "",
         from_date: "",
@@ -386,6 +389,46 @@ function PATIENT_FORM(props) {
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_reports}</Form.Control.Feedback>
                         </Form.Group>
                        {/*  <button onClick = {handleChange} className = "join_button">Upload<i className="fa fa-upload" aria-hidden="true" style = {{fontSize: 18, paddingLeft: 10}}></i></button> */}
+                       <div className="pt-4">
+                            <label>Airport Transport needed(applicable to international patients)</label>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, padding:5}}>
+                            <Form.Check
+                                label = "Yes"
+                                required
+                                className="mb-0"
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="airport_transfer_needed"
+                                id = "yes"
+                                value="yes"
+                                onChange={handleChange}
+                                isInvalid={!!errors.airport_transfer_needed}
+                            />
+                            <Form.Check
+                                label="No"
+                                style = {{paddingLeft: "8rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="airport_transfer_needed" 
+                                id="no" 
+                                value="no"
+                                isInvalid={!!errors.airport_transfer_needed}
+                                />
+                                
+                            <Form.Check
+                                label="Maybe"
+                                style = {{paddingLeft: "7rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="airport_transfer_needed" 
+                                id="maybe" 
+                                value="maybe"
+                                isInvalid = {!!errors.airport_transfer_needed}/>                            
+                                </div>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.airport_transfer_needed}</Form.Control.Feedback>
+                        </div>
+                        
+                        
                         
                     </div>
                     <div className="col-md-4">
@@ -605,7 +648,44 @@ function PATIENT_FORM(props) {
                             </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.transport_support_needed}</Form.Control.Feedback>
                         </div>
-                        
+                        <div className="pt-4">
+                            <label>Ambulance Support Needed(Applicable to international patients)</label>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, padding:5}}>
+                            <Form.Check
+                                label = "Yes"
+                                required
+                                className="mb-0"
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="ambulance_support_needed"
+                                id = "yes"
+                                value="yes"
+                                onChange={handleChange}
+                                isInvalid={!!errors.ambulance_support_neededce}
+                            />
+                            <Form.Check
+                                label="No"
+                                style = {{paddingLeft: "8rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="ambulance_support_needed" 
+                                id="no" 
+                                value="no"
+                                isInvalid={!!errors.ambulance_support_needed}
+                                />
+                                
+                            <Form.Check
+                                label="Maybe"
+                                style = {{paddingLeft: "7rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="ambulance_support_needed" 
+                                id="maybe" 
+                                value="maybe"
+                                isInvalid = {!!errors.ambulance_support_needed}/>                            
+                                </div>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.ambulance_support_needed}</Form.Control.Feedback>
+                        </div>
 
 
                     </div>
@@ -798,6 +878,44 @@ function PATIENT_FORM(props) {
                                 isInvalid = {!!errors.accomodation}/>                            
                                 </div>
                             <Form.Control.Feedback style= {{color:"red"}}>{errors?.accomodation}</Form.Control.Feedback>
+                        </div>
+                        <div className="pt-4">
+                            <label>Medical Visa Arrangement(Applicable to international patients)</label>
+                            <div className="d-flex"  style = {{border: "2px solid #164473", borderRadius: 10, padding:5}}>
+                            <Form.Check
+                                label = "Yes"
+                                required
+                                className="mb-0"
+                                style = {{paddingLeft: "4rem"}}
+                                type="radio"
+                                name="Medical_visa_arrangements"
+                                id = "yes"
+                                value="yes"
+                                onChange={handleChange}
+                                isInvalid={!!errors.Medical_visa_arrangements}
+                            />
+                            <Form.Check
+                                label="No"
+                                style = {{paddingLeft: "8rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="Medical_visa_arrangements" 
+                                id="no" 
+                                value="no"
+                                isInvalid={!!errors.Medical_visa_arrangements}
+                                />
+                                
+                            <Form.Check
+                                label="Maybe"
+                                style = {{paddingLeft: "7rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="Medical_visa_arrangements" 
+                                id="maybe" 
+                                value="maybe"
+                                isInvalid = {!!errors.Medical_visa_arrangements}/>                            
+                                </div>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.Medical_visa_arrangements}</Form.Control.Feedback>
                         </div>
                         
                         <label style = {{marginTop: 5}}>Preferred Hospital Visit Type</label>

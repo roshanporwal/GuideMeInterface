@@ -116,6 +116,7 @@ function PATIENT_DASHBOARD(props) {
         food_menu: "",
         confirmation: "",
         general_disclaimer: "",
+        lenth_of_stay: "",
         })
         
     
@@ -210,7 +211,7 @@ function PATIENT_DASHBOARD(props) {
 
 
         console.log("formValues",formValues)
-        setValidated(true);
+        setValidated(false);
 
          const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
         if(formsubmit.payload){
@@ -403,7 +404,7 @@ function PATIENT_DASHBOARD(props) {
                                                     value={formValues.select_doctor}
                                                     checked={select_doctor.length!==0?select_doctor.find(item => item === target.doctor_name):false}
                                                     onChange={() => checkBox("select_doctor",target.doctor_name)}
-                                                    isValid={!errors.select_doctor}
+                                                    isInvalid={!!errors.select_doctor}
                                                 />
                                             ))}
 
@@ -426,7 +427,7 @@ function PATIENT_DASHBOARD(props) {
                                             value={formValues.select_anesthesiologist}
                                            
                                             onChange={() => checkBox("select_doctor")}
-                                            isValid={!errors.select_anesthesiologist}
+                                            isInvalid={!!errors.select_anesthesiologist}
                                         />
 
                                         ))}
@@ -445,7 +446,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="treatment_plan"
                                         value={formValues.treatment_plan}
                                         onChange={handleChange}
-                                        isValid={!errors.treatment_plan}
+                                        isInvalid={!!errors.treatment_plan}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.treatment_plan}</Form.Control.Feedback>
                                 </Form.Group>
@@ -459,7 +460,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="estimate_price"
                                         value={formValues.estimate_price}
                                         onChange={handleChange}
-                                        isValid={!errors.estimate_price}
+                                        isInvalid={!!errors.estimate_price}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.estimate_price}</Form.Control.Feedback>
                                 </Form.Group>
@@ -473,7 +474,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="inclusion"
                                         value={formValues.inclusion}
                                         onChange={handleChange}
-                                        isValid={!errors.inclusion}
+                                        isInvalid={!!errors.inclusion}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.inclusion}</Form.Control.Feedback>
                                 </Form.Group>
@@ -487,7 +488,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="exclusion"
                                         value={formValues.exclusion}
                                         onChange={handleChange}
-                                        isValid={!errors.exclusion}
+                                        isInvalid={!!errors.exclusion}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.exclusion}</Form.Control.Feedback>
                                 </Form.Group>
@@ -501,7 +502,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="estimate_copay"
                                         value={formValues.estimate_copay}
                                         onChange={handleChange}
-                                        isValid={!errors.estimate_copay}
+                                        isInvalid={!!errors.estimate_copay}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.estimate_copay}</Form.Control.Feedback>
                                 </Form.Group>
@@ -520,7 +521,7 @@ function PATIENT_DASHBOARD(props) {
                                     value="local"
                                     checked={formValues.type_of_anesthesia==="local"}
                                     onChange={handleChange}
-                                    isValid={!errors.type_of_anesthesia}
+                                    isInvalid={!!errors.type_of_anesthesia}
                                 />
                                 </div>
                                 <div className = "col-md-5">
@@ -534,7 +535,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="general"
                                         checked={formValues.type_of_anesthesia==="general"}
                                         onChange={handleChange}
-                                        isValid={!errors.type_of_anesthesia}
+                                        isInvalid={!!errors.type_of_anesthesia}
                                     />
                                     </div>
                                     <div className = "col-md-2">
@@ -548,7 +549,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="epidural"
                                         checked={formValues.type_of_anesthesia==="epidural"}
                                         onChange={handleChange}
-                                        isValid={!errors.type_of_anesthesia}
+                                        isInvalid={!!errors.type_of_anesthesia}
                                     />
                                     </div>
                                 </div>
@@ -563,7 +564,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="type_of_room"
                                         value={formValues.type_of_room}
                                         onChange={handleChange}
-                                        isValid={!errors.type_of_room}
+                                        isInvalid={!!errors.type_of_room}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.type_of_room}</Form.Control.Feedback>
                                 </Form.Group>
@@ -577,7 +578,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="expected_length"
                                         value={formValues.expected_length}
                                         onChange={handleChange}
-                                        isValid={!errors.expected_length}
+                                        isInvalid={!!errors.expected_length}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.expected_length}</Form.Control.Feedback>
                                 </Form.Group>
@@ -598,7 +599,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="yes"
                                         checked={formValues.free_room_upgrade=== "yes"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_room_upgrade}
+                                        isInvalid={!!errors.free_room_upgrade}
                                     />
                                     <Form.Check
                                         label = "No"
@@ -610,7 +611,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="no"
                                         checked={formValues.free_room_upgrade=== "no"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_room_upgrade}
+                                        isInvalid={!!errors.free_room_upgrade}
                                     />
                                     <Form.Check
                                         label = "At Discount"
@@ -622,7 +623,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="at_discount"
                                         checked={formValues.free_room_upgrade=== "at_discount"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_room_upgrade}
+                                        isInvalid={!!errors.free_room_upgrade}
                                     />
                                 </div>
                                 <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_room_upgrade}</Form.Control.Feedback>
@@ -642,7 +643,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="yes"
                                         checked={formValues.free_physiotherapy=== "yes"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_physiotherapy}
+                                        isInvalid={!!errors.free_physiotherapy}
                                     />
                                     <Form.Check
                                         label = "No"
@@ -654,7 +655,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="no"
                                         checked={formValues.free_physiotherapy==="no"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_physiotherapy}
+                                        isInvalid={!!errors.free_physiotherapy}
                                     />
                                     <Form.Check
                                         label = "At Discount"
@@ -666,7 +667,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="at_discount"
                                         checked={formValues.free_physiotherapy==="at_discount"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_physiotherapy}
+                                        isInvalid={!!errors.free_physiotherapy}
                                     />
                                 </div>
                                 <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_physiotherapy}</Form.Control.Feedback>
@@ -685,7 +686,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="free_other_speciality_consultant"
                                         value={formValues.free_other_speciality_consultant}
                                         onChange={handleChange}
-                                        isValid={!errors.free_other_speciality_consultant}
+                                        isInvalid={!!errors.free_other_speciality_consultant}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.free_other_speciality_consultant}</Form.Control.Feedback>
                                 </Form.Group>
@@ -705,7 +706,7 @@ function PATIENT_DASHBOARD(props) {
                                     value="yes"
                                     checked={formValues.free_telephonic_feedback==="yes"}
                                     onChange={handleChange}
-                                    isValid={!errors.free_telephonic_feedback}
+                                    isInvalid={!!errors.free_telephonic_feedback}
                                 />
                                 </div>
                                 <div className = "col-sm-5">
@@ -720,7 +721,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="no"
                                         checked={formValues.free_telephonic_feedback==="no"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_telephonic_feedback}
+                                        isInvalid={!!errors.free_telephonic_feedback}
                                     />
                                     </div>
                                     <div className = "col-sm-2">
@@ -734,7 +735,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="at_discount"
                                         onChange={handleChange}
                                         checked={formValues.free_telephonic_feedback==="at_discount"}
-                                        isValid={!errors.free_telephonic_feedback}
+                                        isInvalid={!!errors.free_telephonic_feedback}
                                     />
                                     </div>
                                 </div>
@@ -755,7 +756,7 @@ function PATIENT_DASHBOARD(props) {
                                     value="patients"
                                     checked={free_annual_checkup.find(item => item === "patients")}
                                     onChange={() => checkBox("free_annual_checkup","patients" )}
-                                    isValid={!errors.free_annual_checkup}
+                                    isInvalid={!!errors.free_annual_checkup}
                                 />
                                 </div>
                                 <div className = "col-sm-5">
@@ -769,7 +770,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="family_members"
                                         checked={free_annual_checkup.find(item => item === "family_members")}
                                         onChange={() => checkBox("free_annual_checkup","family_members" )}
-                                        isValid={!errors.free_annual_checkup}
+                                        isInvalid={!!errors.free_annual_checkup}
                                     />
                                     </div>
                                     <div className = "col-sm-2">
@@ -783,7 +784,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="at_discount"
                                         checked={free_annual_checkup.find(item => item === "at_discount")}
                                         onChange={() => checkBox("free_annual_checkup","at_discount" )}
-                                        isValid={!errors.free_annual_checkup}
+                                        isInvalid={!!errors.free_annual_checkup}
                                     />
                                     </div>
                                 </div>
@@ -807,7 +808,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="yes"
                                         checked={formValues.pickup_and_drop==="yes"}
                                         onChange={handleChange}
-                                        isValid={!errors.pickup_and_drop}
+                                        isInvalid={!!errors.pickup_and_drop}
                                     />
                                     <Form.Check
                                         label = "No"
@@ -819,7 +820,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="no"
                                         checked={formValues.pickup_and_drop==="no"}
                                         onChange={handleChange}
-                                        isValid={!errors.pickup_and_drop}
+                                        isInvalid={!!errors.pickup_and_drop}
                                     />
                                     <Form.Check
                                         label = "Could be planned"
@@ -831,7 +832,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="at_discount"
                                         checked={formValues.pickup_and_drop==="at_discount"}
                                         onChange={handleChange}
-                                        isValid={!errors.pickup_and_drop}
+                                        isInvalid={!!errors.pickup_and_drop}
                                     />
                                     </div>
                                      <Form.Control.Feedback style={{ color: "red" }}>{errors?.pickup_and_drop}</Form.Control.Feedback>
@@ -854,7 +855,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="yes"
                                         checked={formValues.free_patient_dedicated_relationship==="yes"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_patient_dedicated_relationship}
+                                        isInvalid={!!errors.free_patient_dedicated_relationship}
                                     />
                                     <Form.Check
                                         label = "No"
@@ -866,7 +867,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="no"
                                         checked={formValues.free_patient_dedicated_relationship==="no"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_patient_dedicated_relationship}
+                                        isInvalid={!!errors.free_patient_dedicated_relationship}
                                     />
                                     <Form.Check
                                         label = "Available"
@@ -878,7 +879,7 @@ function PATIENT_DASHBOARD(props) {
                                         value="available"
                                         checked={formValues.free_patient_dedicated_relationship==="available"}
                                         onChange={handleChange}
-                                        isValid={!errors.free_patient_dedicated_relationship}
+                                        isInvalid={!!errors.free_patient_dedicated_relationship}
                                     />
                                 </div>
                                 
@@ -895,7 +896,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="benefits_for_patient"
                                         value={formValues.benefits_for_patient}
                                         onChange={handleChange}
-                                        isValid={!errors.benefits_for_patient}
+                                        isInvalid={!!errors.benefits_for_patient}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.benefits_for_patient}</Form.Control.Feedback>
                                 </Form.Group>
@@ -908,7 +909,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="benefits_for_attendent"
                                         value={formValues.benefits_for_attendent}
                                         onChange={handleChange}
-                                        isValid={!errors.benefits_for_attendent}
+                                        isInvalid={!!errors.benefits_for_attendent}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.benefits_for_attendent}</Form.Control.Feedback>
                                 </Form.Group>
@@ -921,7 +922,7 @@ function PATIENT_DASHBOARD(props) {
                                         name="food_menu"
                                         value={formValues.food_menu}
                                         onChange={handleChange}
-                                        isValid={!errors.food_menu}
+                                        isInvalid={!!errors.food_menu}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.food_menu}</Form.Control.Feedback>
                                 </Form.Group>
@@ -934,9 +935,22 @@ function PATIENT_DASHBOARD(props) {
                                         name="confirmation"
                                         value={formValues.confirmation}
                                         onChange={handleChange}
-                                        isValid={!errors.confirmation}
+                                        isInvalid={!!errors.confirmation}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.confirmation}</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group style = {{marginTop: "2rem"}}>
+                                <Form.Label>Expected Length of Stay in the Country</Form.Label>
+                                    <Form.Control
+                                        required
+                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                        type="text"
+                                        name="length_of_stay"
+                                        value={formValues.lenth_of_stay}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.length_of_stay}
+                                    />
+                                    <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.length_of_stay}</Form.Control.Feedback>
                                 </Form.Group>
 
                         </Form>

@@ -24,4 +24,5 @@ export const quoteSchema = yup.object().shape({
         food_menu: yup.string().required("Food menu is required"),
         confirmation: yup.string().required("Confirmation is required"),
         general_disclaimer: yup.string().required("General disclaimer is required"),
+        length_of_stay: yup.string().required("Expected length of stay is required"),
 })
