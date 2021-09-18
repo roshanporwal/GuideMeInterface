@@ -26,7 +26,7 @@ function enquries(login_id,data) {
 }
 function updatedoctor(login_id,_id,data) {
  
-  const req = instance.post(`/doctor/${login_id}/update1?login_id=${_id}`,data);
+  const req = instance.post(`/doctor/${login_id}/update?login_id=${_id}`,data);
   return req
 }
 function updatehospital(login_id,data) {

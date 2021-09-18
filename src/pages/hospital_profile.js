@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import SPECIALITY_DELETE from '../components/speciality_delete';
 import INSURANCE_UPDATE from '../components/insurance_update';
+import * as auth_service from "../services/auth_service";
 
 import { Form } from 'react-bootstrap';
 import './style.css'
@@ -17,9 +18,10 @@ function ADMIN_HOSPITAL_PROFILE (props){
     const [speciality, setSpeciality] = useState([]);
     const [insurance, setInsurance] = useState([]);
     const [validated, setValidated] = useState(false);
+    const [hospital_avatar, setHospital_avatar] = useState();
     const [formValues, setFormValue] = useState({
-        hospital_address: "",
-        hospital_mobile: "",
+        address: "",
+        phno: "",
         hospital_email: "",
         hospital_image: ""
         
@@ -67,21 +69,34 @@ function ADMIN_HOSPITAL_PROFILE (props){
             return errObj;
         }
     }; 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const err = await validate(formValues);
-        const formData = new FormData();
-       
-        setErrors(err);       
+    const onchange = e => {
         
-        formData.append('formValues', JSON.stringify(formValues))
-        
-        console.log(formValues)
-        setValidated(true);
 
-        /* const login = await auth_service.enquries(formData)
-         console.log(login)*/
-    };
+        
+            setHospital_avatar(e.target.files[0])
+    }
+    async function edithospital() {
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        if(formValues.address===''){
+           
+          window.location.reload();
+          return
+        }
+        const formData = new FormData();
+      
+        formData.append('hospital_avatar', hospital_avatar);
+        formData.append('formValues', JSON.stringify(formValues))
+    
+        const updatehospital = await auth_service.updatehospital(data.login_id, formData)
+        console.log(updatehospital)
+        if (updatehospital.payload) {
+          localStorage.setItem('login', JSON.stringify(updatehospital.payload));
+          window.location.reload();
+        } else if (!updatehospital.payload) {
+          //window.location.reload();
+        }
+      }
         return(
             
             <>
@@ -105,12 +120,12 @@ function ADMIN_HOSPITAL_PROFILE (props){
                         className = "form-control"
                         onChange={handleChange} 
                         type="text" 
-                        name="hospital_address" 
-                        id="hospital_address" 
-                        isValid = {!errors.hospital_address}
-                        value = {formValues.hospital_address}
+                        name="address" 
+                        id="address" 
+                        isValid = {!errors.address}
+                        value = {formValues.address}
                         />
-                      <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_address}</Form.Control.Feedback>
+                      <Form.Control.Feedback style = {{color: "red"}}>{errors?.address}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group style = {{marginTop: "2rem"}}>
             
@@ -120,12 +135,12 @@ function ADMIN_HOSPITAL_PROFILE (props){
                         className = "form-control"
                         onChange={handleChange} 
                         type="text" 
-                        name="hospital_mobile" 
-                        id="hospital_mobile" 
-                        isValid = {!errors.hospital_mobile}
-                        value = {formValues.hospital_mobile}
+                        name="phno" 
+                        id="phno" 
+                        isValid = {!errors.phno}
+                        value = {formValues.phno}
                         />
-                        <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_mobile}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color: "red"}}>{errors?.phno}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group  style = {{marginTop: "2rem"}}>
             
@@ -165,7 +180,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
         
       </div>
       <div className="modal-body">
-      <Form  noValidate validated={validated}  onSubmit = {handleSubmit}>
+      <Form  noValidate validated={validated}  onSubmit = {edithospital}>
             <Form.Group>
             
             <Form.Control
@@ -174,12 +189,12 @@ function ADMIN_HOSPITAL_PROFILE (props){
                         className = "form-control"
                         onChange={handleChange} 
                         type="text" 
-                        name="hospital_address" 
-                        id="hospital_address" 
-                        isValid = {!errors.hospital_address}
-                        value = {formValues.hospital_address}
+                        name="address" 
+                        id="address" 
+                        isValid = {!errors.address}
+                        value = {formValues.address}
                         />
-                      <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_address}</Form.Control.Feedback>
+                      <Form.Control.Feedback style = {{color: "red"}}>{errors?.address}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group style = {{marginTop: "2rem"}}>
             
@@ -189,12 +204,12 @@ function ADMIN_HOSPITAL_PROFILE (props){
                         className = "form-control"
                         onChange={handleChange} 
                         type="text" 
-                        name="hospital_mobile" 
-                        id="hospital_mobile" 
-                        isValid = {!errors.hospital_mobile}
-                        value = {formValues.hospital_mobile}
+                        name="phno" 
+                        id="phno" 
+                        isValid = {!errors.phno}
+                        value = {formValues.phno}
                         />
-                        <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_mobile}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color: "red"}}>{errors?.phno}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group  style = {{marginTop: "2rem"}}>
             
@@ -217,12 +232,12 @@ function ADMIN_HOSPITAL_PROFILE (props){
             style={{ border: "2px solid #164473", borderRadius: 10 }}
                         placeholder="Hospital Email"
                         className = "form-control"
-                        onChange={handleChange} 
+                        onChange={onchange} 
                         type="file" 
                         name="hospital_image" 
                         id="hospital_image" 
                         isValid = {!errors.hospital_image}
-                        value = {formValues.hospital_image}
+                        
                         />
                         <Form.Control.Feedback style = {{color: "red"}}>{errors?.hospital_image}</Form.Control.Feedback>
             </Form.Group>
@@ -233,7 +248,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
        </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary" onClick = {handleSubmit}>Submit</button>
+        <button type="button" className="btn btn-primary" onClick = {edithospital}>Submit</button>
       </div>
     </div>
   </div>

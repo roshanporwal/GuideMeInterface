@@ -285,20 +285,20 @@ function HOSPITAL_DASHBOARD(props) {
                     
                 </div>
                  {
-                    res.alert.map((target, index) => (
+                    enquriesstatus.map((target, index) => (
 
 
                         <div style = {{marginLeft: "30px"}} className="alert_container col-sm-6 mt-5" key={index}{...target}>
                         <div className="row">
                             <div className = "col-sm-6 text-center">
-                                <h1 style={{ fontSize: 42, color: "white", marginTop: "8rem"}}>{target.pending}</h1>
+                                <h1 style={{ fontSize: 42, color: "white", marginTop: "8rem"}}>{target.new}</h1>
                                 <button className="view_patients_button">View Now</button>
                             </div>
                             <div className="alert col-sm-6 text-center" style = {{paddingTop: "60px"}}>
                                 <h1>Alert</h1><br />
-                                <h4>You have following enquiries<br />
-                                    {target.pending} unattended new enquiries
-                                    since {target.hours} hours and {target.minutes} minutes</h4>
+                                <h4>You have following enquiries.<br />
+                                    {target.new} unattended new enquiries.
+                                    </h4>
                             </div>
                         </div>
                         

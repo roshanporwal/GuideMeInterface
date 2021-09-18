@@ -57,7 +57,7 @@ function PATIENT_FORM(props) {
         accomodation: "",
         airport_transfer_needed: "",
         ambulance_support_needed: "",
-        Medical_visa_arrangements: "",
+        medical_visa_arrangements: "",
         preferred_hospital_visit: "",
         proposal_date: "",
         from_date: "",
@@ -888,21 +888,21 @@ function PATIENT_FORM(props) {
                                 className="mb-0"
                                 style = {{paddingLeft: "4rem"}}
                                 type="radio"
-                                name="Medical_visa_arrangements"
+                                name="medical_visa_arrangements"
                                 id = "yes"
                                 value="yes"
                                 onChange={handleChange}
-                                isInvalid={!!errors.Medical_visa_arrangements}
+                                isInvalid={!!errors.medical_visa_arrangements}
                             />
                             <Form.Check
                                 label="No"
                                 style = {{paddingLeft: "8rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
-                                name="Medical_visa_arrangements" 
+                                name="medical_visa_arrangements" 
                                 id="no" 
                                 value="no"
-                                isInvalid={!!errors.Medical_visa_arrangements}
+                                isInvalid={!!errors.medical_visa_arrangements}
                                 />
                                 
                             <Form.Check
@@ -910,12 +910,12 @@ function PATIENT_FORM(props) {
                                 style = {{paddingLeft: "7rem"}}
                                 onChange={handleChange} 
                                 type="radio" 
-                                name="Medical_visa_arrangements" 
+                                name="medical_visa_arrangements" 
                                 id="maybe" 
                                 value="maybe"
-                                isInvalid = {!!errors.Medical_visa_arrangements}/>                            
+                                isInvalid = {!!errors.medical_visa_arrangements}/>                            
                                 </div>
-                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.Medical_visa_arrangements}</Form.Control.Feedback>
+                            <Form.Control.Feedback style= {{color:"red"}}>{errors?.medical_visa_arrangements}</Form.Control.Feedback>
                         </div>
                         
                         <label style = {{marginTop: 5}}>Preferred Hospital Visit Type</label>

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 export const hospitalSchema = yup.object().shape({
         hospital_address: yup.string().required("Hospital address is required"),
         hospital_mobile: yup.string().email().required("Hospital mobile is required"),
-        hospital_email: yup.string().email().required("Hospital email is required"),
+        //hospital_email: yup.string().email().required("Hospital email is required"),
         
        
         

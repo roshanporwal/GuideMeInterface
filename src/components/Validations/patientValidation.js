@@ -17,7 +17,7 @@ export const validationSchema = yup.object().shape({
         medical_history: yup.string().required("Patient medical history is required"),
         airport_transfer_needed: yup.string().required("Please select an option"),
         ambulance_support_needed: yup.string().required("Please select an option"),
-        Medical_visa_arrangements: yup.string().required("Please select an option"),
+        medical_visa_arrangements: yup.string().required("Please select an option"),
         //proposed_treatment_plan: yup.bool().required("Proposed treatment plan is required"),
         //other_plan: yup.string().required("required"),
         transport_support_needed: yup.string().required("Please select an option"),

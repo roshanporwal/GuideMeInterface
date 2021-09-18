@@ -141,10 +141,14 @@ function PATIENT_DASHBOARD(props) {
         data = JSON.parse(data)
         const getenquriesbyid = await auth_service.getenquriesbyid(props.location.state)
        console.log(getenquriesbyid.payload)
-        setEnqurie_data(getenquriesbyid.payload)
+        
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
         setDoctor(getdoctor.payload) 
          const hospital_data =getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
+         console.log(hospital_data)
+         getenquriesbyid.payload[0].status=hospital_data.status
+         setEnqurie_data(getenquriesbyid.payload)
+
          if(hospital_data!=null){
             
              let ahospital_data=hospital_data.select_doctor?setSelect_doctor(hospital_data.select_doctor):null;
@@ -212,6 +216,7 @@ function PATIENT_DASHBOARD(props) {
 
         console.log("formValues",formValues)
         setValidated(false);
+        if(Object.keys(err).length === 0){
 
          const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
         if(formsubmit.payload){
@@ -231,11 +236,13 @@ function PATIENT_DASHBOARD(props) {
              await  ahospital_data;
              ahospital_data=hospital_data.select_anesthesiologist?setSelect_anesthesiologist(hospital_data.select_anesthesiologist):null;
              await  ahospital_data;
-             alert("sended successful")
+             window.location.reload();
+            
          }
         
            
         }
+    }
     };
 
     const handleChange = e => {
@@ -321,7 +328,7 @@ function PATIENT_DASHBOARD(props) {
                             <div key={index} {...target}>
                                 <div className="d-flex mt-5">
                                     <p><b>Speciality: </b></p>
-                                    <p style={{ paddingLeft: 10 }}>{target.medical_history}</p>
+                                    <p style={{ paddingLeft: 10 }}>{}</p>
                                 </div>
                                 <div className="d-flex">
                                     <p style={{ marginBottom: 5 }}><b>Medical History</b></p>
@@ -946,11 +953,24 @@ function PATIENT_DASHBOARD(props) {
                                         style={{ border: "2px solid #164473", borderRadius: 10 }}
                                         type="text"
                                         name="length_of_stay"
-                                        value={formValues.lenth_of_stay}
+                                        value={formValues.length_of_stay}
                                         onChange={handleChange}
                                         isInvalid={!!errors.length_of_stay}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.length_of_stay}</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group style = {{marginTop: "2rem"}}>
+                                <Form.Label>General disclaimer</Form.Label>
+                                    <Form.Control
+                                        required
+                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                        type="text"
+                                        name="general_disclaimer"
+                                        value={formValues.general_disclaimer}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.general_disclaimer}
+                                    />
+                                    <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.general_disclaimer}</Form.Control.Feedback>
                                 </Form.Group>
 
                         </Form>

@@ -2,8 +2,8 @@ import * as yup from 'yup';
 
 
 export const quoteSchema = yup.object().shape({
-        select_doctor: yup.string().required("Please select a doctor"),
-        select_anesthesiologist: yup.string().email().required("Please select anesthediologist"),
+       // select_doctor: yup.string().required("Please select a doctor"),
+       // select_anesthesiologist: yup.string().email().required("Please select anesthediologist"),
         treatment_plan: yup.string().required("Treatment plan is required"),
         estimate_price: yup.string().required("Estimate price is required"),
         inclusion: yup.string().required("Inclusion is required"),
@@ -16,7 +16,7 @@ export const quoteSchema = yup.object().shape({
         free_physiotherapy: yup.string().required("Please select an option"),
         free_other_speciality_consultant: yup.string().required("Please select an option"),
         free_telephonic_feedback: yup.string().required("Please select an option"),
-        free_annual_checkup: yup.string().required("Please select an option"),
+       // free_annual_checkup: yup.string().required("Please select an option"),
         pickup_and_drop: yup.string().required("Please select an option"),
         free_patient_dedicated_relationship: yup.string().required("This field is required"),
         benefits_for_patient: yup.string().required("Please enter a response"),
