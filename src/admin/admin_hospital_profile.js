@@ -5,7 +5,7 @@ import * as auth_service from "../services/auth_service";
 import HospitalDetails from '../components/hospital_details';
 import HOSPITAL_LIST from '../components/hospital_list';
 import './style.css'
-import ADMIN_NAVBAR from "../Navbar/admin_navbar"
+import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 
 
 function HOSPITAL_PROFILE(){

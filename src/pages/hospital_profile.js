@@ -9,6 +9,7 @@ import './style.css'
 
 import { hospitalSchema } from '../components/Validations/hospitalValidation';
 import HospitalNavbar from "../Navbar/hospital_navbar";
+import ReactGifLoader from '../components/gif_loader';
 
 
 function ADMIN_HOSPITAL_PROFILE (props){
@@ -18,6 +19,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
     const [speciality, setSpeciality] = useState([]);
     const [insurance, setInsurance] = useState([]);
     const [validated, setValidated] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [hospital_avatar, setHospital_avatar] = useState();
     const [formValues, setFormValue] = useState({
         address: "",
@@ -31,7 +33,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
 
     useEffect(() => {
 
-        fetchData();
+        fetchData().then(() => setLoading(false));
     }, []);
     async function fetchData(props) {
 
@@ -97,6 +99,13 @@ function ADMIN_HOSPITAL_PROFILE (props){
           //window.location.reload();
         }
       }
+      if(loading === true)
+     return (
+        <>
+        <ReactGifLoader />
+        </>
+      )
+      else
         return(
             
             <>

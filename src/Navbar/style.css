@@ -370,7 +370,7 @@
 .container_patient_details  {
    
     
-    margin-left: 10%;
+    margin: 10%;
     margin-top: 10%;
     
     
@@ -393,7 +393,7 @@
 }
 
 .container_patient_preferences{
-    margin-left: 10%;
+    margin: 10%;
     margin-top: 5%;
     
     
@@ -471,7 +471,7 @@
        border-radius: 10px;
        background-color: #E3E3E3;
        color: black;
-       width: 40rem;
+       width: 100%;
        height: 7rem;
        box-shadow: 5px 10px 8px #888888;
        margin-top: 5%;
@@ -487,10 +487,10 @@
        border-radius: 10px;
        background-color: #E3E3E3;
        color: black;
-       width: 40rem;
+       width: 100%;
        height: 7rem;
        box-shadow: 5px 10px 8px #888;
-        margin-right: 10px;
+       
        margin-top: 5%;
 }
 
@@ -509,7 +509,7 @@ p{
 }
 
 .chart_container{
-    height: 30rem;
+    height: 35rem;
    
     
     background: #f2f2f2;
@@ -529,7 +529,7 @@ p{
 }
 
 .alert_container{
-    height: 30rem;
+    height: 35rem;
     
     background: #164473;
     border-radius: 20px;

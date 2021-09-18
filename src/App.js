@@ -21,6 +21,7 @@ import './App.css';
 import 'react-bootstrap';
 
 
+
 export default function App(props) {
  
   
@@ -28,8 +29,8 @@ export default function App(props) {
   
 
   return (
+   
     <Router>
-      {/*doctor ?isadmin() ? <ADMIN_NAVBAR/> : <HospitalNavbar/>:null*/}
     
       <Switch>
       <Route path='/' exact  component={Home} />
@@ -51,7 +52,7 @@ export default function App(props) {
 
         <Route path='/patient_view' exact component={PATIENT_VIEW} />
       </Switch>
-      
+
     </Router>
   );
 };

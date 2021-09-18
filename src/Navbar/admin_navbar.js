@@ -10,6 +10,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
+
 export default function ADMIN_NAVBAR(props) {
   const history = useHistory();
   function logout() {
@@ -29,9 +30,9 @@ export default function ADMIN_NAVBAR(props) {
         <>
  <Navbar bg="light" expand="lg">
   <Container>
-    <div className = "col-md-2">
-    <Navbar.Text><img src="assets\images\GuideMeDocLogo.png" alt=""/></Navbar.Text>
-    </div>
+    
+    <Navbar.Brand><img src="../assets/images/GuideMeDocLogo.png" alt="" style = {{height: "100px", width: "200px", marginTop: "-40px"}} /></Navbar.Brand>
+    
     
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">

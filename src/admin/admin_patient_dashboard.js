@@ -5,12 +5,13 @@ import { MultiSelect } from "react-multi-select-component";
 import ReactStars from "react-rating-stars-component";
 import { Form } from "react-bootstrap";
 import './style.css';
-import ADMIN_NAVBAR from "../Navbar/admin_navbar"
+import ADMIN_NAVBAR from "../Navbar/admin_navbar";
+import ReactGifLoader from '../components/gif_loader';
 
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
-
+    const [loading, setLoading] = useState(true);
     const [show, setShow] = useState(false);
 
     const handleOthersField = () => {
@@ -50,7 +51,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     useEffect(() => {
 
-        fetchData(props);
+        fetchData(props).then(() => setLoading(false));
     }, [props]);
 
 
@@ -159,6 +160,13 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             
         }
     }
+    if(loading === true)
+    return (
+       <>
+       <ReactGifLoader />
+       </>
+     )
+     else
     return (
         <>
         <ADMIN_NAVBAR/>
@@ -418,11 +426,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     <div className="buttons">
                         <div className="row">
                             <div className="col-md-5">
-                                <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
+                                <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, float: "right", paddingRight: "10%"}} className="fa fa-download "></i></button>
                             </div>
                             <div className="col-md-2"></div>
                             <div className="col-md-5">
-                                <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
+                                <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16,float: "right", paddingRight: "10%"  }} className="fa fa-eye "></i></button>
                             </div>
                         </div>
                     </div>

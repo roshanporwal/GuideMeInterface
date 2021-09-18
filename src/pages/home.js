@@ -2,11 +2,13 @@ import React, { useState ,useEffect} from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
-import './style.css'
+import './style.css';
+
 
 
 
 function Home(props) {
+  
   const [values, setValues] = useState({
     login_id: "",
     password: ""
@@ -70,6 +72,7 @@ function Home(props) {
 
 
     <Router>
+      <div className = "container-fluid">
       <div className="content row" >
         <div className="col-md-4">
           
@@ -101,7 +104,7 @@ function Home(props) {
           </form>
         </div>
       </div>
-
+    </div>
     </Router>
   );
 

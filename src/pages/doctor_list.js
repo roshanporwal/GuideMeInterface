@@ -6,6 +6,8 @@ import { doctorSchema } from "../components/Validations/doctorValidation";
 import * as auth_service from "../services/auth_service";
 import './style.css'
 import HospitalNavbar from "../Navbar/hospital_navbar";
+import ReactGifLoader from '../components/gif_loader';
+
 
 
 
@@ -18,7 +20,7 @@ function DOCTOR_LIST(props) {
   const [doctor, setDoctor] = useState([])
   const [doctor_avatar, setDoctor_avatar] = useState()
   const [errors, setErrors] = useState({});
- 
+  const [loading, setLoading] = useState(true);
   const [validated, setValidated] = useState(false);
   const hiddenFileInput = React.useRef(null);
   const [formValues, setFormValue] = useState({
@@ -30,7 +32,7 @@ function DOCTOR_LIST(props) {
   const [isSubmitting] = useState(false)
   useEffect(() => {
 
-    fetchData();
+    fetchData().then(() => setLoading(false));
   }, []);
 
   async function fetchData(props) {
@@ -127,7 +129,13 @@ function DOCTOR_LIST(props) {
 
 
 
-
+  if(loading === true)
+  return (
+     <>
+     <ReactGifLoader />
+     </>
+   )
+   else
 
 
 

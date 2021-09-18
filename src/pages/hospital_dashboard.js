@@ -8,9 +8,10 @@ import  * as auth_service from "../services/auth_service";
 import DataTable from "react-data-table-component";
 import './style.css';
 import HospitalNavbar from "../Navbar/hospital_navbar";
+import ReactGifLoader from '../components/gif_loader';
 
 
-const res = {
+/* const res = {
     "enquiries": [
         {
             "total": "153",
@@ -61,7 +62,7 @@ const res = {
         }
     ]
 }
-
+ */
 const columns = [
     {
       name: 'Patient_Name',
@@ -97,7 +98,7 @@ const columns = [
 
 
 function HOSPITAL_DASHBOARD(props) {
-
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
     const [enquries, setEnquries] = useState([])
     const [enquriesstatus,setEnquriesstatus] = useState([ ])
@@ -107,7 +108,7 @@ function HOSPITAL_DASHBOARD(props) {
 
     useEffect(() => {
 
-        fetchData();
+        fetchData().then(() => setLoading(false));
     }, []);
 
 
@@ -164,7 +165,13 @@ function HOSPITAL_DASHBOARD(props) {
              state:event._id
            });  
      };
-
+     if(loading === true)
+     return (
+        <>
+        <ReactGifLoader />
+        </>
+      )
+      else
     return (
         <>
         <HospitalNavbar/>

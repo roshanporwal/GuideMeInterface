@@ -33,17 +33,20 @@ function ADMIN_Home(props) {
 
 
   return (
+
+
     <Router>
-      <div className="content d-flex" >
+      <div className = "container-fluid">
+      <div className="content row" >
         <div className="col-md-4">
           
-          
-            <img className="login_image img-fluid" src="assets\images\admin_login.jpg" alt="" />
+            <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\admin_login.jpg" alt=""  />
 
-        
+         
+
         </div>
-        <div className="col-md-8" style = {{marginLeft: "5rem"}}>
-          <h2 className="login_title">Welcome Admin</h2>
+        <div className="col-md-8">
+          <h2 className="login_title">Hospital/Doctor Login</h2>
           <form className="login_form">
             <div className="email_field">
               <label htmlFor="exampleInputEmail1">Email</label>
@@ -51,7 +54,7 @@ function ADMIN_Home(props) {
             </div>
             <div className="password_field">
               <label htmlFor="exampleInputEmail1">Password</label>
-              <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password"  value={values.password}  onChange={handleChange} placeholder="**********" />
+              <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password" value={values.password} onChange={handleChange} placeholder="**********" />
             </div>
             <div className="submit_btn">
 
@@ -65,10 +68,9 @@ function ADMIN_Home(props) {
           </form>
         </div>
       </div>
-
+    </div>
     </Router>
   );
-
 }
 
 export default ADMIN_Home;

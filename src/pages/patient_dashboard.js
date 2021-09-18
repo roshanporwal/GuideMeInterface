@@ -7,6 +7,7 @@ import * as auth_service from "../services/auth_service";
 import { Form } from 'react-bootstrap';
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import './style.css'
+import ReactGifLoader from '../components/gif_loader';
 
 
 const res = {
@@ -93,6 +94,7 @@ function PATIENT_DASHBOARD(props) {
 
 
     const [validated, setValidated] = useState(false)
+    const [loading, setLoading] = useState(true);
     const [formValues, setFormValue] = useState({  
         select_doctor: "",
         select_anesthesiologist: "",
@@ -131,7 +133,7 @@ function PATIENT_DASHBOARD(props) {
 
      useEffect(() => {
 
-        fetchData(props);
+        fetchData(props).then(() => setLoading(false));;
     }, [props]);
  
 
@@ -274,6 +276,13 @@ function PATIENT_DASHBOARD(props) {
             return errObj;
         }
     };
+    if(loading === true)
+     return (
+        <>
+        <ReactGifLoader />
+        </>
+      )
+      else
 
     return (
         <>
@@ -358,13 +367,13 @@ function PATIENT_DASHBOARD(props) {
                     }
                     <div className="buttons">
                         <div className = "row">
-                        <div className = "col-md-4">
+                        <div className = "col-md-5">
                             <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
                         </div>
-                        <div className = "col-md-3">
+                        <div className = "col-md-2">
 
                         </div>
-                        <div className = "col-md-4">
+                        <div className = "col-md-5">
                             <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
                         </div>
                         </div>

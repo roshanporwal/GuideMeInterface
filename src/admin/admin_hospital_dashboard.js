@@ -7,8 +7,9 @@ import  * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import './style.css'
-import ADMIN_NAVBAR from "../Navbar/admin_navbar"
-const res = {
+import ADMIN_NAVBAR from "../Navbar/admin_navbar";
+import ReactGifLoader from '../components/gif_loader';
+/* const res = {
     "enquiries": [
         {
             "total": "153",
@@ -58,7 +59,7 @@ const res = {
             "status": "New"
         }
     ]
-}
+} */
 
 const columns = [
     {
@@ -95,7 +96,7 @@ const columns = [
 
 export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const history = useHistory();
-    
+    const [loading, setLoading] = useState(true);
     const [enquriesstatus,setEnquriesstatus] = useState([ ])
    
     const [enquries, setEnquries] = useState([])
@@ -103,7 +104,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
 
     useEffect(() => {
        
-        fetchData();
+        fetchData().then(() => setLoading(false));
       }, []);
 
 
@@ -154,7 +155,13 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     };
 
   
-
+    if(loading === true)
+    return (
+       <>
+       <ReactGifLoader />
+       </>
+     )
+     else
 
 
  
