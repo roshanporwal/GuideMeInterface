@@ -141,7 +141,7 @@ function PATIENT_DASHBOARD(props) {
 
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const getenquriesbyid = await auth_service.getenquriesbyid(props.location.state)
+        const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id,props.location.state)
        console.log(getenquriesbyid.payload)
         
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
@@ -222,7 +222,7 @@ function PATIENT_DASHBOARD(props) {
 
          const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
         if(formsubmit.payload){
-            const getenquries = await auth_service.getenquriesbyid(enqurie_data[0]._id)
+            const getenquries = await auth_service.getenquriesbyid(data.login_id,enqurie_data[0]._id)
             console.log(getenquries.payload)
             setEnqurie_data(getenquries.payload)
             const hospital_data =getenquries.payload[0].hospitals.find(item => item.hospital_id === data._id)

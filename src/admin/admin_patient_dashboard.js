@@ -61,7 +61,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const getenquriesbyid = await auth_service.getenquriesbyid(props.location.state)
+        const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id,props.location.state)
         console.log(getenquriesbyid.payload)
         setEnqurie_data(getenquriesbyid.payload)
         const enq = getenquriesbyid.payload[0].hospitals
@@ -87,7 +87,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             } else {
                 const updateenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
                 if (updateenquries.payload) {
-                    const getenquries = await auth_service.getenquriesbyid(enqurie_data[0]._id)
+                    const getenquries = await auth_service.getenquriesbyid(data.login_id,enqurie_data[0]._id)
                     setEnqurie_data(getenquries.payload)
                     setHopital_enq(getenquries.payload[0].hospitals)
                     setShow_quota(true)

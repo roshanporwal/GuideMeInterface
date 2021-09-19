@@ -19,7 +19,7 @@ export default function PATIENT_VIEW(props) {
     async function fetchData(id) {
 
        
-        const getenquries = await auth_service.getenquriesbyid(id)
+        const getenquries = await auth_service.getenquriesbyid_patient(id)
         console.log(getenquries)
         setEnqurie_data(getenquries.payload)
         const enq=getenquries.payload[0].hospitals

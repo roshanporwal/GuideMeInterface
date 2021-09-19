@@ -11,58 +11,7 @@ import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
 
 
-/* const res = {
-    "enquiries": [
-        {
-            "total": "153",
-            "new": "20",
-            "awaiting": "34",
-            "lost": "12",
-            "won": "56"
-        }
-    ],
-    "alert": [
-        {
-            "pending": "13",
-            "hours": "1",
-            "minutes": "44"
-        }
-    ],
 
-    "patient_table": [
-        {
-            "id": 1,
-            "name": "Monica Latte",
-            "query": "I was having abdominal pain and indigestion which was making me nauseous when i looked at food",
-            "insurance/tpa": "Afiya",
-            "date": "17/08/21",
-            "time": "03:48 AM",
-            "speciality": "Gastreoenterology",
-            "status": "New"
-        },
-        {
-            "id": 2,
-            "name": "Wade Warren",
-            "query": "I have painless bleeding during bowel movements.I have noticed small amount of bright red color blood on your toilet tissue",
-            "insurance/tpa": "Allianz",
-            "date": "15/08/21",
-            "time": "05:45 AM",
-            "speciality": "Proctology",
-            "status": "Awaiting"
-        },
-        {
-            "id": 3,
-            "name": "Mukesh Kumar",
-            "query": "Not able to taste food, feeling dizzy all the time",
-            "insurance/tpa": "Petersons",
-            "date": "12/05/21",
-            "time": "03:43 AM",
-            "speciality": "physiology",
-            "status": "New"
-        }
-    ]
-}
- */
 const columns = [
     {
       name: 'Patient_Name',
@@ -115,7 +64,7 @@ function HOSPITAL_DASHBOARD(props) {
     async function fetchData() {
         let data=localStorage.getItem("login")
         data= JSON.parse(data)
-        const gethospitalstaus = await auth_service.gethospitalstaus(data._id)
+        const gethospitalstaus = await auth_service.gethospitalstaus(data.login_id,data._id)
         setEnquriesstatus(gethospitalstaus.payload)
         console.log(gethospitalstaus.payload)
         let data_pie=[]
