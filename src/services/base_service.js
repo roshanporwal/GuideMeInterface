@@ -1,9 +1,10 @@
 import axios from 'axios';
+import constants from '../constant';
 
 
 
 const instance = axios.create({
-  baseURL: `http://localhost:8080`,
+  baseURL: `${constants.serverBaseUrl}`,
   //"http://localhost:8080"
 });
 

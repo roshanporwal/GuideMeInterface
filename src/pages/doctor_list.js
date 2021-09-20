@@ -7,6 +7,7 @@ import * as auth_service from "../services/auth_service";
 import './style.css'
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
+import constants from "../constant";
 
 
 
@@ -356,7 +357,7 @@ function DOCTOR_LIST(props) {
 
                 <div className="doctor_image_container">
                   <img className="doctor_image"
-                    src={target.avatar ? target.avatar : "http://localhost:8080/view?filepath=./tmp/doctor_avatar/doctor_image.jpg"}
+                    src={target.avatar ? target.avatar : `${constants.serverBaseUrl}/view?filepath=./tmp/doctor_avatar/doctor_image.jpg`}
                     alt="" />
                   <h5>{target.doctor_name}</h5>
                   <h6>{target.speciality}</h6>
