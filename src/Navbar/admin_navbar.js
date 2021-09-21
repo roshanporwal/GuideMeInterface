@@ -47,7 +47,7 @@ export default function ADMIN_NAVBAR(props) {
         </div>
         <div className = "col-md-3">
         <FontAwesomeIcon icon={faSearch} style = {{fontSize: 22}} />
-        <Nav.Link  className = "text-dark" ><p style = {{color:"black"}}>Smart Search</p></Nav.Link>
+        <Nav.Link  className = "text-dark" as={Link} to= '/admin/smartsearch'><p style = {{color:"black"}}>Smart Search</p></Nav.Link>
         </div>
         <div className = "col-md-2">
         <FontAwesomeIcon icon={faPaperclip} style = {{fontSize: 22}} />
