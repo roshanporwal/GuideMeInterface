@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react';
+import constants from '../constant';
 
 
 
@@ -35,7 +36,7 @@ export default function HospitalDetails({target}){
         <>
         <div className = "hospital-info col-md-4">
                 <div className = "medstar_container">
-                        <img className = "medstar_image"  src = "assets\images\Medstar-Healthcare-Jobs.png" alt = ""/>  
+                        <img className = "medstar_image"  src = {target.avatar[0]?target.avatar:`${constants.serverBaseUrl}/view?filepath=./tmp/pngegg.png`} alt = ""/>  
                         <h5 style = {{textAlign: "center", padding: 5}}>{target.hospital_name}</h5>
                         <h6 style = {{textAlign: "center", padding: 5}}>{target.google_location}</h6>
                         <div className = "d-flex p-4">

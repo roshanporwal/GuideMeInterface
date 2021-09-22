@@ -15,6 +15,7 @@ import ADMIN_Home from './admin/admin_home.js';
 //import HospitalNavbar from './Navbar/hospital_navbar';
 //import ADMIN_NAVBAR from './Navbar/admin_navbar';
 import PATIENT_VIEW from './admin/patient_view';
+import SMART_SEARCH from './admin/smart_search';
 
 
 import './App.css';
@@ -48,6 +49,7 @@ export default function App(props) {
         <Route path='/admin/dashboard' exact component={ADMIN_HOSPITAL_DASHBOARD} />
         <Route path='/admin/hospital/profile' exact component={ADMIN_HOSPITAL_PROFILE} />
         <Route path='/admin/sendquota' exact component={ADMIN_PATIENT_DASHBOARD} />
+        <Route path='/admin/smartsearch' exact component={SMART_SEARCH} />
       
 
         <Route path='/patient_view' exact component={PATIENT_VIEW} />

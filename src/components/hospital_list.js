@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as auth_service from "../services/auth_service";
+import constants from '../constant';
 
 export default function HOSPITAL_LIST({ hospitals, showInfo }) {
   const fileInputRef = useRef();
@@ -16,28 +17,16 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       setHospital(hospitals)
       return
     }
-
-    
-    
     const hp = hospitals.filter((data) => data.hospital_name.charAt(0) === char)
-    
     setHospital(hp)
-
-
-
   }
   const handleChange = async (e) => {
 
     const formData = new FormData();
     if (e.target.files.length === 0) {
       setLoading(false)
-      return 
-      
+      return    
     }
-
-   
-    
-    
     for (const fi of e.target.files) {
       if (e.target.files.length === 1) {
         formData.append('blogimage', fi);
@@ -48,11 +37,12 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
     }
     formData.append('blogimage1', "file");
     
-    auth_service.uploadexcelfile(formData).then((enquire_data) => {
-      alert("file upload successful")
-    }).catch((err) => {
-      alert(err)
-    })
+    const uploadexcelfile= await auth_service.uploadexcelfile(formData)
+    if(uploadexcelfile.payload){
+      alert("File uploaded successfully")
+    }else{
+      alert("something went wrong pls check the file is in correct format?")
+    }
     
   }
 
@@ -109,7 +99,7 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
         {
           hospital.map((target, index) => (
             <div className="hospital_list_container d-flex" key={index} {...target} onClick={() => showInfo(target)}>
-              <img className="hospital_image" src="assets\images\Medstar-Healthcare-Jobs.png" alt="" />
+             <img className="hospital_image" src={target.avatar[0]?target.avatar:`${constants.serverBaseUrl}/view?filepath=./tmp/pngegg.png`} alt="" />
               <h4 style={{ marginTop: 30, paddingLeft: 5 }}>{target.hospital_name}<br /><p>{target.google_location}</p></h4>
             </div>
           ))

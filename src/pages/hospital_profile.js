@@ -10,6 +10,7 @@ import './style.css'
 import { hospitalSchema } from '../components/Validations/hospitalValidation';
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
+import constants from '../constant';
 
 
 function ADMIN_HOSPITAL_PROFILE (props){
@@ -43,6 +44,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
         data = JSON.parse(data)
         console.log(data.insurance)
         setHospital_data([data])
+        setFormValue(data)
         setSpeciality(data.speciality)
         if(data.insurance){
         setInsurance(data.insurance)
@@ -273,7 +275,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
               { 
                 hospital_data.map((target,index) => (
                     <div className = "medstar_container" key = {index} {...target}>
-                        <img className = "medstar_image"  src = "assets\images\Medstar-Healthcare-Jobs.png" alt = ""/> 
+                        <img className = "medstar_image"  src = {target.avatar[0]?target.avatar:`${constants.serverBaseUrl}/view?filepath=./tmp/pngegg.png`} alt = ""/> 
                         <button  data-toggle="modal" data-target="#exampleModal" /* onClick= {handleShow} */ disabled={isSubmitting} type = "submit" className = "update_doctor" style = {{marginLeft: "10rem"}}><i style = {{fontSize: 20}} className= "fa fa-pencil"></i></button> 
                         <h6 style = {{textAlign: "center", padding: 5}}>{target.google_location}</h6>
                         <div className = "d-flex p-4">
