@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as auth_service from "../services/auth_service";
+
 export default function HOSPITAL_LIST({ hospitals, showInfo }) {
   const fileInputRef = useRef();
-  const [/*loading,*/ ,setLoading] = useState(false)
-
+  const [fileprocess, setFileProcess] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [hospital, setHospital] = useState([])
   useEffect(() => {
 
@@ -15,6 +16,8 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       setHospital(hospitals)
       return
     }
+
+    
     
     const hp = hospitals.filter((data) => data.hospital_name.charAt(0) === char)
     
@@ -31,6 +34,8 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       return 
       
     }
+
+   
     
     
     for (const fi of e.target.files) {
@@ -42,12 +47,17 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
 
     }
     formData.append('blogimage1', "file");
+    
     auth_service.uploadexcelfile(formData).then((enquire_data) => {
       alert("file upload successful")
     }).catch((err) => {
       alert(err)
     })
-    setLoading(false)
+    
+  }
+
+  const file_upload_loading=()=>{
+    setFileProcess(!fileprocess)
   }
   return (
     <>
@@ -87,8 +97,9 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
         <div className="add_hospital col-md-2">
           
 
-            <button className="add_hospital_button" onClick={() => { fileInputRef.current.click()}}>Add Hospital<i className="fa fa-upload" aria-hidden="true" style={{ fontSize: 18, paddingLeft: 10 }}></i></button>
-          <input onChange={(e)=>{setLoading(true);handleChange(e)}}  accept=" .xlsx" multiple={true} ref={fileInputRef} type='file' hidden />
+            <button className="add_hospital_button" onClick={() => { fileInputRef.current.click(); file_upload_loading()}} onBlur = {() => file_upload_loading()} >Add Hospital
+            {fileprocess?<i style={{ fontSize: 18, marginLeft: 10 }} className="fa fa-refresh fa-spin"></i>: <i className="fa fa-upload" aria-hidden="true" style={{ fontSize: 18, paddingLeft: 10 }}></i>}</button>
+          <input onChange={(e)=>{handleChange(e); file_upload_loading()}}  accept=" .xlsx" multiple={true} ref={fileInputRef} type='file' hidden />
 
 
         </div>
