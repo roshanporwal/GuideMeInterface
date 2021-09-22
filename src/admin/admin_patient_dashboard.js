@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import './style.css';
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from '../components/gif_loader';
+import constants from "../constant";
 
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
@@ -87,7 +88,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             }
         } else {
             const url = {
-                url: "http://localhost:3000/patient_view?id=" + enqurie_data[0]._id,
+                url: `${constants.clientBaseUrl}patient_view?id=` + enqurie_data[0]._id,
                 email: enqurie_data[0].patient_email,
                 enq_id: enqurie_data[0]._id
             }
