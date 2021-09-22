@@ -15,11 +15,11 @@ import constants from '../constant';
 
 function ADMIN_HOSPITAL_PROFILE (props){
     
-    const [errors, setErrors] = useState({});
+    const [errors, /*setErrors*/] = useState({});
     const [hospital_data, setHospital_data] = useState([]);
     const [speciality, setSpeciality] = useState([]);
     const [insurance, setInsurance] = useState([]);
-    const [validated, setValidated] = useState(false);
+    const [validated, /*setValidated*/] = useState(false);
     const [loading, setLoading] = useState(true);
     const [hospital_avatar, setHospital_avatar] = useState();
     const [formValues, setFormValue] = useState({

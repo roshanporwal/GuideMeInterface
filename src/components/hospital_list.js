@@ -5,7 +5,7 @@ import constants from '../constant';
 export default function HOSPITAL_LIST({ hospitals, showInfo }) {
   const fileInputRef = useRef();
   const [fileprocess, setFileProcess] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [/*loading*/, setLoading] = useState(true);
   const [hospital, setHospital] = useState([])
   useEffect(() => {
 

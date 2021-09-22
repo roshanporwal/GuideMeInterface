@@ -10,7 +10,7 @@ function SMART_SEARCH(){
         search_location: "",
         search_speciality: ""
     })
-    const [isSubmitting] = useState(false)
+   
 
     const handleChange = e => {
        
@@ -22,7 +22,7 @@ function SMART_SEARCH(){
     
         
     } 
-    const handleSubmit = async (event) => {
+   /* const handleSubmit = async (event) => {
         event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
@@ -37,7 +37,7 @@ function SMART_SEARCH(){
         
        
       
-      };
+      };*/
     return (
         <>
         <ADMIN_NAVBAR />
