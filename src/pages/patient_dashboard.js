@@ -104,6 +104,7 @@ function PATIENT_DASHBOARD(props) {
         exclusion: "",
         expected_length: "",
         estimate_copay: "",
+        estimate_copay_percentage: "",
         translator: "",
         type_of_anesthesia: "",
         type_of_room: "",
@@ -522,6 +523,19 @@ function PATIENT_DASHBOARD(props) {
                                         isInvalid={!!errors.estimate_copay}
                                     />
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.estimate_copay}</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group style = {{marginTop: "2rem"}}>
+                                <Form.Label>Estimate Copay Percentage</Form.Label>
+                                    <Form.Control
+                                        required
+                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                        type="text"
+                                        name="estimate_copay_percentage"
+                                        value={formValues.estimate_copay_percentage}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.estimate_copay_percentage}
+                                    />
+                                    
                                 </Form.Group>
 
                             <div className="pt-4">
@@ -979,11 +993,11 @@ function PATIENT_DASHBOARD(props) {
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.food_menu}</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group style = {{marginTop: "2rem"}}>
-                                <Form.Label>Confirmation</Form.Label>
+                                <Form.Label>Confirm Date</Form.Label>
                                     <Form.Control
                                         required
                                         style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                        type="text"
+                                        type="date"
                                         name="confirmation"
                                         value={formValues.confirmation}
                                         onChange={handleChange}
