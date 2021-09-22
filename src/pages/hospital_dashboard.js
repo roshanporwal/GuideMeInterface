@@ -66,7 +66,6 @@ function HOSPITAL_DASHBOARD(props) {
         data= JSON.parse(data)
         const gethospitalstaus = await auth_service.gethospitalstaus(data.login_id,data._id)
         setEnquriesstatus(gethospitalstaus.payload)
-        console.log(gethospitalstaus.payload)
         let data_pie=[]
         data_pie.push(gethospitalstaus.payload[0].awaiting)
         data_pie.push(gethospitalstaus.payload[0].won)
@@ -96,9 +95,6 @@ function HOSPITAL_DASHBOARD(props) {
         })
       
         const getenquries = await auth_service.getenquriesbyhospitals(data.login_id,data._id);
-        console.log(getenquries)
-        
-        //console.log(getenquries.payload,"hospitals")
         for(const st of getenquries.payload){
             const hospital =st.hospitals.find(item => item.hospital_id === data._id) 
             st.status= hospital.status

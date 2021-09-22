@@ -37,12 +37,8 @@ function ADMIN_HOSPITAL_PROFILE (props){
         fetchData().then(() => setLoading(false));
     }, []);
     async function fetchData(props) {
-
-
-        console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        console.log(data.insurance)
         setHospital_data([data])
         setFormValue(data)
         setSpeciality(data.speciality)
@@ -93,7 +89,6 @@ function ADMIN_HOSPITAL_PROFILE (props){
         formData.append('formValues', JSON.stringify(formValues))
     
         const updatehospital = await auth_service.updatehospital(data.login_id, formData)
-        console.log(updatehospital)
         if (updatehospital.payload) {
           localStorage.setItem('login', JSON.stringify(updatehospital.payload));
           window.location.reload();

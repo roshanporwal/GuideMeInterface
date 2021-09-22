@@ -10,29 +10,18 @@ export default function PATIENT_VIEW(props) {
     const search = useLocation().search;
   const name = new URLSearchParams(search).get('id');
     useEffect(() => {
-       
-       
         fetchData(name);
       }, [name]);
-
-
     async function fetchData(id) {
-
-       
         const getenquries = await auth_service.getenquriesbyid_patient(id)
-        console.log(getenquries)
         setEnqurie_data(getenquries.payload)
         const enq=getenquries.payload[0].hospitals
         setHopital_enq(enq)
         if(enq.length !== 0){
             setShow_quota(true)
-
-        } 
-      
-
+        }
     }
     
-
     return (
         <>
 

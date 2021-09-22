@@ -48,7 +48,6 @@ function Home(props) {
     }))
   }
   const handleSubmit = async (event) => {
-    console.log(values)
     event.preventDefault();
     const login = await auth_service.login(values)
     if (login.payload) {
@@ -58,7 +57,6 @@ function Home(props) {
         pathname: '/hospital/dashboard'
       });
     }else{
-      console.log(login)
       alert(login.message)
     }
 

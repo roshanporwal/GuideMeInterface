@@ -21,23 +21,15 @@ function PATIENT_FORM(props) {
    /*  const hiddenFileInput = React.useRef(null); */
     const handleOthersField =()=> {
         setShow(!show)
-        console.log("clicked")
-        console.log(show)
     }
     const handleOthersField1 =()=> {
         setShow1(!show1)
-        console.log("clicked")
-        console.log(show)
     }
     const handleOthersField2 =()=> {
         setShow2(!show2)
-        console.log("clicked")
-        console.log(show)
     }
     const handleOthersField3 =()=> {
         setShow3(!show3)
-        console.log("clicked")
-        console.log(show)
     }
     const history = useHistory();
     const [formValues, setFormValue] = useState({
@@ -139,22 +131,12 @@ function PATIENT_FORM(props) {
         event.preventDefault();
         const form = event.currentTarget;
         const err = await validate(formValues);
-        /*  console.log(err) */
          setErrors(err); 
-         console.log(formValues);
-        /*  console.log("err")
-         console.log(err) 
-         console.log("err") */
          if(Object.keys(err).length === 0){
-             console.log(err.length)
-         
-         
-
         const formData = new FormData();
         formValues.proposed_treatment_plan = proposed_treatment_plan;
         formValues.languages_spoken = languages_spoken
         formValues.status="New"
-      
         formData.append('patient_document', patient_document);
         formData.append('patient_reports', patient_reports);
         formData.append('insurance_card_copy', insurance_card_copy);
@@ -163,20 +145,9 @@ function PATIENT_FORM(props) {
             event.preventDefault();
             event.stopPropagation();
           }
-
-        
-         console.log(patient_reports)
-         console.log(insurance_card_copy)
          setValidated(false);
-
-
-        
-
           auth_service.enquries("admin",formData).then((enquire_data) => {
-
-            console.log(enquire_data)
             if(enquire_data.payload){
-              
                history.push({
                  pathname:'/admin/dashboard'
                });

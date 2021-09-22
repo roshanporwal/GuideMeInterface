@@ -144,12 +144,10 @@ function PATIENT_DASHBOARD(props) {
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id,props.location.state)
-       console.log(getenquriesbyid.payload)
         
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
         setDoctor(getdoctor.payload) 
          const hospital_data =getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
-         console.log(hospital_data)
          getenquriesbyid.payload[0].status=hospital_data.status
          setEnqurie_data(getenquriesbyid.payload)
 
@@ -202,30 +200,20 @@ function PATIENT_DASHBOARD(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formValues)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        console.log("data", data)
         const err = await validate(formValues);
-        console.log(err)
         setErrors(err);
-
-
-
         formValues.select_doctor = select_doctor;
         formValues.select_anesthesiologist = select_anesthesiologist;
         formValues.free_annual_checkup=free_annual_checkup;
         formValues.status = "Awaiting From Patients"
-
-
-        console.log("formValues",formValues)
         setValidated(false);
         if(Object.keys(err).length === 0){
 
          const formsubmit = await auth_service.sendquote(enqurie_data[0]._id, data.login_id, data._id, formValues) 
         if(formsubmit.payload){
             const getenquries = await auth_service.getenquriesbyid(data.login_id,enqurie_data[0]._id)
-            console.log(getenquries.payload)
             setEnqurie_data(getenquries.payload)
             const hospital_data =getenquries.payload[0].hospitals.find(item => item.hospital_id === data._id)
          if(hospital_data!=null){

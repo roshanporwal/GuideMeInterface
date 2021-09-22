@@ -16,8 +16,6 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     const handleOthersField = () => {
         setShow(!show)
-
-        console.log(show)
     }
     const [rating, setRating] = useState(0)
     const [islowrating, setIsLowRating] = useState(null);
@@ -56,23 +54,16 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
 
     async function fetchData(props) {
-
-
-        console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id,props.location.state)
-        console.log(getenquriesbyid.payload)
         setEnqurie_data(getenquriesbyid.payload)
         const enq = getenquriesbyid.payload[0].hospitals
-        console.log(enq)
         setHopital_enq(enq)
         if (enq.length !== 0) {
             setShow_quota(true)
-
         }
         const getenquries = await auth_service.gethospitals(data.login_id)
-        console.log(getenquries)
         setHospitals(getenquries.payload)
     }
 
@@ -81,7 +72,6 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         if (event === "before") {
-            console.log(selected.length)
             if (selected.length > 3) {
                 return alert(" Patient details can be shared only with three Hospitals.")
             } else {
@@ -96,37 +86,24 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
             }
         } else {
-            console.log(enqurie_data[0])
             const url = {
                 url: "http://localhost:3000/patient_view?id=" + enqurie_data[0]._id,
                 email: enqurie_data[0].patient_email,
                 enq_id: enqurie_data[0]._id
             }
-            console.log(url)
             const getenquries = await auth_service.sendmail(data.login_id, url)
-
-            console.log(getenquries)
             if (getenquries.payload) {
                 window.location.reload();
                 alert(getenquries.payload)
-                console.log(getenquries)
-
-
             }
         }
 
     };
 
     async function wonandloss(id) {
-
-
-        //console.log(props)
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        console.log(formValues)
-
         const wonandloss = await auth_service.wonandloss(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
-        console.log(wonandloss)
         if (wonandloss.payload) {
             window.location.reload();
         }
@@ -152,12 +129,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 feedbackrating: rating
             }
             const feedback = await auth_service.feedback(enqurie_data[0]._id, data.login_id, res)
-            console.log(feedback)
             if (feedback.payload) {
                 setIsLowRating(false)
-            }
-
-            
+            }   
         }
     }
     if(loading === true)
@@ -285,14 +259,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 </div>
                             </div>
                         ))}
-
-                   
-                        {/* enqurie_data[0].status === "Won Patients" ?console.log("Done"):console.log("No")*/}
-                        
-
                             <div className="col-md-5 pt-4">
                                 <h4>Please rate us!</h4>
-
                                 <ReactStars
                                     count={5}
                                     onChange={ratingChanged}
