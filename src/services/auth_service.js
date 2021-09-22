@@ -65,7 +65,7 @@ function gethospitalsall(login_id) {
   return req
 }
 function uploadexcelfile(data) {
-  const req = instance.post(`/upladfile`,data);
+  const req = instance.post(`/uploadexcel/insurance`,data);
   return req
 }
 function getenquries(login_id) {
