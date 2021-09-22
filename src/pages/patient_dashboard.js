@@ -104,6 +104,7 @@ function PATIENT_DASHBOARD(props) {
         exclusion: "",
         expected_length: "",
         estimate_copay: "",
+        translator: "",
         type_of_anesthesia: "",
         type_of_room: "",
         free_room_upgrade: "",
@@ -523,6 +524,41 @@ function PATIENT_DASHBOARD(props) {
                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.estimate_copay}</Form.Control.Feedback>
                                 </Form.Group>
 
+                            <div className="pt-4">
+                                <Form.Label>Translator available as per patients's preferred language</Form.Label>
+                                <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
+                                    <div className = "col-md-6">
+                                <Form.Check
+                                    label = "Yes"
+                                    required
+                                   
+                                    type="radio"
+                                    name="translator"
+                                    id = "yes"
+                                    value="yes"
+                                    checked={formValues.translator==="yes"}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.translator}
+                                />
+                                </div>
+                                <div className = "col-md-6">
+                                    <Form.Check
+                                        label = "No"
+                                        required
+                                       
+                                        type="radio"
+                                        name="translator"
+                                        id = "no"
+                                        value="no"
+                                        checked={formValues.translator==="no"}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.translator}
+                                    />
+                                    </div>
+                                    
+                                </div>
+                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
+                            </div>
                             <div className="pt-4">
                                 <Form.Label>Types of Anesthesia</Form.Label>
                                 <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>

@@ -26,17 +26,17 @@ function SMART_SEARCH(){
         event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const err = await validate(formValues);
+       
     
     
-        setErrors(err);
-        if(Object.keys(err).length === 0){
+      
+        
         const formData = new FormData();
         
         formData.append('formValues', JSON.stringify(formValues))
         
        
-      }
+      
       };
     return (
         <>

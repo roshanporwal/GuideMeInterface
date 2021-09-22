@@ -17,6 +17,7 @@ function PATIENT_FORM(props) {
     const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
+    const [show3, setShow3] = useState(false);
    /*  const hiddenFileInput = React.useRef(null); */
     const handleOthersField =()=> {
         setShow(!show)
@@ -33,6 +34,11 @@ function PATIENT_FORM(props) {
         console.log("clicked")
         console.log(show)
     }
+    const handleOthersField3 =()=> {
+        setShow3(!show3)
+        console.log("clicked")
+        console.log(show)
+    }
     const history = useHistory();
     const [formValues, setFormValue] = useState({
         
@@ -46,6 +52,7 @@ function PATIENT_FORM(props) {
         patient_document: "",
         patient_reports: "",
         current_diagnosis: "",
+       
         insurance_card_copy: "",
         medical_history: "",
         proposed_treatment_plan: [],
@@ -134,9 +141,10 @@ function PATIENT_FORM(props) {
         const err = await validate(formValues);
         /*  console.log(err) */
          setErrors(err); 
-         console.log("err")
+         console.log(formValues);
+        /*  console.log("err")
          console.log(err) 
-         console.log("err")
+         console.log("err") */
          if(Object.keys(err).length === 0){
              console.log(err.length)
          
@@ -445,20 +453,45 @@ function PATIENT_FORM(props) {
                             />
                              <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
                         </Form.Group>
+                        <label style = {{marginTop: "2rem"}}>Cash or Insurance(Insurance Name)</label>
+                        <div className="pt-2"  style = {{ border: "2px solid #164473", borderRadius: 10}}>
+                           
 
-                        <Form.Group style = {{marginTop: "2rem"}}>
-                        <Form.Label>Insurance Name</Form.Label>
-                            <Form.Control
+                            <Form.Check
+                                label="Cash"
+                                style = {{paddingLeft: "5rem"}}
+                                onChange={handleChange} 
+                                type="radio" 
+                                name="insurance_name" 
+                                id="cash" 
+                                value="cash"
+                                isInvalid={!!errors.insurance_name}
+                                />
+                            <Form.Check
+                                label="Insurance"
+                                style = {{paddingLeft: "5rem"}}
+                                onChange={handleOthersField3} 
+                                type="radio" 
+                                name="insurance_name" 
+                                id="insurance" 
+                                value="insurance"
+                                isInvalid={!!errors.insurance_name}
+                                /> 
+                                {show3? 
+                                <Form.Control
+                                placeholder = "Please Enter Insurance Name"
                                 required
-                                style={{ border: "2px solid #164473", borderRadius: 10}}
+                                style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "0px", marginBottom: "1rem"}}
                                 type="text"
                                 name="insurance_name"
                                 value={formValues.insurance_name}
                                 onChange={handleChange}
                                 isInvalid={!!errors.insurance_name}
-                            />
-                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.insurance_name}</Form.Control.Feedback>
-                        </Form.Group>
+                            /> : ""}
+                        </div>
+                        <Form.Control.Feedback style= {{color:"red"}}>{errors?.cash_or_insurance}</Form.Control.Feedback>
+                        
+                        
                         
                        
                         <Form.Group style = {{marginTop: "2rem"}}>
