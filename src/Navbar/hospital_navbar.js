@@ -33,11 +33,11 @@ export default function HospitalNavbar(props) {
       <div className = "col-md-2"></div>
       <div className = "col-md-2"></div>
       <div className = "col-md-2">
-      <Nav.Link className = "text-dark"  as={Link} to= '/hospital/dashboard'><p style = {{color: "black"}}>Dashboard</p></Nav.Link>
+      <Nav.Link className = "text-dark"  as={Link} to= '/hospital/dashboard'><p style = {{color: "#164473"}}>Dashboard</p></Nav.Link>
       </div>
       <div className = "col-md-2"></div>
        <div className = "col-md-2"> 
-        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/doctors'><p style = {{color: "black"}}>Doctors</p></Nav.Link>
+        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/doctors'><p style = {{color: "#164473"}}>Doctors</p></Nav.Link>
         </div>
         <div className = "col-md-2"></div>
         <div className = "col-md-2"></div>
@@ -45,10 +45,10 @@ export default function HospitalNavbar(props) {
         <div className = "col-md-2"></div>
        
         <div className = "col-md-2">
-        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/profile'><p style = {{color: "black"}}><FontAwesomeIcon icon={faUser} style = {{fontSize: 22}} /></p></Nav.Link> 
+        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/profile'><p style = {{color: "#164473"}}><FontAwesomeIcon icon={faUser} style = {{fontSize: 22}} /></p></Nav.Link> 
         </div>
         <div className = "col-md-2">
-        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "black"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22}} /></p></Nav.Link> 
+        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22}} /></p></Nav.Link> 
         </div>
        
       </Nav>

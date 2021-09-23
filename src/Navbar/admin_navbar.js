@@ -32,30 +32,30 @@ export default function ADMIN_NAVBAR(props) {
  <Navbar bg="light" expand="lg">
   <Container>
     
-    <Navbar.Brand><img src={`${constants.serverBaseUrl}/view?filepath=./tmp/GuideMeDocLogo.png`} alt="" style = {{height: "100px", width: "200px", marginTop: "-40px"}} /></Navbar.Brand>
+    <Navbar.Brand><img src= "/assets/images/GuideMeDocLogo.png" alt="" style = {{height: "100px", width: "200px", marginTop: "-40px"}} /></Navbar.Brand>
     
     
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav>
         <div className = "col-md-2">
-      <FontAwesomeIcon icon={faUserAlt} style = {{fontSize: 22}} />
-      <Nav.Link className = "text-dark" as={Link} to= '/admin/dashboard'><p style = {{color:"black"}}>Patients</p></Nav.Link>
+      <FontAwesomeIcon icon={faUserAlt} style = {{fontSize: 22, color: "#164473"}} />
+      <Nav.Link className = "text-dark" as={Link} to= '/admin/dashboard'><p style = {{color:"#164473"}}>Patients</p></Nav.Link>
       </div>
       <div className = "col-md-2">
-      <FontAwesomeIcon icon={faHospital} style = {{fontSize: 22}} />
-        <Nav.Link  className = "text-dark" as={Link} to= '/admin/hospital/profile'><p style = {{color:"black"}}>Hospitals</p></Nav.Link>
+      <FontAwesomeIcon icon={faHospital} style = {{fontSize: 22, color: "#164473"}} />
+        <Nav.Link  className = "text-dark" as={Link} to= '/admin/hospital/profile'><p style = {{color:"#164473"}}>Hospitals</p></Nav.Link>
         </div>
         <div className = "col-md-3">
-        <FontAwesomeIcon icon={faSearch} style = {{fontSize: 22}} />
-        <Nav.Link  className = "text-dark" as={Link} to= '/admin/smartsearch'><p style = {{color:"black"}}>Smart Search</p></Nav.Link>
+        <FontAwesomeIcon icon={faSearch} style = {{fontSize: 22, color: "#164473"}} />
+        <Nav.Link  className = "text-dark" as={Link} to= '/admin/smartsearch'><p style = {{color:"#164473"}}>Smart Search</p></Nav.Link>
         </div>
         <div className = "col-md-2">
-        <FontAwesomeIcon icon={faPaperclip} style = {{fontSize: 22}} />
-        <Nav.Link  className = "text-dark"  ><p style = {{color:"black"}}>MIS</p></Nav.Link>
+        <FontAwesomeIcon icon={faPaperclip} style = {{fontSize: 22, color: "#164473"}} />
+        <Nav.Link  className = "text-dark"  ><p style = {{color:"#164473"}}>MIS</p></Nav.Link>
         </div>
         <div className = "col-md-2">
-        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "black", marginLeft: "1rem"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20rem"}} /></p></Nav.Link> 
+        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473", marginLeft: "1rem"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20rem", color: "#164473"}} /></p></Nav.Link> 
         </div>
        
       </Nav>

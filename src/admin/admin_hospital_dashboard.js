@@ -118,7 +118,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             <>
                 <ADMIN_NAVBAR />
                 <div className="text-center">
-                    <h1>Admin Dashboard</h1>
+                    <h1 style = {{color: "#3f9efd"}}>Admin Dashboard</h1>
                 </div>
                 {
                     enquriesstatus.map((target, index) => (
@@ -127,45 +127,45 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                             <div className="enquiries">
                                 <div className="col-md-2 col-sm-6 total_enquiries text-center">
                                     <div className="text-center" >
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-file"></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.total}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-file"></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.total}</h1>
                                     </div>
-                                    <h3>Total Enquiries</h3>
+                                    <h3 style = {{color: "#3f9efd"}}>Total Enquiries</h3>
                                 </div>
                                 <div className="col-md-2 col-sm-6 new_enquiries text-center">
                                     <div className=" text-center"  >
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-plus"></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.new}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-plus"></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.new}</h1>
                                     </div>
-                                    <h3 >New Enquiries</h3>
+                                    <h3  style = {{color: "#3f9efd"}}>New Enquiries</h3>
                                 </div>
                                 <div className="col-md-2 col-sm-6 awaiting_enquiries text-center">
                                     <div className="text-center" >
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-pause"></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.lost}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-pause"></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.lost}</h1>
                                     </div>
-                                    <h3>Lost Enquiries</h3>
+                                    <h3  style = {{color: "#3f9efd"}}>Lost Enquiries</h3>
                                 </div>
                                 <div className="col-md-2 col-sm-6 won_enquiries text-center">
                                     <div className="text-center">
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className=" fa fa-smile-o "></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.won}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className=" fa fa-smile-o "></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.won}</h1>
                                     </div>
-                                    <h3>Won Enquiries</h3>
+                                    <h3  style = {{color: "#3f9efd"}}>Won Enquiries</h3>
                                 </div>
                                 <div className="col-md-2 col-sm-6 lost_enquiries text-center">
                                     <div className="text-center" >
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-frown-o"></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.inprogress}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-tasks"></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.inprogress}</h1>
                                     </div>
-                                    <h3>In Progress</h3>
+                                    <h3  style = {{color: "#3f9efd"}}>In Progress</h3>
                                 </div>
                                 <div className="col-md-2 col-sm-6 sent_quote text-center">
                                     <div className="text-center">
-                                        <i style={{ fontSize: 32, marginTop: "25px" }} className="fa fa-frown-o"></i>
-                                        <h1 style={{ paddingLeft: "1rem" }}>{target.sentquote}</h1>
+                                        <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-share"></i>
+                                        <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.sentquote}</h1>
                                     </div>
-                                    <h3>Sent Quote</h3>
+                                    <h3  style = {{color: "#3f9efd"}}>Sent Quote</h3>
                                 </div>
                             </div>
                         </div>
