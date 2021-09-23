@@ -72,8 +72,8 @@ function Home(props) {
     <Router>
       <div className = "container-fluid">
       <div className="content row" >
-        <div className="col-md-4">
-          
+        <div className="col-md-4 m-0">
+            <img className = "login_image" style = {{width: "300px", height: "200px"}} src="/assets/images/GuideMeDocLogo.png" alt=""  />
             <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\login_img.png" alt=""  />
 
          
@@ -92,7 +92,7 @@ function Home(props) {
             </div>
             <div className="submit_btn">
 
-              <button className="join_button" onClick={handleSubmit} type="submit">Join Now</button>
+              <button className="join_button" onClick={handleSubmit} type="submit">Login</button>
 
             </div>
 

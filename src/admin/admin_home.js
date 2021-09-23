@@ -39,14 +39,14 @@ function ADMIN_Home(props) {
       <div className = "container-fluid">
       <div className="content row" >
         <div className="col-md-4">
-          
+        <img className = "login_image" style = {{width: "300px", height: "200px"}} src="/assets/images/GuideMeDocLogo.png" alt=""  />
             <img className = "login_image" style = {{marginTop: "-20px"}} src="assets\images\admin_login.jpg" alt=""  />
 
          
 
         </div>
         <div className="col-md-8">
-          <h2 className="login_title">Hospital/Doctor Login</h2>
+          <h2 className="login_title">Welcome, Admin</h2>
           <form className="login_form">
             <div className="email_field">
               <label htmlFor="exampleInputEmail1">Email</label>
