@@ -14,6 +14,7 @@ import  * as auth_service from "../services/auth_service";
 
 function PATIENT_FORM(props) {
     const [validated, setValidated] = useState(false);
+    const [fileprocess, setFileProcess] = useState(false);
     const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
@@ -101,8 +102,7 @@ function PATIENT_FORM(props) {
         insurance_name:""
     })
 
-    
-
+  
 
 
 
@@ -145,6 +145,7 @@ function PATIENT_FORM(props) {
             event.preventDefault();
             event.stopPropagation();
           }
+          setFileProcess(!fileprocess)
          setValidated(false);
           auth_service.enquries("admin",formData).then((enquire_data) => {
             if(enquire_data.payload){
@@ -1013,7 +1014,7 @@ function PATIENT_FORM(props) {
 
                     </div>
                     <div className = "offset-col-md-4 col-md-4">
-                         <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{isSubmitting ? "Please wait..." : "Submit"}</button>
+                         <button className="patient_submit" disabled={isSubmitting} type="submit" onClick={handleSubmit}>{fileprocess?<i style={{ fontSize: 18, marginLeft: 10 }} className="fa fa-refresh fa-spin"></i> : "Submit"}</button>
                     </div>
                 </Form>
             </div>
