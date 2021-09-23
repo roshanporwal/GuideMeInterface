@@ -28,10 +28,10 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
       return    
     }
     for (const fi of e.target.files) {
-      if (e.target.files.length === 1) {
+     /* if (e.target.files.length === 1) {
         formData.append('blogimage', fi);
 
-      }
+      }*/
       formData.append('blogimage', fi);
 
     }
@@ -89,7 +89,7 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
 
             <button className="add_hospital_button" onClick={() => { fileInputRef.current.click(); file_upload_loading()}} onBlur = {() => file_upload_loading()} >Add Hospital
             {fileprocess?<i style={{ fontSize: 18, marginLeft: 10 }} className="fa fa-refresh fa-spin"></i>: <i className="fa fa-upload" aria-hidden="true" style={{ fontSize: 18, paddingLeft: 10 }}></i>}</button>
-          <input onChange={(e)=>{handleChange(e); file_upload_loading()}}  accept=" .xlsx" multiple={true} ref={fileInputRef} type='file' hidden />
+          <input onChange={(e)=>{handleChange(e); file_upload_loading()}}  accept=" .xlsx" multiple={false} ref={fileInputRef} type='file' hidden />
 
 
         </div>
