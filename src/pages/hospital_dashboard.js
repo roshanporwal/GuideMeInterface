@@ -121,7 +121,7 @@ function HOSPITAL_DASHBOARD(props) {
         <>
         <HospitalNavbar/>
             <div className="text-center">
-                <h1 style = {{color: "#3f9efd"}}>Hospital Dashboard</h1>
+                <h1 className = "mt-0 p-5" style = {{color: "#000"}}>Hospital Dashboard</h1>
             </div>
             {
                 enquriesstatus.map((target, index) => (
@@ -167,47 +167,48 @@ function HOSPITAL_DASHBOARD(props) {
                         <div  className="enquiries offset-1">
                             <div className="col-md-2 col-sm-6 total_enquiries text-center">
                                 <div className="text-center" >
-                                    <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-file"></i>
+                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-file"></i>
                                     <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.total}</h1>
                                 </div>
-                                <h3 style = {{color: "#3f9efd"}}>Total Enquiries</h3>
+                                <h3 className = "mt-0 pb-5" style = {{color: "#3f9efd"}}>Total Enquiries</h3>
                             </div>
                             <div  className="col-md-2 col-sm-6 new_enquiries text-center">
                                 <div className=" text-center"  >
-                                    <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-plus"></i>
+                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-plus"></i>
                                     <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.new}</h1>
                                 </div>
-                                <h3  style = {{color: "#3f9efd"}}>New Enquiries</h3>
+                                <h3  className = "mt-0  pb-5"  style = {{color: "#3f9efd"}}>New Enquiries</h3>
                             </div>
                             <div  className="col-md-3 col-sm-6 awaiting_enquiries text-center">
                                 <div className="text-center" >
-                                    <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-pause"></i>
+                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-pause"></i>
                                     <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.awaiting}</h1>
                                 </div>
-                                <h3  style = {{color: "#3f9efd"}}>Awaiting Enquiries</h3>
+                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Awaiting Enquiries</h3>
                             </div>
                             <div  className="col-md-2 col-sm-6 won_enquiries text-center">
                                 <div className="text-center">
-                                    <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className=" fa fa-smile-o "></i>
+                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className=" fa fa-smile-o "></i>
                                     <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.won}</h1>
                                 </div>
-                                <h3  style = {{color: "#3f9efd"}}>Won Enquiries</h3>
+                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Won Enquiries</h3>
                             </div>
                             <div  className="col-md-2 col-sm-6 lost_enquiries text-center">
                                 <div className="text-center" >
-                                    <i style={{ fontSize: 32, marginTop: "25px", color: "#164473" }} className="fa fa-frown-o"></i>
+                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-frown-o"></i>
                                     <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.lost}</h1>
                                 </div>
-                                <h3  style = {{color: "#3f9efd"}}>Lost Enquiries</h3>
+                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Lost Enquiries</h3>
                             </div>
                             
                         </div>
                     </div>
                 ))}
-            <div className="chart_content offset-1">
-                <div className="chart_container col-sm-5 mt-5 mb-5">
+            <div className="">
+                <div className=" col-md-offset-1 col-md-5 mt-5 mb-5" >
+                    <div className = "chart_container">
                     <div className = "row">
-                        <div className = "col-sm-7 ">
+                        <div className = "col-md-offset-2 col-md-8 p-5  ">
                         <Pie
                             data={pie}
                             options={{
@@ -223,16 +224,16 @@ function HOSPITAL_DASHBOARD(props) {
                             }}
                         />
                         </div>
-                        <div className = "col-sm-5 ">
+                        {/* <div className = "col-sm-5 ">
                         <ul style={{ fontSize: 20 }}>
                             <li>Awaiting Patients</li>
                             <li>Won Patients</li>
                             <li>Lost Patients</li>
                             <li>New Patients</li>
                         </ul>
-                        </div>
+                        </div> */}
                     </div>
-                    
+                 </div>   
                     
                     
                 </div>
@@ -240,7 +241,7 @@ function HOSPITAL_DASHBOARD(props) {
                     enquriesstatus.map((target, index) => (
 
 
-                        <div style = {{marginLeft: "30px"}} className="alert_container col-sm-6 mt-5" key={index}{...target}>
+                        <div style = {{margin: "0px 5px"}} className="alert_container col-sm-5 mt-5" key={index}{...target}>
                         <div className="row">
                             <div className = "col-sm-6 text-center">
                                 <h1 style={{ fontSize: 42, color: "white", marginTop: "8rem"}}>{target.new}</h1>

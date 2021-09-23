@@ -264,6 +264,7 @@
 
     .chart_content{
         width: 100%;
+        margin-left: 0px!important;
             
     }
 
@@ -511,7 +512,7 @@ p{
 
 .chart_container{
    
-   height: 35rem;
+   height: 38rem;
     
     background: #f2f2f2;
     border-radius: 20px;
@@ -530,7 +531,7 @@ p{
 }
 
 .alert_container{
-    height: 35rem;
+    height: 38rem;
     
     background: #164473;
     border-radius: 20px;
@@ -955,6 +956,20 @@ tbody{
    padding : 5px;
 }
 
+.search_button{
+    width: "100%";
+}
+
+/* loading button animation */
+
+
+  
+  
+  
+  
+  
+  
+ 
 
 
 
