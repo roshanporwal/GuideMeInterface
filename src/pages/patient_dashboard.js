@@ -445,6 +445,8 @@ function PATIENT_DASHBOARD(props) {
 
                                             </div>
                                         </div>
+                                        <div className = "row">
+                                            <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Treatment Plan</Form.Label>
                                             <Form.Control
@@ -458,7 +460,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.treatment_plan}</Form.Control.Feedback>
                                         </Form.Group>
-
+                                        </div>
+                                        <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Estimate Price</Form.Label>
                                             <Form.Control
@@ -472,7 +475,10 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_price}</Form.Control.Feedback>
                                         </Form.Group>
-
+                                        </div>
+                                        </div>
+                                        <div className = "row">
+                                            <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Inclusions</Form.Label>
                                             <Form.Control
@@ -486,7 +492,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.inclusion}</Form.Control.Feedback>
                                         </Form.Group>
-
+                                                </div>
+                                                <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Exclusions</Form.Label>
                                             <Form.Control
@@ -500,7 +507,11 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.exclusion}</Form.Control.Feedback>
                                         </Form.Group>
+                                        </div>
+                                   </div>
 
+                                    <div className = "row">
+                                        <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Estimate Copay</Form.Label>
                                             <Form.Control
@@ -514,6 +525,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_copay}</Form.Control.Feedback>
                                         </Form.Group>
+                                        </div>
+                                        <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Estimate Copay Percentage</Form.Label>
                                             <Form.Control
@@ -527,7 +540,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
 
                                         </Form.Group>
-
+                                        </div>
+                                    </div>
                                         <div className="pt-4">
                                             <Form.Label>Translator available as per patients's preferred language</Form.Label>
                                             <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
@@ -624,9 +638,10 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.type_of_room}</Form.Control.Feedback>
                                         </Form.Group>
-
+                                        <div className = "row">
+                                            <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Expected Length of Stay</Form.Label>
+                                            <Form.Label>Expected Length of Stay in Hospital</Form.Label>
                                             <Form.Control
                                                 required
                                                 style={{ border: "2px solid #164473", borderRadius: 10 }}
@@ -638,11 +653,27 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.expected_length}</Form.Control.Feedback>
                                         </Form.Group>
-
+                                        </div>
+                                        <div className = "col-md-6">
+                                        <Form.Group style={{ marginTop: "2rem" }}>
+                                            <Form.Label>Expected Length of Stay in the Country</Form.Label>
+                                            <Form.Control
+                                                required
+                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                type="text"
+                                                name="length_of_stay"
+                                                value={formValues.length_of_stay}
+                                                onChange={handleChange}
+                                                isInvalid={!!errors.length_of_stay}
+                                            />
+                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.length_of_stay}</Form.Control.Feedback>
+                                        </Form.Group>
+                                        </div>
+                                        </div>
 
                                         <div style={{ marginTop: "2rem" }}>
                                             <div className="row">
-                                                <div className="col-md-5">
+                                                <div className="col-md-6">
                                                     <label>Free Room Upgrade</label>
                                                     <div className=" d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
                                                         <Form.Check
@@ -684,8 +715,8 @@ function PATIENT_DASHBOARD(props) {
                                                     </div>
                                                     <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_room_upgrade}</Form.Control.Feedback>
                                                 </div>
-                                                <div className="col-md-2"></div>
-                                                <div className="col-md-5">
+                                                
+                                                <div className="col-md-6">
                                                     <label>Free Physiotherapy</label>
                                                     <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10, verticalAlign: "center" }}>
 
@@ -850,7 +881,7 @@ function PATIENT_DASHBOARD(props) {
 
                                         <div style={{ marginTop: "2rem" }}>
                                             <div className="row">
-                                                <div className="col-sm-6">
+                                                <div className="col-md-6">
                                                     <label>Pickup and Drop</label>
                                                     <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
 
@@ -895,8 +926,8 @@ function PATIENT_DASHBOARD(props) {
                                                 </div>
 
 
-                                                <div className="col-sm-1"></div>
-                                                <div className="col-sm-5">
+                                                
+                                                <div className="col-md-6">
 
                                                     <label>Dedicated Patient Relationship Management</label>
                                                     <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
@@ -943,6 +974,8 @@ function PATIENT_DASHBOARD(props) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className = "row">
+                                            <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Other Benefits For Patient</Form.Label>
                                             <Form.Control
@@ -956,6 +989,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_patient}</Form.Control.Feedback>
                                         </Form.Group>
+                                        </div>
+                                        <div className = "col-md-6">
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Other Benefits of Attendants</Form.Label>
                                             <Form.Control
@@ -969,6 +1004,8 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_attendent}</Form.Control.Feedback>
                                         </Form.Group>
+                                        </div>
+                                        </div>
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>Food Menu</Form.Label>
                                             <Form.Control
@@ -995,19 +1032,7 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.confirmation}</Form.Control.Feedback>
                                         </Form.Group>
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Expected Length of Stay in the Country</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="length_of_stay"
-                                                value={formValues.length_of_stay}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.length_of_stay}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.length_of_stay}</Form.Control.Feedback>
-                                        </Form.Group>
+                                        
                                         <Form.Group style={{ marginTop: "2rem" }}>
                                             <Form.Label>General disclaimer</Form.Label>
                                             <Form.Control

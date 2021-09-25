@@ -32,23 +32,33 @@ const columns = [
     {
       name: 'From',
       selector: row => row['from_date'],
+      sortable: true,
     },
     {
         name: 'To',
         selector: row => row['to_date'],
+        sortable: true,
     },
     {
         name: 'Status',
         selector: row => row['status'],
+        sortable: true,
     },
   ];
-
+  const customStyles = {
+    rows: {
+        style: {
+            cursor: "pointer"// override the row height
+        },
+    },
+}
 
 
 
 function HOSPITAL_DASHBOARD(props) {
     const [loading, setLoading] = useState(true);
     const history = useHistory();
+    const [search, setSearch] = useState('');
     const [enquries, setEnquries] = useState([])
     const [enquriesstatus,setEnquriesstatus] = useState([ ])
     const [pie,setPie] = useState()
@@ -59,6 +69,9 @@ function HOSPITAL_DASHBOARD(props) {
 
         fetchData().then(() => setLoading(false));
     }, []);
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
+      };
 
 
     async function fetchData() {
@@ -290,14 +303,23 @@ function HOSPITAL_DASHBOARD(props) {
                    */}        
                             
     <div className = "data_table">
+    <div className = "col-md-12">
+                    <label htmlFor="search">
+                    Search by Patient Name:<br/>
+                    <input id="search" type="text" onChange={handleSearch} />
+                </label>
+                </div>
     <DataTable
        
         onRowClicked = {(target) => handleSubmit(target)}                      
         columns={columns}
-        data={enquries}
+        data={enquries.filter((item) =>
+            item.patient_name.toLowerCase().includes(search.toLowerCase())
+          )}
         highlightOnHover
         pagination
         paginationPerPage={5}
+        customStyles = {customStyles}
         paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
         paginationComponentOptions={{
           rowsPerPageText: 'Records per page:',

@@ -5,50 +5,80 @@ import 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
-import DataTable from "react-data-table-component";
+import DataTable from "react-data-table-component"; 
+/* import DataTable from "react-data-components";   */
 import './style.css'
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from '../components/gif_loader';
+import "react-data-components/css/table-twbs.css";
+/* import FilterTableComponent from "../components/data_table"; */
 
 
-const columns = [
-    {
-        name: 'Patient_Name',
-        selector: row => row['patient_name'],
-        sortable: true,
 
+
+  const columns = [
+    {
+      name: 'Patient_Name',
+      selector: row => row['patient_name'],
+      sortable: true,
+     
     },
     {
-        name: 'Diagnosis',
-        selector: row => row['current_diagnosis'],
-        sortable: true,
+      name: 'Diagnosis',
+      selector: row => row['current_diagnosis'],
+      sortable: true,
     },
     {
-        name: 'Insurance/TPA',
-        selector: row => row['insurance_name'],
-        sortable: true,
+      name: 'Insurance/TPA',
+      selector: row => row['insurance_name'],
+      sortable: true,
     },
     {
-        name: 'From',
-        selector: row => row['from_date'],
+      name: 'From',
+      selector: row => row['from_date'],
+      sortable: true,
+
     },
     {
         name: 'To',
         selector: row => row['to_date'],
+        sortable: true,
+
     },
     {
         name: 'Status',
         selector: row => row['status'],
+        sortable: true,
+
     },
-];
+  ];
+ /* 
+  const columns = [
+    { title: 'Patient Name', prop: 'patient_name'  },
+    { title: 'Diagnosis', prop: 'diagnosis' },
+    { title: 'Insurance/TPA', prop: 'insurance_name' },
+    { title: 'From', prop: 'from_date' },
+    { title: 'To', prop: 'to_date' },
+    { title: 'Status', prop: 'status' }
+  ];
 
 
+ */
 
+  const customStyles = {
+    rows: {
+        style: {
+            cursor: "pointer"// override the row height
+        },
+    },
+}
+
+  
 export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [enquriesstatus, setEnquriesstatus] = useState([])
-
+    const [search, setSearch] = useState('');
     const [enquries, setEnquries] = useState([])
     const [pie, setPie] = useState()
 
@@ -56,7 +86,10 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
 
         fetchData().then(() => setLoading(false));
     }, []);
-
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
+      };
+    
 
     async function fetchData() {
         let data = localStorage.getItem("login")
@@ -95,6 +128,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
 
     }
 
+   
     const handleSubmit = async (event) => {
         history.push({
             pathname: '/admin/sendquota',
@@ -191,6 +225,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                     }}
                                 />
                             </div>
+                            
                            {/*  <div className="col-sm-5 ">
                                 <ul style={{ fontSize: 20 }}>
                                     <li>Awaiting Patients</li>
@@ -200,10 +235,11 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                 </ul>
                             </div> */}
                         </div>
-
+                       
 
 
                     </div>
+                   
                     {
                         enquriesstatus.map((target, index) => (
 
@@ -230,29 +266,49 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                     </div>
                 </div>
                 <div className="patient_table_container" style={{ marginTop: 40 }}>
-
+                
 
                     <div className="data_table mt-5">
-
-                        <DataTable
-
+                <div className = "col-md-12">
+                    <label htmlFor="search">
+                    Search by Patient Name:<br/>
+                    <input id="search" type="text" onChange={handleSearch} />
+                </label>
+                </div>
+                     {/* <DataTable
+      keys="name"
+      columns={columns}
+      initialData={enquries}
+      onRowClicked={(target) => handleSubmit(target)}
+      initialPageLength={5}
+      initialSortBy={{ prop: 'city', order: 'descending' }}
+    /> */}
+ 
+ 
+                         <DataTable
+                            className = "react_table"
                             style={{ paddingTop: "30px" }}
                             columns={columns}
-                            data={enquries}
+                            data={enquries.filter((item) =>
+                                item.patient_name.toLowerCase().includes(search.toLowerCase())
+                              )}
                             highlightOnHover
                             pagination
                             paginationPerPage={5}
+                            defaultSortField="patient_name"
                             onRowClicked={(target) => handleSubmit(target)}
                             paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+                            customStyles = {customStyles}
                             paginationComponentOptions={{
                                 rowsPerPageText: 'Records per page:',
                                 rangeSeparatorText: 'out of',
 
                             }}
-                        />
+                        />   
+                       {/*  <FilterTableComponent /> */}
 
 
-
+                    
                     </div>
 
                 </div>
