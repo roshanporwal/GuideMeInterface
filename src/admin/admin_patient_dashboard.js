@@ -72,6 +72,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         //event.preventDefault();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
+        console.log(formValues);
         if (event === "before") {
             if (selected.length > 3) {
                 return alert(" Patient details can be shared only with three Hospitals.")
@@ -281,7 +282,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <form>
                                             <div className="form-check">
                                                 <input className="form-check-input"
-                                                    type="radio" name="rating"
+                                                    type="checkbox" name="rating"
                                                     value=" Communication Skills of Professionals"
                                                     id="communication_skills"
                                                     onClick={() => setFeedbackmessgae(" Communication Skills of Professionals")} />
@@ -294,7 +295,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <div className="form-check">
                                                 <label>Care and Hospitality of other professionals</label>
                                                 <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     name="rating"
                                                     id="care_and_hospitality"
                                                     value="Care and Hospitality of other professionals"
@@ -306,7 +307,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <div className="form-check">
                                                 <label>Hospital Infrastructure</label>
                                                 <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     name="rating"
                                                     id="hospital_infrastructure"
                                                     value="Hospital Infrastructure"
@@ -318,7 +319,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <div className="form-check">
                                                 <label>Transparency in Communication</label>
                                                 <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     label="Transparency in Communication"
                                                     id="transparency"
                                                     value="Transparency in Communication"
@@ -330,7 +331,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <div className="form-check">
                                                 <label>Overall outcome of treatment</label>
                                                 <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     name="rating"
                                                     id="overall_outcome"
                                                     value="Overall outcome of treatment"
@@ -341,7 +342,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <div className="form-check">
                                                 <label>Other</label>
                                                 <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     label="Other"
                                                     id="other_text"
                                                     name="other_text"
