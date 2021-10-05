@@ -103,7 +103,7 @@ export default function PATIENT_VIEW(props) {
                             </div>
                         ))
                     }
-                    {enqurie_data[0].reports[1] ?
+                    {   enqurie_data[0]? enqurie_data[0].reports[1] ?
                         <div className="buttons d-flex">
                             <div>
                                 <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
@@ -111,7 +111,7 @@ export default function PATIENT_VIEW(props) {
                             <div>
                                 <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
                             </div>
-                        </div> : null
+                        </div> : null:null
                     }
                     {
                         enqurie_data.map((target, index) => (

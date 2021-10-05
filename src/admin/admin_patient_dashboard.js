@@ -89,9 +89,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             }
         } else {
             const url = {
-                url: `${constants.clientBaseUrl}patient_view?id=` + enqurie_data[0]._id,
+                url: `${constants.clientBaseUrl}patient_view?id=` + enqurie_data[0].id,
                 email: enqurie_data[0].patient_email,
-                enq_id: enqurie_data[0]._id
+                enq_id: enqurie_data[0]._id,
+                name:enqurie_data[0].patient_name
             }
             const getenquries = await auth_service.sendmail(data.login_id, url)
             if (getenquries.payload) {
@@ -205,6 +206,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <h5><b>{target.patient_name}</b></h5>
                                         </div>
                                         <div className="patient_details">
+                                        <p className="card-text">Id: {target.id}</p>
                                             <p className="card-text">Phone Number: {target.patient_mobile}</p>
                                             <p className="card-text">Email: {target.patient_email}</p>
                                             <p className="card-text">Age: {target.patient_age}</p>

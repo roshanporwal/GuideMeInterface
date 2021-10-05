@@ -49,7 +49,7 @@ function getenquriesbyid(login_id,_id) {
   return req
 }
 function getenquriesbyid_patient(_id) {
-  const req = instance.get(`/sendmail/get?_id=${_id}`);
+  const req = instance.get(`/sendmail/get?id=${_id}`);
   return req
 }
 function getdoctorbyhospital(_id,login_id) {
