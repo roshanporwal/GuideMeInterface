@@ -484,14 +484,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 {enqurie_data[0].status === "Awaiting From Patients" ?
-                                                    <button data-toggle="modal" data-target="#exampleModal" style={{ background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "7rem" }}
+                                                    <button data-toggle="modal" data-target="#exampleModal" style={{ background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "14rem" }}
                                                         onClick={() =>
                                                             setFormValue(prevState => ({
                                                                 ...prevState,
                                                                 id: target.hospital_id
                                                             }))
                                                         }
-                                                    >Won</button> : null
+                                                    >Certified Patients</button> : null
                                                 }
                                             </div>
 
