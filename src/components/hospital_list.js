@@ -40,8 +40,10 @@ export default function HOSPITAL_LIST({ hospitals, showInfo }) {
     const uploadexcelfile= await auth_service.uploadexcelfile(formData)
     if(uploadexcelfile.payload){
       alert("File uploaded successfully")
+      window.location.reload();
     }else{
       alert("something went wrong pls check the file is in correct format?")
+      window.location.reload();
     }
     
   }

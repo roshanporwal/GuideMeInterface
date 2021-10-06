@@ -9,7 +9,6 @@ import { faHospital } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import constants from '../constant';
 
 
 export default function ADMIN_NAVBAR(props) {
