@@ -11,6 +11,7 @@ import { hospitalSchema } from '../components/Validations/hospitalValidation';
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
 import constants from '../constant';
+import ImageUpload from '../components/image_upload';
 
 
 function ADMIN_HOSPITAL_PROFILE (props){
@@ -105,7 +106,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
       else
         return(
             
-            <>
+            <div>
             <HospitalNavbar/>
             <SPECIALITY_DELETE />
           <INSURANCE_UPDATE />
@@ -265,7 +266,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
               </div>
                 
               
-         <div className = "hospital-info col-md-12">
+         <div className = "hospital-info row p-5">
               <div className = "col-md-4">
               { 
                 hospital_data.map((target,index) => (
@@ -296,40 +297,14 @@ function ADMIN_HOSPITAL_PROFILE (props){
     }
 
               <div>
-              <div className = "row">
-                  <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                    
-                 </div>
-                 <div className = "row">
-                 <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
-                <div className = "col-sm-3">
-                    <img className = "hospital_photos"  src = "assets\images\doctor_image.jpg" alt = ""/>
-                </div>
+              <div className = "row mt-5" style = {{overflow: "hidden", height: "45rem", overflowY: "scroll"}}>
+                  <ImageUpload />
                  </div>
               </div>
               </div>
-              <div className = "col-md-7 ">
+              <div className = "col-md-8 ">
 
-              <div style = {{height: "45rem", overflow: "hidden", overflowY: "scroll"}}>
+              <div style = {{height: "45rem",  overflowX: "hidden", overflowY: "scroll"}}>
               <div className = "row">
                                     <div className = "col-md-8">
                                         <h4 style = {{marginLeft: 30}}>Our Specialities</h4>
@@ -342,7 +317,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
                                     </div>
                                 </div>
                                 <div className = "d-flex">
-                                    <div style = {{marginLeft: 30, marginTop: 10}}>
+                                    <div style = {{marginLeft: 30, marginTop: 10 }}>
                                         <ul>
                                          { 
                             speciality.map((item,index) => (
@@ -367,13 +342,15 @@ function ADMIN_HOSPITAL_PROFILE (props){
                                         <h4><button  data-toggle="modal" data-target="#exampleModal4" className = "update_doctor"><i className = "fa fa-pencil"></i></button></h4>
                                     </div>
                                 </div>
-        <div className = "row">
+        <div className = "row" >
             
                  { 
                 insurance.map((target,index) => (
-                    <div className = "insurance_detail_container col-sm-3" key = {index} {...target}>
-                        <h4 style = {{textAlign: "center"}}>{target.insurance_company_name}</h4>
-                        <h4>Type: {target.type}</h4>
+                    <div className = "insurance_detail_container col-md-3" key = {index} {...target}>
+                        <div className = "p-1">
+                            <h4 style = {{textAlign: "center"}}>{target.insurance_company_name}</h4>
+                            <h4>Type: {target.type}</h4>
+                        </div>
                         
                     </div>
                 ))}
@@ -387,7 +364,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
               
               </div>
               
-            </>
+            </div>
         );
     }
 
