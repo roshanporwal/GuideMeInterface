@@ -199,7 +199,7 @@
     
     .login_image{
         width: 33rem;
-        height: 600px;
+        height: 400px;
     }
 
     
@@ -465,6 +465,10 @@
     margin-top: 1%;
     text-align: justify;
 }
+
+.react_table:hover{
+     cursor: pointer;
+ }
 
 .download_button{
     border: 1px #E3E3E3;
@@ -940,5 +944,128 @@ tbody{
     padding-top: 5%;
 }
 
+.login{
+	position: absolute;
+    right: 215px;
+    top: 48px;
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #00CDAC;
+    box-shadow: 0px 100px 80px rgb(0 0 0 / 7%), 0px 41.7776px 33.4221px rgb(0 0 0 / 6%), 0px 22.3363px 17.869px rgb(0 0 0 / 5%), 0px 12.5216px 10.0172px rgb(0 0 0 / 4%), 0px 6.6501px 5.32008px rgb(0 0 0 / 3%), 0px 2.76726px 2.21381px rgb(0 0 0 / 2%);
+    border-radius: 10px;
+}
+.hospital{
+	position: absolute;
+    right: 375px;
+    top: 48px;
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #00CDAC;
+    box-shadow: 0px 100px 80px rgb(0 0 0 / 7%), 0px 41.7776px 33.4221px rgb(0 0 0 / 6%), 0px 22.3363px 17.869px rgb(0 0 0 / 5%), 0px 12.5216px 10.0172px rgb(0 0 0 / 4%), 0px 6.6501px 5.32008px rgb(0 0 0 / 3%), 0px 2.76726px 2.21381px rgb(0 0 0 / 2%);
+    border-radius: 10px;
+}
+.feedback{
+	position: absolute;
+    right: 50px;
+    top: 48px;
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #00CDAC;
+    box-shadow: 0px 100px 80px rgb(0 0 0 / 7%), 0px 41.7776px 33.4221px rgb(0 0 0 / 6%), 0px 22.3363px 17.869px rgb(0 0 0 / 5%), 0px 12.5216px 10.0172px rgb(0 0 0 / 4%), 0px 6.6501px 5.32008px rgb(0 0 0 / 3%), 0px 2.76726px 2.21381px rgb(0 0 0 / 2%);
+    border-radius: 10px;
+}
+.callus{
+	color: #FFFFFF;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	position: absolute;
+	left: 42%;
+	right: 42%;
+	top: 340px;
+	background: #1C247C;
+	box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.058402), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0490752), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.0410615), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.033197), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0232711);
+	border-radius: 10px;
+}
+@media (max-width: 767px){
+	.DesktopView{
+		display:none!important;
+	}	
+	.MobileView{
+		display:block!important;
+		margin-bottom:40px;
+	}
+	.hospital{
+		text-align: center;
+		display: inline;
+		position: fixed;
+		bottom: 0px;
+		top: auto;
+		left: 26%;
+		width: 24%;
+		border-radius: 0px;
+	}	
+	.login{
+		text-align: center;
+		display: inline;
+		position: fixed;
+		bottom: 0px;
+		top: auto;
+		left: 0%;
+		width: 25%;
+		border-radius: 0px;
+	}
+	.feedback{
+		text-align: center;
+		display: inline;
+		position: fixed;
+		bottom: 0px;
+		top: auto;
+		right: 0px;
+		width: 25%;
+		border-radius: 0px;
+	}
+	.callus{
+		text-align: center;
+		display: inline;
+		position: fixed;
+		bottom: 0px;
+		top: auto;
+		left: 51%;
+		right: 22%;
+		width: 23%;
+		border-radius: 0px;
+	}
+}
+@media (max-width: 320px) {
+	.hospital,.login,.feedback,.callus{
+		font-size:12px;
+	}
+}
 
 

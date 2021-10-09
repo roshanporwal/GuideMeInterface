@@ -1,8 +1,6 @@
 const constants = {
-    serverBaseUrl: 'http://proctologyalliance.com',
-    clientBaseUrl:`http://192.46.209.112/`,
-   
-  
+    serverBaseUrl: "http://192.46.209.112:8080/",//'http://localhost:8080',
+    clientBaseUrl:/*'http://localhost:3000'*/`http://guidemedoc.com/`,
   };
 
 export default  constants;
