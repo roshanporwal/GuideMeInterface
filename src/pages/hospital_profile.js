@@ -11,7 +11,7 @@ import { hospitalSchema } from '../components/Validations/hospitalValidation';
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
 import constants from '../constant';
-import ImageUpload from '../components/image_upload';
+//import ImageUpload from '../components/image_upload';
 
 
 function ADMIN_HOSPITAL_PROFILE (props){
@@ -298,7 +298,7 @@ function ADMIN_HOSPITAL_PROFILE (props){
 
               <div>
               <div className = "row mt-5" style = {{overflow: "hidden", height: "45rem", overflowY: "scroll"}}>
-                  <ImageUpload />
+                 {/* <ImageUpload /> */}
                  </div>
               </div>
               </div>
