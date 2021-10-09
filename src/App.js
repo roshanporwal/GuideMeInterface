@@ -36,9 +36,9 @@ export default function App(props) {
     <Router>
     
       <Switch>
-      <Route path='/home' exact  component={Home} />
-      <Route path='/admin' exact component={ADMIN_Home} />
-      <Route path = '/' exact component = {Landing} />
+    
+      <Route path='/admin'  component={ADMIN_Home} />
+      <Route path = '/' exact component = {Home} />
       
         <Route path='/hospital/sendquota' exact component={PATIENT_DASHBOARD} />
         <Route path='/hospital/dashboard' exact component={HOSPITAL_DASHBOARD} />
