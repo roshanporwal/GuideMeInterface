@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
  import Home from './pages/home';
 
 import PATIENT_DASHBOARD from './pages/patient_dashboard';
@@ -16,6 +17,7 @@ import ADMIN_Home from './admin/admin_home.js';
 //import ADMIN_NAVBAR from './Navbar/admin_navbar';
 import PATIENT_VIEW from './admin/patient_view';
 import SMART_SEARCH from './admin/smart_search';
+import Landing from './pages/landing';
 
 
 import './App.css';
@@ -34,9 +36,9 @@ export default function App(props) {
     <Router>
     
       <Switch>
-      <Route path='/' exact  component={Home} />
+      <Route path='/home' exact  component={Home} />
       <Route path='/admin' exact component={ADMIN_Home} />
-      
+      <Route path = '/' exact component = {Landing} />
       
         <Route path='/hospital/sendquota' exact component={PATIENT_DASHBOARD} />
         <Route path='/hospital/dashboard' exact component={HOSPITAL_DASHBOARD} />
