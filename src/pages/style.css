@@ -944,6 +944,11 @@ tbody{
     padding-top: 5%;
 }
 
+/*Ajit CSSS*/
+
+#HomeSection img{
+	width:100%;
+}
 .login{
 	position: absolute;
     right: 215px;
@@ -1012,6 +1017,14 @@ tbody{
 	box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.058402), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0490752), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.0410615), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.033197), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0232711);
 	border-radius: 10px;
 }
+.MobileView{
+	display:none;
+}
+@media (max-width: 320px) {
+	.hospital,.login,.feedback,.callus{
+		font-size:12px;
+	}
+}
 @media (max-width: 767px){
 	.DesktopView{
 		display:none!important;
@@ -1062,10 +1075,38 @@ tbody{
 		border-radius: 0px;
 	}
 }
-@media (max-width: 320px) {
-	.hospital,.login,.feedback,.callus{
-		font-size:12px;
+
+@media only screen and (min-width: 768px) and (max-width: 1024px){
+	.callus{
+		font-size: 16px;
+		top: 185px!important;
+		left: 40%;
+		right: 40%;
+	}
+}
+@media only screen and (min-width: 1024px) and (max-width: 1200px){
+	.callus{
+		top: 300px;
 	}
 }
 
-
+.Logo{
+	width: 260px;
+    height: 140px;
+    padding: 10px 0px;
+}
+.loginImage{
+	width:100%;
+}
+@media (max-width: 767px){
+	.loginImage{
+		display:none;
+	}
+	.login_title {
+		margin-top: 5%;
+	}
+	.login_form{
+		width: 90%!important;
+		margin: auto;
+	}
+}
