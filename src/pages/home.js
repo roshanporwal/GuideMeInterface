@@ -93,7 +93,7 @@ function Home(props) {
             <div className="submit_btn">
 
               <button className="join_button" onClick={handleSubmit} type="submit">Login</button>
-              <button className="join_button" onClick={()=> history.push({ pathname: '/admin'})} type="submit">admin</button>
+              
 
             </div>
 
