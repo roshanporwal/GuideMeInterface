@@ -51,7 +51,7 @@ export default function ADMIN_NAVBAR(props) {
         </div>
         <div className = "col-md-2">
         <FontAwesomeIcon icon={faPaperclip} style = {{fontSize: 22, color: "#164473"}} />
-        <Nav.Link  className = "text-dark"  ><p style = {{color:"#164473"}}>MIS</p></Nav.Link>
+        <Nav.Link  className = "text-dark" as={Link} to= '/admin/mis'  ><p style = {{color:"#164473"}}>MIS</p></Nav.Link>
         </div>
         <div className = "col-md-2">
         <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473", marginLeft: "1rem"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20rem", color: "#164473"}} /></p></Nav.Link> 
