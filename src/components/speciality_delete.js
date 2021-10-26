@@ -92,7 +92,7 @@ function SPECIALITY_DELETE() {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-            <h4 class="modal-title">Add a Speciality</h4>
+            <h4 className="modal-title">Add a Speciality</h4>
             </div>
             <div className="modal-body">
               <div className="pt-5 pb-5">
@@ -119,7 +119,7 @@ function SPECIALITY_DELETE() {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 class="modal-title">Select Speciality to delete</h4>
+              <h4 className="modal-title">Select Speciality to delete</h4>
             </div>
             <div className="modal-body">
               <div className="pt-5 pb-5">

@@ -120,7 +120,7 @@ import * as auth_service from "../services/auth_service";
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 class="modal-title">Add an Insurance</h4>
+                <h4 className="modal-title">Add an Insurance</h4>
               </div>
              <div className="modal-body">
                 <div>
@@ -179,7 +179,7 @@ import * as auth_service from "../services/auth_service";
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-             <h4 class="modal-title">Select Insurance to delete</h4>
+             <h4 className="modal-title">Select Insurance to delete</h4>
           </div>
           <div className="modal-body">
                 <div className="pt-5 pb-5">             
