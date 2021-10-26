@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Form, Card} from 'react-bootstrap';
 import ADMIN_NAVBAR from '../Navbar/admin_navbar';
+import * as auth_service from "../services/auth_service";
 
 
 function SMART_SEARCH(){
@@ -10,7 +11,7 @@ function SMART_SEARCH(){
         search_location: "",
         search_speciality: ""
     })
-   
+    const [ideal, setIdeal] = useState();
 
     const handleChange = e => {
        
@@ -22,22 +23,27 @@ function SMART_SEARCH(){
     
         
     } 
-   /* const handleSubmit = async (event) => {
+    useEffect(() => {
+
+        fetchData()
+    }, []);
+   
+
+    async function fetchData() {
+       
+        const idealdata = await auth_service.idealdata()
+        console.log(idealdata.payload)
+        setIdeal(idealdata.payload)
+
+    }
+
+
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
-       
-    
-    
-      
-        
-        const formData = new FormData();
-        
-        formData.append('formValues', JSON.stringify(formValues))
-        
-       
-      
-      };*/
+        const idealdata = await auth_service.smartsearch(formValues.search_insurance,formValues.search_speciality)
+        console.log(idealdata)
+      };
     return (
         <>
         <ADMIN_NAVBAR />
@@ -91,7 +97,7 @@ function SMART_SEARCH(){
                                 </Form.Group>
                     </div>
                     <div  style = {{marginTop: "2rem"}} className = "col-md-6">
-                        <button style = {{backgroundColor: "#164473", border: "1px solid #164473", borderRadius: "5px", color: "white", height: "3rem"}} className = "search_button col-md-12" >Search</button>
+                        <button style = {{backgroundColor: "#164473", border: "1px solid #164473", borderRadius: "5px", color: "white", height: "3rem"}} onClick={handleSubmit} className = "search_button col-md-12" >Search</button>
                     </div>   
                 </div> 
                 </Form>

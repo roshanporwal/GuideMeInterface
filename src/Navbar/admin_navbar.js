@@ -45,7 +45,7 @@ export default function ADMIN_NAVBAR(props) {
                           </li>
                           <li className="nav-item d-flex justify-content-center align-items-center">
                             <img src="/assets/images/icons/MIS.png" alt=""/>
-                            <Link to ='#' className = "nav-link"><span style = {{color:"#164473"}}>MIS</span></Link>
+                            <Link className = "nav-link" as={Link} to= '/admin/mis'><span style = {{color:"#164473"}}>MIS</span></Link>
                           </li>
                         </ul>
                         <span className="navbar-text">
