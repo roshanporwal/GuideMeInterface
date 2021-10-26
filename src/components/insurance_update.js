@@ -117,99 +117,88 @@ import * as auth_service from "../services/auth_service";
      return (
          <>
          <div className="modal fade" id="exampleModal4" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-      <label>Add an Insurance</label>
-        
-      </div>
-      <div className="modal-body">
-             <div className="pt-5 pb-5">
-                           <Form>
-                               <Form.Group> 
-                            <Form.Label>Insurance Name</Form.Label>
-                            <Form.Control
-                                type = "text"
-                                name = "insurance_company_name"
-                                id = "insurance_company_name"
-                                onChange={handleChange}
-                                value = {formValues.insurance_company_name}
-                                
-                            />
-                            </Form.Group>
-                            <Form.Group> 
-                            <Form.Label>Insurance Type</Form.Label>
-                            <Form.Check
-                                type = "checkbox"
-                                name = "type"
-                                id = "IP"
-                                onChange={() => checkBox("type", "IP")}
-                                label = "IP"
-                                value = {formValues.type}
-                                
-                            />
-                            <Form.Check
-                                type = "checkbox"
-                                label = "OP"
-                                name = "type"
-                                id = "OP"
-                                onChange={() => checkBox("type", "OP")}
-                                value = {formValues.type}
-                                
-                            />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Network</Form.Label> 
-                            <Form.Control
-                                type = "text"
-                                name = "network"
-                                id = "network"
-                                onChange={handleChange}
-                                value = {formValues.network}
-                                
-                            />
-                            </Form.Group>
-                            <button style={{ marginTop: 100 }} className="join_button" type="button" onClick={addinsurence}>Add</button>
-                           
-                            </Form>
-                            
-            </div>
-       </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-        
-      </div>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 class="modal-title">Add an Insurance</h4>
+              </div>
+             <div className="modal-body">
+                <div>
+                    <Form>
+                        <Form.Group> 
+                    <Form.Label>Insurance Name</Form.Label>
+                    <Form.Control
+                        type = "text"
+                        name = "insurance_company_name"
+                        id = "insurance_company_name"
+                        onChange={handleChange}
+                        value = {formValues.insurance_company_name}
+                    />
+                    </Form.Group>
+                    <Form.Group> 
+                    <Form.Label>Insurance Type</Form.Label>
+                    <Form.Check
+                        type = "checkbox"
+                        name = "type"
+                        id = "IP"
+                        onChange={() => checkBox("type", "IP")}
+                        label = "IP"
+                        value = {formValues.type}                      
+                    />
+                    <Form.Check
+                        type = "checkbox"
+                        label = "OP"
+                        name = "type"
+                        id = "OP"
+                        onChange={() => checkBox("type", "OP")}
+                        value = {formValues.type}                      
+                    />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Network</Form.Label> 
+                    <Form.Control
+                        type = "text"
+                        name = "network"
+                        id = "network"
+                        onChange={handleChange}
+                        value = {formValues.network}                      
+                    />
+                    </Form.Group>
+                    <button className="JoinButton mt-2" type="button" onClick={addinsurence}>Add</button> 
+                    </Form>         
+                </div>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+          </div>
     </div>
   </div>
 </div>
 
-<div className="modal fade" id="exampleModal3" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-      <label>Select Insurance to delete</label>
-        
-      </div>
-      <div className="modal-body">
-             <div className="pt-5 pb-5">
-                            
-                            <MultiSelect
-                                
-                                options={insurance}
-                                value={selected}
-                                onChange={setSelected}
-                                labelledBy="Select"
-                            />
-                            <button style={{ marginTop: 100 }} className="join_button" type="button"  onClick={remove}><i className = "fa fa-trash"></i></button>
-            </div>
-       </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal" >Close</button>
-        
+    <div className="modal fade" id="exampleModal3" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+             <h4 class="modal-title">Select Insurance to delete</h4>
+          </div>
+          <div className="modal-body">
+                <div className="pt-5 pb-5">             
+                  <MultiSelect
+                      
+                      options={insurance}
+                      value={selected}
+                      onChange={setSelected}
+                      labelledBy="Select"
+                  />
+                  <button className="JoinButton mt-3" type="button"  onClick={remove}><i className = "fa fa-trash"></i></button>
+               </div>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
          </>
      )
  }

@@ -1,12 +1,7 @@
 import React from 'react';
-import {Navbar, Nav, Container} from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
-import {  Link,useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Link, useHistory } from 'react-router-dom';
 import './style.css';
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-
 
 export default function HospitalNavbar(props) {
   const history = useHistory();
@@ -24,37 +19,38 @@ export default function HospitalNavbar(props) {
 
     return(
         <>
- <Navbar bg="light" expand="lg">
-  <Container>
-  <Navbar.Brand><img src="../assets/images/GuideMeDocLogo.png" alt="" style = {{height: "100px", width: "200px", marginTop: "-40px"}} /></Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav>
-      <div className = "col-md-2"></div>
-      <div className = "col-md-2"></div>
-      <div className = "col-md-2">
-      <Nav.Link className = "text-dark"  as={Link} to= '/hospital/dashboard'><p style = {{color: "#164473"}}>Dashboard</p></Nav.Link>
-      </div>
-      <div className = "col-md-2"></div>
-       <div className = "col-md-2"> 
-        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/doctors'><p style = {{color: "#164473"}}>Doctors</p></Nav.Link>
-        </div>
-        <div className = "col-md-2"></div>
-        <div className = "col-md-2"></div>
-        <div className = "col-md-2"></div>
-        <div className = "col-md-2"></div>
-       
-        <div className = "col-md-2">
-        <Nav.Link  className = "text-dark"as={Link} to= '/hospital/profile'><p style = {{color: "#164473"}}><FontAwesomeIcon icon={faUser} style = {{fontSize: 22}} /></p></Nav.Link> 
-        </div>
-        <div className = "col-md-2">
-        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22}} /></p></Nav.Link> 
-        </div>
-       
-      </Nav>
-    </Navbar.Collapse>
-  </Container>
-</Navbar> 
-    </>
+        <div id="HospitalNavBar">
+            <div className="container">
+              <div className="row">
+                  <div className="col-md-12">
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <Link to="/" className="navbar-brand"><img src= "/assets/images/GuideMeDocLogo.png" className="HeaderLogo" alt="" /></Link>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                          <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarText">
+                          <ul className="navbar-nav me-auto my-0">
+                            <li className="nav-item d-flex justify-content-center align-items-center">
+                              <Link className = "nav-link active" to = '/hospital/dashboard'><span style = {{color: "#164473"}}>Dashboard</span></Link>
+                            </li>
+                            <li className="nav-item d-flex justify-content-center align-items-center">
+                              <Link className = "nav-link" to = '/hospital/doctors'><span style = {{color: "#164473"}}>Doctors</span></Link>
+                            </li>
+                          </ul>
+                          <span className="navbar-text">
+                            <Link className = "nav-link" to = '/hospital/profile'><span style = {{color: "#164473"}}>
+                            <img src="/assets/images/icons/patients.png" alt=""/></span></Link> 
+                          </span>
+                          <span className="navbar-text">
+                            <Link className = "nav-link" to ='#' onClick={logout}><span style = {{color: "#164473"}}>
+                            <img src="/assets/images/icons/logout.png" alt=""/></span></Link>  
+                          </span>
+                        </div>
+                    </nav>
+                  </div>  
+                </div>   
+            </div>  
+          </div>
+      </>
     )
 }

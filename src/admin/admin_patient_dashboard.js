@@ -196,261 +196,235 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         </div>
                     </div>
                 </div>
-                <div >
-                    <div className="col-md-3 column_small">
-                        {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="container_patient_details">
-                                        <div className="patient_name">
-                                            <h5><b>{target.patient_name}</b></h5>
-                                        </div>
-                                        <div className="patient_details">
-                                        <p className="card-text">Id: {target.id}</p>
-                                            <p className="card-text">Phone Number: {target.patient_mobile}</p>
-                                            <p className="card-text">Email: {target.patient_email}</p>
-                                            <p className="card-text">Age: {target.patient_age}</p>
-                                            <p className="card-text">Gender: {target.patient_gender}</p>
-                                            <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                            <div className="card-text"><h5 className="languages">Language: {target.languages_spoken.join(', ')}</h5><br /> </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            ))
-                        }
-                        {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="container_patient_preferences">
-                                        <div className="patient_name">
-                                            <h4><b>Patient Preferences</b></h4>
+                <div className="container my-5">
+                    <div className="row">
+                        <div className="col-md-4">
+                            {
+                                enqurie_data.map((target, index) => (
+                                    <div key={index}>
+                                        <div className="PatientDetails">
+                                            <h2 className="PatientName py-3">{target.patient_name}</h2>
+                                            <p><b>Id :</b> <span>{target.id}?</span></p>
+                                            <p><b>Phone Number : </b> <span>{target.patient_mobile}</span></p>
+                                            <p><b>Email : </b> <span>{target.patient_email}</span></p>
+                                            <p><b>Age : </b> <span>{target.patient_age}</span></p>
+                                            <p><b>Gender : </b> <span>{target.patient_gender}</span></p>
+                                            <p><b>Nationality : </b> <span>{target.patient_nationality}</span></p>
+                                            <h5><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></h5>
+                                            
                                         </div>
 
-                                        <div className="patient_prefernces_details">
-
-                                            <div className="card-text2" ><b>Patient Requirement:</b><br /><h5 className="proposed_plans">{target.proposed_treatment_plan.join(', ')}</h5></div>
-
-                                            <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
-                                            <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>
-                                            <p className="card-text"><b>Transport Support Needed:</b><br />{target.transport_support_needed}</p>
-                                            <p className="card-text"><b>Accomodation / Other Logistic:</b><br />{target.accomodation}</p>
-                                            <p className="card-text"><b>Preferred Hospital Visit Type:</b><br />{target.preferred_hospital_visit}</p>
-                                            <p className="card-text" ><b>Food Preferences:</b><br />{target.food_preferences} </p>
+                                    </div>
+                                ))
+                            }
+                            {
+                                enqurie_data.map((target, index) => (
+                                    <div key={index} {...target}>
+                                        <div className="PatientPreferencesDetails my-4">
+                                            <h2 className="PatientPreferences py-3">Patient Preferences</h2>
+                                            <p className="mb-1">Patient Requirement : </p>
+                                            <h6>{target.proposed_treatment_plan.join(', ')}</h6>
+                                            <p>Patient Location : {target.patient_nationality}</p>
+                                            <p>Proposed Date : {target.proposal_date}</p>
+                                            <p>Transport Support Needed : {target.transport_support_needed}</p>
+                                            <p>Accomodation / Other Logistic : {target.accomodation}</p>
+                                            <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit}</p>
+                                            <p>Food Preferences : {target.food_preferences} </p>                                         
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                    </div>
-
-                    <div className="col-md-9 row">
-                        {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target} className="col-md-5">
-                                    <div className="d-flex mt-5">
-                                        <p><b>Speciality: </b></p>
-                                        <p style={{ paddingLeft: 10 }}>{target.speciality}</p>
-                                    </div>
-                                    <div className="d-flex">
-                                        <p style={{ marginBottom: 5 }}><b>Medical History</b></p>
-                                        <p style={{ paddingLeft: 20 }}>{target.medical_history}</p>
-                                        <p style={{ paddingLeft: 20 }}>{target.med2}</p>
-                                        <p style={{ paddingLeft: 20 }}>{target.med3}</p>
-                                    </div>
-                                    <div className="d-flex">
-                                        <p style={{ marginBottom: 5 }}><b>Status:</b></p>
-                                        <p style={{ paddingLeft: 20 }}>{target.status}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        <div className="col-md-5 pt-4">
-                            <h4>Please rate us!</h4>
-                            <ReactStars
-                                count={5}
-                                onChange={ratingChanged}
-                                size={42}
-                                activeColor="#ffd700"
-
-                            />
-
-                            {islowrating ?
-                                <div className="rate" style={{ borderRadius: "15px", backgroundColor: "beige" }}>
-                                    <div className=" heading text-center">
-                                        <h4>We understand that there are certain areas where we need to improve our level of services further.
-                                            Please let us know where you would want to focus the most.</h4>
-                                    </div>
-                                    <hr />
-                                    <div style={{ paddingLeft: "5px" }}>
-                                        <form>
-                                            <div className="form-check">
-                                                <input className="form-check-input"
-                                                    type="checkbox" name="rating"
-                                                    value=" Communication Skills of Professionals"
-                                                    id="communication_skills"
-                                                    onClick={() => setFeedbackmessgae(" Communication Skills of Professionals")} />
-                                                <label className="form-check-label">
-                                                    Communication Skills of Professionals
-                                                </label>
-
-                                            </div>
-
-                                            <div className="form-check">
-                                                <label>Care and Hospitality of other professionals</label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="rating"
-                                                    id="care_and_hospitality"
-                                                    value="Care and Hospitality of other professionals"
-                                                    className="form-check-input"
-                                                    onClick={() => setFeedbackmessgae("Care and Hospitality of other professionals")}
-                                                />
-
-                                            </div>
-                                            <div className="form-check">
-                                                <label>Hospital Infrastructure</label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="rating"
-                                                    id="hospital_infrastructure"
-                                                    value="Hospital Infrastructure"
-                                                    className="form-check-input"
-                                                    onClick={() => setFeedbackmessgae("Hospital Infrastructure")}
-
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <label>Transparency in Communication</label>
-                                                <input
-                                                    type="checkbox"
-                                                    label="Transparency in Communication"
-                                                    id="transparency"
-                                                    value="Transparency in Communication"
-                                                    className="form-check-input"
-                                                    name="rating"
-                                                    onClick={() => setFeedbackmessgae("Transparency in Communication")}
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <label>Overall outcome of treatment</label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="rating"
-                                                    id="overall_outcome"
-                                                    value="Overall outcome of treatment"
-                                                    className="form-check-input"
-                                                    onClick={() => setFeedbackmessgae("Overall outcome of treatment")}
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <label>Other</label>
-                                                <input
-                                                    type="checkbox"
-                                                    label="Other"
-                                                    id="other_text"
-                                                    name="other_text"
-                                                    value="Other_text"
-                                                    onChange={handleOthersField}
-                                                    className="form-check-input"
-                                                />
-                                            </div>
-                                            {show ?
-
-                                                <div className="form-check">
-                                                    <input
-                                                        type="text"
-                                                        label="Other"
-                                                        id="other"
-                                                        name="rating"
-                                                        className="form-control"
-                                                        style={{ width: "32rem" }}
-                                                    />
-                                                </div>
-                                                : ""}
-
-
-                                        </form>
-                                    </div>
-                                </div> : islowrating == null ? "" : <div>
-                                    <h3>Thankyou!</h3>
-                                </div>}
-
-                            <button onClick={checklowRating} type="submit" className="btn btn-warning">Send</button>
-
-
+                                ))}
                         </div>
 
+                        <div className="col-md-8">
+                            <div className="row">
+                            {
+                                enqurie_data.map((target, index) => (
+                                    <div key={index} className="col-md-6">
+                                        <p><b>Speciality : </b>{target.speciality}</p>
+                                        <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                        <p><b>Status : </b>{target.status}</p> 
+                                    </div>
+                                ))}
+                                    <div className="col-md-6">
+                                        <h2 className="rating">Please rate us!</h2>
+                                        <ReactStars
+                                            count={5}
+                                            onChange={ratingChanged}
+                                            size={42}
+                                            activeColor="#ffd700"
+                                        />
+                                    </div>    
+                                {islowrating ?
+                                    <div className="col-md-12">
+                                        <div className="ratingBox" >
+                                            <h4>We understand that there are certain areas where we need to improve our level of services further.
+                                            Please let us know where you would want to focus the most.</h4>
+                                            <hr />
+                                            <div>
+                                                <form>
+                                                    <div className="form-check">
+                                                        <input className="form-check-input"
+                                                            type="checkbox" name="rating"
+                                                            value=" Communication Skills of Professionals"
+                                                            id="communication_skills"
+                                                            onClick={() => setFeedbackmessgae(" Communication Skills of Professionals")} />
+                                                        <label className="form-check-label"> Communication Skills of Professionals
+                                                        </label>
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <label>Care and Hospitality of other professionals</label>
+                                                        <input
+                                                            type="checkbox"
+                                                            name="rating"
+                                                            id="care_and_hospitality"
+                                                            value="Care and Hospitality of other professionals"
+                                                            className="form-check-input"
+                                                            onClick={() => setFeedbackmessgae("Care and Hospitality of other professionals")}
+                                                        />
 
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <label>Hospital Infrastructure</label>
+                                                        <input
+                                                            type="checkbox"
+                                                            name="rating"
+                                                            id="hospital_infrastructure"
+                                                            value="Hospital Infrastructure"
+                                                            className="form-check-input"
+                                                            onClick={() => setFeedbackmessgae("Hospital Infrastructure")}
 
-                        {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="query_container">
-                                        <div className="query_title">
-                                            <h2>Query</h2>
+                                                        />
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <label>Transparency in Communication</label>
+                                                        <input
+                                                            type="checkbox"
+                                                            label="Transparency in Communication"
+                                                            id="transparency"
+                                                            value="Transparency in Communication"
+                                                            className="form-check-input"
+                                                            name="rating"
+                                                            onClick={() => setFeedbackmessgae("Transparency in Communication")}
+                                                        />
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <label>Overall outcome of treatment</label>
+                                                        <input
+                                                            type="checkbox"
+                                                            name="rating"
+                                                            id="overall_outcome"
+                                                            value="Overall outcome of treatment"
+                                                            className="form-check-input"
+                                                            onClick={() => setFeedbackmessgae("Overall outcome of treatment")}
+                                                        />
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <label>Other</label>
+                                                        <input
+                                                            type="checkbox"
+                                                            label="Other"
+                                                            id="other_text"
+                                                            name="other_text"
+                                                            value="Other_text"
+                                                            onChange={handleOthersField}
+                                                            className="form-check-input"
+                                                        />
+                                                    </div>
+                                                    {show ?
+
+                                                        <div className="form-check">
+                                                            <input
+                                                                type="text"
+                                                                label="Other"
+                                                                id="other"
+                                                                name="rating"
+                                                                className="form-control"
+                                                                style={{ width: "32rem" }}
+                                                            />
+                                                        </div>
+                                                        : ""}
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div className="query_content">
-                                            <p>{target.current_diagnosis}</p>
+                                    </div> : islowrating == null ? "" : 
+                                    <div>
+                                        <h3>Thankyou!</h3>
+                                    </div>}
+                                    <div className="offset-lg-5 col-md-2 my-2">                      
+                                         <div style={{width:"100%",letterSpecing:1}} onClick={checklowRating}  className="btn btn-warning">SEND</div>
+                                    </div>                             
+                            </div>
+                             {
+                                enqurie_data.map((target, index) => (
+                                    <div className="row" key={index}>
+                                        <div className="col-md-12">
+                                            <div className="queryBox my-2">
+                                                <h2>Query</h2>                                              
+                                                <p>{target.current_diagnosis}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
-                        }
-                        {enqurie_data[0].reports[1] ?
-                            <div className="buttons">
-                                <div className="row">
+                                ))
+                            }
+                            
+                             {enqurie_data[0].reports[1] ?
+                               <div className="row m-2">
                                     <div className="col-md-5">
-                                        <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, float: "right", paddingRight: "10%" }} className="fa fa-download "></i></button>
+                                        <div className="DownloadButton" 
+                                            onClick={() => { window.location.href = enqurie_data[0].reports[1] }} > Download Reports
+                                            <i className="fa fa-download "></i>
+                                        </div>
                                     </div>
                                     <div className="col-md-2"></div>
                                     <div className="col-md-5">
-                                        <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, float: "right", paddingRight: "10%" }} className="fa fa-eye "></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            : null}
-                        {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="diagnosis_container">
-                                        <div className="query_title">
-                                            <h2>Current Diagnosis</h2>
-                                        </div>
-                                        <div className="query_content">
-                                            <p>{target.current_diagnosis}</p>
+                                        <div className="InsuranceButton"
+                                            onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance
+                                            <i className="fa fa-eye "></i>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
-                        {show_quota ? null :
-                            <div className="pt-5 pb-5">
-                                <label>Select Hospital(Please Select any 3)</label>
-                                <MultiSelect
-                                    options={hospitals}
-                                    value={selected}
-                                    onChange={setSelected}
-                                    labelledBy="Select"
-                                />
-                                <button style={{ marginTop: 100 }} className="join_button" type="submit" onClick={() => handleSubmit("before")}>{"Submit"}</button>
-                            </div>}
+                                : null}
+                                {
+                                enqurie_data.map((target, index) => (
+                                    <div className="row" key={index}>
+                                        <div className="col-md-12">
+                                            <div className="diagnosisBox my-3">
+                                                <h2>Current Diagnosis</h2>
+                                                <p>{target.current_diagnosis}</p>                                          
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                 
+                            {show_quota ? null :
+                                <div className="row">
+                                    <div className="col-md-12">   
+                                        <label className="form-label">Select Hospital(Please Select any 3)</label>
+                                        <MultiSelect
+                                            options={hospitals}
+                                            value={selected}
+                                            onChange={setSelected}
+                                            labelledBy="Select"
+                                        />
+                                        <button className="JoinButton my-2" type="submit" onClick={() => handleSubmit("before")}>{"Submit"}</button>
+                                    </div>
+                                </div>}
+                        </div>
                     </div>
                 </div>
                 {show_quota ?
-                    <div>
-                        <div className="col-md-12" style={{ marginTop: 20 }}>
-
-                            <div className="col-md-3">
-
-                            </div>
+                    <div className="container my-5">
+                        <div className="row mb-3" style={{background:"#164473"}} >
+                           <div className="col-md-3">{/* empty column for table headling */}</div>
                             {
                                 hopital_enq.map((target, index) => (
-                                    <div className="col-md-3" key={index} {...target}>
-                                        <p><b>{target.hospital_name}</b></p>
-                                    </div>
-
-                                ))}
-
+                                <div className="col-md-3" key={index} >
+                                    <h2 className="HospitalTitle">{target.hospital_name}</h2>
+                                </div>
+                             ))}
                         </div>
-                        <div className="col-md-12" >
+                       
+                        <div className="row" >
                             <div className="col-md-3" style={{ textAlign: "center" }}>
                                 <p><b>Estimate Price</b></p>
                                 <p><b>Treatment Plan</b></p>
@@ -468,7 +442,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div>
                             {
                                 hopital_enq.map((target, index) => (
-                                    <div className="col-md-3" key={index} {...target}>
+                                    <div className="col-md-3" key={index}>
                                         {target.estimate_price ?
 
                                             <div>
@@ -508,8 +482,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                         </div>
                         {enqurie_data[0].status === "Won Patients" ?
-                            <div className="col-md-12 mt-4" >
-                                <div className="col-md-3">
+                            <div className="row mt-4" >
+                                <div className="col-md-3 text-center">
                                     <p><b>Won: </b></p>
                                     <p><b>Transaction Value: </b></p>
                                     <p><b>Commission Value:</b></p>
@@ -522,8 +496,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div> : null
                         }
                         {enqurie_data[0].status === "Awaiting From Hospital" ?
-                            <div>
-                                <button style={{ width: "100%", marginBottom: 30, marginTop: 30 }} className="join_button" onClick={() => handleSubmit("after")}>Forward to Patient</button>
+                            <div className="col-md-12 my-3">
+                                <button style={{width:"100%"}} className="JoinButton" onClick={() => handleSubmit("after")}>Forward to Patient</button>
                             </div>
                             : null}
                     </div> : null}

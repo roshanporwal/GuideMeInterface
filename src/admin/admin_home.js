@@ -46,9 +46,9 @@ function ADMIN_Home(props) {
 				<div className="col-md-4">
 					<img className = "loginImage" src="assets\images\admin_login.jpg" alt=""  />
 				</div>
-				<div className="col-md-8">
+				<div className="col-md-6">
 					<form className="login_form">
-						<h2 className="login_title">Welcome, Admin.</h2>
+						<h2 className="login_title">Welcome, Admin</h2>
 						<div className="email_field">
 						  <label htmlFor="exampleInputEmail1">Email</label>
 						  <input style={{ borderRadius: "5px" }} className="form-control" type="text" name="login_id" value={values.login_id} onChange={handleChange} placeholder="name@domain.com" />
@@ -58,7 +58,7 @@ function ADMIN_Home(props) {
 						  <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password" value={values.password} onChange={handleChange} placeholder="**********" />
 						</div>
 						<div className="submit_btn">
-						  <button className="join_button" onClick={handleSubmit} type="submit">Join Now</button>
+						  <button className="JoinButton" onClick={handleSubmit} type="submit">Join Now</button>
 						</div>
 					</form>
 				</div>

@@ -9,13 +9,6 @@ import HospitalNavbar from "../Navbar/hospital_navbar";
 import ReactGifLoader from '../components/gif_loader';
 import constants from "../constant";
 
-
-
-
-
-
-
-
 function DOCTOR_LIST(props) {
   
   const [doctor, setDoctor] = useState([])
@@ -145,11 +138,11 @@ function DOCTOR_LIST(props) {
     <HospitalNavbar/>
       <div>
 
-        <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="EditDoctorModel" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Add a Doctor</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Edit Doctor</h5>
 
               </div>
               <div className="modal-body">
@@ -219,14 +212,14 @@ function DOCTOR_LIST(props) {
 
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="modal fade" id="exampleModal_addnew" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="AddDoctorModel" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -300,85 +293,61 @@ function DOCTOR_LIST(props) {
 
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" className="btn btn-primary" onClick={handleSubmit_addnew}>Submit</button>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="doctor_list_title">
-          <h1>Our Doctors</h1>
-
-        </div>
-        <div className="col-md-10 offset-1" >
-          <button onClick={() => setFormValue({
-            doctor_name: "",
-            speciality: "",
-            doctor_bio: "",
-            avatar_name: "",
-          })}/* disabled={isSubmitting} */ data-toggle="modal" data-target="#exampleModal_addnew" type="submit" className="new_doctor"><i style={{ fontSize: 32 }} className="fa fa-user-plus"></i></button>
-          <div>
-
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 text-center">
+              <h1 className = "dashboardTitle">Our Doctors</h1>
           </div>
+        </div> 
+      </div>
+      <div className="container">
+        <div className="row">
+            <div className="offset-lg-11 col-md-1">
+            <button onClick={() => setFormValue({
+              doctor_name: "",
+              speciality: "",
+              doctor_bio: "",
+              avatar_name: "",
+            })} data-bs-toggle="modal" data-bs-target="#AddDoctorModel" type="submit" className="AddDoctor"><i className="fa fa-user-plus"></i></button>
+            </div>
         </div>
-
-        {/* <Modal show={show} onHide={handleClose} style = {{opacity: 1, marginTop: "10rem"}}>
-                  <Modal.Header closeButton style = {{opacity: 2}}>
-                    <Modal.Title>Modal heading</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <DOCTOR_FORM />
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                      Save Changes
-                    </Button>
-                  </Modal.Footer>
-                </Modal>  */}
-
-
-
-
-
+      </div>
+      
+      <div className="container">
         {
           doctor.map((target, index) => (
-
-            <div key={index}{...target}>
-
-
-
-
-
-              <div className="doctor_container offset-1 d-flex col-md-10">
-
-                <div className="doctor_image_container">
-                  <img className="doctor_image"
+            <div key={index}>  
+             <div className="DoctorBox">       
+                <div className="row">    
+                  <div className="col-md-3 text-center">
+                    <img className="doctor_image"
                     src={target.avatar ? target.avatar : `${constants.serverBaseUrl}/view?filepath=./tmp/doctor_image.jpg`}
                     alt="" />
-                  <h5>{target.doctor_name}</h5>
-                  <h6>{target.speciality}</h6>
-                </div>
-                <div className="doctor_detail_container  col-md-10">
-                  <h5 style={{ padding: 10, marginTop: "2rem" }}>
-                    {target.doctor_bio}
-                  </h5>
-                  <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} onClick={() => { setFormValue({}); setFormValue(target) }} type="submit" className="update_doctor"><i style={{ fontSize: 20}} className="fa fa-pencil"></i></button>
-                </div>
-              </div>
-            </div>
-
-
-          ))
-        }
-
-
-
-
-      </div>
+                    <h2>{target.doctor_name}</h2>
+                    <h3>{target.speciality}</h3>  
+                  </div>
+                  <div className="col-md-8">
+                    <h5> {target.doctor_bio}</h5>
+                  </div>
+                  <div className="col-md-1">
+                    <div className="EditDoctorIcon">
+                      <button data-bs-toggle="modal" data-bs-target="#EditDoctorModel" disabled={isSubmitting} onClick={() => { setFormValue({}); setFormValue(target) }} type="submit"><i className="fa fa-pencil"></i></button>
+                    </div>
+                  </div>
+                </div> 
+                </div> 
+              </div>  
+            ))
+          }
+      </div>  
     </>
   );
 

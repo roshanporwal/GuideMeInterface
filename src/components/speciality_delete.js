@@ -92,8 +92,7 @@ function SPECIALITY_DELETE() {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <label>Add a Speciality</label>
-
+            <h4 class="modal-title">Add a Speciality</h4>
             </div>
             <div className="modal-body">
               <div className="pt-5 pb-5">
@@ -104,15 +103,13 @@ function SPECIALITY_DELETE() {
                     id="speciality"
                     onChange={handleChange}
                     value={formValues.speciality}
-
                   />
-                  <button style={{ marginTop: 100 }} className="join_button" type='button' onClick={addspeciality}  >Add</button>
+                  <button className="JoinButton mt-3" type='button' onClick={addspeciality} >Add</button>
                 </form>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -122,25 +119,21 @@ function SPECIALITY_DELETE() {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <label>Select Speciality to delete</label>
-
+              <h4 class="modal-title">Select Speciality to delete</h4>
             </div>
             <div className="modal-body">
               <div className="pt-5 pb-5">
-
                 <MultiSelect
-
                   options={speciality}
                   value={selected}
                   onChange={setSelected}
                   labelledBy="Select"
                 />
-                <button style={{ marginTop: 100 }} className="join_button" type="submit" onClick={remove} ><i className="fa fa-trash"></i></button>
+                <button className="JoinButton  mt-3" type="submit" onClick={remove} ><i className="fa fa-trash"></i></button>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

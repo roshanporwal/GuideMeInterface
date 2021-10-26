@@ -276,137 +276,103 @@ function PATIENT_DASHBOARD(props) {
 
         return (
             <>
-                <HospitalNavbar />
-                <div>
-                    <div className="col-md-3 column_small">
+            <HospitalNavbar />
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-4">
                         {
                             enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="container_patient_details">
-                                        <div className="patient_name">
-                                            <h5><b>{target.patient_name}</b></h5>
-                                        </div>
-                                        <div className="patient_details">
-                                            <p className="card-text">Phone Number: {target.patient_mobile}</p>
-                                            <p className="card-text">Email: {target.patient_email}</p>
-                                            <p className="card-text">Age: {target.patient_age}</p>
-                                            <p className="card-text">Gender: {target.patient_gender}</p>
-                                            <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                            <div className="card-text"><h5 className="languages">Language: {target.languages_spoken.join(', ')}</h5></div>
-                                        </div>
+                                <div key={index}>
+                                    <div className="PatientDetails">
+                                        <h2 className="PatientName py-3">{target.patient_name}</h2>
+                                        <p><b>Phone Number : </b><span>{target.patient_mobile}</span></p>
+                                        <p><b>Email : </b><span>{target.patient_email}</span></p>
+                                        <p><b>Age : </b><span>{target.patient_age}</span></p>
+                                        <p><b>Gender : </b><span>{target.patient_gender}</span></p>
+                                        <p><b>Nationality : </b><span>{target.patient_nationality}</span></p>
+                                        <h5><b>Language : </b> <span>Language: {target.languages_spoken.join(', ')}</span></h5>  
                                     </div>
-
                                 </div>
                             ))
                         }
                         {
-                            enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="container_patient_preferences">
-                                        <div className="patient_name">
-                                            <h5><b>Patient Preferences</b></h5>
-                                        </div>
-
-                                        <div className="patient_prefernces_details">
-                                            <div className="card-text"><b>Patient Requirement:</b><br /><h5 className="proposed_plans">{target.proposed_treatment_plan.join(', ')}</h5></div>
-                                            <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
-                                            <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>
-                                            <p className="card-text"><b>Transport Support Needed:</b><br />{target.transport_support_needed}</p>
-                                            <p className="card-text"><b>Accomodation / Other Logistic:</b><br />{target.accomodation}</p>
-                                            <p className="card-text"><b>Preferred Hospital Visit Type:</b><br />{target.preferred_hospital_visit}</p>
-                                            <p className="card-text"><b>Food Preferences:</b><br />{target.food_preferences}</p>
-                                        </div>
+                             enqurie_data.map((target, index) => (
+                                <div key={index}>
+                                    <div className="PatientPreferencesDetails my-4">
+                                        <h2 className="PatientPreferences py-3">Patient Preferences</h2>
+                                        <p className="mb-1">Patient Requirement : </p>
+                                         <h6>{target.proposed_treatment_plan.join(', ')}</h6>
+                                        <p>Patient Location : {target.patient_nationality}</p>
+                                        <p>Proposed Date : {target.proposal_date}</p>
+                                        <p>Transport Support Needed : {target.transport_support_needed}</p>
+                                        <p>Accomodation / Other Logistic : {target.accomodation}</p>
+                                        <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit}</p>
+                                        <p>Food Preferences : {target.food_preferences} </p>                                         
                                     </div>
                                 </div>
                             ))}
                     </div>
 
-                    <div className="col-md-9">
+                    <div className="col-md-8">
                         {
                             enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="d-flex mt-5">
-                                        <p><b>Speciality: </b></p>
-                                        <p style={{ paddingLeft: 10 }}>{ }</p>
-                                    </div>
-                                    <div className="d-flex">
-                                        <p style={{ marginBottom: 5 }}><b>Medical History</b></p>
-                                        <p style={{ paddingLeft: 20 }}>{target.medical_history}</p>
-                                        <p style={{ paddingLeft: 20 }}>{target.med2}</p>
-                                        <p style={{ paddingLeft: 20 }}>{target.med3}</p>
-                                    </div>
-                                    <div className="d-flex">
-                                        <p style={{ marginBottom: 5 }}><b>Status:</b></p>
-                                        <p style={{ paddingLeft: 20 }}>{target.status}</p>
-                                    </div>
+                                <div key={index}>
+                                    <p><b>Speciality : </b>{ }</p>
+                                    <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                    <p><b>Status : </b>{target.status}</p> 
                                 </div>
                             ))}
                         {
                             enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="query_container">
-                                        <div className="query_title">
-                                            <h2>Query</h2>
-                                        </div>
-                                        <div className="query_content">
-                                            <p>{target.current_diagnosis}</p>
-                                        </div>
+                                <div key={index} >
+                                    <div className="queryBox my-2">
+                                        <h2>Query</h2>                                              
+                                        <p>{target.current_diagnosis}</p>
                                     </div>
                                 </div>
                             ))
                         }
                         {enqurie_data[0].reports[1] ?
-                            <div className="buttons">
-                                <div className="row">
-                                    <div className="col-md-5">
-                                        <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
-                                    </div>
-                                    <div className="col-md-2">
-
-                                    </div>
-                                    <div className="col-md-5">
-                                        <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
-                                    </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-5">
+                                    <div className="DownloadButton" 
+                                    onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports
+                                    <i className="fa fa-download "></i></div>
                                 </div>
-                            </div> :
+                                <div className="col-md-5">
+                                    <div className="InsuranceButton" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance
+                                    <i className="fa fa-eye "></i></div>
+                                </div>
+                            </div>
+                            :
                             null}
                         {
                             enqurie_data.map((target, index) => (
-                                <div key={index} {...target}>
-                                    <div className="diagnosis_container">
-                                        <div className="query_title">
-                                            <h2>Current Diagnosis</h2>
-                                        </div>
-                                        <div className="query_content">
-                                            <p>{target.current_diagnosis}</p>
-                                        </div>
+                                <div key={index}>
+                                    <div className="diagnosisBox my-3">
+                                        <h2>Current Diagnosis</h2>
+                                         <p>{target.current_diagnosis}</p>                                          
                                     </div>
                                 </div>
                             ))}
-
-                        {
-                            sendquote ?
-
-                                <div style={{ marginLeft: "40%", marginTop: "3%", marginBottom: "4%" }}>
-                                    <button className="join_button" type="submit" onClick={() => setSendquote(false)}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
+                            {
+                                 sendquote ?
+                                <div className="text-center">  
+                                    <button className="JoinButton col-md-4" type="submit" onClick={() => setSendquote(false)}>Send Quote &nbsp;&nbsp;<i className="fa fa-share"></i></button>
                                 </div>
                                 :
                                 <div >
                                     <Form noValidate validated={validated} style={{ border: "2px", borderColor: "#164473", borderRadius: "15px" }} onSubmit={handleSubmit} >
-                                        <div className="d-flex">
-                                            <div>
+                                        <div className="row">
+                                            <div className="col-md-6">
                                                 <h5>Select Doctors</h5>
-
-
-                                                <div style={{ border: "2px solid #164473", borderRadius: 10, height: "18rem" }} className="select_doctor">
+                                                <div className="SelectDoctor">
                                                     {
-
                                                         doctor.map((target, index) => (
                                                             <Form.Check
-                                                                key={index}{...target}
+                                                                key={index}
                                                                 label={target.doctor_name}
                                                                 required
-                                                                style={{ marginLeft: "20px", marginTop: "1rem" }}
                                                                 type="checkbox"
                                                                 name="select_doctor"
                                                                 value={formValues.select_doctor}
@@ -414,218 +380,203 @@ function PATIENT_DASHBOARD(props) {
                                                                 onChange={() => checkBox("select_doctor", target.doctor_name)}
                                                                 isInvalid={!!errors.select_doctor}
                                                             />
-                                                        ))}
-
+                                                    ))}
                                                 </div>
                                                 <span style={{ color: "red" }}>{errors?.select_doctor}</span>
                                             </div>
-                                            <div>
-                                                <h5 style={{ marginLeft: "1rem" }}>Select Anesthesiologist</h5>
-
-                                                <div style={{ border: "2px solid #164473", borderRadius: 10, height: "18rem", marginLeft: "1rem" }} className="select_doctor">
+                                            <div className="col-md-6">
+                                                <h5>Select Anesthesiologist</h5>
+                                                <div className="Anesthesiologist">
                                                     {
                                                         res.anesthesiologist.map((target, index) => (
                                                             <Form.Check
-                                                                key={index}{...target}
+                                                                key={index}
                                                                 label={target.anesthesiologist}
                                                                 required
-                                                                style={{ marginLeft: "20px", marginTop: "1rem" }}
                                                                 type="checkbox"
                                                                 name="select_doctor"
                                                                 value={formValues.select_anesthesiologist}
-
                                                                 onChange={() => checkBox("select_doctor")}
                                                                 isInvalid={!!errors.select_anesthesiologist}
                                                             />
-
                                                         ))}
                                                 </div>
-
                                                 <span style={{ color: "red", marginLeft: "20rem" }}>{errors?.select_anesthesiologist}</span>
-
                                             </div>
                                         </div>
+
                                         <div className = "row">
                                             <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Treatment Plan</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="treatment_plan"
-                                                value={formValues.treatment_plan}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.treatment_plan}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.treatment_plan}</Form.Control.Feedback>
-                                        </Form.Group>
-                                        </div>
-                                        <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Estimate Price</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="estimate_price"
-                                                value={formValues.estimate_price}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.estimate_price}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_price}</Form.Control.Feedback>
-                                        </Form.Group>
-                                        </div>
-                                        </div>
-                                        <div className = "row">
+                                                <Form.Group>
+                                                <Form.Label>Treatment Plan</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="treatment_plan"
+                                                    value={formValues.treatment_plan}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.treatment_plan}
+                                                />
+                                                 <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.treatment_plan}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </div>
                                             <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Inclusions</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="inclusion"
-                                                value={formValues.inclusion}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.inclusion}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.inclusion}</Form.Control.Feedback>
-                                        </Form.Group>
-                                                </div>
-                                                <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Exclusions</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="exclusion"
-                                                value={formValues.exclusion}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.exclusion}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.exclusion}</Form.Control.Feedback>
-                                        </Form.Group>
+                                                <Form.Group>
+                                                <Form.Label>Estimate Price</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="estimate_price"
+                                                    value={formValues.estimate_price}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.estimate_price}
+                                                />
+                                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_price}</Form.Control.Feedback>
+                                                 </Form.Group>
+                                            </div>
+                                        </div>
+
+                                        <div className = "row mt-2">
+                                            <div className = "col-md-6">
+                                            <Form.Group >
+                                                <Form.Label>Inclusions</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="inclusion"
+                                                    value={formValues.inclusion}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.inclusion}
+                                                />
+                                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.inclusion}</Form.Control.Feedback>
+                                            </Form.Group>
+                                            </div>
+                                            <div className = "col-md-6">
+                                            <Form.Group>
+                                                <Form.Label>Exclusions</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="exclusion"
+                                                    value={formValues.exclusion}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.exclusion}
+                                                />
+                                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.exclusion}</Form.Control.Feedback>
+                                            </Form.Group>
                                         </div>
                                    </div>
 
-                                    <div className = "row">
+                                    <div className = "row mt-2">
                                         <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Estimate Copay</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="estimate_copay"
-                                                value={formValues.estimate_copay}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.estimate_copay}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_copay}</Form.Control.Feedback>
-                                        </Form.Group>
+                                            <Form.Group>
+                                                <Form.Label>Estimate Copay</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="estimate_copay"
+                                                    value={formValues.estimate_copay}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.estimate_copay}
+                                                />
+                                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.estimate_copay}</Form.Control.Feedback>
+                                            </Form.Group>
                                         </div>
                                         <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Estimate Copay Percentage</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="estimate_copay_percentage"
-                                                value={formValues.estimate_copay_percentage}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.estimate_copay_percentage}
-                                            />
-
-                                        </Form.Group>
+                                            <Form.Group>
+                                                <Form.Label>Estimate Copay Percentage</Form.Label>
+                                                <Form.Control
+                                                    required
+                                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                    type="text"
+                                                    name="estimate_copay_percentage"
+                                                    value={formValues.estimate_copay_percentage}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.estimate_copay_percentage}
+                                                />
+                                            </Form.Group>
                                         </div>
                                     </div>
-                                        <div className="pt-4">
-                                            <Form.Label>Translator available as per patients's preferred language</Form.Label>
-                                            <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
-                                                <div className="col-md-6">
-                                                    <Form.Check
-                                                        label="Yes"
-                                                        required
-
-                                                        type="radio"
-                                                        name="translator"
-                                                        id="yes"
-                                                        value="yes"
-                                                        checked={formValues.translator === "yes"}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.translator}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <Form.Check
-                                                        label="No"
-                                                        required
-
-                                                        type="radio"
-                                                        name="translator"
-                                                        id="no"
-                                                        value="no"
-                                                        checked={formValues.translator === "no"}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.translator}
-                                                    />
-                                                </div>
-
-                                            </div>
-                                            <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
+                                    <Form.Label className="pt-2">Translator available as per patients's preferred language</Form.Label>
+                                    <div className="row py-1" style={{border: "2px solid #164473", borderRadius: 10,margin:0}}>
+                                        <div className="col-md-6">
+                                            <Form.Check
+                                                label="Yes"
+                                                required
+                                                type="radio"
+                                                name="translator"
+                                                id="yes"
+                                                value="yes"
+                                                checked={formValues.translator === "yes"}
+                                                onChange={handleChange}
+                                                isInvalid={!!errors.translator}
+                                             />
                                         </div>
-                                        <div className="pt-4">
-                                            <Form.Label>Types of Anesthesia</Form.Label>
-                                            <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
-                                                <div className="col-md-5">
-                                                    <Form.Check
-                                                        label="Local"
-                                                        required
-
-                                                        type="radio"
-                                                        name="type_of_anesthesia"
-                                                        id="local"
-                                                        value="local"
-                                                        checked={formValues.type_of_anesthesia === "local"}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.type_of_anesthesia}
-                                                    />
-                                                </div>
-                                                <div className="col-md-5">
-                                                    <Form.Check
-                                                        label="General"
-                                                        required
-
-                                                        type="radio"
-                                                        name="type_of_anesthesia"
-                                                        id="general"
-                                                        value="general"
-                                                        checked={formValues.type_of_anesthesia === "general"}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.type_of_anesthesia}
-                                                    />
-                                                </div>
-                                                <div className="col-md-2">
-                                                    <Form.Check
-                                                        label="Epidural"
-                                                        required
-
-                                                        type="radio"
-                                                        name="type_of_anesthesia"
-                                                        id="epidural"
-                                                        value="epidural"
-                                                        checked={formValues.type_of_anesthesia === "epidural"}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.type_of_anesthesia}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
+                                        <div className="col-md-6">
+                                            <Form.Check
+                                                label="No"
+                                                required
+                                                type="radio"
+                                                name="translator"
+                                                id="no"
+                                                value="no"
+                                                checked={formValues.translator === "no"}
+                                                onChange={handleChange}
+                                                isInvalid={!!errors.translator}
+                                            />     
                                         </div>
-                                        <Form.Group style={{ marginTop: "2rem" }}>
+                                        <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
+                                    </div>
+                                    <Form.Label className="pt-2">Types of Anesthesia</Form.Label>
+                                        <div className="row py-1" style={{border: "2px solid #164473", borderRadius: 10,margin:0}}>
+                                            <div className="col-md-5">
+                                                <Form.Check
+                                                    label="Local"
+                                                    required
+                                                    type="radio"
+                                                    name="type_of_anesthesia"
+                                                    id="local"
+                                                    value="local"
+                                                    checked={formValues.type_of_anesthesia === "local"}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.type_of_anesthesia}
+                                                />
+                                            </div>
+                                            <div className="col-md-5">
+                                                <Form.Check
+                                                    label="General"
+                                                    required
+                                                    type="radio"
+                                                    name="type_of_anesthesia"
+                                                    id="general"
+                                                    value="general"
+                                                    checked={formValues.type_of_anesthesia === "general"}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.type_of_anesthesia}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <Form.Check
+                                                    label="Epidural"
+                                                    required
+                                                    type="radio"
+                                                    name="type_of_anesthesia"
+                                                    id="epidural"
+                                                    value="epidural"
+                                                    checked={formValues.type_of_anesthesia === "epidural"}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.type_of_anesthesia}
+                                                />
+                                            </div>
+                                        </div>
+                                        <Form.Control.Feedback style={{ color: "red" }}>{errors?.type_of_anesthesia}</Form.Control.Feedback>
+                                        
+                                        <Form.Group className="pt-2">
                                             <Form.Label>Type of Room</Form.Label>
                                             <Form.Control
                                                 required
@@ -638,92 +589,86 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.type_of_room}</Form.Control.Feedback>
                                         </Form.Group>
-                                        <div className = "row">
+
+                                        <div className = "row mt-2">
                                             <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Expected Length of Stay in Hospital</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="expected_length"
-                                                value={formValues.expected_length}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.expected_length}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.expected_length}</Form.Control.Feedback>
-                                        </Form.Group>
-                                        </div>
-                                        <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Expected Length of Stay in the Country</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="length_of_stay"
-                                                value={formValues.length_of_stay}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.length_of_stay}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.length_of_stay}</Form.Control.Feedback>
-                                        </Form.Group>
-                                        </div>
+                                                <Form.Group>
+                                                    <Form.Label>Expected Length of Stay in Hospital</Form.Label>
+                                                    <Form.Control
+                                                        required
+                                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                        type="text"
+                                                        name="expected_length"
+                                                        value={formValues.expected_length}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.expected_length}
+                                                    />
+                                                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.expected_length}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </div>
+                                            <div className = "col-md-6">
+                                                <Form.Group>
+                                                    <Form.Label>Expected Length of Stay in the Country</Form.Label>
+                                                    <Form.Control
+                                                        required
+                                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                        type="text"
+                                                        name="length_of_stay"
+                                                        value={formValues.length_of_stay}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.length_of_stay}
+                                                    />
+                                                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.length_of_stay}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </div>
                                         </div>
 
-                                        <div style={{ marginTop: "2rem" }}>
-                                            <div className="row">
-                                                <div className="col-md-6">
-                                                    <label>Free Room Upgrade</label>
-                                                    <div className=" d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
-                                                        <Form.Check
-                                                            label="Yes"
-                                                            required
-                                                            style={{ paddingLeft: "4rem" }}
-                                                            type="radio"
-                                                            name="free_room_upgrade"
-                                                            id="yes"
-                                                            value="yes"
-                                                            checked={formValues.free_room_upgrade === "yes"}
-                                                            onChange={handleChange}
-                                                            isInvalid={!!errors.free_room_upgrade}
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label className="py-2">Free Room Upgrade</label>
+                                                <div className="d-flex justify-content-between" style={{border: "2px solid #164473", borderRadius: 10,padding:"5px 10px"}}>
+                                                    <Form.Check
+                                                        label="Yes"
+                                                        required
+                                                        ype="radio"
+                                                        name="free_room_upgrade"
+                                                        id="yes"
+                                                        value="yes"
+                                                        checked={formValues.free_room_upgrade === "yes"}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.free_room_upgrade}
+                                                    />
+                                                    <Form.Check
+                                                        label="No"
+                                                        required
+                                                       type="radio"
+                                                        name="free_room_upgrade"
+                                                        id="no"
+                                                        value="no"
+                                                        checked={formValues.free_room_upgrade === "no"}
+                                                        onChange={handleChange}
+                                                         isInvalid={!!errors.free_room_upgrade}
+                                                    />
+                                                    <Form.Check
+                                                        label="At Discount"
+                                                         required
+                                                        type="radio"
+                                                        name="free_room_upgrade"
+                                                        id="at_discount"
+                                                        value="at_discount"
+                                                        checked={formValues.free_room_upgrade === "at_discount"}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.free_room_upgrade}
                                                         />
-                                                        <Form.Check
-                                                            label="No"
-                                                            required
-                                                            style={{ paddingLeft: "100px" }}
-                                                            type="radio"
-                                                            name="free_room_upgrade"
-                                                            id="no"
-                                                            value="no"
-                                                            checked={formValues.free_room_upgrade === "no"}
-                                                            onChange={handleChange}
-                                                            isInvalid={!!errors.free_room_upgrade}
-                                                        />
-                                                        <Form.Check
-                                                            label="At Discount"
-                                                            required
-                                                            style={{ paddingLeft: "90px" }}
-                                                            type="radio"
-                                                            name="free_room_upgrade"
-                                                            id="at_discount"
-                                                            value="at_discount"
-                                                            checked={formValues.free_room_upgrade === "at_discount"}
-                                                            onChange={handleChange}
-                                                            isInvalid={!!errors.free_room_upgrade}
-                                                        />
-                                                    </div>
-                                                    <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_room_upgrade}</Form.Control.Feedback>
                                                 </div>
-                                                
-                                                <div className="col-md-6">
-                                                    <label>Free Physiotherapy</label>
-                                                    <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10, verticalAlign: "center" }}>
-
+                                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_room_upgrade}</Form.Control.Feedback>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label className="py-2">Free Physiotherapy</label>
+                                                <div className="d-flex justify-content-between" style={{border: "2px solid #164473", borderRadius: 10,padding:"5px 10px"}}>
                                                         <Form.Check
                                                             label="Yes"
                                                             required
-                                                            style={{ paddingLeft: "4rem" }}
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="yes"
@@ -735,7 +680,6 @@ function PATIENT_DASHBOARD(props) {
                                                         <Form.Check
                                                             label="No"
                                                             required
-                                                            style={{ paddingLeft: "100px" }}
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="no"
@@ -747,7 +691,6 @@ function PATIENT_DASHBOARD(props) {
                                                         <Form.Check
                                                             label="At Discount"
                                                             required
-                                                            style={{ paddingLeft: "90px" }}
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="at_discount"
@@ -756,15 +699,12 @@ function PATIENT_DASHBOARD(props) {
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
                                                         />
-                                                    </div>
-                                                    <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_physiotherapy}</Form.Control.Feedback>
                                                 </div>
+                                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_physiotherapy}</Form.Control.Feedback>
                                             </div>
                                         </div>
 
-
-
-                                        <Form.Group style={{ marginTop: "3rem" }}>
+                                        <Form.Group className="mt-2">
                                             <Form.Label>For Other Speciality Consultant</Form.Label>
                                             <Form.Control
                                                 required
@@ -777,16 +717,14 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.free_other_speciality_consultant}</Form.Control.Feedback>
                                         </Form.Group>
-
-
-                                        <div className="pt-4">
+                                        
+                                        <div className="pt-2">
                                             <Form.Label>Free Telephonic Feedback from other patients / attendants who have undergone similar treatment</Form.Label>
-                                            <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
-                                                <div className="col-sm-5">
+                                            <div className="row py-1" style={{ border: "2px solid #164473", borderRadius: 10, margin:0}}>
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="Yes"
                                                         required
-
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="yes"
@@ -796,12 +734,10 @@ function PATIENT_DASHBOARD(props) {
                                                         isInvalid={!!errors.free_telephonic_feedback}
                                                     />
                                                 </div>
-                                                <div className="col-sm-5">
-
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="No"
                                                         required
-
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="no"
@@ -811,11 +747,10 @@ function PATIENT_DASHBOARD(props) {
                                                         isInvalid={!!errors.free_telephonic_feedback}
                                                     />
                                                 </div>
-                                                <div className="col-sm-2">
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="At Discount"
                                                         required
-
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="at_discount"
@@ -829,14 +764,13 @@ function PATIENT_DASHBOARD(props) {
                                             <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_telephonic_feedback}</Form.Control.Feedback>
                                         </div>
 
-                                        <div className="pt-4">
+                                        <div className="pt-2">
                                             <Form.Label>Free Annual Checkup</Form.Label>
-                                            <div className="row" style={{ border: "2px solid #164473", borderRadius: 10, marginLeft: "4px", marginRight: "4px" }}>
-                                                <div className="col-sm-5">
+                                            <div className="row py-1" style={{ border: "2px solid #164473", borderRadius: 10, margin:0 }}>
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="Patients"
                                                         required
-
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="patients"
@@ -846,11 +780,10 @@ function PATIENT_DASHBOARD(props) {
                                                         isInvalid={!!errors.free_annual_checkup}
                                                     />
                                                 </div>
-                                                <div className="col-sm-5">
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="Family Members"
                                                         required
-
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="family_members"
@@ -860,11 +793,10 @@ function PATIENT_DASHBOARD(props) {
                                                         isInvalid={!!errors.free_annual_checkup}
                                                     />
                                                 </div>
-                                                <div className="col-sm-2">
+                                                <div className="col-md-4">
                                                     <Form.Check
                                                         label="At Discount"
                                                         required
-
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="at_discount"
@@ -877,18 +809,14 @@ function PATIENT_DASHBOARD(props) {
                                             </div>
                                             <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_annual_checkup}</Form.Control.Feedback>
                                         </div>
-
-
-                                        <div style={{ marginTop: "2rem" }}>
-                                            <div className="row">
-                                                <div className="col-md-6">
-                                                    <label>Pickup and Drop</label>
-                                                    <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
-
-                                                        <Form.Check
+                                        
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label className="py-2">Pickup and Drop</label>
+                                                <div className="d-flex justify-content-between" style={{ border: "2px solid #164473", borderRadius: 10,padding:"5px 10px" }}>
+                                                    <Form.Check
                                                             label="Yes"
                                                             required
-                                                            style={{ paddingLeft: "4rem" }}
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="yes"
@@ -896,11 +824,10 @@ function PATIENT_DASHBOARD(props) {
                                                             checked={formValues.pickup_and_drop === "yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
-                                                        />
-                                                        <Form.Check
+                                                    />
+                                                    <Form.Check
                                                             label="No"
                                                             required
-                                                            style={{ paddingLeft: "100px" }}
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="no"
@@ -908,11 +835,10 @@ function PATIENT_DASHBOARD(props) {
                                                             checked={formValues.pickup_and_drop === "no"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
-                                                        />
-                                                        <Form.Check
+                                                    />
+                                                    <Form.Check
                                                             label="Could be planned"
                                                             required
-                                                            style={{ paddingLeft: "100px" }}
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="at_discount"
@@ -920,22 +846,16 @@ function PATIENT_DASHBOARD(props) {
                                                             checked={formValues.pickup_and_drop === "at_discount"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
-                                                        />
-                                                    </div>
-                                                    <Form.Control.Feedback style={{ color: "red" }}>{errors?.pickup_and_drop}</Form.Control.Feedback>
+                                                    />
                                                 </div>
-
-
-                                                
-                                                <div className="col-md-6">
-
-                                                    <label>Dedicated Patient Relationship Management</label>
-                                                    <div className="d-flex" style={{ border: "2px solid #164473", borderRadius: 10 }}>
-
-                                                        <Form.Check
+                                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.pickup_and_drop}</Form.Control.Feedback>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label className="my-2">Dedicated Patient Relationship Management</label>
+                                                <div className="d-flex justify-content-between" style={{ border: "2px solid #164473", borderRadius: 10,padding:"5px 10px" }}>
+                                                    <Form.Check
                                                             label="Yes"
                                                             required
-                                                            style={{ paddingLeft: "4rem" }}
                                                             type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="yes"
@@ -943,11 +863,10 @@ function PATIENT_DASHBOARD(props) {
                                                             checked={formValues.free_patient_dedicated_relationship === "yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
-                                                        />
-                                                        <Form.Check
+                                                    />
+                                                    <Form.Check
                                                             label="No"
                                                             required
-                                                            style={{ paddingLeft: "100px" }}
                                                             type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="no"
@@ -955,58 +874,57 @@ function PATIENT_DASHBOARD(props) {
                                                             checked={formValues.free_patient_dedicated_relationship === "no"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
-                                                        />
-                                                        <Form.Check
+                                                    />
+                                                    <Form.Check
                                                             label="Available"
                                                             required
-                                                            style={{ paddingLeft: "100px" }}
-                                                            type="radio"
+                                                           type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="available"
                                                             value="available"
                                                             checked={formValues.free_patient_dedicated_relationship === "available"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
-                                                        />
-                                                    </div>
-
-                                                    <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_patient_dedicated_relationship}</Form.Control.Feedback>
+                                                    />
                                                 </div>
+                                                <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_patient_dedicated_relationship}</Form.Control.Feedback>
                                             </div>
                                         </div>
-                                        <div className = "row">
+                                      
+                                        <div className = "row mt-2">
                                             <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Other Benefits For Patient</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="benefits_for_patient"
-                                                value={formValues.benefits_for_patient}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.benefits_for_patient}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_patient}</Form.Control.Feedback>
-                                        </Form.Group>
+                                                <Form.Group>
+                                                    <Form.Label>Other Benefits For Patient</Form.Label>
+                                                    <Form.Control
+                                                        required
+                                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                        type="text"
+                                                        name="benefits_for_patient"
+                                                        value={formValues.benefits_for_patient}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.benefits_for_patient}
+                                                    />
+                                                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_patient}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </div>
+                                            <div className = "col-md-6">
+                                                <Form.Group>
+                                                    <Form.Label>Other Benefits of Attendants</Form.Label>
+                                                    <Form.Control
+                                                        required
+                                                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                                        type="text"
+                                                        name="benefits_for_attendent"
+                                                        value={formValues.benefits_for_attendent}
+                                                        onChange={handleChange}
+                                                        isInvalid={!!errors.benefits_for_attendent}
+                                                    />
+                                                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_attendent}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </div>
                                         </div>
-                                        <div className = "col-md-6">
-                                        <Form.Group style={{ marginTop: "2rem" }}>
-                                            <Form.Label>Other Benefits of Attendants</Form.Label>
-                                            <Form.Control
-                                                required
-                                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                                type="text"
-                                                name="benefits_for_attendent"
-                                                value={formValues.benefits_for_attendent}
-                                                onChange={handleChange}
-                                                isInvalid={!!errors.benefits_for_attendent}
-                                            />
-                                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_attendent}</Form.Control.Feedback>
-                                        </Form.Group>
-                                        </div>
-                                        </div>
-                                        <Form.Group style={{ marginTop: "2rem" }}>
+
+                                        <Form.Group className="mt-2">
                                             <Form.Label>Food Menu</Form.Label>
                                             <Form.Control
                                                 required
@@ -1019,7 +937,7 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.food_menu}</Form.Control.Feedback>
                                         </Form.Group>
-                                        <Form.Group style={{ marginTop: "2rem" }}>
+                                        <Form.Group className="mt-2">
                                             <Form.Label>Confirm Date</Form.Label>
                                             <Form.Control
                                                 required
@@ -1033,7 +951,7 @@ function PATIENT_DASHBOARD(props) {
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.confirmation}</Form.Control.Feedback>
                                         </Form.Group>
                                         
-                                        <Form.Group style={{ marginTop: "2rem" }}>
+                                        <Form.Group className="mt-2">
                                             <Form.Label>General disclaimer</Form.Label>
                                             <Form.Control
                                                 required
@@ -1046,22 +964,19 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.general_disclaimer}</Form.Control.Feedback>
                                         </Form.Group>
-
                                     </Form>
+
                                     {
                                         sendquotebutton ?
-
-                                            <div style={{ marginLeft: "40%", marginTop: "3%", marginBottom: "4%" }}>
-                                                <button className="join_button" type="submit" onClick={handleSubmit}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
-                                            </div> : null
+                                        <div className="text-center my-3">
+                                            <button className="JoinButton col-md-4" type="submit" onClick={handleSubmit}>Send Quote<i style={{ fontSize: 12, marginLeft: "20%" }} className="fa fa-share"></i></button>
+                                        </div> : null
                                     }
                                 </div>
-                        }
-
+                            }
+                         </div>
                     </div>
                 </div>
-
-
             </>
         );
 }

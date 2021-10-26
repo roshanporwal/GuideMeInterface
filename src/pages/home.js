@@ -93,7 +93,7 @@ function Home(props) {
 						  <input style={{ borderRadius: "5px" }} className="form-control " type="password" name="password" value={values.password} onChange={handleChange} placeholder="**********" />
 						</div>
 						<div className="submit_btn">
-						  <button className="join_button" onClick={handleSubmit} type="submit">Login</button>
+						  <button className="JoinButton" onClick={handleSubmit} type="submit">Login</button>
 						 </div>
 					</form>
 				</div>

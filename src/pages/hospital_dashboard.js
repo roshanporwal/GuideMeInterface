@@ -29,7 +29,7 @@ const columns = [
       selector: row => row['insurance_name'],
       sortable: true,
     },
-    {
+    /* {
       name: 'From',
       selector: row => row['from_date'],
       sortable: true,
@@ -38,7 +38,7 @@ const columns = [
         name: 'To',
         selector: row => row['to_date'],
         sortable: true,
-    },
+    }, */
     {
         name: 'Status',
         selector: row => row['status'],
@@ -133,204 +133,129 @@ function HOSPITAL_DASHBOARD(props) {
     return (
         <>
         <HospitalNavbar/>
-            <div className="text-center">
-                <h1 className = "mt-0 p-5" style = {{color: "#000"}}>Hospital Dashboard</h1>
-            </div>
-            {
-                enquriesstatus.map((target, index) => (
-
-                    <div key={index}{...target}>
-                        {/* <div style={{ justifyContent: "center", paddingTop: "2rem" }} className="enquiries  d-flex">
-                            <div style={{ paddingLeft: "3rem" }} className="total_enquiries">
-                                <div className="d-flex">
-                                    <i style={{ fontSize: 32, paddingLeft: "1rem", marginTop: "25px" }} className="fa fa-file"></i>
-                                    <h1 style={{ paddingLeft: "1rem" }}>{target.total}</h1>
-                                </div>
-                                <h3>Total Enquiries</h3>
-                            </div>
-                            <div style={{ paddingLeft: "2rem" }} className="new_enquiries">
-                                <div className="d-flex">
-                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-plus"></i>
-                                    <h1 style={{ paddingLeft: "1rem" }}>{target.new}</h1>
-                                </div>
-                                <h3 style={{ paddingLeft: "5rem" }}>New Enquiries</h3>
-                            </div>
-                            <div style={{ paddingLeft: "2rem" }} className="awaiting_enquiries">
-                                <div className="d-flex">
-                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-pause"></i>
-                                    <h1 style={{ paddingLeft: "1rem" }}>{target.awaiting}</h1>
-                                </div>
-                                <h3 style={{ paddingLeft: "5rem" }}>Awaiting Enquiries</h3>
-                            </div>
-                            <div style={{ paddingLeft: "2rem" }} className="won_enquiries">
-                                <div className="d-flex">
-                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className=" fa fa-smile-o "></i>
-                                    <h1 style={{ paddingLeft: "1rem" }}>{target.won}</h1>
-                                </div>
-                                <h3 style={{ paddingLeft: "5rem" }}>Won Enquiries</h3>
-                            </div>
-                            <div style={{ paddingLeft: "2rem" }} className="lost_enquiries">
-                                <div className="d-flex">
-                                    <i style={{ fontSize: 32, paddingLeft: "5rem", marginTop: "25px" }} className="fa fa-frown-o"></i>
-                                    <h1 style={{ paddingLeft: "1rem" }}>{target.lost}</h1>
-                                </div>
-                                <h3 style={{ paddingLeft: "5rem" }}>Lost Enquiries</h3>
-                            </div>
-                        </div> */}
-                        <div  className="enquiries offset-1">
-                            <div className="col-md-2 col-sm-6 total_enquiries text-center">
-                                <div className="text-center" >
-                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-file"></i>
-                                    <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.total}</h1>
-                                </div>
-                                <h3 className = "mt-0 pb-5" style = {{color: "#3f9efd"}}>Total Enquiries</h3>
-                            </div>
-                            <div  className="col-md-2 col-sm-6 new_enquiries text-center">
-                                <div className=" text-center"  >
-                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-plus"></i>
-                                    <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.new}</h1>
-                                </div>
-                                <h3  className = "mt-0  pb-5"  style = {{color: "#3f9efd"}}>New Enquiries</h3>
-                            </div>
-                            <div  className="col-md-3 col-sm-6 awaiting_enquiries text-center">
-                                <div className="text-center" >
-                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-pause"></i>
-                                    <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.awaiting}</h1>
-                                </div>
-                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Awaiting Enquiries</h3>
-                            </div>
-                            <div  className="col-md-2 col-sm-6 won_enquiries text-center">
-                                <div className="text-center">
-                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className=" fa fa-smile-o "></i>
-                                    <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.won}</h1>
-                                </div>
-                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Won Enquiries</h3>
-                            </div>
-                            <div  className="col-md-2 col-sm-6 lost_enquiries text-center">
-                                <div className="text-center" >
-                                    <i style={{ fontSize: 26, marginTop: "25px", color: "#164473" }} className="fa fa-frown-o"></i>
-                                    <h1 style={{ paddingLeft: "1rem", color: "#3f9efd" }}>{target.lost}</h1>
-                                </div>
-                                <h3  className = "mt-0  pb-5" style = {{color: "#3f9efd"}}>Lost Enquiries</h3>
-                            </div>
-                            
+            <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                             <h1 className = "dashboardTitle">Hospital Dashboard</h1>
                         </div>
-                    </div>
-                ))}
-            <div className="">
-                <div className=" col-md-offset-1 col-md-5 mt-5 mb-5" >
-                    <div className = "chart_container">
-                    <div className = "row">
-                        <div className = "col-md-offset-2 col-md-8 p-5  ">
-                        <Pie
-                            data={pie}
-                            options={{
-                                title: {
-                                    display: true,
-                                    text: 'Patients',
-                                    fontSize: 20
-                                },
-                                legend: {
-                                    display: true,
-                                    position: 'bottom'
-                                }
-                            }}
-                        />
-                        </div>
-                        {/* <div className = "col-sm-5 ">
-                        <ul style={{ fontSize: 20 }}>
-                            <li>Awaiting Patients</li>
-                            <li>Won Patients</li>
-                            <li>Lost Patients</li>
-                            <li>New Patients</li>
-                        </ul>
-                        </div> */}
-                    </div>
-                 </div>   
-                    
-                    
+                    </div> 
                 </div>
-                 {
+                {
                     enquriesstatus.map((target, index) => (
-
-
-                        <div style = {{margin: "0px 5px"}} className="alert_container col-sm-5 mt-5" key={index}{...target}>
-                        <div className="row">
-                            <div className = "col-sm-6 text-center">
-                                <h1 style={{ fontSize: 42, color: "white", marginTop: "8rem"}}>{target.new}</h1>
-                                <button className="view_patients_button">View Now</button>
+                            <div className="container pb-5" key={index}{...target}>
+                                <div className="row justify-content-center">
+                                    <div className="col-md-2 col-sm-6 total_enquiries text-center">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <img src="/assets/images/icons/total_enquiries.png" className="IconFont" alt=""/>
+                                            <h2>{target.total}</h2>
+                                        </div>
+                                        <h3>Total Enquiries</h3>
+                                    </div>
+                                    <div className="col-md-2 col-sm-6 new_enquiries text-center">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <img src="/assets/images/icons/new_enquiries.png" className="IconFont" alt=""/>
+                                            <h2>{target.new}</h2>
+                                        </div>
+                                        <h3>New Enquiries</h3>
+                                    </div>
+                                    <div className="col-md-3 col-sm-6 lost_enquiries text-center">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <img src="/assets/images/icons/in_progress.png" className="IconFont" alt=""/>
+                                            <h2>{target.awaiting}</h2>
+                                        </div>
+                                        <h3>Awaiting Enquiries</h3>
+                                    </div>
+                                    <div className="col-md-2 col-sm-6 won_enquiries text-center">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <img src="/assets/images/icons/won_enquiries.png" className="IconFont" alt=""/>
+                                            <h2>{target.won}</h2>
+                                        </div>
+                                        <h3>Won Enquiries</h3>
+                                    </div>
+                                    <div className="col-md-2 col-sm-6 awaiting_enquiries text-center">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <img src="/assets/images/icons/lost_enquiries.png" className="IconFont" alt=""/>
+                                            <h2>{target.lost}</h2>
+                                        </div>
+                                        <h3>Lost Enquiries</h3>
+                                    </div>
+                                   
+                                </div>
                             </div>
-                            <div className="alert col-sm-6 text-center" style = {{paddingTop: "60px"}}>
-                                <h1>Alert</h1><br />
-                                <h4>You have following enquiries.<br />
-                                    {target.new} unattended new enquiries.
-                                    </h4>
-                            </div>
-                        </div>
-                        
-                        </div>
-
                     ))}
-                
-            </div><div className="patient_table_container">
-                  {/* <table>
-                    <thead style={{ height: "5rem" }}>
-                        <tr>
-                        <th style={{ paddingLeft: "2rem" }}>Patient Name</th>
-                        <th>Query</th>
-                        <th>Insurance/TPA</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Speciality</th>
-                        <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            enquries.map((target, index) => (
-                                <tr key={index} {...target} onClick={() => handleSubmit(target)}>
-                                    <td style={{ paddingLeft: "2rem" }}>{target.patient_name}</td>
-                                    <td style={{ width: "50rem" }}>{target.current_diagnosis}</td>
-                                    <td>{target.insurance_name}</td>
-                                    <td>{target.from_date}</td>
-                                    <td>{target.to_date}</td>
-                                    <td>-</td>
-                                    <td>{target.status}</td>
-                                </tr>
-                            ))}
-                    </tbody>
-                            </table> 
-                   */}        
-                            
-    <div className = "data_table">
-    <div className = "col-md-12">
-                    <label htmlFor="search">
-                    Search by Patient Name:<br/>
-                    <input id="search" type="text" onChange={handleSearch} />
-                </label>
+            
+                <div className = "container">
+                    <div className = "row">
+                        <div className = "col-md-6">
+                            <div className="PieChart">
+                                <Pie
+                                    data={pie}
+                                    options={{
+                                        title: {
+                                            display: true,
+                                            text: 'Patients',
+                                            fontSize: 20
+                                        },
+                                        legend: {
+                                            display: true,
+                                            position: 'bottom'
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className=""> 
+                                {
+                                 enquriesstatus.map((target, index) => (
+                                    <div className="AlertBox" key={index}{...target}>
+                                        <div className="d-flex flex-column flex-lg-row align-items-center">
+                                            <div className="col-md-5 text-center">
+                                                <h2>{target.new}</h2>
+                                                 <button className="ViewButton">View Now</button>
+                                            </div>
+                                             <div className="col-md-7">
+                                                <h3>Alert</h3>
+                                                <p>You have following enquiries.<br />
+                                                    {target.new} unattended new enquiries.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ))}        
+                                </div>
+                            </div> 
+                     </div>
+                 </div>   
+                 <div className="container my-5">
+                    <div className = "row">
+                        <div className = "offset-lg-9 col-md-3 pb-2">
+                            <label htmlFor="search" style={{width:"100%"}}>
+                            Search by Patient Name:<br/>
+                            <input id="search" type="text" className="form-control mt-2"  onChange={handleSearch} />
+                            </label>
+                        </div>
+                        <div className = "col-md-12">    
+                            <DataTable
+                                style={{ paddingTop: "30px" }}
+                                onRowClicked = {(target) => handleSubmit(target)}                      
+                                columns={columns}
+                                data={enquries.filter((item) =>
+                                    item.patient_name.toLowerCase().includes(search.toLowerCase())
+                                )}
+                                highlightOnHover
+                                pagination
+                                paginationPerPage={5}
+                                customStyles = {customStyles}
+                                paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+                                paginationComponentOptions={{
+                                rowsPerPageText: 'Records per page:',
+                                rangeSeparatorText: 'out of',
+                            }}
+                            />
+                        </div> 
+                    </div>         
                 </div>
-    <DataTable
-       
-        onRowClicked = {(target) => handleSubmit(target)}                      
-        columns={columns}
-        data={enquries.filter((item) =>
-            item.patient_name.toLowerCase().includes(search.toLowerCase())
-          )}
-        highlightOnHover
-        pagination
-        paginationPerPage={5}
-        customStyles = {customStyles}
-        paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
-        paginationComponentOptions={{
-          rowsPerPageText: 'Records per page:',
-          rangeSeparatorText: 'out of',
-        }}
-      />
-       </div>
-                           
-                           
-             </div>
-
         </>
     );
 

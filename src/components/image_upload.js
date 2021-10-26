@@ -79,13 +79,8 @@ class ImageUpload extends React.Component {
     }
     return (
     <div className="MainDiv">
-     
-      
-      <div className="container">
-          
-          <PicturesWall />
-        </div>
-      </div>
+      <PicturesWall />
+    </div>
   );
 }
 }

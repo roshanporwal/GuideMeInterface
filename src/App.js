@@ -17,7 +17,6 @@ import ADMIN_Home from "./admin/admin_home.js";
 import PATIENT_VIEW from "./admin/patient_view";
 import SMART_SEARCH from "./admin/smart_search";
 import Landing from "./pages/landing";
-import mis from "./admin/mis"
 
 import "./App.css";
 import "react-bootstrap";
@@ -56,7 +55,6 @@ export default function App(props) {
           component={ADMIN_PATIENT_DASHBOARD}
         />
         <Route path="/admin/smartsearch" exact component={SMART_SEARCH} />
-        <Route path="/admin/mis" exact component={mis} />
 
         <Route path="/patient_view" exact component={PATIENT_VIEW} />
       </Switch>

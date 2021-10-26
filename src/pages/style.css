@@ -1,40 +1,13 @@
-.display-4{
+/*.display-4{
     font-size: 46px!important;
     
  }
- 
- 
- .logo{
-     height: 100px;
-     width: 100px;
-     border: 1px;
-     border-radius: 50%;
-     padding-left: 5px;
- }
- 
- 
+
  .top{
      background-color: rgb(135, 135, 236);
  }
  
- .navbar-nav{
-     font-size: 14px;
-     border: 1px;
-     border-radius: 50%!important;
-    
- }
  
- .nav-item{
-     padding-left: 20px;
-     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-     
-     
- }
- 
- .nav-link{
-     color: beige!important;
-     text-decoration: none!important;
- }
  
  
  
@@ -95,11 +68,11 @@
  
  @keyframes example {
     25%  { left:-20px; left:20px;}
-     /* 25%  {background-color:yellow; left:200px; top:0px;}
+     25%  {background-color:yellow; left:200px; top:0px;}
      50%  {background-color:blue; left:200px; top:200px;}
      75%  {background-color:green; left:0px; top:200px;}
      100% {background-color:red; left:0px; top:0px;}
-  */
+  
  }
  
  .cred-card:hover{
@@ -120,20 +93,6 @@
        padding-right: 4rem;
    }
  
-   .join_button{
-       border: 1px #164473;
-       border-radius: 10px;
-       background-color: #164473;
-       color: white;
-       width: 14rem;
-       height: 3rem;
-       box-shadow: 5px 10px 8px #888888;
-   }
- 
-   .join_button:hover{
-       background-color: rgb(58, 49, 97);
-       transition: 0.5s;
-   }
  
    .footer{
      background-color: rgb(61, 34, 61);
@@ -159,54 +118,8 @@
       height: 4rem;
   }
 
-  .login_title{
-      margin-top: 15%;
-  }
-
-  .login_form{
-      width: 60%;
-  }
-  .email_field{
-      padding-top: 10%;
-      border: 1px rgb(49, 49, 92);
-      border-radius: 35px;
-  }
-
-  .password_field{
-      padding-top: 5%;
-  }
-
-  .submit_btn{
-      padding-top: 10%;
-  }
-
-  .login_image{
-      height: 63rem;
-  }
-
   @media only screen and (max-width: 768px) {
-    .login_form{
-        margin-top: 5%;
-        margin-left: 40%;
-        width: 100%;
-        margin-bottom: 10%;
-    }
-
-    .login_title{
-        margin-top: 208%;
-        margin-left: -40%;
-    }
     
-    .login_image{
-        width: 33rem;
-        height: 400px;
-    }
-
-    
-   /* .column_big{
-       margin-left: 10%;
-   } */
-
    
 
     .medical_history{
@@ -345,7 +258,7 @@
     .sent_quote{
 
     }
- */
+
 
     
   .enquiries .total_enquiries, .enquiries .new_enquiries,  .enquiries .awaiting_enquiries, .enquiries .won_enquiries,  .enquiries .lost_enquiries, .enquiries .sent_quote{
@@ -683,7 +596,7 @@ tbody{
 }
 
 .alphabets_container{
-    /* width: 85%; */
+    /* width: 85%; 
     background-color: rgb(56, 56, 121);
     height: 50px;
     border: 1px #164473;
@@ -944,7 +857,7 @@ tbody{
     padding-top: 5%;
 }
 
-/*Ajit CSSS*/
+/*Ajit CSSS
 
 #HomeSection img{
 	width:100%;
@@ -1090,23 +1003,4 @@ tbody{
 	}
 }
 
-.Logo{
-	width: 260px;
-    height: 140px;
-    padding: 10px 0px;
-}
-.loginImage{
-	width:100%;
-}
-@media (max-width: 767px){
-	.loginImage{
-		display:none;
-	}
-	.login_title {
-		margin-top: 5%;
-	}
-	.login_form{
-		width: 90%!important;
-		margin: auto;
-	}
-}
+*/
