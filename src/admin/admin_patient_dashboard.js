@@ -74,7 +74,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         data = JSON.parse(data)
         console.log(formValues);
         if (event === "before") {
-            if (selected.length > 3) {
+            if (selected.length > 5) {
                 return alert(" Patient details can be shared only with three Hospitals.")
             } else {
                 const updateenquries = await auth_service.updateenquries(enqurie_data[0]._id, selected, data.login_id)
@@ -147,8 +147,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         return (
             <>
                 <ADMIN_NAVBAR />
-                <div className="modal fade bd-example-modal-sm" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-sm" role="document">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">Transaction</h5>
@@ -190,7 +190,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} type="submit" className="btn btn-primary" onClick={wonandloss}>Submit</button>
                             </div>
                         </div>
@@ -460,7 +460,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 {enqurie_data[0].status === "Awaiting From Patients" ?
-                                                    <button data-toggle="modal" data-target="#exampleModal" style={{ background: "#164473", border: "1px solid #164473", borderRadius: "15px", color: "white", width: "14rem" }}
+                                                    <button className="JoinButton" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                                                         onClick={() =>
                                                             setFormValue(prevState => ({
                                                                 ...prevState,
