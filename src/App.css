@@ -327,7 +327,11 @@
     cursor: pointer;
     box-shadow: 0 0 5px 5px #d0d0d0;
 }
+.PatientName{
+	color:#333!important;
+}
 .PatientName,.PatientPreferences{
+	color:#fff;
 	text-align: center;
     font-size: 18px;
     text-transform: uppercase;
@@ -349,6 +353,9 @@
 .PatientPreferencesDetails p{
 	font-weight: 600;
     letter-spacing: 0.8px;
+}
+.PatientPreferences h6{
+	color:#fff;
 }
 .rating{
 	font-size: 18px;
@@ -372,6 +379,7 @@
     color: white;
 }
 .queryBox h2,.diagnosisBox h2{
+	color:#fff;
 	font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
