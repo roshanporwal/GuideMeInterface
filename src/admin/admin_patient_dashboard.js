@@ -399,7 +399,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             {show_quota ? null :
                                 <div className="row">
                                     <div className="col-md-12">   
-                                        <label className="form-label">Select Hospital(Please Select any 3)</label>
+                                        <label className="form-label">Select Hospital(Please Select any 5)</label>
                                         <MultiSelect
                                             options={hospitals}
                                             value={selected}
