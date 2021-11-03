@@ -51,7 +51,13 @@ function Home(props) {
     event.preventDefault();
     const login = await auth_service.login(values)
     if (login.payload) {
-      localStorage.setItem('login', JSON.stringify(login.payload));
+      if(login.payload.master_hospital_check){
+        localStorage.setItem('allhospital', JSON.stringify(login.payload.allhospital));
+        localStorage.setItem('login', JSON.stringify(login.payload.allhospital[0]));
+      }else{
+        localStorage.setItem('login', JSON.stringify(login.payload));
+      }
+     
       
       history.push({
         pathname: '/hospital/dashboard'

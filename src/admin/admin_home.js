@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
 import  * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
@@ -12,6 +12,31 @@ function ADMIN_Home(props) {
     password:""
    
   })
+  useEffect(() => {
+    async function fetchData() {
+      let data = localStorage.getItem("login")
+     if(data===null){
+       return 
+     }
+     const  islogin = JSON.parse(data)
+     
+        if(islogin.admin){
+         history.push({
+          pathname: '/admin/dashboard'
+        });
+        }else{
+          history.push({
+            pathname: '/hospital/dashboard'
+          });
+       
+      }
+      
+    
+    }
+       
+    fetchData()
+  }, [history]);
+
   const handleChange = e => {
     const { name, value } = e.currentTarget
     setValues(prevState => ({

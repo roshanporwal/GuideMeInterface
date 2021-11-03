@@ -7,8 +7,8 @@ export default function HospitalNavbar(props) {
   const history = useHistory();
 
   function logout() {
-   
-    localStorage.removeItem("login")
+   localStorage.clear()
+    //localStorage.removeItem("login")
     history.push({
      pathname:'/'
    });

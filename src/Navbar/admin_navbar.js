@@ -6,7 +6,7 @@ export default function ADMIN_NAVBAR(props) {
   const history = useHistory();
   function logout() {
    
-     localStorage.removeItem("login")
+    localStorage.clear()
      
      history.push({
       pathname:'/'
