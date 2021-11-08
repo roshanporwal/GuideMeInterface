@@ -247,7 +247,7 @@ function PATIENT_FORM(props) {
                             </Form.Group>
                             
                             <Form.Group style = {{marginTop: "0.5rem"}}>
-                            <Form.Label>Patient Preferred By</Form.Label>
+                            <Form.Label>Patient Referred By</Form.Label>
                                 <Form.Control
                                     required
                                     style={{ border: "2px solid #164473", borderRadius: 10}}
@@ -997,7 +997,7 @@ function PATIENT_FORM(props) {
                         </div>
                         <Form.Control.Feedback style= {{color:"red"}}>{errors?.preferred_hospital_visit}</Form.Control.Feedback>
                         <Form.Group style = {{marginTop: "0.5rem"}}>
-                        <Form.Label>Proposed Date to awail the services</Form.Label>
+                        <Form.Label>Propose date to avail the service</Form.Label>
                             <Form.Control
                                 required
                                 style={{ border: "2px solid #164473", borderRadius: 10}}

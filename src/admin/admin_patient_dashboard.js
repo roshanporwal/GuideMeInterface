@@ -210,7 +210,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p><b>Age : </b> <span>{target.patient_age}</span></p>
                                             <p><b>Gender : </b> <span>{target.patient_gender}</span></p>
                                             <p><b>Nationality : </b> <span>{target.patient_nationality}</span></p>
-                                            <h5><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></h5>
+                                            <p><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></p>
                                             
                                         </div>
 
@@ -415,17 +415,17 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 {show_quota ?
                     <div className="container my-5">
                         <div className="row mb-3" style={{background:"#164473"}} >
-                           <div className="col-md-3">{/* empty column for table headling */}</div>
+                           <div className="col-md-2">{/* empty column for table headling */}</div>
                             {
                                 hopital_enq.map((target, index) => (
-                                <div className="col-md-3" key={index} >
+                                <div className="col-md-2" key={index} >
                                     <h2 className="HospitalTitle">{target.hospital_name}</h2>
                                 </div>
                              ))}
                         </div>
                        
                         <div className="row" >
-                            <div className="col-md-3" style={{ textAlign: "center" }}>
+                            <div className="col-md-2" style={{ textAlign: "center" }}>
                                 <p><b>Estimate Price</b></p>
                                 <p><b>Treatment Plan</b></p>
                                 <p><b>Inclusions</b></p>
@@ -442,7 +442,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div>
                             {
                                 hopital_enq.map((target, index) => (
-                                    <div className="col-md-3" key={index}>
+                                    <div className="col-md-2" key={index}>
                                         {target.estimate_price ?
 
                                             <div>
