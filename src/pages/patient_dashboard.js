@@ -146,7 +146,9 @@ function PATIENT_DASHBOARD(props) {
         const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id, props.location.state)
 
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
-        setDoctor(getdoctor.payload)
+        if(getdoctor.payload){
+            setDoctor(getdoctor.payload)
+          }
         const hospital_data = getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
         getenquriesbyid.payload[0].status = hospital_data.status
         setEnqurie_data(getenquriesbyid.payload)
