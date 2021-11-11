@@ -219,10 +219,21 @@
 	border-radius: 20.0224px;
 }
 .PieChart canvas {
-    width: 280px!important;
-    height: 280px!important;
+    width: 300px!important;
+    height: 300px!important;
     margin: auto;
 }
+.delete-box i{
+    font-size: 18px;
+    color: red;
+    padding: 8px;
+}
+.delete-box i:hover{
+    font-size: 20px;
+    color:black;
+    padding: 8px;
+}
+
 
  .AlertBox{
 	height:325px; 
