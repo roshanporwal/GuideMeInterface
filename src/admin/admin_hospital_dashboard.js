@@ -98,8 +98,13 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         setSearch(event.target.value);
       };
     
-    const DeletePatient = (row) => {
-        console.log('in DELETE ',row);
+      async function DeletePatient(row){
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+        const getadminstaus = await auth_service.deleteenquries(data.login_id,row)
+        if(getadminstaus.payload){
+            window.location.reload();
+        }
     }
 
 

@@ -73,6 +73,11 @@ function getenquries(login_id) {
   return req
 }
 
+function deleteenquries(login_id,_id) {
+  const req = instance.delete(`/enquries/${login_id}/remove?id=${_id}`);
+  return req
+}
+
 function getenquriesbyhospitals(login_id, id) {
   const req = instance.get(`/enquries/${login_id}/hospital?hospital_id=${id}`);
   return req
@@ -144,4 +149,5 @@ export {
   loginadmin,
   idealdata,
   smartsearch,
+  deleteenquries
 }
