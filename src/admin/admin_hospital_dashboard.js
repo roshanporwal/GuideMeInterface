@@ -7,51 +7,11 @@ import * as auth_service from "../services/auth_service";
 import { useHistory } from 'react-router-dom';
 import DataTable from "react-data-table-component"; 
 /* import DataTable from "react-data-components";   */
-import './style.css'
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from '../components/gif_loader';
 import "react-data-components/css/table-twbs.css";
 /* import FilterTableComponent from "../components/data_table"; */
 
-
-
-
-  const columns = [
-    {
-      name: 'Patient Name',
-      selector: row => row['patient_name'],
-      sortable: true,
-     
-    },
-    {
-      name: 'Diagnosis',
-      selector: row => row['current_diagnosis'],
-      sortable: true,
-    },
-    {
-      name: 'Insurance / TPA',
-      selector: row => row['insurance_name'],
-      sortable: true,
-    },
-    /* {
-      name: 'From',
-      selector: row => row['from_date'],
-      sortable: true,
-
-    },
-    {
-        name: 'To',
-        selector: row => row['to_date'],
-        sortable: true,
-
-    }, */
-    {
-        name: 'Status',
-        selector: row => row['status'],
-        sortable: true,
-
-    },
-  ];
  /* 
   const columns = [
     { title: 'Patient Name', prop: 'patient_name'  },
@@ -79,8 +39,56 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const [loading, setLoading] = useState(true);
     const [enquriesstatus, setEnquriesstatus] = useState([])
     const [search, setSearch] = useState('');
-    const [enquries, setEnquries] = useState([])
-    const [pie, setPie] = useState()
+    const [enquries, setEnquries] = useState([]);
+    const [pie, setPie] = useState();
+
+    const columns = [
+        {
+        name: 'Patient Name',
+        selector: row => row['patient_name'],
+        sortable: true,
+        
+        },
+        {
+        name: 'Diagnosis',
+        selector: row => row['current_diagnosis'],
+        sortable: true,
+        },
+        {
+        name: 'Insurance / TPA',
+        selector: row => row['insurance_name'],
+        sortable: true,
+        },
+        /* {
+        name: 'From',
+        selector: row => row['from_date'],
+        sortable: true,
+
+        },
+        {
+            name: 'To',
+            selector: row => row['to_date'],
+            sortable: true,
+
+        }, */
+        {
+            name: 'Status',
+            selector: row => row['status'],
+            sortable: true,
+
+        },
+        {
+            name: 'Action',
+            cell: row => {
+                return (<div className="delete-box" onClick={() =>DeletePatient(row.id)}>
+                        <i className="fa fa-trash"></i>
+                    </div>);
+            },
+            sortable: false,
+
+        },
+    ];
+
 
     useEffect(() => {
 
@@ -90,6 +98,11 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         setSearch(event.target.value);
       };
     
+    const DeletePatient = (row) => {
+        console.log('in DELETE ',row);
+    }
+
+
 
     async function fetchData() {
         let data = localStorage.getItem("login")
@@ -144,11 +157,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             </>
         )
     else
-
-
-
-
-        return (
+       return (
             <>
                 <ADMIN_NAVBAR />
                 <div className="container">
@@ -217,13 +226,22 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                         title: {
                                             display: true,
                                             text: 'Patients',
-                                            fontSize: 20,
-                                            circumference:50
+                                            fontSize: 10,
                                         },
-                                        legend: {
-                                            display: true,
-                                            position: 'right'
+                                        plugins:{
+                                            legend: {
+                                                display: true,
+                                                position: 'bottom',
+                                                align:'center',
+                                                labels:{
+                                                    boxWidth:20,
+                                                    font: {
+                                                        size: 16
+                                                    }
+                                                }
+                                            }
                                         }
+
                                     }}
                                 />
                             </div> 
