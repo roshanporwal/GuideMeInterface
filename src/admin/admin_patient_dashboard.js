@@ -70,6 +70,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     const handleSubmit = async (event) => {
         //event.preventDefault();
+        setLoading(true);
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
         console.log(formValues);
@@ -83,9 +84,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     setEnqurie_data(getenquries.payload)
                     setHopital_enq(getenquries.payload[0].hospitals)
                     setShow_quota(true)
-                    window.location.reload();
                 }
-
+                setLoading(false);
             }
         } else {
             const url = {
@@ -95,9 +95,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 name:enqurie_data[0].patient_name
             }
             const getenquries = await auth_service.sendmail(data.login_id, url)
+            //console.log(getenquries)
             if (getenquries.payload) {
-                window.location.reload();
                 alert(getenquries.payload)
+                setLoading(false);
             }
         }
 

@@ -98,13 +98,19 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         setSearch(event.target.value);
       };
     
-      async function DeletePatient(row){
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
-        const getadminstaus = await auth_service.deleteenquries(data.login_id,row)
-        if(getadminstaus.payload){
-            window.location.reload();
-        }
+    async function DeletePatient(row){
+          var r = window.confirm("Sure you want to delete ?");
+            if (r == true) {        
+                let data = localStorage.getItem("login")
+                data = JSON.parse(data)
+                const getadminstaus = await auth_service.deleteenquries(data.login_id,row)
+                if(getadminstaus.payload){
+                    window.location.reload();
+                }
+            } 
+            else {
+                return null;
+            }
     }
 
 

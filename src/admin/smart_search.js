@@ -4,13 +4,13 @@ import ADMIN_NAVBAR from '../Navbar/admin_navbar';
 import * as auth_service from "../services/auth_service";
 import ReactGifLoader from '../components/gif_loader';
 import DataTable from 'react-data-table-component';
-const customStyles = {
+/* const customStyles = {
     rows: {
         style: {
             cursor: "pointer"// override the row height
         },
     },
-}
+} */
 
 function SMART_SEARCH(){
     const [loading, setLoading] = useState(true);
