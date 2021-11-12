@@ -95,9 +95,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 name:enqurie_data[0].patient_name
             }
             const getenquries = await auth_service.sendmail(data.login_id, url)
-            //console.log(getenquries)
             if (getenquries.payload) {
                 alert(getenquries.payload)
+            fetchData(props).then(() => setLoading(false));
                 setLoading(false);
             }
         }
