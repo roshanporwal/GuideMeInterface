@@ -73,7 +73,6 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         setLoading(true);
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        console.log(formValues);
         if (event === "before") {
             if (selected.length > 5) {
                 return alert(" Patient details can be shared only with three Hospitals.")

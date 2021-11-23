@@ -34,7 +34,6 @@ function DOCTOR_LIST(props) {
     let data = localStorage.getItem("login")
     data = JSON.parse(data)
     const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
-    console.log(getdoctor)
     if(getdoctor.payload){
       setDoctor(getdoctor.payload)
     }

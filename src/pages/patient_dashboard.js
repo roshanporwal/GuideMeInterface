@@ -149,19 +149,20 @@ function PATIENT_DASHBOARD(props) {
         if(getdoctor.payload){
             setDoctor(getdoctor.payload)
           }
+          let status = getenquriesbyid.payload[0].status
         const hospital_data = getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
         getenquriesbyid.payload[0].status = hospital_data.status
         setEnqurie_data(getenquriesbyid.payload)
 
         if (hospital_data != null) {
-
+            
             let ahospital_data = hospital_data.select_doctor ? setSelect_doctor(hospital_data.select_doctor) : null;
             await ahospital_data;
             ahospital_data = hospital_data.select_doctor ? setSendquote(false) : null;
             await ahospital_data;
             ahospital_data = hospital_data.select_doctor ? setFormValue(hospital_data) : null;
             await ahospital_data;
-            ahospital_data = hospital_data.select_doctor ? setSendquotebutton(false) : null;
+            ahospital_data = hospital_data.select_doctor ? (status === "Awaiting From Hospital")?null: setSendquotebutton(false) : null;
             await ahospital_data;
             ahospital_data = hospital_data.free_annual_checkup ? setFree_annual_checkup(hospital_data.free_annual_checkup) : null;
             await ahospital_data;

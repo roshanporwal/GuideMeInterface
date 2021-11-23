@@ -64,7 +64,6 @@ function SMART_SEARCH(){
     async function fetchData() {
        
         const idealdata = await auth_service.idealdata()
-        /* console.log(idealdata.payload) */
         setIdeal(idealdata.payload)
         
     }
@@ -80,7 +79,6 @@ function SMART_SEARCH(){
         const idealdata = await auth_service.smartsearch(formValues.search_insurance,formValues.search_speciality)
         //const idealdata = await auth_service.smartsearch('Adnic',formValues.search_speciality)
         setSearchResults(idealdata.payload);
-        /* console.log(idealdata) */
     };
 
 

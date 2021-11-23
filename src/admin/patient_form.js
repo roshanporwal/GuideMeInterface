@@ -139,7 +139,6 @@ function PATIENT_FORM(props) {
             patient_referred_by: old_value+" "+patientrefferedtext
         }))
 
-        console.log(formValues)
 
         const form = event.currentTarget;
         const err = await validate(formValues);
@@ -196,7 +195,6 @@ function PATIENT_FORM(props) {
                     }))
             }
             else{
-                console.log("in else");
                     setFormValue(prevState => ({
                     ...prevState,
                     [name]: value

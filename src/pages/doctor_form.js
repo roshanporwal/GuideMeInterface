@@ -41,11 +41,10 @@ function DOCTOR_FORM(props){
         
         formData.append('formValues', JSON.stringify(formValues))
         
-        console.log(formValues)
         setValidated(true);
 
         /* const login = await auth_service.enquries(formData)
-         console.log(login)*/
+       */
     };
     return (
         <>
