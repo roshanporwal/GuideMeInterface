@@ -19,6 +19,9 @@ function PATIENT_FORM(props) {
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
     const [show3, setShow3] = useState(false);
+    const [showpatientreffered,showPatientRefferedBy] = useState(false);
+    const [patientrefferedtext,setPatientRefferedByText] = useState(" ");
+
    /*  const hiddenFileInput = React.useRef(null); */
     const handleOthersField =()=> {
         setShow(!show)
@@ -129,44 +132,85 @@ function PATIENT_FORM(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const form = event.currentTarget;
-        const err = await validate(formValues);
-         setErrors(err); 
-         if(Object.keys(err).length === 0){
-        const formData = new FormData();
-        formValues.proposed_treatment_plan = proposed_treatment_plan;
-        formValues.languages_spoken = languages_spoken
-        formValues.status="New"
-        formData.append('patient_document', patient_document);
-        formData.append('patient_reports', patient_reports);
-        formData.append('insurance_card_copy', insurance_card_copy);
-        formData.append('formValues', JSON.stringify(formValues))
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          setFileProcess(!fileprocess)
-         setValidated(false);
-          auth_service.enquries("admin",formData).then((enquire_data) => {
-            if(enquire_data.payload){
-               history.push({
-                 pathname:'/admin/dashboard'
-               });
-           }else{
-               setShow(true)
-           }
-          })
-        
-    };
-}
-
-     const handleChange = e => {
-       
-        const { name, value } = e.currentTarget
+    
+        let old_value = formValues["patient_referred_by"];
         setFormValue(prevState => ({
             ...prevState,
-            [name]: value
+            patient_referred_by: old_value+" "+patientrefferedtext
         }))
+
+        console.log(formValues)
+
+        const form = event.currentTarget;
+        const err = await validate(formValues);
+        setErrors(err);
+
+         
+        if(Object.keys(err).length === 0){
+            var r = window.confirm("Confirm if all entered details are correct");
+            if (r == true) {
+                const formData = new FormData();
+                formValues.proposed_treatment_plan = proposed_treatment_plan;
+                formValues.languages_spoken = languages_spoken;
+                formValues.status="New";
+                formData.append('patient_document', patient_document);
+                formData.append('patient_reports', patient_reports);
+                formData.append('insurance_card_copy', insurance_card_copy);
+                formData.append('formValues', JSON.stringify(formValues));
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                setFileProcess(!fileprocess)
+                setValidated(false);
+                auth_service.enquries("admin",formData).then((enquire_data) => {
+                    if(enquire_data.payload){
+                    history.push({
+                        pathname:'/admin/dashboard'
+                    });
+                }else{
+                    setShow(true)
+                }
+                })
+            
+            }
+        }
+}
+
+    const handleRefferedByTextChange = e => {
+        const {value} = e.currentTarget;
+        setPatientRefferedByText(value)
+    }
+
+    const handleChange = e => {
+       
+        const { name, value } = e.currentTarget
+
+        if(name == "patient_referred_by"){
+            if(value == "Internal reference" || value == "Patient reference" || 
+                value == "Insurance" || value == "TPA"){
+                    showPatientRefferedBy(true);
+                    setFormValue(prevState => ({
+                        ...prevState,
+                        [name]: value
+                    }))
+            }
+            else{
+                console.log("in else");
+                    setFormValue(prevState => ({
+                    ...prevState,
+                    [name]: value
+                }))
+                showPatientRefferedBy(false);
+                setPatientRefferedByText(" ");
+            }
+        }
+        else{
+            setFormValue(prevState => ({
+                ...prevState,
+                [name]: value
+            }))
+        }
         validate(formValues);
         
     } 
@@ -249,6 +293,35 @@ function PATIENT_FORM(props) {
                             <Form.Group style = {{marginTop: "0.5rem"}}>
                             <Form.Label>Patient Referred By</Form.Label>
                                 <Form.Control
+                                    as="select"
+                                    required
+                                    style={{ border: "2px solid #164473", borderRadius: 10,marginBottom:20}}
+                                    name="patient_referred_by"
+                                    value={formValues.patient_referred_by}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.patient_referred_by}
+                                >
+                                    <option value="">Select an option</option>
+                                    <option value="Internal reference">Internal reference</option>
+                                    <option value="Patient reference">Patient reference</option>
+                                    <option value="Social media">Social media</option>
+                                    <option value="Insurance">Insurance</option>
+                                    <option value="TPA">TPA</option>
+                                </Form.Control>
+                                {showpatientreffered ?(
+                                    <> 
+                                    <Form.Label>Enter more details</Form.Label>
+
+                                    <Form.Control
+                                        required
+                                        style={{ border: "2px solid #164473", borderRadius: 10}}
+                                        type="text"
+                                        value={patientrefferedtext}
+                                        onChange={handleRefferedByTextChange}
+                                        isInvalid={!!errors.patient_referred_by}
+                                    /> </>)
+                                        : null}
+                                {/* <Form.Control
                                     required
                                     style={{ border: "2px solid #164473", borderRadius: 10}}
                                     type="text"
@@ -256,7 +329,7 @@ function PATIENT_FORM(props) {
                                     value={formValues.patient_referred_by}
                                     onChange={handleChange}
                                     isInvalid={!!errors.patient_referred_by}
-                                />
+                                /> */}
                                 <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.patient_referred_by}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group style = {{marginTop: "0.5rem"}}>
@@ -533,9 +606,31 @@ function PATIENT_FORM(props) {
                                 isInvalid={!!errors.proposed_treatment_plan}
                             />
                             </div>
-
+                            <div className="d-flex mb-1">
+                                <Form.Check
+                                label = "Surgery"
+                                required
+                                style={{marginBottom:5}}
+                                type="checkbox"
+                                name="proposed_treatment_plan"
+                                value={formValues.proposed_treatment_plan}
+                                id = "second_opinion_of_consultation"
+                                onChange={() => checkBox("proposed_treatment_plan", "surgery")}
+                                isInvalid={!!errors.proposed_treatment_plan}
+                                /><Form.Check
+                                    label = "Consultation"
+                                    required
+                                    style={{marginLeft: "10px"}}
+                                    type="checkbox"
+                                    name="proposed_treatment_plan"
+                                    value={formValues.proposed_treatment_plan}
+                                    id = "second_opinion_of_consultation"
+                                    onChange={() => checkBox("proposed_treatment_plan", "consultation")}
+                                    isInvalid={!!errors.proposed_treatment_plan}
+                                />
+                            </div>
                             <Form.Check
-                                label = "Second Opinion of Consultation"
+                                label = "Second Opinion"
                                 required
                                 style={{marginBottom:5}}
                                 type="checkbox"
@@ -582,7 +677,7 @@ function PATIENT_FORM(props) {
                                 
                             </div>
                             <Form.Check
-                                label = "Need multiple options to choos e the best"
+                                label = "Need multiple options to choose the best"
                                 required
                                 style={{marginBottom:5}}
                                type="checkbox"

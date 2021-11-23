@@ -3,11 +3,15 @@
 #HomeSection img{
 	width:100%;
 }
+#HomeSection a{
+	font-size: 16px;
+    letter-spacing: 1px;
+}
 .login{
 	position: absolute;
-    right: 215px;
+    right:300px;
     top: 48px;
-    width: 150px;
+    width: 110px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -23,9 +27,27 @@
 }
 .hospital{
 	position: absolute;
-    right: 375px;
+    right: 420px;
     top: 48px;
-    width: 150px;
+    width: 110px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+	text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #00CDAC;
+    box-shadow: 0px 100px 80px rgb(0 0 0 / 7%), 0px 41.7776px 33.4221px rgb(0 0 0 / 6%), 0px 22.3363px 17.869px rgb(0 0 0 / 5%), 0px 12.5216px 10.0172px rgb(0 0 0 / 4%), 0px 6.6501px 5.32008px rgb(0 0 0 / 3%), 0px 2.76726px 2.21381px rgb(0 0 0 / 2%);
+    border-radius: 10px;
+}
+.consultation{
+    position: absolute;
+    right: 170px;
+    top: 48px;
+    width: 120px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -43,7 +65,7 @@
 	position: absolute;
     right: 50px;
     top: 48px;
-    width: 150px;
+    width: 110px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -91,6 +113,10 @@
 		display:block!important;
 		margin-bottom:40px;
 	}
+    .consultation{
+        left:10px;
+        top:10px;
+    }
 	.hospital{
 		text-align: center;
 		display: inline;

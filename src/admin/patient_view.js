@@ -24,129 +24,100 @@ export default function PATIENT_VIEW(props) {
 
     return (
         <>
-
-            <div className="d-flex">
-                <div className="col-3 column_small">
+		<div className="container my-5">
+			<div className="row">
+				<div className="col-md-4">
+					{
+						enqurie_data.map((target, index) => (
+							<div key={index} {...target}>
+								<div className="PatientDetails">
+									<h2 class="PatientName py-3"><b>{target.patient_name}</b></h2>
+									<p><b>Phone Number :</b> <span>{target.patient_mobile}</span></p>
+									<p><b>Email :</b> <span>{target.patient_email}</span></p>	
+									<p><b>Age :</b> <span>{target.patient_age}</span></p>	
+									<p><b>Gender :</b> <span>{target.patient_gender}</span></p>	
+									<p><b>Nationality :</b> <span>{target.patient_nationality}</span></p>	
+									<p><b>Language :</b> <span>{target.languages_spoken}</span></p>
+								</div>
+							</div>
+						))
+					}
+					{
+						enqurie_data.map((target, index) => (
+							<div key={index} {...target}>
+								<div className="PatientPreferencesDetails my-4">
+									<h2 className="PatientPreferences py-3">Patient Preferences</h2>
+									<p className="mb-1"><b>Patient Requirement :</b> {target.proposed_treatment_plan}</p>
+									<p><b>Patient Location :</b>{target.patient_nationality}</p>
+									<p><b>Proposed Date : </b>{target.proposal_date}</p>
+									<p><b>Transport Support Needed :</b>{target.transport_support_needed}</p>
+									<p><b>Accomodation / Other Logistic :</b>{target.accomodation}</p>
+									<p><b>Preferred Hospital Visit Type :</b> {target.preferred_hospital_visit}</p>
+									<p><b>Food Preferences : </b>{target.food_preferences}</p>
+								</div>
+							</div>
+				   ))}
+				</div>
+				<div className="col-md-8">
                     {
                         enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
-                                <div className="container_patient_details">
-                                    <div className="patient_name">
-                                        <h5><b>{target.patient_name}</b></h5>
-                                    </div>
-                                    <div className="patient_details">
-                                        <p className="card-text">Phone Number: {target.patient_mobile}</p>
-                                        <p className="card-text">Email: {target.patient_email}</p>
-                                        <p className="card-text">Age: {target.patient_age}</p>
-                                        <p className="card-text">Gender: {target.patient_gender}</p>
-                                        <p className="card-text">Nationality: {target.patient_nationality}</p>
-                                        <p className="card-text">Language: {target.languages_spoken}</p>
-                                    </div>
-                                </div>
-
+                            <div key={index}>
+                                <p><b>Speciality : </b>{ }</p>
+                                <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                <p><b>Status : </b>{target.status}</p> 
                             </div>
-                        ))
-                    }
-                    {
+                    ))}
+					{
                         enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
-                                <div className="container_patient_preferences">
-                                    <div className="patient_name">
-                                        <h5><b>Patient Preferences</b></h5>
-                                    </div>
-
-                                    <div className="patient_prefernces_details">
-                                        <p className="card-text"><b>Patient Requirement:</b><br />{target.proposed_treatment_plan}</p>
-                                        <p className="card-text"><b>Patient Location:</b><br />{target.patient_nationality}</p>
-                                        <p className="card-text"><b>Proposed Date:</b><br />{target.proposal_date}</p>
-                                        <p className="card-text"><b>Transport Support Needed:</b><br />{target.transport_support_needed}</p>
-                                        <p className="card-text"><b>Accomodation / Other Logistic:</b><br />{target.accomodation}</p>
-                                        <p className="card-text"><b>Preferred Hospital Visit Type:</b><br />{target.preferred_hospital_visit}</p>
-                                        <p className="card-text"><b>Food Preferences:</b><br />{target.food_preferences}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                </div>
-
-                <div className="col-9 column_big">
-                    {
-                        enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
-                                <div className="d-flex mt-5">
-                                    <p><b>Speciality: </b></p>
-                                    <p style={{ paddingLeft: 10 }}>{target.speciality}</p>
-                                </div>
-                                <div className="d-flex">
-                                    <p style={{ marginBottom: 5 }}><b>Medical History</b></p>
-                                    <p style={{ paddingLeft: 20 }}>{target.medical_history}</p>
-                                    <p style={{ paddingLeft: 20 }}>{target.med2}</p>
-                                    <p style={{ paddingLeft: 20 }}>{target.med3}</p>
-                                </div>
-                                <div className="d-flex">
-                                    <p style={{ marginBottom: 5 }}><b>Status:</b></p>
-                                    <p style={{ paddingLeft: 20 }}>{target.status}</p>
-                                </div>
-                            </div>
-                        ))}
-                    {
-                        enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
-                                <div className="query_container">
-                                    <div className="query_title">
-                                        <h2>Query</h2>
-                                    </div>
-                                    <div className="query_content">
-                                        <p>{target.current_diagnosis}</p>
-                                    </div>
+							<div key={index} >
+                                <div className="queryBox my-2">
+                                    <h2>Query</h2>                                              
+                                    <p>{target.current_diagnosis}</p>
                                 </div>
                             </div>
                         ))
                     }
+					
                     {   enqurie_data[0]? enqurie_data[0].reports[1] ?
-                        <div className="buttons d-flex">
-                            <div>
-                                <button className="download_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-download "></i></button>
+                       <div className="row justify-content-center">
+                             <div className="col-md-5">
+                                <div className="DownloadButton" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} > Download Reports <i className="fa fa-download "></i></div>
                             </div>
-                            <div>
-                                <button className="view_button" type="submit" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance<i style={{ fontSize: 16, marginLeft: "40%" }} className="fa fa-eye "></i></button>
+                            <div className="col-md-5">
+                                <div className="InsuranceButton" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}> View Insurance <i className="fa fa-eye "></i></div>
                             </div>
                         </div> : null:null
                     }
+					
+					
                     {
                         enqurie_data.map((target, index) => (
-                            <div key={index} {...target}>
-                                <div className="query_container">
-                                    <div className="query_title">
-                                        <h2>Current Diagnosis</h2>
-                                    </div>
-                                    <div className="query_content">
-                                        <p>{target.current_diagnosis}</p>
-                                    </div>
-                                </div>
+                        <div key={index}>
+                            <div className="diagnosisBox my-3">
+                                <h2>Current Diagnosis</h2>
+                                <p>{target.current_diagnosis}</p>                                          
                             </div>
-                        ))}
+						</div>
+                    ))}
 
                 </div>
             </div>
+		</div>	
+			
+			
             {show_quota ?
-                <div>
-                    <div className="col-md-12" style={{ marginTop: 20 }}>
-
-                        <div className="col-md-3">
-
-                        </div>
-                        {
-                            hopital_enq.map((target, index) => (
-                                <div className="col-md-3" key={index} {...target}>
-                                    <p><b>{target.hospital_name}</b></p>
+				<div className="container my-5">
+                    <div className="row mb-3" style={{background:"#164473"}} >
+                        <div className="col-md-2">{/* empty column for table headling */}</div>
+                            {
+                                hopital_enq.map((target, index) => (
+                                <div className="col-md-2" key={index} >
+                                    <h2 className="HospitalTitle">{target.hospital_name}</h2>
                                 </div>
-
                             ))}
-
-                    </div>
-                    <div className="col-md-12" >
-                        <div className="col-md-3" style={{ textAlign: "center" }}>
+                    </div>	
+					 <div className="row" >	
+                        <div className="col-md-2" style={{ textAlign: "center" }}>
                             <p><b>Estimate Price</b></p>
                             <p><b>Treatment Plan</b></p>
                             <p><b>Inclusions</b></p>
@@ -161,9 +132,11 @@ export default function PATIENT_VIEW(props) {
                             <p><b>Other free consultation</b></p>
                             <p><b>Free Annual checkup</b></p>
                         </div>
+						
+						
                         {
                             hopital_enq.map((target, index) => (
-                                <div className="col-md-3" key={index} {...target}>
+                                 <div className="col-md-2" key={index}>
                                     {target.estimate_price ?
 
                                         <div>
@@ -184,7 +157,6 @@ export default function PATIENT_VIEW(props) {
 
                                         : <div className="col-md-3">
                                             <p>AWAITING FOR QUOTATION</p>
-
                                         </div>
                                     }
 
@@ -194,9 +166,6 @@ export default function PATIENT_VIEW(props) {
                     </div>
 
                 </div> : null}
-
-
-
         </>
     );
 }
