@@ -968,7 +968,7 @@ function PATIENT_DASHBOARD(props) {
                                         </Form.Group>
                                         
                                         <Form.Group className="mt-2">
-                                            <Form.Label>General disclaimer</Form.Label>
+                                            <Form.Label>Other Comments</Form.Label>
                                             <Form.Control
                                                 as="textarea"
                                                 placeholder="Leave a comment here"
