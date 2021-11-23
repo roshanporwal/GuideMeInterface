@@ -966,6 +966,18 @@ function PATIENT_DASHBOARD(props) {
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.general_disclaimer}</Form.Control.Feedback>
                                         </Form.Group>
+                                        
+                                        <Form.Group className="mt-2">
+                                            <Form.Label>General disclaimer</Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                placeholder="Leave a comment here"
+                                                style={{ height: '100px',border: "2px solid #164473", borderRadius: 10 }}
+                                                name="other_comments"
+                                                value={formValues.other_comments}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
                                     </Form>
 
                                     {
