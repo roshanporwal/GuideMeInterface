@@ -100,7 +100,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     
     async function DeletePatient(row){
           var r = window.confirm("Sure you want to delete ?");
-            if (r == true) {        
+            if (r === true) {        
                 let data = localStorage.getItem("login")
                 data = JSON.parse(data)
                 const getadminstaus = await auth_service.deleteenquries(data.login_id,row)

@@ -148,7 +148,7 @@ function PATIENT_FORM(props) {
          
         if(Object.keys(err).length === 0){
             var r = window.confirm("Confirm if all entered details are correct");
-            if (r == true) {
+            if (r === true) {
                 const formData = new FormData();
                 formValues.proposed_treatment_plan = proposed_treatment_plan;
                 formValues.languages_spoken = languages_spoken;
@@ -186,9 +186,9 @@ function PATIENT_FORM(props) {
        
         const { name, value } = e.currentTarget
 
-        if(name == "patient_referred_by"){
-            if(value == "Internal reference" || value == "Patient reference" || 
-                value == "Insurance" || value == "TPA"){
+        if(name === "patient_referred_by"){
+            if(value === "Internal reference" || value === "Patient reference" || 
+                value === "Insurance" || value === "TPA"){
                     showPatientRefferedBy(true);
                     setFormValue(prevState => ({
                         ...prevState,
