@@ -293,7 +293,7 @@ function PATIENT_DASHBOARD(props) {
                                         <p><b>Age : </b><span>{target.patient_age}</span></p>
                                         <p><b>Gender : </b><span>{target.patient_gender}</span></p>
                                         <p><b>Nationality : </b><span>{target.patient_nationality}</span></p>
-                                        <h5><b>Language : </b> <span>Language: {target.languages_spoken.join(', ')}</span></h5>  
+                                        <h5><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></h5>  
                                     </div>
                                 </div>
                             ))
