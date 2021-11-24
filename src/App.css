@@ -111,52 +111,59 @@
 	}	
 	.MobileView{
 		display:block!important;
-		margin-bottom:40px;
+		margin-bottom:20px;
 	}
-    .consultation{
-        left:10px;
-        top:10px;
-    }
+    
 	.hospital{
 		text-align: center;
-		display: inline;
-		position: fixed;
-		bottom: 0px;
-		top: auto;
-		left: 26%;
-		width: 24%;
-		border-radius: 0px;
+        display: inline-block;
+        position: relative;
+        top: auto;
+        left: 10%;
+        width: 40%;
+        border-radius: 0px;
+        margin-bottom: 60px;
 	}	
 	.login{
 		text-align: center;
-		display: inline;
-		position: fixed;
-		bottom: 0px;
-		top: auto;
-		left: 0%;
-		width: 25%;
-		border-radius: 0px;
+        display: inline-block;
+        position: relative;
+        top: auto;
+        left: 12%;
+        right: 15px;
+        width: 40%;
+        margin-bottom: 60px;
+        border-radius: 0px;
 	}
+    .consultation{
+        text-align: center;
+        display: inline;
+        position: fixed;
+        bottom: 0px;
+        top: auto;
+        left: 0px;
+        width: 34%;
+        border-radius: 0px;
+    }
 	.feedback{
 		text-align: center;
-		display: inline;
-		position: fixed;
-		bottom: 0px;
-		top: auto;
-		right: 0px;
-		width: 25%;
-		border-radius: 0px;
+        display: inline;
+        position: fixed;
+        bottom: 0px;
+        top: auto;
+        right: 0px;
+        width: 34%;
+        border-radius: 0px;
 	}
 	.callus{
 		text-align: center;
-		display: inline;
-		position: fixed;
-		bottom: 0px;
-		top: auto;
-		left: 51%;
-		right: 22%;
-		width: 23%;
-		border-radius: 0px;
+        display: inline;
+        position: fixed;
+        bottom: 0px;
+        top: auto;
+        width: 30%;
+        left: 35%;
+        border-radius: 0px;
 	}
 }
 
