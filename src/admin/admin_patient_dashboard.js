@@ -98,6 +98,8 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 alert(getenquries.payload)
             fetchData(props).then(() => setLoading(false));
                 setLoading(false);
+            }else{
+                window.location.reload(); 
             }
         }
 
