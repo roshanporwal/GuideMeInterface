@@ -96,8 +96,12 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             const getenquries = await auth_service.sendmail(data.login_id, url)
             if (getenquries.payload) {
                 alert(getenquries.payload)
-            fetchData(props).then(() => setLoading(false));
-                setLoading(false);
+                fetchData(props).then(
+                    () => setLoading(false)
+                ).catch((c) => {
+                    setLoading(false);
+                    alert("Some thing Went Wrong");
+                });
             }
         }
 
