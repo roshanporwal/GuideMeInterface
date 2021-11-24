@@ -94,9 +94,16 @@ function sendquote(enquries_id, login_id, id, data) {
   return req
 }
 
-function wonandloss(enquries_id, login_id, hospital_id, data) {
+function won(enquries_id, login_id, hospital_id, data) {
 
-  const req = instance.post(`/enquries/${login_id}/hospital/wonandloss?hospital_id=${hospital_id}&enquries_id=${enquries_id}`, data);
+  const req = instance.post(`/enquries/${login_id}/hospital/won?hospital_id=${hospital_id}&enquries_id=${enquries_id}`, data);
+  return req
+}
+
+
+function loss(enquries_id, login_id) {
+
+  const req = instance.get(`/enquries/${login_id}/hospital/loss?enquries_id=${enquries_id}`);
   return req
 }
 
@@ -136,7 +143,8 @@ export {
   updatedoctor,
   createdoctor,
   getadminstaus,
-  wonandloss,
+  won,
+  loss,
   uploadexcelfile,
   getenquries,
   getenquriesbyid,

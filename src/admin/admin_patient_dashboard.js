@@ -103,13 +103,20 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     };
 
-    async function wonandloss(id) {
+    async function wonandloss(wonorloss) {
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const wonandloss = await auth_service.wonandloss(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
+        if(wonorloss=== "won"){
+        const wonandloss = await auth_service.won(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
         if (wonandloss.payload) {
             window.location.reload();
         }
+    }else{
+        const wonandloss = await auth_service.loss(enqurie_data[0]._id, data.login_id)
+        if (wonandloss.payload) {
+            window.location.reload();
+        }
+    }
 
 
 
@@ -155,7 +162,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                             </div>
                             <div className="modal-body">
-                                <Form onSubmit={wonandloss}>
+                                <Form onSubmit={()=>wonandloss("won")}>
                                     <Form.Group>
 
                                         <Form.Control
@@ -191,7 +198,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} type="submit" className="btn btn-primary" onClick={wonandloss}>Submit</button>
+                                <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} type="submit" className="btn btn-primary" onClick={()=>wonandloss("won")}>Submit</button>
                             </div>
                         </div>
                     </div>
