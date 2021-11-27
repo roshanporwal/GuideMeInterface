@@ -153,7 +153,9 @@ function PATIENT_FORM(props) {
                 formValues.languages_spoken = languages_spoken;
                 formValues.status="New";
                 formData.append('patient_document', patient_document);
-                formData.append('patient_reports', patient_reports);
+                for(const tp of patient_reports){
+                    formData.append('patient_reports', tp);
+                }                
                 formData.append('insurance_card_copy', insurance_card_copy);
                 formData.append('formValues', JSON.stringify(formValues));
                 if (form.checkValidity() === false) {
@@ -242,7 +244,7 @@ function PATIENT_FORM(props) {
         if (name === 'patient_document') {
             setPatient_document(e.target.files[0])
         } else if (name === 'patient_reports') {
-            setPatient_reports(e.target.files[0])
+            setPatient_reports(e.target.files)
         } else {
             setInsurance_card_copy(e.target.files[0])
         }
@@ -435,6 +437,7 @@ function PATIENT_FORM(props) {
                                     style={{ border: "2px solid #164473", borderRadius: 10}}
                                     type="file"
                                     name="patient_reports"
+                                    multiple 
                                 /*   ref={hiddenFileInput} */
                                     onChange={onchange}
                                     isInvalid={!!errors.patient_reports}
