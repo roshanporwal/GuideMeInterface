@@ -265,7 +265,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                             <div className="d-flex flex-column flex-lg-row align-items-center">
                                                 <div className="col-md-5 text-center">
                                                     <h2>{target.new}</h2>
-                                                    <button className="ViewButton">View Now</button>
+                                                    <button className="ViewButton Hover">View Now</button>
                                                 </div>
                                                 <div className="col-md-7">
                                                     <h3>Alert</h3>
@@ -279,7 +279,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                                 </div>
                             </div>  
                             <div className="col-md-2 AddPatient">
-                                <button onClick={() => history.push('/admin/enqurie_form')}>ADD PATIENT</button>
+                                <button onClick={() => history.push('/admin/enqurie_form')} className="Hover">ADD PATIENT</button>
                             </div>         
                         </div>    
                     </div>      

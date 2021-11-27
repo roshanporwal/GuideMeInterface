@@ -381,15 +381,15 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                              {enqurie_data[0].reports[1] ?
                                <div className="row m-2">
                                     <div className="col-md-5">
-                                        <div className="DownloadButton" 
+                                        <div className="DownloadButton Hover" 
                                             onClick={() => { window.location.href = enqurie_data[0].reports[1] }} > Download Reports
                                             <i className="fa fa-download "></i>
                                         </div>
                                     </div>
                                     <div className="col-md-2"></div>
                                     <div className="col-md-5">
-                                        <div className="InsuranceButton"
-                                            onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance
+                                        <div className="InsuranceButton Hover"
+                                            onClick={() => { window.open (enqurie_data[0].insurance_card_copy[0],'_blank') }}>View Insurance
                                             <i className="fa fa-eye "></i>
                                         </div>
                                     </div>
@@ -471,7 +471,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 {enqurie_data[0].status === "Awaiting From Patients" ?
-                                                    <button className="JoinButton" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                                    <button className="JoinButton Hover" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                                                         onClick={() =>
                                                             setFormValue(prevState => ({
                                                                 ...prevState,
@@ -509,10 +509,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         <div className="py-5">
                         {enqurie_data[0].status === "Awaiting From Hospital" ?
                             <div className="col-md-12 my-3">
-                                <button style={{width:"100%"}} className="JoinButton" onClick={() => handleSubmit("after")}>Forward to Patient</button>
+                                <button style={{width:"100%"}} className="JoinButton Hover" onClick={() => handleSubmit("after")}>Forward to Patient</button>
                             </div>
                             :(enqurie_data[0].status === "Lost Patients" || enqurie_data[0].status === "Won Patients" )? null: <div className="col-md-12 ">
-                                <button style={{width:"100%",backgroundColor:'orange'}} className="JoinButton" onClick={()=>wonandloss("lost")}>Patient Lost</button>
+                                <button style={{width:"100%",backgroundColor:'orange'}} className="JoinButton Hover" onClick={()=>wonandloss("lost")}>Patient Lost</button>
                             </div>}
                         </div>
                     </div> : null}

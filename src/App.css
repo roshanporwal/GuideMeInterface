@@ -272,7 +272,7 @@
 	height:325px; 
 	background: #164473;
     border-radius: 20px;
-    cursor: pointer;
+    
 	padding:110px 20px;
     box-shadow: 0 0 10px 3px #d0d0d0; 
  } 
@@ -297,7 +297,12 @@
     background-color: rgb(236, 236, 245);
     color: black;
     font-size: 16px;
+    cursor: pointer;
 } 
+.Hover:hover{
+    cursor: pointer;
+    opacity: 0.9;
+}
 .AddPatient button{
 	border: 0px;
     padding: 10px 30px;
@@ -419,7 +424,7 @@
 	padding:15px;
     background: #164473;
     border-radius: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
     color: white;
 }
 .queryBox h2,.diagnosisBox h2{
