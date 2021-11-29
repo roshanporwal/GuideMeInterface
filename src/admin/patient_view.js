@@ -22,6 +22,26 @@ export default function PATIENT_VIEW(props) {
         }
     }
 
+    const DownloadReports = () => {
+        //console.log(enqurie_data[0]);
+        if(enqurie_data[0].reports.length === 0){
+            return  alert("No reports found")
+        }
+        enqurie_data[0].reports.forEach(element => {
+          window.location.href = element;  
+        });
+    }
+    const viewInsurance = () => {
+        console.log(enqurie_data[0]);
+        if(enqurie_data[0].insurance_card_copy.length === 0){
+            return  alert("No reports found")
+        }
+        enqurie_data[0].insurance_card_copy.forEach(element => {
+          window.open (element,'_blank')  
+        });
+         //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
+    }
+
     return (
         <>
 		<div className="container my-5">
@@ -81,10 +101,10 @@ export default function PATIENT_VIEW(props) {
                     {   enqurie_data[0]? enqurie_data[0].reports[1] ?
                        <div className="row justify-content-center">
                              <div className="col-md-5">
-                                <div className="DownloadButton" onClick={() => { window.location.href = enqurie_data[0].reports[1] }} > Download Reports <i className="fa fa-download "></i></div>
+                                <div className="DownloadButton" onClick={() => DownloadReports()} > Download Reports <i className="fa fa-download "></i></div>
                             </div>
                             <div className="col-md-5">
-                                <div className="InsuranceButton" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}> View Insurance <i className="fa fa-eye "></i></div>
+                                <div className="InsuranceButton" onClick={() => viewInsurance()}> View Insurance <i className="fa fa-eye "></i></div>
                             </div>
                         </div> : null:null
                     }
