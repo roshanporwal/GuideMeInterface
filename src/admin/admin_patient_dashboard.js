@@ -106,6 +106,25 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         }
 
     };
+    const DownloadReports = () => {
+        //console.log(enqurie_data[0]);
+        if(enqurie_data[0].reports.length === 0){
+            return  alert("No reports found")
+        }
+        enqurie_data[0].reports.forEach(element => {
+          window.location.href = element;  
+        });
+    }
+    const viewInsurance = () => {
+        console.log(enqurie_data[0]);
+        if(enqurie_data[0].insurance_card_copy.length === 0){
+            return  alert("No reports found")
+        }
+        enqurie_data[0].insurance_card_copy.forEach(element => {
+          window.open (element,'_blank')  
+        });
+         //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
+    }
 
     async function wonandloss(wonorloss) {
         let data = localStorage.getItem("login")
@@ -121,7 +140,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             window.location.reload();
         }
     }
-
+    
 
 
     }
@@ -382,14 +401,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                <div className="row m-2">
                                     <div className="col-md-5">
                                         <div className="DownloadButton Hover" 
-                                            onClick={() => { window.location.href = enqurie_data[0].reports[1] }} > Download Reports
+                                            onClick={() => DownloadReports()} > Download Reports
                                             <i className="fa fa-download "></i>
                                         </div>
                                     </div>
                                     <div className="col-md-2"></div>
                                     <div className="col-md-5">
                                         <div className="InsuranceButton Hover"
-                                            onClick={() => { window.open (enqurie_data[0].insurance_card_copy[0],'_blank') }}>View Insurance
+                                            onClick={() => viewInsurance()}>View Insurance
                                             <i className="fa fa-eye "></i>
                                         </div>
                                     </div>
