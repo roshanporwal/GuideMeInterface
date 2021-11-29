@@ -22,20 +22,8 @@ export default function PATIENT_VIEW(props) {
         }
     }
 
-    const DownloadReports = () => {
-        //console.log(enqurie_data[0]);
-        if(enqurie_data[0].reports.length === 0){
-            return  alert("No reports found")
-        }
-        enqurie_data[0].reports.forEach(element => {
-
-          if(element.search('http://192.46.209.112:8080/download') !== -1){
-            let pop = window.confirm("Download file ? ");
-            if(pop){
-                window.open(element,'_new'); 
-            }            
-          } 
-        });
+    const DownloadReports = (element) => {
+          window.open (element,'_blank')  
     }
     const viewInsurance = () => {
         console.log(enqurie_data[0]);
@@ -106,8 +94,18 @@ export default function PATIENT_VIEW(props) {
 					
                     {   enqurie_data[0]? enqurie_data[0].reports[1] ?
                        <div className="row justify-content-center">
-                             <div className="col-md-5">
-                                <div className="DownloadButton" onClick={() => DownloadReports()} > Download Reports <i className="fa fa-download "></i></div>
+                             <div className="col-md-5 d-flex justify-content-between">
+                                {enqurie_data[0].reports.map((element,index) => {
+                                    
+                                    if(element.search('http://192.46.209.112:8080/download') !== -1){
+                                        
+                                    return(
+                                        <div className="DownloadButton Hover m-1" key={index}
+                                            onClick={() => DownloadReports(element)} > Download Report
+                                        </div>)
+                                    }
+                                    return null;
+                                })}
                             </div>
                             <div className="col-md-5">
                                 <div className="InsuranceButton" onClick={() => viewInsurance()}> View Insurance <i className="fa fa-eye "></i></div>
