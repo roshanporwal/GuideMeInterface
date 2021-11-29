@@ -28,7 +28,13 @@ export default function PATIENT_VIEW(props) {
             return  alert("No reports found")
         }
         enqurie_data[0].reports.forEach(element => {
-          window.location.href = element;  
+
+          if(element.search('http://192.46.209.112:8080/download') !== -1){
+            let pop = window.confirm("Download file ? ");
+            if(pop){
+                window.open(element,'_new'); 
+            }            
+          } 
         });
     }
     const viewInsurance = () => {

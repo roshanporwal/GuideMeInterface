@@ -242,7 +242,7 @@ function PATIENT_FORM(props) {
         const { name } = e.currentTarget
         console.log(e.target.files[0].type);
         for (var i = 0; i < e.target.files.length; i++) {
-            if(e.target.files[i].type == "image/png" || e.target.files[i].type == "application/pdf"){
+            if(e.target.files[i].type === "image/png" || e.target.files[i].type === "application/pdf"){
                 continue;
             }
             else{
