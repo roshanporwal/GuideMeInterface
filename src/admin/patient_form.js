@@ -240,7 +240,7 @@ function PATIENT_FORM(props) {
     }; 
     const onchange = e => {
         const { name } = e.currentTarget
-        console.log(e.target.files[0].type);
+      /*  console.log(e.target.files[0].type);
         for (var i = 0; i < e.target.files.length; i++) {
             if(e.target.files[i].type === "image/png" || e.target.files[i].type === "application/pdf"){
                 continue;
@@ -250,7 +250,7 @@ function PATIENT_FORM(props) {
                 e.target.value = '';
                 return null;
             }
-        }
+        }*/
                
         if (name === 'patient_document') {
             setPatient_document(e.target.files[0])
@@ -434,6 +434,7 @@ function PATIENT_FORM(props) {
                                     style={{ border: "2px solid #164473", borderRadius: 10}}
                                     type="file"
                                     name="patient_document"
+                                    accept="image/*,application/pdf"
                                 /*  ref = {hiddenFileInput} */
                                     onChange={onchange}
                                     isInvalid={!!errors.patient_document}
@@ -449,6 +450,7 @@ function PATIENT_FORM(props) {
                                     type="file"
                                     name="patient_reports"
                                     multiple 
+                                    accept="image/*,application/pdf"
                                 /*   ref={hiddenFileInput} */
                                     onChange={onchange}
                                     isInvalid={!!errors.patient_reports}
@@ -568,6 +570,7 @@ function PATIENT_FORM(props) {
                                 style={{ border: "2px solid #164473", borderRadius: 10}}
                                 type="file"
                                 name="insurance_card_copy"
+                                accept="image/*,application/pdf"
                                /*  ref = {hiddenFileInput} */
                                 onChange={onchange}
                                 isInvalid={!!errors.insurance_card_copy}
