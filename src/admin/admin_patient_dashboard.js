@@ -3,11 +3,12 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { MultiSelect } from "react-multi-select-component";
 import ReactStars from "react-rating-stars-component";
-import { Form } from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 import './style.css';
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from '../components/gif_loader';
 import constants from "../constant";
+import { Button } from "antd";
 
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
@@ -38,6 +39,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     })
     const [feedbackmessage, setFeedbackmessgae] = useState('');
+    const [showreason, setShowReason] = useState(false);
+    const [lossreason, setLossReason] = useState(" ");
+
     const [isSubmitting] = useState(false)
     const handleChange = e => {
         const { name, value } = e.currentTarget
@@ -46,6 +50,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             [name]: value
         }))
 
+    }
+    const handleReason = e => {
+        const { value } = e.currentTarget
+        setLossReason(value);
     }
 
     useEffect(() => {
@@ -66,6 +74,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         }
         const getenquries = await auth_service.gethospitals(data.login_id)
         setHospitals(getenquries.payload)
+        console.log(getenquries.payload)   
     }
 
     const handleSubmit = async (event) => {
@@ -94,8 +103,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 name:enqurie_data[0].patient_name
             }
             const getenquries = await auth_service.sendmail(data.login_id, url)
+            console.log(getenquries.payload)
             if (getenquries.payload) {
-                alert(getenquries.payload)
+                alert("sent successfully")
                 fetchData(props).then(
                     () => setLoading(false)
                 ).catch((c) => {
@@ -123,20 +133,22 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     async function wonandloss(wonorloss) {
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        if(wonorloss=== "won"){
-        const wonandloss = await auth_service.won(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
-        if (wonandloss.payload) {
-            window.location.reload();
+        if (wonorloss === "won") {
+            const wonandloss = await auth_service.won(enqurie_data[0]._id, data.login_id, formValues.id, formValues)
+            if (wonandloss.payload) {
+                window.location.reload();
+            }
+        } else if(wonorloss === "lost") {
+            const patient_lost_reason = lossreason;
+            const wonandloss = await auth_service.loss(enqurie_data[0]._id, data.login_id, patient_lost_reason);
+            if (wonandloss.payload) {
+                window.location.reload();
+            }
         }
-    }else{
-        const wonandloss = await auth_service.loss(enqurie_data[0]._id, data.login_id)
-        if (wonandloss.payload) {
-            window.location.reload();
+        else if (wonorloss === "reason"){
+            setShowReason(!showreason);
+            return ;
         }
-    }
-    
-
-
     }
     const ratingChanged = (newRating) => {
         setRating(newRating)
@@ -170,6 +182,35 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     else
         return (
             <>
+            {showreason ? (
+                <Modal show={showreason} onHide={()=>wonandloss("reason")}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Mark Patient Lost</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group >
+                            <Form.Label>Loss Reason</Form.Label>
+                            <Form.Control
+                                required
+                                style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                type="text"
+                                name="patient_name"
+                                value={lossreason}
+                                onChange={handleReason}
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={()=>wonandloss("reason")}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={()=>wonandloss("lost")}>
+                            Mark Lost
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            ) : null}
+            
                 <ADMIN_NAVBAR />
                 <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -263,10 +304,17 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             <div className="row">
                             {
                                 enqurie_data.map((target, index) => (
-                                    <div key={index} className="col-md-6">
-                                        <p><b>Speciality : </b>{target.speciality}</p>
+                                    <div key={index} className="col-md-6">{/* 
+                                        <p><b>Speciality : </b>{target.speciality}</p> */}
                                         <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
-                                        <p><b>Status : </b>{target.status}</p> 
+                                        <p><b>Status : </b>{target.status} {target.status === "Lost Patients" ? (
+                                            <>
+                                                <br/>
+                                                <b>Reason :</b> 
+                                                {target.patient_lost_reason}
+                                            </>)
+                                            :null}
+                                        </p> 
                                     </div>
                                 ))}
                                     <div className="col-md-6">
@@ -532,13 +580,10 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <button style={{width:"100%"}} className="JoinButton Hover" onClick={() => handleSubmit("after")}>Forward to Patient</button>
                             </div>
                             :(enqurie_data[0].status === "Lost Patients" || enqurie_data[0].status === "Won Patients" )? null: <div className="col-md-12 ">
-                                <button style={{width:"100%",backgroundColor:'orange'}} className="JoinButton Hover" onClick={()=>wonandloss("lost")}>Patient Lost</button>
+                                <button style={{width:"100%",backgroundColor:'orange'}} className="JoinButton Hover" onClick={()=>wonandloss("reason")}>Patient Lost</button>
                             </div>}
                         </div>
                     </div> : null}
-
-
-
             </>
         );
 }

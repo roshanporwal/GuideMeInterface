@@ -148,7 +148,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             ]
         })
         const getenquries = await auth_service.getenquries(data.login_id)
-        setEnquries(getenquries.payload)
+        setEnquries(getenquries.payload.reverse())
 
     }
 

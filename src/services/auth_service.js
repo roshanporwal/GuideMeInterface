@@ -101,9 +101,9 @@ function won(enquries_id, login_id, hospital_id, data) {
 }
 
 
-function loss(enquries_id, login_id) {
+function loss(enquries_id, login_id,patient_lost_reason) {
 
-  const req = instance.get(`/enquries/${login_id}/hospital/loss?enquries_id=${enquries_id}`);
+  const req = instance.get(`/enquries/${login_id}/hospital/loss?enquries_id=${enquries_id}&patient_lost_reason=${patient_lost_reason}`);
   return req
 }
 

@@ -112,7 +112,7 @@ function HOSPITAL_DASHBOARD(props) {
             const hospital =st.hospitals.find(item => item.hospital_id === data._id) 
             st.status= hospital.status
         }
-        setEnquries(getenquries.payload);
+        setEnquries(getenquries.payload.reverse());
 
         
     }
