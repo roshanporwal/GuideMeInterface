@@ -28,14 +28,16 @@ function NewConsultation() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);
+        console.log(formValues);       
         const formData = new FormData();
-    
-        formValues.patient_id = 2;
-        formValues.patient_name = "nik";
+        let data = localStorage.getItem("login")
+        data = JSON.parse(data)
+
+        formValues.patient_id = data._id;
+        formValues.patient_name = data.name;
         formValues.type = "new_consulation";
-    
-    
+
+
         if (reports !== undefined) {
             for (const tp of reports) {
                 formData.append('patient_reports', tp);
@@ -43,8 +45,8 @@ function NewConsultation() {
         }
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
-    
-        const createNewConsulation = await auth_service.createNewConsulation("admin", formData)
+
+        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
         console.log(createNewConsulation)
     }
     const handleFiles = e => {

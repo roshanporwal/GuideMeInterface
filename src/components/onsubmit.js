@@ -6,8 +6,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "new_consulation";
 
 
@@ -19,7 +22,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const createNewConsulation = await auth_service.createNewConsulation("admin", formData)
+    const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
     console.log(createNewConsulation)
 }
 
@@ -31,8 +34,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 3;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "free_surgical_opinion";
     formValues.basetype = "second_consulation"
 
@@ -45,7 +51,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createSecondConsulation("admin", formData)
+    const abc = await auth_service.createSecondConsulation(data.login_id, formData)
     console.log(abc)
 }
 
@@ -57,8 +63,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "international_opinion";
     formValues.basetype = "second_consulation"
 
@@ -71,7 +80,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createSecondConsulation("admin", formData)
+    const abc = await auth_service.createSecondConsulation(data.login_id, formData)
     console.log(abc)
 }
 
@@ -82,8 +91,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "rcpcrtest";
     formValues.basetype = "home_service"
 
@@ -96,7 +108,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createHomeService("admin", formData)
+    const abc = await auth_service.createHomeService(data.login_id, formData)
     console.log(abc)
 }
 
@@ -106,8 +118,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "teleconsulation";
     formValues.basetype = "home_service"
 
@@ -120,7 +135,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createHomeService("admin", formData)
+    const abc = await auth_service.createHomeService(data.login_id, formData)
     console.log(abc)
 }
 
@@ -130,8 +145,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "doctorhomevist";
     formValues.basetype = "home_service"
 
@@ -144,7 +162,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createHomeService("admin", formData)
+    const abc = await auth_service.createHomeService(data.login_id, formData)
     console.log(abc)
 }
 
@@ -157,8 +175,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "physiotherapy";
     formValues.basetype = "home_service"
 
@@ -171,7 +192,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createHomeService("admin", formData)
+    const abc = await auth_service.createHomeService(data.login_id, formData)
     console.log(abc)
 }
 
@@ -184,8 +205,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 4;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "nursingservice";
     formValues.basetype = "home_service"
 
@@ -198,7 +222,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createHomeService("admin", formData)
+    const abc = await auth_service.createHomeService(data.login_id, formData)
     console.log(abc)
 }
 
@@ -214,8 +238,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "lab";
 
 
@@ -227,7 +254,7 @@ const handleSubmit = async (e) => {
     formData.append('insurance_card_copy', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createlab("admin", formData)
+    const abc = await auth_service.createlab(data.login_id, formData)
     console.log(abc)
 }
 
@@ -238,8 +265,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "xray";
     formValues.basetype = "diagnostics"
 
@@ -252,7 +282,7 @@ const handleSubmit = async (e) => {
     formData.append('prescription', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createDiagnostics("admin", formData)
+    const abc = await auth_service.createDiagnostics(data.login_id, formData)
     console.log(abc)
 }
 
@@ -263,8 +293,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "mammogram";
     formValues.basetype = "diagnostics"
 
@@ -277,7 +310,7 @@ const handleSubmit = async (e) => {
     formData.append('prescription', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createDiagnostics("admin", formData)
+    const abc = await auth_service.createDiagnostics(data.login_id, formData)
     console.log(abc)
 }
 
@@ -288,8 +321,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "ctscan";
     formValues.basetype = "diagnostics"
 
@@ -302,7 +338,7 @@ const handleSubmit = async (e) => {
     formData.append('prescription', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createDiagnostics("admin", formData)
+    const abc = await auth_service.createDiagnostics(data.login_id, formData)
     console.log(abc)
 }
 
@@ -313,8 +349,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "mri";
     formValues.basetype = "diagnostics"
 
@@ -327,7 +366,7 @@ const handleSubmit = async (e) => {
     formData.append('prescription', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createDiagnostics("admin", formData)
+    const abc = await auth_service.createDiagnostics(data.login_id, formData)
     console.log(abc)
 }
 
@@ -339,8 +378,11 @@ const handleSubmit = async (e) => {
     console.log(formValues);
     const formData = new FormData();
 
-    formValues.patient_id = 2;
-    formValues.patient_name = "nik";
+    let data = localStorage.getItem("login")
+    data = JSON.parse(data)
+
+    formValues.patient_id = data._id;
+    formValues.patient_name = data.name;
     formValues.type = "ultrasound";
     formValues.basetype = "diagnostics"
 
@@ -353,7 +395,7 @@ const handleSubmit = async (e) => {
     formData.append('prescription', insurance);
     formData.append('formValues', JSON.stringify(formValues));
 
-    const abc = await auth_service.createDiagnostics("admin", formData)
+    const abc = await auth_service.createDiagnostics(data.login_id, formData)
     console.log(abc)
 }
 

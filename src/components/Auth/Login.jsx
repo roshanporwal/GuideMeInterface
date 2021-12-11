@@ -6,6 +6,7 @@ import HeroImage from '../../assets/login-hero.png';
 import {MdCall} from 'react-icons/md'
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
+import * as auth_service from "../../service/auth_service";
 function LoginScreen() {
     const navigate = useNavigate();
 
@@ -18,9 +19,18 @@ function LoginScreen() {
         setFormValues({...formValues,[name]:value});
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
         console.log(formValues);
+        const req ={
+            login_id:formValues.mobile,
+
+        }
+        const login = await auth_service.login( req)
+        if(login.payload){
+            localStorage.setItem('login', JSON.stringify(login.payload));
+           }
+        console.log(login)
     }
 
     return ( 
