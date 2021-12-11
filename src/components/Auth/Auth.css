@@ -1,0 +1,60 @@
+.content-container{
+  margin: 6% 0;
+}
+.grey-inputs{
+    background-color: rgba(34, 34, 34, 0.1)!important;
+    width: 16rem!important;
+    padding-left: 40px!important;
+}
+.grey-inputs:focus{
+    background-color: rgba(34, 34, 34, 0.1)!important;
+}
+.prepend-icon{
+    position: relative;
+    z-index: 999;
+    margin-bottom: -29px;
+    margin-left: 12px;
+    width: 20px;
+}
+
+
+.login-form ::placeholder {
+    font-size: small;
+    color: black;
+}
+
+.login-submit{
+    padding: 4px 10px;
+    font-size: 15px;
+    border: none;
+    background: #08C0CF;
+    color:white;
+    width: 10rem;
+    border-radius: 20px;
+    box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.17);
+}
+.sign-up-button{
+    padding: 5px 10px;
+    border: none;
+    font-size: 15px;
+    background: #1A4981;
+    color:white;
+    width: 10rem;
+    border-radius: 20px;
+    box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.17);
+}
+.footer-row{
+    position: fixed;
+    bottom: 0;
+    height: 248px;
+    background-image: url('../../assets/footer-final.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: 100% 100%;
+}
+@media screen and (max-width:768px) {    
+    .footer-row{
+        height: 99px;
+    }
+}
