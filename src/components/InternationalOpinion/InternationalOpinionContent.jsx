@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import InnerLayout from '../Layout/InnerLayout';
-import HeroImage from '../../assets/new-consultation.png';
-import NewConsultation from './NewConsultation';
+import HeroImage from '../../assets/International-opinion-header.png';
 import ThankYouModal from '../Layout/ThankYouModal';
+import InternationalOpinion from './InternationalOpinion';
 
 
-function NewConsultationContent() {
-    
+function InternationalOpinionContent() {
+
     const [modalshow, setModalShow] = useState(false);
     const handleModalClose = () => setModalShow(false);
     const handleModalShow = () => setModalShow(true);
 
+
     return ( 
         <InnerLayout 
             HeroImage={HeroImage}
-            pageName={"New consultation"}
-            NestedComponent={<NewConsultation handleModalShow={handleModalShow} />}
+            pageName={"International Expert Opinion"}
+            NestedComponent={<InternationalOpinion handleModalShow={handleModalShow} />}
             ThankYouModal = {<ThankYouModal modalshow={modalshow} handleModalClose={handleModalClose} />}
         />
     );
 }
 
-export default NewConsultationContent;
+export default InternationalOpinionContent;

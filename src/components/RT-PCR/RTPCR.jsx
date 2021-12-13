@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-function NewConsultation({handleModalShow}) {
+function RTPCR({handleModalShow}) {
     // Create a reference to the hidden file input element
     const hiddenFileInput = React.useRef(null);
     
@@ -227,4 +227,4 @@ function NewConsultation({handleModalShow}) {
     );
 }
 
-export default NewConsultation;
+export default RTPCR;

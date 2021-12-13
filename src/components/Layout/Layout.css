@@ -1,35 +1,68 @@
 .layout-content{
-    position: absolute;
+    /* position: absolute;
     top: 20%;
     left: 15%;
     height: 70%;
-    width: 70%;
+    width: 70%; */
+    margin: 43px 67px;
+    padding: 20px 0px 40px;
     background-color: #fff;
     border-radius: 17px;
     z-index: 999;
     box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.17), 0px 3.28515px 6.5703px rgba(0, 0, 0, 0.117297), 0px 1.59488px 3.18976px rgba(0, 0, 0, 0.0945694), 0px 0.781839px 1.56368px rgba(0, 0, 0, 0.0754306), 0px 0.30914px 0.618281px rgba(0, 0, 0, 0.0527031);
 }
+
+.form-container ::placeholder {
+    font-size: 12px!important;
+}
 .form-container{
     border-radius: 12px;
     border: 1px solid rgba(26, 73, 129, 1);
-    padding: 22px 10px;
+    padding: 22px 10px 22px 0px;
 }
 .global-inputs{
     background-color: rgba(245, 245, 245, 1)!important;
     padding-left: 40px!important;
-    margin: 10px;
+    margin: 17px 10px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .global-inputs:focus{
     background-color: rgba(34, 34, 34, 0.1)!important;
 }
+
+.global-inputs-check label{
+    font-size: 12px!important;
+}
+.global-inputs-check{
+    background-color: rgba(245, 245, 245, 1)!important;
+    padding-left: 30px!important;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    margin-left: 10px;
+    margin-bottom: 15px!important;
+}
+.global-file-input{
+    background-color: rgba(45, 182, 210, 1);
+    border-radius: 12px;
+    
+    text-align: center;
+    margin:17px 0px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 10px;
+    color: white;
+}
+.global-file-input p{
+    margin-left: 14px;
+    padding: 12px 0px;
+}
+
 .react-datepicker-popper{
     z-index: 999!important;
 }
 .prepend-icon{
     position: relative;
     z-index: 2;
-    margin-bottom: -38px;
+    margin-bottom: -45px;
     margin-left: 19px;
     width: 20px;
     color: rgba(26, 73, 129, 1);
@@ -48,4 +81,35 @@
 .form-container ::placeholder {
     font-size: small;
     color: black;
+}
+
+@media screen and (max-width:768px) {
+    .layout-content{
+            margin: 20px 0;
+    padding: 10px 0px 20px;
+    }
+}
+
+.large-buts{
+    background: rgba(233, 240, 255, 1);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 10px;
+    /* margin: 1.5rem; */
+    height: 130px;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(26, 73, 129, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.large-buts img{
+    width:50px;
+}
+.large-buts p{
+    flex-basis: 0;
+    flex-grow: 1;
+    margin: 10px 0px;
 }

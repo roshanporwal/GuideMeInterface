@@ -60,7 +60,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Second Opinion"
                                         item_img={SecLogo}
-                                        item_link={"#"}
+                                        item_link={"/second-opinion"}
                                         navigate = {navigate}
                                     />    
                                 </Col>
@@ -68,7 +68,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Home Service"
                                         item_img={HomeLogo}
-                                        item_link={"#"}
+                                        item_link={"/home-care-services"}
                                         navigate = {navigate}
                                     />    
                                 </Col>

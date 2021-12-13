@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import InnerLayout from '../Layout/InnerLayout';
-import HeroImage from '../../assets/new-consultation.png';
-import NewConsultation from './NewConsultation';
+import HeroImage from '../../assets/freeopinion-hero.png';
+import FreeOpinion from './FreeOpinion';
 import ThankYouModal from '../Layout/ThankYouModal';
 
 
-function NewConsultationContent() {
-    
+function FreeOpinionContent() {
+
     const [modalshow, setModalShow] = useState(false);
     const handleModalClose = () => setModalShow(false);
     const handleModalShow = () => setModalShow(true);
 
+
     return ( 
         <InnerLayout 
             HeroImage={HeroImage}
-            pageName={"New consultation"}
-            NestedComponent={<NewConsultation handleModalShow={handleModalShow} />}
+            pageName={"Free Surgical Second Opinion Within The Country"}
+            NestedComponent={<FreeOpinion handleModalShow={handleModalShow} />}
             ThankYouModal = {<ThankYouModal modalshow={modalshow} handleModalClose={handleModalClose} />}
         />
     );
 }
 
-export default NewConsultationContent;
+export default FreeOpinionContent;

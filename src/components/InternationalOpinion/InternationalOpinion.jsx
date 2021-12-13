@@ -2,12 +2,13 @@ import React, { forwardRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital, MdOutlinePersonAdd, MdStickyNote2, MdUploadFile
+    MdInfoOutline, MdOutlineCalendarToday, MdOutlineFilePresent,
+    MdRefresh, MdUploadFile
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-function NewConsultation({handleModalShow}) {
+function InternationalOpinion({handleModalShow}) {
+
     // Create a reference to the hidden file input element
     const hiddenFileInput = React.useRef(null);
     
@@ -16,7 +17,8 @@ function NewConsultation({handleModalShow}) {
     const handleFileClick = event => {
         hiddenFileInput.current.click();
     };
-    
+
+
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
@@ -25,6 +27,7 @@ function NewConsultation({handleModalShow}) {
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -53,8 +56,7 @@ function NewConsultation({handleModalShow}) {
 
         const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
         console.log(createNewConsulation)
-        handleModalShow();
-
+        handleSubmit();
     }
     const handleFiles = e => {
         const { name } = e.currentTarget
@@ -74,35 +76,35 @@ function NewConsultation({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="name"
-                            placeholder='Person Name'
+                            name="condition"
+                            placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared)'
                             onChange={handleChange}
                             className="global-inputs"
                         />
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdFamilyRestroom />
+                            <MdInfoOutline />
                         </div>
                         <Form.Control
                             type='text'
-                            name="family"
-                            placeholder='Add Family Member'
+                            name="additional_condition_info"
+                            placeholder='Additional Information'
                             onChange={handleChange}
                             className="global-inputs"
                         />
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdOutlinePersonAdd />
+                            <MdRefresh />
                         </div>
                         <Form.Control
                             type='text'
-                            name="register"
+                            name="recomended_treatment"
                             placeholder='Register Patient'
                             onChange={handleChange}
                             className="global-inputs"
@@ -112,12 +114,12 @@ function NewConsultation({handleModalShow}) {
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdLocationOn />
+                            <MdInfoOutline />
                         </div>
                         <Form.Control
                             type='text'
-                            name="location"
-                            placeholder='Location *'
+                            name="additional_treatment_info"
+                            placeholder='Additional information'
                             onChange={handleChange}
                             className="global-inputs"
                         />
@@ -125,30 +127,16 @@ function NewConsultation({handleModalShow}) {
                 </div>
                 <div className='col-10'>
                     <Form.Group>
-                        <div className="prepend-icon">
-                            <MdStickyNote2 />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="symptoms"
-                            placeholder='Symptoms / Conditions'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineLocalHospital />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="hospital"
-                            placeholder='Preferred doctor/hospital/specialization'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
+                            {/* <div className="prepend-icon">
+                                <MdStickyNote2 />
+                            </div> */}
+                            <Form.Check
+                                type='checkbox'
+                                name="doctor_specialization_recommend"
+                                label='Not sure which doctor specialization - kindly recommend'
+                                onChange={handleChange}
+                                className="global-inputs-check form-control"
+                            />
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -161,7 +149,7 @@ function NewConsultation({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 1 *' />}
+                                customInput={<DatePickerInput text='Preferred date of appointment (1) (compulsory)' />}
                             />
                         </div>
                     </Form.Group>
@@ -176,7 +164,7 @@ function NewConsultation({handleModalShow}) {
                                 selected={DateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 2 *' />}
+                                customInput={<DatePickerInput text='Preferred date of appointment (2) (not compulsory)' />}
                             />
                         </div>
                     </Form.Group>
@@ -227,4 +215,4 @@ function NewConsultation({handleModalShow}) {
     );
 }
 
-export default NewConsultation;
+export default InternationalOpinion;
