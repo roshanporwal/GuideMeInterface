@@ -82,7 +82,12 @@
     font-size: small;
     color: black;
 }
-
+.sub-title{
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color:rgba(22, 68, 115, 1);
+}
 @media screen and (max-width:768px) {
     .layout-content{
             margin: 20px 0;
@@ -109,6 +114,29 @@
     width:50px;
 }
 .large-buts p{
+    flex-basis: 0;
+    flex-grow: 1;
+    margin: 10px 0px;
+}
+.large-buts-for-homecare{
+    background: rgba(233, 240, 255, 1);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 1rem;
+    height: 100px;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(26, 73, 129, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.large-buts-for-homecare img{
+    width:40px;
+}
+.large-buts-for-homecare p{
     flex-basis: 0;
     flex-grow: 1;
     margin: 10px 0px;

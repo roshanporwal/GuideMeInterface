@@ -56,7 +56,7 @@ function LoginScreen() {
                                 </div>
                                 <Form onSubmit={e => handleSubmit(e)} className="login-form">                                        
                                         <Form.Group>
-                                            <div className="prepend-icon">
+                                            <div className="prepend-icon-auth">
                                                 <MdCall />
                                             </div>
                                             <Form.Control 

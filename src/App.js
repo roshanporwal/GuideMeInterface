@@ -13,7 +13,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import InternationalOpinionContent from "./components/InternationalOpinion/InternationalOpinionContent";
 import HomeCareContent from "./components/HomeCare/HomeCareContent";
 import RTPCRContent from "./components/RT-PCR/RTPCRContent";
-
+import TeleConsultationContent from "./components/TeleConsultation/TeleConsultationContent";
+import DoctorVisitContent from "./components/DoctorVisit/DoctorVisitContent";
+import PhysioTherapyContent from "./components/PhysioTherapy/PhysioTherapyContent";
+import NurseServiceContent from "./components/Nurse/NurseServiceContent";
+import LabTestContent from "./components/LabTest/LabTestContent";
+import DiagnosticContent from "./components/Diagnostic/DiagnosticContent";
+import XRayContent from "./components/XRay/XRayContent";
+import MammogramContent from "./components/Mammogram/MammogramContent";
+import CTScanContent from "./components/CTScan/CTScanContent";
+import MRIContent from "./components/MRI/MRIContent";
+import UltraSoundContent from "./components/Ultrasound/UltraSoundContent";
 function App() {
   return (
     <AuthProvider>
@@ -29,10 +39,19 @@ function App() {
               <Route path="/international-opinion" element={<InternationalOpinionContent />} />
               <Route path="/home-care-services" element={<HomeCareContent />} />
               <Route path="/rt-pcr" element={<RTPCRContent />} />
-              <Route path="/teleconsultation" element={<RTPCRContent />} />
-              <Route path="/doctor-home-visit" element={<RTPCRContent />} />
-              <Route path="/physiotherapy" element={<RTPCRContent />} />
-              <Route path="/nursing-service" element={<RTPCRContent />} />
+              <Route path="/teleconsultation" element={<TeleConsultationContent />} />
+              <Route path="/doctor-home-visit" element={<DoctorVisitContent />} />
+              <Route path="/physiotherapy" element={<PhysioTherapyContent />} />
+              <Route path="/nursing-service" element={<NurseServiceContent />} />
+              <Route path="/nursing-service" element={<NurseServiceContent />} />
+              <Route path="/lab-tests" element={<LabTestContent />} />
+              <Route path="/diagnostic" element={<DiagnosticContent />} />
+              <Route path="/x-ray" element={<XRayContent />} />
+              <Route path="/mammogram" element={<MammogramContent />} />
+              <Route path="/ct-scan" element={<CTScanContent />} />
+              <Route path="/mri" element={<MRIContent />} />
+              <Route path="/ultrasound" element={<UltraSoundContent />} />
+
             </Route>
         </Routes>
       </Router>

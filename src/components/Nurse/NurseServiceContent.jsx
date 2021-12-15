@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import InnerLayout from '../Layout/InnerLayout';
-import HeroImage from '../../assets/rt-pcr-hero.png';
+import HeroImage from '../../assets/nursing-hero.png';
 import ThankYouModal from '../Layout/ThankYouModal';
-import RTPCR from './RTPCR';
+import NurseService from './NurseService';
 
 
-function RTPCRContent() {
+
+function NurseServiceContent() {
     
     const [modalshow, setModalShow] = useState(false);
     const handleModalClose = () => setModalShow(false);
@@ -14,11 +15,11 @@ function RTPCRContent() {
     return ( 
         <InnerLayout 
             HeroImage={HeroImage}
-            pageName={"RT PCR"}
-            NestedComponent={<RTPCR handleModalShow={handleModalShow} />}
+            pageName={"NURSING SERVICE"}
+            NestedComponent={<NurseService handleModalShow={handleModalShow} />}
             ThankYouModal = {<ThankYouModal modalshow={modalshow} handleModalClose={handleModalClose} />}
         />
     );
 }
 
-export default RTPCRContent;
+export default NurseServiceContent;

@@ -3,24 +3,21 @@ import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
     MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital, MdOutlinePersonAdd, MdStickyNote2, MdUploadFile
+    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
+    MdOutlineApartment,MdCall,MdTransgender,MdPayment
 } from 'react-icons/md';
+import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
+import {IoHomeOutline} from 'react-icons/io5'
+import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-function RTPCR({handleModalShow}) {
+function CTScan({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
-    const hiddenFileInputReports = React.useRef(null);
-
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileInsuranceClick = event => {
         hiddenFileInputInsurance.current.click();
-    };
-    // Programatically click the hidden file input element
-    // when the Button component is clicked
-    const handleFileReportsClick = event => {
-        hiddenFileInputReports.current.click();
     };
     
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
@@ -28,8 +25,7 @@ function RTPCR({handleModalShow}) {
     ));
     const [formValues, setFormValues] = useState();
     const [DateOne, setDateOne] = useState();
-    const [DateTwo, setDateTwo] = useState();
-    const [reports, setReports] = useState([]);
+    
     const [insurance, setInsurance] = useState();
 
     const handleChange = (e) => {
@@ -48,12 +44,6 @@ function RTPCR({handleModalShow}) {
         formValues.patient_name = data.name;
         formValues.type = "new_consulation";
 
-
-        if (reports !== undefined) {
-            for (const tp of reports) {
-                formData.append('patient_reports', tp);
-            }
-        }
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
 
@@ -63,12 +53,7 @@ function RTPCR({handleModalShow}) {
 
     }
     const handleFiles = e => {
-        const { name } = e.currentTarget
-        if (name === 'reports') {
-            setReports(e.target.files)
-        } else {
             setInsurance(e.target.files[0])
-        }
     }
     return (
         <div className="form-container">
@@ -118,48 +103,6 @@ function RTPCR({handleModalShow}) {
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdLocationOn />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="location"
-                            placeholder='Location *'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdStickyNote2 />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="symptoms"
-                            placeholder='Symptoms / Conditions'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineLocalHospital />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="hospital"
-                            placeholder='Preferred doctor/hospital/specialization'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
                             <MdOutlineCalendarToday />
                         </div>
                         <div>
@@ -167,26 +110,43 @@ function RTPCR({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 1 *' />}
+                                showTimeSelect
+                                customInput={<DatePickerInput text='Date and Time of Delivery' />}
                             />
                         </div>
                     </Form.Group>
                 </div>
-                <div className='col-10'>
+            
+                <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdOutlineCalendarToday />
+                            <MdLocationOn />
                         </div>
-                        <div>
-                            <DatePicker
-                                selected={DateTwo}
-                                onChange={date => setDateTwo(date)}
-                                dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 2 *' />}
-                            />
-                        </div>
+                        <Form.Control
+                            type='text'
+                            name="location"
+                            placeholder='Area / Location'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
                     </Form.Group>
                 </div>
+                
+                 <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaClipboardList />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="requirements"
+                            placeholder='Select your requirement '
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -206,24 +166,8 @@ function RTPCR({handleModalShow}) {
                         />
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineFilePresent />
-                        </div>
-                        <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
-                            <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
-                        </div>
-                        <input
-                            type="file"
-                            name="reports"
-                            ref={hiddenFileInputReports}
-                            accept="image/*,application/pdf"
-                            style={{ display: 'none' }}
-                            onChange={handleFiles}
-                            multiple
-                        />
-                    </Form.Group>
+                <div className='col-10'>
+                    <p className="sub-title text-center">payment would be done at the time of test in the lab center</p>
                 </div>
                 <div className='text-center mt-4'>
                     <input className="form-button" type="submit" value="SUBMIT" />
@@ -233,4 +177,4 @@ function RTPCR({handleModalShow}) {
     );
 }
 
-export default RTPCR;
+export default CTScan;

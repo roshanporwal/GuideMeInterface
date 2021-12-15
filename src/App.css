@@ -12,6 +12,7 @@
     font-weight: bold;
     text-decoration: none;
 }
+
 .dashboard-call-button{
   border-radius: 12px;
   border:1px solid rgba(38, 158, 183, 1);
@@ -43,6 +44,10 @@ align-items: center;
     flex-grow: 1;
     margin: 10px 0px;
 }
+.dashboard-logo{
+    position: relative;
+    z-index: -2;
+}
 
 .footer-row-global{
     position: fixed;
@@ -53,9 +58,10 @@ align-items: center;
     background-repeat: no-repeat;
     width: 100%;
     background-size: 100% 100%;
+    z-index: -1;
 }
 @media screen and (max-width:768px) {    
-    .footer-row{
+    .footer-row-global{
         height: 99px;
     }
 }

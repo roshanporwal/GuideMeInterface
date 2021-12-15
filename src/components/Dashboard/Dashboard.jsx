@@ -1,6 +1,8 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import HeroImage from '../../assets/dashboard-hero.png';
+import HeroImagelg from '../../assets/dashboard-lg-hero.png';
+//import HeroImagesm from '../../assets/dashboard-sm-hero.png';
+
 import Logo from '../../assets/guidemedoc-logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardItem from './DashboardItem';
@@ -42,8 +44,8 @@ function Dashboard() {
                             <div className='text-center'>
                                 <Link className='dashboard-call-button' to="#">[04] 356 2 356</Link>
                             </div>
-                            <div className='mt-5'>
-                                <img src={HeroImage} width="100%" alt='company-logo' />
+                            <div className='mt-5 dashboard-logo'>
+                                <img src={HeroImagelg} width="100%" alt='company-logo'/>
                             </div>
                         </div>
                         <div className='col-md-6 col-11 mt-5 mt-lg-0'>
@@ -84,7 +86,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Lab Tests"
                                         item_img={LabLogo}
-                                        item_link={"#"}
+                                        item_link={"/lab-tests"}
                                         navigate = {navigate}
                                     />    
                                 </Col>
@@ -92,7 +94,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Diagnostics/ Radiology"
                                         item_img={XRayLogo}
-                                        item_link={"#"}
+                                        item_link={"/diagnostic"}
                                         navigate = {navigate}
                                     />    
                                 </Col>

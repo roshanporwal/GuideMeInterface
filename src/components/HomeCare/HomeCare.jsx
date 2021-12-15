@@ -13,31 +13,31 @@ function HomeCare() {
         <div /* className="form-container" */>
             <div className="row justify-content-center">
                 <div className='col-10 col-md-5'>
-                    <div className="large-buts" role="button" onClick={() => navigate('/rt-pcr')}>
+                    <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/rt-pcr')}>
                         <img src={Rtpcr} alt="im"/>
                         <p>RT PCR Test</p>
                     </div>
                 </div>
                 <div className='col-10 col-md-5'>
-                    <div className="large-buts" role="button" onClick={() => navigate('/teleconsultation')}>
+                    <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/teleconsultation')}>
                         <img src={Telecom} alt="im"/>
                         <p>Teleconsultation</p>
                     </div>
                 </div>
                 <div className='col-10 col-md-5'>
-                    <div className="large-buts" role="button" onClick={() => navigate('/doctor-home-visit')}>
+                    <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/doctor-home-visit')}>
                         <img src={DoctorVisit} alt="im"/>
                         <p>Doctor Home Visit</p>
                     </div>
                 </div>
                 <div className='col-10 col-md-5'>
-                    <div className="large-buts" role="button" onClick={() => navigate('/physiotherapy')}>
+                    <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/physiotherapy')}>
                         <img src={Physio} alt="im"/>
                         <p>Physiotherapy</p>
                     </div>
                 </div>
                 <div className='col-10 col-md-5'>
-                    <div className="large-buts" role="button" onClick={() => navigate('/nursing-service')}>
+                    <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/nursing-service')}>
                         <img src={Nurse} alt="im"/>
                         <p>Nursing service</p>
                     </div>

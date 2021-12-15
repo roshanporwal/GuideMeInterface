@@ -9,7 +9,7 @@
 .grey-inputs:focus{
     background-color: rgba(34, 34, 34, 0.1)!important;
 }
-.prepend-icon{
+.prepend-icon-auth{
     position: relative;
     z-index: 999;
     margin-bottom: -29px;

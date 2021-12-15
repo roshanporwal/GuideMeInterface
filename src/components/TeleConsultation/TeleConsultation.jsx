@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-function RTPCR({handleModalShow}) {
+function TeleConsultation({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
 
@@ -233,4 +233,4 @@ function RTPCR({handleModalShow}) {
     );
 }
 
-export default RTPCR;
+export default TeleConsultation;

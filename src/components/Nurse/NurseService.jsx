@@ -1,13 +1,18 @@
 import React, { forwardRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
+import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
     MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital, MdOutlinePersonAdd, MdStickyNote2, MdUploadFile
+    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
+    MdOutlineApartment,MdCall,MdTransgender,MdPayment
 } from 'react-icons/md';
+import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
+import {IoHomeOutline} from 'react-icons/io5'
+import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-function RTPCR({handleModalShow}) {
+function NurseService({handleModalShow}) {
+    // Create a reference to the hidden file input element
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
 
@@ -28,7 +33,6 @@ function RTPCR({handleModalShow}) {
     ));
     const [formValues, setFormValues] = useState();
     const [DateOne, setDateOne] = useState();
-    const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
 
@@ -115,49 +119,7 @@ function RTPCR({handleModalShow}) {
                         />
                     </Form.Group>
                 </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdLocationOn />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="location"
-                            placeholder='Location *'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdStickyNote2 />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="symptoms"
-                            placeholder='Symptoms / Conditions'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineLocalHospital />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="hospital"
-                            placeholder='Preferred doctor/hospital/specialization'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
+                {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineCalendarToday />
@@ -167,26 +129,149 @@ function RTPCR({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 1 *' />}
+                                showTimeSelect
+                                customInput={<DatePickerInput text='Date and Time of Delivery' />}
                             />
                         </div>
+                    </Form.Group>
+                </div>*/}
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdFormatListNumbered />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="current_diagnosis"
+                            placeholder='Current diagnosis (compulsory)'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaClock />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="time_period"
+                            placeholder='Time period for nursing service (number of days/months) '
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10'>
+                    <div className='d-flex align-items-start justify-content-center mb-2'>
+                        <div className="mx-1 mb-1">
+                            <IoHomeOutline /> 
+                        </div>
+                        <div>
+                            <span>Address </span>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdFormatListNumbered />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="flat-number"
+                            placeholder='Flat Number / Apartment Number'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaBuilding />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="building_name"
+                            placeholder='Building Name (Mandatory)'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <GiDirectionSigns />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="street_name"
+                            placeholder='Street Name'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdLocationOn />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="location"
+                            placeholder='Area / Location'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaGlobeAsia />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="emirates"
+                            placeholder='Emirates'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdOutlineApartment />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="landmark"
+                            placeholder='Nearest Landmark (Optional)'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
                     </Form.Group>
                 </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <MdOutlineCalendarToday />
+                            <MdCall />
                         </div>
-                        <div>
-                            <DatePicker
-                                selected={DateTwo}
-                                onChange={date => setDateTwo(date)}
-                                dateFormat="dd/MM/yyyy"
-                                customInput={<DatePickerInput text='Preferred date 2 *' />}
-                            />
-                        </div>
+                        <Form.Control
+                            type='text'
+                            name="symptoms"
+                            placeholder='Alternate Mobile Number'
+                            onChange={handleChange}
+                            className="global-inputs"
+                        />
                     </Form.Group>
                 </div>
+                
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -233,4 +318,4 @@ function RTPCR({handleModalShow}) {
     );
 }
 
-export default RTPCR;
+export default NurseService;

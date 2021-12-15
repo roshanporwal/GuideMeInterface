@@ -8,14 +8,19 @@ import {
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 function FreeOpinion({handleModalShow}) {
+const hiddenFileInputInsurance = React.useRef(null);
+    const hiddenFileInputReports = React.useRef(null);
 
-    // Create a reference to the hidden file input element
-    const hiddenFileInput = React.useRef(null);
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileClick = event => {
-        hiddenFileInput.current.click();
+    const handleFileInsuranceClick = event => {
+        hiddenFileInputInsurance.current.click();
+    };
+    // Programatically click the hidden file input element
+    // when the Button component is clicked
+    const handleFileReportsClick = event => {
+        hiddenFileInputReports.current.click();
     };
 
 
@@ -175,13 +180,13 @@ function FreeOpinion({handleModalShow}) {
                             <MdUploadFile />
                         </div>
                         
-                        <div  role="button" onClick={handleFileClick} className='global-file-input'>
+                        <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
                             <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
                             name="insurance"
-                            ref={hiddenFileInput}
+                            ref={hiddenFileInputInsurance}
                             accept="image/*,application/pdf"
                             style={{ display: 'none' }}
                             onChange={handleFiles}
@@ -193,13 +198,13 @@ function FreeOpinion({handleModalShow}) {
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
                         </div>
-                        <div  role="button" onClick={handleFileClick} className='global-file-input'>
+                        <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
                             <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
                         </div>
                         <input
                             type="file"
                             name="reports"
-                            ref={hiddenFileInput}
+                            ref={hiddenFileInputReports}
                             accept="image/*,application/pdf"
                             style={{ display: 'none' }}
                             onChange={handleFiles}

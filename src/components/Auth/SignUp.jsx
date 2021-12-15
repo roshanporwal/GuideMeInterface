@@ -50,7 +50,7 @@ function SignUpScreen() {
                                 </div>
                                 <Form onSubmit={e => handleSubmit(e)} className="login-form">                                        
                                         <Form.Group className='my-3'>
-                                            <div className="prepend-icon">
+                                            <div className="prepend-icon-auth">
                                                 <FaUserAlt />
                                             </div>
                                             <Form.Control 
@@ -63,7 +63,7 @@ function SignUpScreen() {
                                             />
                                         </Form.Group>
                                         <Form.Group className='my-3'>
-                                            <div className="prepend-icon">
+                                            <div className="prepend-icon-auth">
                                                 <MdCall />
                                             </div>
                                             <Form.Control 
