@@ -1,9 +1,5 @@
 import { instance } from './base_service';
 
-
-
-
-
 function login(data) {
   const req = instance.post('/patient/login', data);
   return req

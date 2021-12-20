@@ -7,8 +7,11 @@ import {MdCall} from 'react-icons/md'
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 import * as auth_service from "../../service/auth_service";
+import {loginvalidationSchema} from "./authValidation";
 function LoginScreen() {
     const navigate = useNavigate();
+    const [errors, setErrors] = useState();
+
 
     const [formValues,setFormValues] = useState({
         mobile:""
@@ -18,19 +21,38 @@ function LoginScreen() {
         let {name,value} = e.target;
         setFormValues({...formValues,[name]:value});
     }
-
+    const validate = async (values) => {
+        try {
+            await loginvalidationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    }; 
     const handleSubmit =async (e) => {
         e.preventDefault();
-        console.log(formValues);
-        const req ={
-            login_id:formValues.mobile,
+        const err = await validate(formValues);
+        setErrors(err);
+        if(Object.keys(err).length === 0){
+            const req ={
+                login_id:formValues.mobile,
 
+            }
+            const login = await auth_service.login( req)
+            if(login.payload){
+                localStorage.setItem('login', JSON.stringify(login.payload));
+            }
+            console.log(login)
+            
         }
-        const login = await auth_service.login( req)
-        if(login.payload){
-            localStorage.setItem('login', JSON.stringify(login.payload));
-           }
-        console.log(login)
+        
+        console.log(formValues);
     }
 
     return ( 
@@ -66,7 +88,9 @@ function LoginScreen() {
                                                 onChange={handleChange}
                                                 value={formValues.mobile}
                                                 className="grey-inputs"
+                                                isInvalid={errors?.mobile}
                                             />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
                                         </Form.Group>
                                     <div className='text-center mt-4'>
                                         <input className="login-submit" type="submit" value="LOGIN" />

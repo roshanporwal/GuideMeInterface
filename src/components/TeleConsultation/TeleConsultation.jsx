@@ -7,10 +7,38 @@ import {
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
+import { validationSchema } from './teleValidation';
 function TeleConsultation({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        reports:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+        dateTwo:"",
+    });
 
+    const validate = async (values) => {
+        try {
+            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports.length === 0 ? "required" : ""});
+            
+            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    }; 
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -39,27 +67,34 @@ function TeleConsultation({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+         const err = await validate(formValues);
+        setErrors(err);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+            console.log(formValues);
+            const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+            let data = localStorage.getItem("login")
+            data = JSON.parse(data)
+
+            formValues.patient_id = data._id;
+            formValues.patient_name = data.name;
+            formValues.type = "teleconsulation";
+            formValues.basetype = "home_service"
 
 
-        if (reports !== undefined) {
-            for (const tp of reports) {
-                formData.append('patient_reports', tp);
+            if (reports !== undefined) {
+                for (const tp of reports) {
+                    formData.append('patient_reports', tp);
+                }
             }
-        }
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
+            formData.append('insurance_card_copy', insurance);
+            formData.append('formValues', JSON.stringify(formValues));
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleModalShow();
+            const abc = await auth_service.createHomeService(data.login_id, formData)
+            console.log(abc)
+            handleModalShow();
+        }
 
     }
     const handleFiles = e => {
@@ -84,7 +119,10 @@ function TeleConsultation({handleModalShow}) {
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -126,7 +164,9 @@ function TeleConsultation({handleModalShow}) {
                             placeholder='Location *'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.location}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -140,7 +180,10 @@ function TeleConsultation({handleModalShow}) {
                             placeholder='Symptoms / Conditions'
                             onChange={handleChange}
                             className="global-inputs"
+                        isInvalid={errors?.symptoms}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -154,7 +197,10 @@ function TeleConsultation({handleModalShow}) {
                             placeholder='Preferred doctor/hospital/specialization'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.hospital}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.hospital}</Form.Control.Feedback>
+                    
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -170,6 +216,9 @@ function TeleConsultation({handleModalShow}) {
                                 customInput={<DatePickerInput text='Preferred date 1 *' />}
                             />
                         </div>
+                        {dateerrors.dateOne ? (
+                                <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                            : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -185,6 +234,9 @@ function TeleConsultation({handleModalShow}) {
                                 customInput={<DatePickerInput text='Preferred date 2 *' />}
                             />
                         </div>
+                        {dateerrors.dateTwo ? (
+                                <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                            : null} 
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -204,6 +256,9 @@ function TeleConsultation({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
+                        {fileerrors.insurance ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}   
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -223,6 +278,7 @@ function TeleConsultation({handleModalShow}) {
                             onChange={handleFiles}
                             multiple
                         />
+                        
                     </Form.Group>
                 </div>
                 <div className='text-center mt-4'>

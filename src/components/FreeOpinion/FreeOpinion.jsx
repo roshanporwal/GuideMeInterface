@@ -7,10 +7,21 @@ import {
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
+import {validationSchema} from "./freeopinionValidation";
+
 function FreeOpinion({handleModalShow}) {
 const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
-
+    
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        reports:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+        dateTwo:"",
+    });
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -38,30 +49,54 @@ const hiddenFileInputInsurance = React.useRef(null);
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     }
-
+    const validate = async (values) => {
+        try {
+            
+            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
+            
+            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        const err = await validate(formValues);
+        setErrors(err);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "" && dateerrors.dateOne === "" && dateerrors.dateTwo === "")  {  
+            console.log(formValues);
+            const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+            let data = localStorage.getItem("login")
+            data = JSON.parse(data)
+
+            formValues.patient_id = data._id;
+            formValues.patient_name = data.name;
+            formValues.type = "free_surgical_opinion";
+            formValues.basetype = "second_consulation"
 
 
-        if (reports !== undefined) {
-            for (const tp of reports) {
-                formData.append('patient_reports', tp);
+            if (reports !== undefined) {
+                for (const tp of reports) {
+                    formData.append('patient_reports', tp);
+                }
             }
-        }
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
+            formData.append('insurance_card_copy', insurance);
+            formData.append('formValues', JSON.stringify(formValues));
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleSubmit();
+            const abc = await auth_service.createSecondConsulation(data.login_id, formData)
+            console.log(abc)
+        }
     }
     const handleFiles = e => {
         const { name } = e.currentTarget
@@ -85,7 +120,10 @@ const hiddenFileInputInsurance = React.useRef(null);
                             placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared)'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.condition}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.condition}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -100,6 +138,7 @@ const hiddenFileInputInsurance = React.useRef(null);
                             onChange={handleChange}
                             className="global-inputs"
                         />
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -110,10 +149,13 @@ const hiddenFileInputInsurance = React.useRef(null);
                         <Form.Control
                             type='text'
                             name="recomended_treatment"
-                            placeholder='Register Patient'
+                            placeholder='Recommended Treatment'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.recomended_treatment}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.recomended_treatment}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -128,6 +170,7 @@ const hiddenFileInputInsurance = React.useRef(null);
                             onChange={handleChange}
                             className="global-inputs"
                         />
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -156,7 +199,12 @@ const hiddenFileInputInsurance = React.useRef(null);
                                 dateFormat="dd/MM/yyyy"
                                 customInput={<DatePickerInput text='Preferred date of appointment (1) (compulsory)' />}
                             />
+                            
                         </div>
+                        
+                        {dateerrors.dateOne ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}  
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -172,6 +220,9 @@ const hiddenFileInputInsurance = React.useRef(null);
                                 customInput={<DatePickerInput text='Preferred date of appointment (2) (not compulsory)' />}
                             />
                         </div>
+                        {dateerrors.dateTwo ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}  
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -190,7 +241,10 @@ const hiddenFileInputInsurance = React.useRef(null);
                             accept="image/*,application/pdf"
                             style={{ display: 'none' }}
                             onChange={handleFiles}
-                        />
+                            />
+                            {fileerrors.insurance ? (
+                                <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                            : null}    
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>

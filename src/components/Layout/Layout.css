@@ -23,7 +23,6 @@
 .global-inputs{
     background-color: rgba(245, 245, 245, 1)!important;
     padding-left: 40px!important;
-    margin: 17px 10px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .global-inputs:focus{
@@ -38,15 +37,13 @@
     padding-left: 30px!important;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     width: 100%;
-    margin-left: 10px;
-    margin-bottom: 15px!important;
+    margin-top: 24px;   
 }
 .global-file-input{
     background-color: rgba(45, 182, 210, 1);
     border-radius: 12px;
     
     text-align: center;
-    margin:17px 0px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: 10px;
     color: white;
@@ -62,11 +59,20 @@
 .prepend-icon{
     position: relative;
     z-index: 2;
-    margin-bottom: -45px;
-    margin-left: 19px;
+    left: 0;
+    bottom: -26px;
+    margin-left: 9px;
     width: 20px;
     color: rgba(26, 73, 129, 1);
 }
+.loader-wrapper {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background: rgba( 205, 205, 205, 0.4 ) no-repeat;
+}
+
 .form-button{
     padding: 4px 5px;
     font-size: 15px;
@@ -95,6 +101,9 @@
     }
 }
 
+.form-input-container{
+    margin:17px 0px;
+}
 .large-buts{
     background: rgba(233, 240, 255, 1);
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);

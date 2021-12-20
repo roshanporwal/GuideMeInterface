@@ -1,21 +1,44 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
-    MdOutlineApartment,MdCall,MdTransgender,MdPayment
+    MdFamilyRestroom, MdLocationOn, MdOutlineFilePresent,
+    MdOutlinePersonAdd, MdUploadFile,MdFormatListNumbered,
+    MdOutlineApartment,MdCall
 } from 'react-icons/md';
-import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
+import {FaBuilding,FaGlobeAsia} from 'react-icons/fa'
 import {IoHomeOutline} from 'react-icons/io5'
 import {GiDirectionSigns} from 'react-icons/gi'
-import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
+import { validationSchema } from './nurseValidation';
 function NurseService({handleModalShow}) {
     // Create a reference to the hidden file input element
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        reports:"",
+    });
 
+    const validate = async (values) => {
+        try {
+            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
+            
+        //    setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    }; 
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -28,11 +51,11 @@ function NurseService({handleModalShow}) {
         hiddenFileInputReports.current.click();
     };
     
-    const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
+    /* const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
-    ));
+    )); */
     const [formValues, setFormValues] = useState();
-    const [DateOne, setDateOne] = useState();
+    //const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
 
@@ -43,27 +66,35 @@ function NurseService({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        const err = await validate(formValues);
+        setErrors(err);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+               e.preventDefault();
+                console.log(formValues);
+                const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+                let data = localStorage.getItem("login")
+                data = JSON.parse(data)
+
+                formValues.patient_id = data._id;
+                formValues.patient_name = data.name;
+                formValues.type = "nursingservice";
+                formValues.basetype = "home_service"
 
 
-        if (reports !== undefined) {
-            for (const tp of reports) {
-                formData.append('patient_reports', tp);
-            }
+                if (reports !== undefined) {
+                    for (const tp of reports) {
+                        formData.append('patient_reports', tp);
+                    }
+                }
+                formData.append('insurance_card_copy', insurance);
+                formData.append('formValues', JSON.stringify(formValues));
+
+                const abc = await auth_service.createHomeService(data.login_id, formData)
+                console.log(abc)
         }
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleModalShow();
 
     }
     const handleFiles = e => {
@@ -146,7 +177,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Current diagnosis (compulsory)'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.current_diagnosis}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -160,11 +194,14 @@ function NurseService({handleModalShow}) {
                             placeholder='Time period for nursing service (number of days/months) '
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.time_period}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.time_period}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
-                    <div className='d-flex align-items-start justify-content-center mb-2'>
+                    <div className='d-flex align-items-start justify-content-center mt-2'>
                         <div className="mx-1 mb-1">
                             <IoHomeOutline /> 
                         </div>
@@ -180,11 +217,14 @@ function NurseService({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="flat-number"
+                            name="flat_number"
                             placeholder='Flat Number / Apartment Number'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.flat_number}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.flat_number}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -198,7 +238,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Building Name (Mandatory)'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.building_name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.building_name}</Form.Control.Feedback>
+  
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -212,7 +255,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Street Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.street_name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.street_name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -226,7 +272,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.location}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -240,7 +289,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Emirates'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.emirates}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.emirates}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -254,7 +306,10 @@ function NurseService({handleModalShow}) {
                             placeholder='Nearest Landmark (Optional)'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.landmark}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.landmark}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -264,11 +319,14 @@ function NurseService({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="symptoms"
+                            name="mobile"
                             placeholder='Alternate Mobile Number'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.mobile}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 
@@ -289,6 +347,9 @@ function NurseService({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
+                        {fileerrors.insurance ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}   
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>

@@ -2,18 +2,41 @@ import React, { forwardRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
-    MdOutlineApartment,MdCall,MdTransgender,MdPayment
+    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday,
+    MdOutlinePersonAdd, MdUploadFile
 } from 'react-icons/md';
-import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
-import {IoHomeOutline} from 'react-icons/io5'
-import {GiDirectionSigns} from 'react-icons/gi'
+import {FaClipboardList} from 'react-icons/fa'
 import DatePicker from "react-datepicker";
+import { validationSchema } from './ctscanValidation';
 import * as auth_service from "../../service/auth_service";
 function CTScan({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
-    
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+    });
+
+    const validate = async (values) => {
+        try {
+            setFileErrors({insurance:insurance === undefined ? "required" : ""});
+            
+            setDateErrors({dateOne:DateOne === undefined ? "required" : ""});
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileInsuranceClick = event => {
@@ -35,21 +58,28 @@ function CTScan({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        const err = await validate(formValues);
+        setErrors(err);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+                console.log(formValues);
+                const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+                let data = localStorage.getItem("login")
+                data = JSON.parse(data)
 
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
+                formValues.patient_id = data._id;
+                formValues.patient_name = data.name;
+                formValues.type = "ctscan";
+                formValues.basetype = "diagnostics"
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleModalShow();
+                formData.append('prescription', insurance);
+                formData.append('formValues', JSON.stringify(formValues));
+
+                const abc = await auth_service.createDiagnostics(data.login_id, formData)
+                console.log(abc)
+                handleModalShow();
+        }
 
     }
     const handleFiles = e => {
@@ -114,6 +144,9 @@ function CTScan({handleModalShow}) {
                                 customInput={<DatePickerInput text='Date and Time of Delivery' />}
                             />
                         </div>
+                        {dateerrors.dateOne ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}
                     </Form.Group>
                 </div>
             
@@ -128,7 +161,10 @@ function CTScan({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.location}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 
@@ -143,7 +179,10 @@ function CTScan({handleModalShow}) {
                             placeholder='Select your requirement '
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.requirements}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.requirements}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 
@@ -164,6 +203,9 @@ function CTScan({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
+                        {fileerrors.insurance ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}  
                     </Form.Group>
                 </div>
                 <div className='col-10'>

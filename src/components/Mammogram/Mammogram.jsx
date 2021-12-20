@@ -3,17 +3,42 @@ import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
     MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
-    MdOutlineApartment,MdCall,MdTransgender,MdPayment
+    MdOutlinePersonAdd, MdUploadFile,
 } from 'react-icons/md';
-import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
-import {IoHomeOutline} from 'react-icons/io5'
-import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
+import { validationSchema } from './mammogramValidation';
 function Mammogram({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        reports:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+        DateTwo:""
+    });
+
+    const validate = async (values) => {
+        try {
+            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports.length === 0 ? "required" : ""});
+            
+            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -43,25 +68,44 @@ function Mammogram({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        const err = await validate(formValues);
+        setErrors(err);
+        console.log(fileerrors);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+                console.log(formValues);
+                const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+                let data = localStorage.getItem("login")
+                data = JSON.parse(data)
 
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
+                formValues.patient_id = data._id;
+                formValues.patient_name = data.name;
+                formValues.type = "mammogram";
+                formValues.basetype = "diagnostics"
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleModalShow();
+
+                if (reports !== undefined) {
+                    for (const tp of reports) {
+                        formData.append('patient_reports', tp);
+                    }
+                }
+                formData.append('prescription', insurance);
+                formData.append('formValues', JSON.stringify(formValues));
+
+                const abc = await auth_service.createDiagnostics(data.login_id, formData)
+                console.log(abc)
+                handleModalShow();
+        }
 
     }
     const handleFiles = e => {
+        const { name } = e.currentTarget
+        if (name === 'reports') {
+            setReports(e.target.files)
+        } else {
             setInsurance(e.target.files[0])
+        }
     }
     return (
         <div className="form-container">
@@ -122,6 +166,9 @@ function Mammogram({handleModalShow}) {
                                 customInput={<DatePickerInput text='Date and Time of Test' />}
                             />
                         </div>
+                        {dateerrors.dateOne ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -138,6 +185,9 @@ function Mammogram({handleModalShow}) {
                                 customInput={<DatePickerInput text='Date and Time of Reports' />}
                             />
                         </div>
+                        {dateerrors.dateTwo ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -151,7 +201,10 @@ function Mammogram({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.location}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 
@@ -172,6 +225,9 @@ function Mammogram({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
+                        {fileerrors.insurance ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}  
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -191,6 +247,9 @@ function Mammogram({handleModalShow}) {
                             onChange={handleFiles}
                             multiple
                         />
+                        {fileerrors.reports ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}  
                     </Form.Group>
                 </div>
                 <div className='col-10'>

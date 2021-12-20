@@ -1,6 +1,6 @@
 
 
-//new Consulation form
+//new Consulation form done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
 
 
 
-//free_surgical_opinion create
+//free_surgical_opinion create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -57,7 +57,7 @@ const handleSubmit = async (e) => {
 
 
 
-//international_opinion create
+//international_opinion create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -85,7 +85,7 @@ const handleSubmit = async (e) => {
 }
 
 
-//rcpcrtest create
+//rcpcrtest create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -112,7 +112,7 @@ const handleSubmit = async (e) => {
     console.log(abc)
 }
 
-//teleconsulation
+//teleconsulation done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -139,7 +139,7 @@ const handleSubmit = async (e) => {
     console.log(abc)
 }
 
-//doctorhomevist create
+//doctorhomevist create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -169,7 +169,7 @@ const handleSubmit = async (e) => {
 
 
 
-//physiotherapy create
+//physiotherapy create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -199,7 +199,7 @@ const handleSubmit = async (e) => {
 
 
 
-//nursingservice create
+//nursingservice create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -232,7 +232,7 @@ const handleSubmit = async (e) => {
 
 
 
-//lab form
+//lab form done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -259,7 +259,7 @@ const handleSubmit = async (e) => {
 }
 
 
-//xray create
+//xray create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -287,7 +287,7 @@ const handleSubmit = async (e) => {
 }
 
 
-//mammogram create
+//mammogram create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -315,7 +315,7 @@ const handleSubmit = async (e) => {
 }
 
 
-//ctscan create
+//ctscan create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -343,7 +343,7 @@ const handleSubmit = async (e) => {
 }
 
 
-//mri create
+//mri create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);
@@ -372,7 +372,7 @@ const handleSubmit = async (e) => {
 
 
 
-//ultrasound create
+//ultrasound create done
 const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formValues);

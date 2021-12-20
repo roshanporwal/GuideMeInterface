@@ -8,8 +8,10 @@ import {MdCall} from 'react-icons/md'
 import './Auth.css';
 import { useNavigate } from 'react-router-dom';
 import * as auth_service from "../../service/auth_service";
+import {signupvalidationSchema} from "./authValidation";
 function SignUpScreen() {
     const navigate = useNavigate();
+    const [errors, setErrors] = useState();
 
     const [formValues,setFormValues] = useState({
         mobile:""
@@ -19,17 +21,35 @@ function SignUpScreen() {
         let {name,value} = e.target;
         setFormValues({...formValues,[name]:value});
     }
-
+     const validate = async (values) => {
+        try {
+            await signupvalidationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    }; 
     const handleSubmit =async (e) => {
         e.preventDefault();
         console.log(formValues);
-        const req ={
-            login_id:formValues.mobile,
-            name:formValues.name
+        const err = await validate(formValues);
+        setErrors(err);
+        if(Object.keys(err).length === 0){
+            const req ={
+                login_id:formValues.mobile,
+                name:formValues.name
+            }
+            const createaccount = await auth_service.createaccount( req)
+            console.log(createaccount)
         }
-        const createaccount = await auth_service.createaccount( req)
-        console.log(createaccount)
     }
+
 
     return ( 
         <>
@@ -60,7 +80,9 @@ function SignUpScreen() {
                                                 onChange={handleChange}
                                                 value={formValues.name}
                                                 className="grey-inputs"
+                                                isInvalid={errors?.name}
                                             />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
                                         </Form.Group>
                                         <Form.Group className='my-3'>
                                             <div className="prepend-icon-auth">
@@ -73,7 +95,9 @@ function SignUpScreen() {
                                                 onChange={handleChange}
                                                 value={formValues.mobile}
                                                 className="grey-inputs"
+                                                isInvalid={errors?.mobile}
                                             />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
                                         </Form.Group>
                                         <Form.Group className='my-3'>
                                             <Form.Check

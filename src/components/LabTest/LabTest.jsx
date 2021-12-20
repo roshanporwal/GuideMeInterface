@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
     MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdStickyNote2, MdUploadFile,MdFormatListNumbered,
+    MdOutlinePersonAdd, MdUploadFile,MdFormatListNumbered,
     MdOutlineApartment,MdCall,MdTransgender,MdPayment
 } from 'react-icons/md';
 import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
@@ -11,10 +11,38 @@ import {IoHomeOutline} from 'react-icons/io5'
 import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
+import { validationSchema } from './labValidation';
 function LabTest({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
+    const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        reports:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+        dateTwo:"",
+    });
 
+    const validate = async (values) => {
+        try {
+            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
+            
+            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
+            
+            await validationSchema.validate(values, { abortEarly: false });
+            return {};
+        } catch (err) {
+            
+            let errObj = {};
+             for (let { path, message } of err.inner) {
+                errObj[path] = message;
+            }
+            
+            return errObj;
+        }
+    }; 
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -42,27 +70,34 @@ function LabTest({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
-        const formData = new FormData();
-        let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        const err = await validate(formValues);
+        setErrors(err);
+        console.log(err)
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+                e.preventDefault();
+                console.log(formValues);
+                const formData = new FormData();
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+                let data = localStorage.getItem("login")
+                data = JSON.parse(data)
+
+                formValues.patient_id = data._id;
+                formValues.patient_name = data.name;
+                formValues.type = "lab";
 
 
-        if (reports !== undefined) {
-            for (const tp of reports) {
-                formData.append('patient_reports', tp);
-            }
+                if (reports !== undefined) {
+                    for (const tp of reports) {
+                        formData.append('patient_reports', tp);
+                    }
+                }
+                formData.append('insurance_card_copy', insurance);
+                formData.append('formValues', JSON.stringify(formValues));
+
+                const abc = await auth_service.createlab(data.login_id, formData)
+                console.log(abc)
+            handleModalShow();
         }
-        formData.append('insurance_card_copy', insurance);
-        formData.append('formValues', JSON.stringify(formValues));
-
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
-        console.log(createNewConsulation)
-        handleModalShow();
 
     }
     const handleFiles = e => {
@@ -87,7 +122,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -132,11 +170,14 @@ function LabTest({handleModalShow}) {
                                 customInput={<DatePickerInput text='Date and Time of Delivery' />}
                             />
                         </div>
+                        {dateerrors.dateOne ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
-                    <div className='d-flex align-items-start justify-content-center mb-2'>
-                        <div className="mx-1 mb-1">
+                    <div className='d-flex align-items-start justify-content-center mt-2'>
+                        <div className="mx-1">
                             <IoHomeOutline /> 
                         </div>
                         <div>
@@ -151,11 +192,14 @@ function LabTest({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="flat-number"
+                            name="flat_number"
                             placeholder='Flat Number / Apartment Number'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.flat_number}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.flat_number}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -169,7 +213,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Building Name (Mandatory)'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.building_name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.building_name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -183,7 +230,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Street Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.street_name}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.street_name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -197,7 +247,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
+                           isInvalid={errors?.location}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -211,7 +264,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Emirates'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.emirates}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.emirates}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -225,7 +281,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Nearest Landmark (Optional)'
                             onChange={handleChange}
                             className="global-inputs"
+                           isInvalid={errors?.landmark}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.landmark}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -235,11 +294,14 @@ function LabTest({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="symptoms"
+                            name="mobile"
                             placeholder='Alternate Mobile Number'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.mobile}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                  <div className='col-10 col-md-5'>
@@ -253,7 +315,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Select your requirement '
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.requirements}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.requirements}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -267,7 +332,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Prefered Gender of Care Giver '
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.preffered_gender}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preffered_gender}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -281,7 +349,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Language of the caregiver'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.preffered_language}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preffered_language}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -295,7 +366,10 @@ function LabTest({handleModalShow}) {
                             placeholder='Mode of Payment'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.payment_type}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.payment_type}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 
@@ -316,6 +390,9 @@ function LabTest({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
+                        {fileerrors.insurance ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                        : null}   
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
