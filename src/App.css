@@ -718,3 +718,27 @@
   content: "•";
   padding-right:10px;
 }
+
+.select-branch{
+    background-color: #f8f9fa;
+    color: #1C247C;
+    font-weight: 900;
+    border: none;
+}
+.show>.btn-primary.dropdown-toggle {
+    color: #1C247C;
+    font-weight: 900;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+.select-branch:focus{   
+        outline: 0;
+        font-weight: 900;
+    background-color: #f8f9fa;
+    color: #1b4777;
+}
+.select-branch:hover{   
+    color: #1b4777;
+    font-weight: 900;
+    background-color: #f8f9fa;
+}
