@@ -1,10 +1,31 @@
-import React from 'react';
+import React , { useState ,useEffect} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import {Link, useHistory } from 'react-router-dom';
 import './style.css';
 
 export default function HospitalNavbar(props) {
   const history = useHistory();
+  const [allhospital, setAllhospital] = useState([])
+
+
+  useEffect(() => {
+   
+       
+    fetchData()
+  }, []);
+
+  async function fetchData() {
+    let data = localStorage.getItem("allhospital")
+   if(data===null){
+     return 
+   }
+   const  islogin = JSON.parse(data)
+   setAllhospital(islogin)
+  }
+  async function onSubmit(data) {
+    localStorage.setItem('login', JSON.stringify(data));
+    window.location.reload();
+  }
 
   function logout() {
    localStorage.clear()
