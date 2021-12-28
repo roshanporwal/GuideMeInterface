@@ -74,7 +74,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         }
         const getenquries = await auth_service.gethospitals(data.login_id)
         setHospitals(getenquries.payload)
-        console.log(getenquries.payload)   
+        console.log(getenquries.payload)
     }
 
     const handleSubmit = async (event) => {
@@ -100,7 +100,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 url: `${constants.clientBaseUrl}patient_view?id=` + enqurie_data[0].id,
                 email: enqurie_data[0].patient_email,
                 enq_id: enqurie_data[0]._id,
-                name:enqurie_data[0].patient_name
+                name: enqurie_data[0].patient_name
             }
             const getenquries = await auth_service.sendmail(data.login_id, url)
             console.log(getenquries.payload)
@@ -117,17 +117,17 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
     };
     const DownloadReports = (element) => {
-          window.open (element,'_blank')  
+        window.open(element, '_blank')
     }
     const viewInsurance = () => {
         console.log(enqurie_data[0]);
-        if(enqurie_data[0].insurance_card_copy.length === 0){
-            return  alert("No reports found")
+        if (enqurie_data[0].insurance_card_copy.length === 0) {
+            return alert("No reports found")
         }
         enqurie_data[0].insurance_card_copy.forEach(element => {
-          window.open (element,'_blank')  
+            window.open(element, '_blank')
         });
-         //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
+        //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
     }
 
     async function wonandloss(wonorloss) {
@@ -138,16 +138,16 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             if (wonandloss.payload) {
                 window.location.reload();
             }
-        } else if(wonorloss === "lost") {
+        } else if (wonorloss === "lost") {
             const patient_lost_reason = lossreason;
             const wonandloss = await auth_service.loss(enqurie_data[0]._id, data.login_id, patient_lost_reason);
             if (wonandloss.payload) {
                 window.location.reload();
             }
         }
-        else if (wonorloss === "reason"){
+        else if (wonorloss === "reason") {
             setShowReason(!showreason);
-            return ;
+            return;
         }
     }
     const ratingChanged = (newRating) => {
@@ -165,7 +165,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
             const res = {
                 feedbackmessage: feedbackmessage,
-                feedbackrating: rating
+                feedbackrating: rating,
+                patient_name: enqurie_data[0].patient_name,
+                current_diagnosis: enqurie_data[0].current_diagnosis,
+                hospital_name: enqurie_data[0].hospital_name,
+                id: enqurie_data[0]._id
             }
             const feedback = await auth_service.feedback(enqurie_data[0]._id, data.login_id, res)
             if (feedback.payload) {
@@ -182,35 +186,35 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     else
         return (
             <>
-            {showreason ? (
-                <Modal show={showreason} onHide={()=>wonandloss("reason")}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Mark Patient Lost</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form.Group >
-                            <Form.Label>Loss Reason</Form.Label>
-                            <Form.Control
-                                required
-                                style={{ border: "2px solid #164473", borderRadius: 10 }}
-                                type="text"
-                                name="patient_name"
-                                value={lossreason}
-                                onChange={handleReason}
-                            />
-                        </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={()=>wonandloss("reason")}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={()=>wonandloss("lost")}>
-                            Mark Lost
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            ) : null}
-            
+                {showreason ? (
+                    <Modal show={showreason} onHide={() => wonandloss("reason")}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Mark Patient Lost</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Group >
+                                <Form.Label>Loss Reason</Form.Label>
+                                <Form.Control
+                                    required
+                                    style={{ border: "2px solid #164473", borderRadius: 10 }}
+                                    type="text"
+                                    name="patient_name"
+                                    value={lossreason}
+                                    onChange={handleReason}
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => wonandloss("reason")}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={() => wonandloss("lost")}>
+                                Mark Lost
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                ) : null}
+
                 <ADMIN_NAVBAR />
                 <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -220,7 +224,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                             </div>
                             <div className="modal-body">
-                                <Form onSubmit={()=>wonandloss("won")}>
+                                <Form onSubmit={() => wonandloss("won")}>
                                     <Form.Group>
 
                                         <Form.Control
@@ -256,7 +260,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} type="submit" className="btn btn-primary" onClick={()=>wonandloss("won")}>Submit</button>
+                                <button data-toggle="modal" data-target="#exampleModal" disabled={isSubmitting} type="submit" className="btn btn-primary" onClick={() => wonandloss("won")}>Submit</button>
                             </div>
                         </div>
                     </div>
@@ -276,7 +280,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p><b>Gender : </b> <span>{target.patient_gender}</span></p>
                                             <p><b>Nationality : </b> <span>{target.patient_nationality}</span></p>
                                             <p><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></p>
-                                            
+
                                         </div>
 
                                     </div>
@@ -294,7 +298,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>Transport Support Needed : {target.transport_support_needed}</p>
                                             <p>Accomodation / Other Logistic : {target.accomodation}</p>
                                             <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit}</p>
-                                            <p>Food Preferences : {target.food_preferences} </p>                                         
+                                            <p>Food Preferences : {target.food_preferences} </p>
                                         </div>
                                     </div>
                                 ))}
@@ -302,35 +306,35 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
 
                         <div className="col-md-8">
                             <div className="row">
-                            {
-                                enqurie_data.map((target, index) => (
-                                    <div key={index} className="col-md-6">{/* 
+                                {
+                                    enqurie_data.map((target, index) => (
+                                        <div key={index} className="col-md-6">{/* 
                                         <p><b>Speciality : </b>{target.speciality}</p> */}
-                                        <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
-                                        <p><b>Status : </b>{target.status} {target.status === "Lost Patients" ? (
-                                            <>
-                                                <br/>
-                                                <b>Reason :</b> 
-                                                {target.patient_lost_reason}
-                                            </>)
-                                            :null}
-                                        </p> 
-                                    </div>
-                                ))}
-                                    <div className="col-md-6">
-                                        <h2 className="rating">Please rate us!</h2>
-                                        <ReactStars
-                                            count={5}
-                                            onChange={ratingChanged}
-                                            size={42}
-                                            activeColor="#ffd700"
-                                        />
-                                    </div>    
+                                            <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                            <p><b>Status : </b>{target.status} {target.status === "Lost Patients" ? (
+                                                <>
+                                                    <br />
+                                                    <b>Reason :</b>
+                                                    {target.patient_lost_reason}
+                                                </>)
+                                                : null}
+                                            </p>
+                                        </div>
+                                    ))}
+                                <div className="col-md-6">
+                                    <h2 className="rating">Please rate us!</h2>
+                                    <ReactStars
+                                        count={5}
+                                        onChange={ratingChanged}
+                                        size={42}
+                                        activeColor="#ffd700"
+                                    />
+                                </div>
                                 {islowrating ?
                                     <div className="col-md-12">
                                         <div className="ratingBox" >
                                             <h4>We understand that there are certain areas where we need to improve our level of services further.
-                                            Please let us know where you would want to focus the most.</h4>
+                                                Please let us know where you would want to focus the most.</h4>
                                             <hr />
                                             <div>
                                                 <form>
@@ -418,38 +422,38 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 </form>
                                             </div>
                                         </div>
-                                    </div> : islowrating == null ? "" : 
-                                    <div>
-                                        <h3>Thankyou!</h3>
-                                    </div>}
-                                    <div className="offset-lg-5 col-md-2 my-2">                      
-                                         <div style={{width:"100%",letterSpecing:1}} onClick={checklowRating}  className="btn btn-warning">SEND</div>
-                                    </div>                             
+                                    </div> : islowrating == null ? "" :
+                                        <div>
+                                            <h3>Thankyou!</h3>
+                                        </div>}
+                                <div className="offset-lg-5 col-md-2 my-2">
+                                    <div style={{ width: "100%", letterSpecing: 1 }} onClick={checklowRating} className="btn btn-warning">SEND</div>
+                                </div>
                             </div>
-                             {
+                            {
                                 enqurie_data.map((target, index) => (
                                     <div className="row" key={index}>
                                         <div className="col-md-12">
                                             <div className="queryBox my-2">
-                                                <h2>Query</h2>                                              
+                                                <h2>Query</h2>
                                                 <p>{target.current_diagnosis}</p>
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             }
-                            
-                             {enqurie_data[0].reports[1] ?
-                               <div className="row m-2">
+
+                            {enqurie_data[0].reports[1] ?
+                                <div className="row m-2">
                                     <div className="col-md-5 d-flex justify-content-between">
-                                        {enqurie_data[0].reports.map((element,index) => {
-                                            
-                                            if(element.search('http://192.46.209.112:8080/download') !== -1){
-                                                
-                                            return(
-                                                <div className="DownloadButton Hover m-1" key={index}
-                                                    onClick={() => DownloadReports(element)} > Download Report
-                                                </div>)
+                                        {enqurie_data[0].reports.map((element, index) => {
+
+                                            if (element.search('http://192.46.209.112:8080/download') !== -1) {
+
+                                                return (
+                                                    <div className="DownloadButton Hover m-1" key={index}
+                                                        onClick={() => DownloadReports(element)} > Download Report
+                                                    </div>)
                                             }
                                             return null;
                                         })}
@@ -463,21 +467,21 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                                 : null}
-                                {
+                            {
                                 enqurie_data.map((target, index) => (
                                     <div className="row" key={index}>
                                         <div className="col-md-12">
                                             <div className="diagnosisBox my-3">
                                                 <h2>Current Diagnosis</h2>
-                                                <p>{target.current_diagnosis}</p>                                          
+                                                <p>{target.current_diagnosis}</p>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
-                                 
+
                             {show_quota ? null :
                                 <div className="row">
-                                    <div className="col-md-12">   
+                                    <div className="col-md-12">
                                         <label className="form-label">Select Hospital(Please Select any 5)</label>
                                         <MultiSelect
                                             options={hospitals}
@@ -493,16 +497,16 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 </div>
                 {show_quota ?
                     <div className="container my-5">
-                        <div className="row mb-3" style={{background:"#164473"}} >
-                           <div className="col-md-2">{/* empty column for table headling */}</div>
+                        <div className="row mb-3" style={{ background: "#164473" }} >
+                            <div className="col-md-2">{/* empty column for table headling */}</div>
                             {
                                 hopital_enq.map((target, index) => (
-                                <div className="col-md-2" key={index} >
-                                    <h2 className="HospitalTitle">{target.hospital_name}</h2>
-                                </div>
-                             ))}
+                                    <div className="col-md-2" key={index} >
+                                        <h2 className="HospitalTitle">{target.hospital_name}</h2>
+                                    </div>
+                                ))}
                         </div>
-                       
+
                         <div className="row" >
                             <div className="col-md-2" style={{ textAlign: "center" }}>
                                 <p><b>Estimate Price</b></p>
@@ -539,7 +543,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 <p>{target.free_other_speciality_consultant}</p>
                                                 {enqurie_data[0].status === "Awaiting From Patients" ?
-                                                    <button className="JoinButton Hover" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                                    <button className="JoinButton Hover" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                         onClick={() =>
                                                             setFormValue(prevState => ({
                                                                 ...prevState,
@@ -575,13 +579,13 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             </div> : null
                         }
                         <div className="py-5">
-                        {enqurie_data[0].status === "Awaiting From Hospital" ?
-                            <div className="col-md-12 my-3">
-                                <button style={{width:"100%"}} className="JoinButton Hover" onClick={() => handleSubmit("after")}>Forward to Patient</button>
-                            </div>
-                            :(enqurie_data[0].status === "Lost Patients" || enqurie_data[0].status === "Won Patients" )? null: <div className="col-md-12 ">
-                                <button style={{width:"100%",backgroundColor:'orange'}} className="JoinButton Hover" onClick={()=>wonandloss("reason")}>Patient Lost</button>
-                            </div>}
+                            {enqurie_data[0].status === "Awaiting From Hospital" ?
+                                <div className="col-md-12 my-3">
+                                    <button style={{ width: "100%" }} className="JoinButton Hover" onClick={() => handleSubmit("after")}>Forward to Patient</button>
+                                </div>
+                                : (enqurie_data[0].status === "Lost Patients" || enqurie_data[0].status === "Won Patients") ? null : <div className="col-md-12 ">
+                                    <button style={{ width: "100%", backgroundColor: 'orange' }} className="JoinButton Hover" onClick={() => wonandloss("reason")}>Patient Lost</button>
+                                </div>}
                         </div>
                     </div> : null}
             </>
