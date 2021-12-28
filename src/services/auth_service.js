@@ -48,6 +48,10 @@ function getenquriesbyid(login_id, _id) {
   const req = instance.get(`/enquries/${login_id}/id?_id=${_id}`);
   return req
 }
+function getfeedback(login_id, _id) {
+  const req = instance.get(`/enquries/${login_id}/allfeedback?_id=${_id}`);
+  return req
+}
 function getenquriesbyid_patient(_id) {
   const req = instance.get(`/sendmail/get?id=${_id}`);
   return req
@@ -148,6 +152,7 @@ export {
   uploadexcelfile,
   getenquries,
   getenquriesbyid,
+  getfeedback,
   gethospitals,
   updateenquries,
   getdoctorbyhospital,
