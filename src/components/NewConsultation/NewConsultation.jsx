@@ -160,7 +160,7 @@ function NewConsultation({handleModalShow}) {
 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -191,7 +191,7 @@ function NewConsultation({handleModalShow}) {
                             onClick={handlePatientShow}
                         />
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">

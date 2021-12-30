@@ -62,7 +62,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Second Opinion"
                                         item_img={SecLogo}
-                                        item_link={"/second-opinion"}
+                                        item_link={"/free-opinion"}
                                         navigate = {navigate}
                                     />    
                                 </Col>

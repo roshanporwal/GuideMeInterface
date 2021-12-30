@@ -109,6 +109,27 @@ const hiddenFileInputInsurance = React.useRef(null);
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
+                 
+                <div className='col-5'>
+                    <Form.Group>
+                        <Form.Check
+                            type='checkbox'
+                            name="Opinion"
+                            label='Free Surgical Second Opinion Within The Country'
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-5'>
+                    <Form.Group>
+                        <Form.Check
+                            type='checkbox'
+                            name="Opinion"
+                            label='International Expert Opinion'
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -126,7 +147,7 @@ const hiddenFileInputInsurance = React.useRef(null);
 
                     </Form.Group>
                 </div>
-                <div className='col-10'>
+               {/*  <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdInfoOutline />
@@ -140,8 +161,8 @@ const hiddenFileInputInsurance = React.useRef(null);
                         />
 
                     </Form.Group>
-                </div>
-                <div className='col-10'>
+                </div> */}
+                {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdRefresh />
@@ -172,13 +193,13 @@ const hiddenFileInputInsurance = React.useRef(null);
                         />
 
                     </Form.Group>
-                </div>
-                <div className='col-10'>
-                    <Form.Group>
+                </div> */}
+                {/* <div className='col-10'>
+                    <Form.Group> */}
                             {/* <div className="prepend-icon">
                                 <MdStickyNote2 />
                             </div> */}
-                            <Form.Check
+                            {/* <Form.Check
                                 type='checkbox'
                                 name="doctor_specialization_recommend"
                                 label='Not sure which doctor specialization - kindly recommend'
@@ -186,7 +207,7 @@ const hiddenFileInputInsurance = React.useRef(null);
                                 className="global-inputs-check form-control"
                             />
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">

@@ -124,7 +124,7 @@ function RTPCR({handleModalShow}) {
 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -137,8 +137,8 @@ function RTPCR({handleModalShow}) {
                             className="global-inputs"
                         />
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlinePersonAdd />
@@ -151,7 +151,7 @@ function RTPCR({handleModalShow}) {
                             className="global-inputs"
                         />
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">

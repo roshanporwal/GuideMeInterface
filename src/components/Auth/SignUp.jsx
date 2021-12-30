@@ -4,7 +4,7 @@ import { Container, Row ,Col, Form} from 'react-bootstrap';
 import Logo from '../../assets/guidemedoc-logo.png';
 import HeroImage from '../../assets/login-hero.png';
 import {FaUserAlt} from 'react-icons/fa'
-import {MdCall} from 'react-icons/md'
+import {MdCall,MdUploadFile,MdEmail,MdTransgender,MdFlag} from 'react-icons/md'
 import './Auth.css';
 import { useNavigate } from 'react-router-dom';
 import * as auth_service from "../../service/auth_service";
@@ -63,12 +63,14 @@ function SignUpScreen() {
             <Container>
                 <div className="content-container">
                     <div className="row  align-items-center justify-content-center">
-                        <div className='col-md-4 col-11 offset-md-1 mt-5 mt-lg-0'>
+                        <div className='col-md-4 mt-5 mt-lg-0'>
                             <div className="login-form-container d-flex flex-column align-items-center">
                                 <div className='sub-heading mt-3 mb-2'>
-                                    <p>Create An Account</p>
+                                    <h5>Create An Account</h5>
                                 </div>
                                 <Form onSubmit={e => handleSubmit(e)} className="login-form">                                        
+                                <div className="row  align-items-center justify-content-center">
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
                                         <Form.Group className='my-3'>
                                             <div className="prepend-icon-auth">
                                                 <FaUserAlt />
@@ -76,14 +78,16 @@ function SignUpScreen() {
                                             <Form.Control 
                                                 type='text'
                                                 name="name"
-                                                placeholder='Enter Your Full Name'
+                                                placeholder='Full Name'
                                                 onChange={handleChange}
                                                 value={formValues.name}
-                                                className="grey-inputs"
+                                                className="signup-inputs"
                                                 isInvalid={errors?.name}
                                             />
                                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
                                         </Form.Group>
+                                    </div>
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
                                         <Form.Group className='my-3'>
                                             <div className="prepend-icon-auth">
                                                 <MdCall />
@@ -91,14 +95,119 @@ function SignUpScreen() {
                                             <Form.Control 
                                                 type='text'
                                                 name="mobile"
-                                                placeholder='Enter Your Mobile Number'
+                                                placeholder='Mobile Number'
                                                 onChange={handleChange}
                                                 value={formValues.mobile}
-                                                className="grey-inputs"
+                                                className="signup-inputs"
                                                 isInvalid={errors?.mobile}
                                             />
                                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
                                         </Form.Group>
+                                    </div> 
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                        <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                                <MdEmail/>
+                                            </div>
+                                            <Form.Control 
+                                                type='text'
+                                                name="emailid"
+                                                placeholder='Email Id'
+                                                onChange={handleChange}
+                                                value={formValues.emailid}
+                                                className="signup-inputs"
+                                                isInvalid={errors?.emailid}
+                                            />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.emailid}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </div>  
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                        <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                            <FaUserAlt />
+                                            </div>
+                                            <Form.Control 
+                                                type='text'
+                                                name="age"
+                                                placeholder='Age'
+                                                onChange={handleChange}
+                                                value={formValues.age}
+                                                className="signup-inputs"
+                                                isInvalid={errors?.age}
+                                            />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.age}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </div> 
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                        <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                                <MdTransgender />
+                                            </div>
+                                            <Form.Control 
+                                                type='text'
+                                                name="gender"
+                                                placeholder='Gender'
+                                                onChange={handleChange}
+                                                value={formValues.gender}
+                                                className="signup-inputs"
+                                                isInvalid={errors?.gender}
+                                            />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.gender}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </div> 
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                        <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                            <FaUserAlt />
+                                            </div>
+                                            <Form.Control 
+                                                type='text'
+                                                name="referrefby"
+                                                placeholder='Pt referred by'
+                                                onChange={handleChange}
+                                                value={formValues.referrefby}
+                                                className="signup-inputs"
+                                                isInvalid={errors?.referrefby}
+                                            />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.referrefby}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </div> 
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                        <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                                <MdFlag />
+                                            </div>
+                                            <Form.Control 
+                                                type='text'
+                                                name="nationality"
+                                                placeholder='Nationality'
+                                                onChange={handleChange}
+                                                value={formValues.nationality}
+                                                className="signup-inputs"
+                                                isInvalid={errors?.nationality}
+                                            />
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.nationality}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </div>  
+                                    <div className='col-md-6 mt-5 mt-lg-0'>
+                                         <Form.Group className='my-3'>
+                                            <div className="prepend-icon-auth">
+                                            <MdUploadFile />
+                                            </div>                
+                                            <div  role="button" className='global-file-input'>
+                                                <p>Upload Documents</p>
+                                            </div>
+                                            <input
+                                                type="file"
+                                                name="insurance"  
+                                                accept="image/*,application/pdf"
+                                                style={{ display: 'none' }}
+                                            />      
+                                        </Form.Group>   
+                                    </div>  
+                                </div>        
+                                        
+                                        
                                         <Form.Group className='my-3'>
                                             <Form.Check
                                                 name="terms-condition"

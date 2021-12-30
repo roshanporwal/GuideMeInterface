@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { MdCall } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { loginvalidationSchema } from '../Auth/authValidation';
 import * as auth_service from "../../service/auth_service";
+
 
 function InnerLayout(props) {
     const data = JSON.parse(localStorage.getItem("login")) 
     
     const [errors, setErrors] = useState();
 
-
+    const navigate = useNavigate();
+    
     const [formValues,setFormValues] = useState({
         mobile:""
     });
@@ -86,6 +89,9 @@ function InnerLayout(props) {
                                                     <input className="login-submit" type="submit" value="LOGIN" />
                                                 </div>
                                             </Form>
+                                            <div className='text-center mt-4'>
+                                                    <button className="sign-up-button"  onClick={() => navigate("/sign-up")}>SIGN UP</button>
+                                                </div>   
                                         </div>
                                         : (
                                             <div>
@@ -96,7 +102,7 @@ function InnerLayout(props) {
                                                     <Form.Control 
                                                         type='text'
                                                         name="mobile"
-                                                        placeholder='Enter Your Mobile Number'
+                                                        placeholder='Enter Your name'
                                                         value={data.name}
                                                         className="grey-inputs"
                                                         disabled={true}
@@ -115,6 +121,7 @@ function InnerLayout(props) {
                                                         disabled={true}
                                                     />
                                                 </Form.Group>
+                                                
                                             </div>
                                         ) 
                                     }

@@ -38,7 +38,7 @@ function SecondOpinion() {
     return (
         <div /* className="form-container" */>
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-                <div className='col-12'>
+                {/* <div className='col-12'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaRegUser />
@@ -65,8 +65,8 @@ function SecondOpinion() {
                             className="global-inputs"
                         />
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-6'>
+                </div> */}
+                {/* <div className='col-10 col-md-6'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlinePersonAdd />
@@ -82,14 +82,14 @@ function SecondOpinion() {
                 </div>
                 <div className='text-center my-4'>
                     <input className="form-button" type="submit" value="SUBMIT" />
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-6'>
                     <div className="large-buts" role="button" onClick={() => navigate('/free-opinion')}>
                         <img src={FreeOpinion} alt="im"/>
                         <p>Free Surgical Second <br/> Opinion Within The Country</p>
                     </div>
                 </div>
-                <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-6'>
                     <div className="large-buts" role="button" onClick={() => navigate('/international-opinion')}>
                         <img src={InternationalOpinion} alt="im"/>
                         <p>International <br/>Expert Opinion</p>
