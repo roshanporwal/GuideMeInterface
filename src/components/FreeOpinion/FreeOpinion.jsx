@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState,useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -22,6 +22,22 @@ const hiddenFileInputInsurance = React.useRef(null);
         dateOne:"",
         dateTwo:"",
     });
+
+    useEffect(() => {
+
+        fetchData()
+    }, []);
+
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+        formValues = data
+        }
+        
+       
+
+    }
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -94,7 +110,7 @@ const hiddenFileInputInsurance = React.useRef(null);
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
-            const abc = await auth_service.createSecondConsulation(data.login_id, formData)
+            const abc = await auth_service.createNewenqurire(data.login_id, formData)
             console.log(abc)
         }
     }

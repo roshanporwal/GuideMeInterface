@@ -76,7 +76,7 @@ function MRI({handleModalShow}) {
                 formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
-                const abc = await auth_service.createDiagnostics(data.login_id, formData)
+                const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 console.log(abc)
                 handleModalShow();
         }

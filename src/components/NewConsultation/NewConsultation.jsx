@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState ,useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -57,6 +57,21 @@ function NewConsultation({handleModalShow}) {
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+    useEffect(() => {
+
+        fetchData()
+    }, []);
+
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+        setFormValues(data) 
+        }
+        
+       
+
+    }
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -70,11 +85,10 @@ function NewConsultation({handleModalShow}) {
         console.log(err)
         if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
             const formData = new FormData();
-            let data = localStorage.getItem("login")
+            let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
-
-            formValues.patient_id = data._id;
-            formValues.patient_name = data.name;
+            delete formValues._id
+            delete formValues.login_id
             formValues.type = "new_consulation";
 
 
@@ -86,7 +100,7 @@ function NewConsultation({handleModalShow}) {
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
-            const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
+            const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
             console.log(createNewConsulation)
             handleModalShow();
         }

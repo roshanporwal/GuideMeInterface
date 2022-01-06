@@ -11,11 +11,17 @@ import * as auth_service from "../../service/auth_service";
 import {signupvalidationSchema} from "./authValidation";
 function SignUpScreen() {
     const navigate = useNavigate();
+    const [patient_document, setPatient_document] = useState()
+    const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
+    const [insurance, setInsurance] = useState();
 
     const [formValues,setFormValues] = useState({
         mobile:""
     });
+    const handleFileReportsClick = event => {
+        hiddenFileInputReports.current.click();
+    };
 
     const handleChange = (e) => {
         let {name,value} = e.target;
@@ -35,17 +41,25 @@ function SignUpScreen() {
             return errObj;
         }
     }; 
+    const handleFiles = e => {
+        const { name } = e.currentTarget
+        if (name === 'document') {
+            setPatient_document(e.target.files[0])
+        } else {
+            setInsurance(e.target.files[0])
+        }
+    }
     const handleSubmit =async (e) => {
         e.preventDefault();
         console.log(formValues);
         const err = await validate(formValues);
         setErrors(err);
-        if(Object.keys(err).length === 0){
-            const req ={
-                login_id:formValues.mobile,
-                name:formValues.name
-            }
-            const createaccount = await auth_service.createaccount( req)
+       if(Object.keys(err).length === 0){
+        const formData = new FormData();
+        formData.append('insurance_card_copy', insurance);
+        formData.append('formValues', JSON.stringify(formValues));
+
+            const createaccount = await auth_service.createaccount( formData)
             console.log(createaccount)
         }
     }
@@ -194,15 +208,17 @@ function SignUpScreen() {
                                             <div className="prepend-icon-auth">
                                             <MdUploadFile />
                                             </div>                
-                                            <div  role="button" className='global-file-input'>
-                                                <p>Upload Documents</p>
+                                            <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
+                                                <p>Upload Insurance</p>
                                             </div>
                                             <input
-                                                type="file"
-                                                name="insurance"  
-                                                accept="image/*,application/pdf"
-                                                style={{ display: 'none' }}
-                                            />      
+                                            type="file"
+                                            name="insurance"
+                                            ref={hiddenFileInputReports}
+                                            accept="image/*,application/pdf"
+                                            style={{ display: 'none' }}
+                                            onChange={handleFiles}
+                                            />  
                                         </Form.Group>   
                                     </div>  
                                 </div>        

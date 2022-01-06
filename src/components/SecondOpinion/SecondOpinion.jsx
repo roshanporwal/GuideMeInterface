@@ -31,7 +31,7 @@ function SecondOpinion() {
 
         formData.append('formValues', JSON.stringify(formValues));
 
-        const createNewConsulation = await auth_service.createNewConsulation(data.login_id, formData)
+        const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
         console.log(createNewConsulation)
     }
 
