@@ -44,9 +44,10 @@ function LoginScreen() {
                 login_id:formValues.mobile,
 
             }
-            const login = await auth_service.login( req)
+            const login = await auth_service.login(req)
             if(login.payload){
                 localStorage.setItem('login_patient', JSON.stringify(login.payload));
+                window.location = '/';
             }
             console.log(login)
             

@@ -80,9 +80,6 @@ function NewConsultation({handleModalShow}) {
             data = JSON.parse(data)
         setFormValues({ ...formValues, name: data.name });
         }
-        
-       
-
     }
 
     const handleChange = (e) => {

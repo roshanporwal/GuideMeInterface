@@ -1,7 +1,12 @@
 import * as yup from 'yup';
+
+const mobileReg = /^(\+\d{1,3}[- ]?)?\d{10}$/
+const nameReg = /^[a-z ,.'-]+$/i
+const emailReg = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/
+
 export const loginvalidationSchema = yup.object().shape({
         //patient_email: yup.string().email().required("Patient email is required"),
-        mobile: yup.string().required("Mobile is required"),
+        mobile: yup.string().required("Mobile is required").matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
         //patient_age: yup.string().required("Patient age is required"),
         // patient_gender: yup.string().required("Patient gender is required"),
         // current_diagnosis: yup.string().required("Patient current diagnosis is required"),
@@ -13,13 +18,13 @@ export const loginvalidationSchema = yup.object().shape({
         // transport_support_needed: yup.string().required("Please select an option"),
 })
 export const signupvalidationSchema = yup.object().shape({
-        name: yup.string().required("Name is required"),
-        mobile: yup.string().required("Mobile is required"),
-        emailid: yup.string().email().required("Email is required"),
-        age: yup.string().required("Age is required"),
+        name: yup.string().required("Name is required").matches(nameReg, {message:'Please Enter a valid Name',excludeEmptyString:true}),
+        mobile: yup.string().required("Mobile is required").matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
+        emailid: yup.string().required("Email is required").matches(emailReg, {message:'Please Enter a valid Email-ID',excludeEmptyString:true}),
+        age: yup.string().required("Age is required").test("age",'Please Enter a valid Age',(age) => {if(age <0 || age > 200) {return false;}else {return true}}),
         gender: yup.string().required("Gender is required"),
         referrefby: yup.string().required("Referref By is required"),
-        nationality: yup.string().required("Referref By is required"),
+        nationality: yup.string().required("Nationality is required"),
         // insurance_card_copy: yup.mixed().required("Patient insurance card copy is required"),
         // airport_transfer_needed: yup.string().required("Please select an option"),
         // ambulance_support_needed: yup.string().required("Please select an option"),

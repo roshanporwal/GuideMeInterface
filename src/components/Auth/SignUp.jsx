@@ -14,21 +14,30 @@ function SignUpScreen() {
     const [patient_document, setPatient_document] = useState()
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        document:"",
+        terms:""
+    });
+    const [terms,setTerms] = useState(false);
     const [insurance, setInsurance] = useState();
-
     const [formValues,setFormValues] = useState({
         mobile:""
     });
     const handleFileReportsClick = event => {
         hiddenFileInputReports.current.click();
     };
-
+    const handleTermsCheckBox = (e) => {
+        setTerms(e.target.checked);
+    }
     const handleChange = (e) => {
         let {name,value} = e.target;
         setFormValues({...formValues,[name]:value});
     }
      const validate = async (values) => {
         try {
+            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/insurance:insurance === undefined ? "Insurance File is Required" : ""});
+            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/terms:terms === false ? "CheckBox is Required" : ""});
             await signupvalidationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
@@ -59,12 +68,11 @@ function SignUpScreen() {
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
 
-            const createaccount = await auth_service.createaccount( formData)
+            const createaccount = await auth_service.createaccount(formData)
             console.log(createaccount)
+            window.location = "/log-in"
         }
     }
-
-
     return ( 
         <>
             <div className='container-fluid'>
@@ -158,15 +166,21 @@ function SignUpScreen() {
                                                 <MdTransgender />
                                             </div>
                                             <Form.Control 
-                                                type='text'
+                                                as='select'
                                                 name="gender"
                                                 placeholder='Gender'
                                                 onChange={handleChange}
                                                 value={formValues.gender}
                                                 className="signup-inputs"
                                                 isInvalid={errors?.gender}
-                                            />
+                                            >
+                                                <option value="">Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </Form.Control>
                                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.gender}</Form.Control.Feedback>
+                                            
                                         </Form.Group>
                                     </div> 
                                     <div className='col-md-6 mt-5 mt-lg-0'>
@@ -211,27 +225,32 @@ function SignUpScreen() {
                                             <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
                                                 <p>Upload Insurance</p>
                                             </div>
-                                            <input
+                                            <Form.Control
                                             type="file"
                                             name="insurance"
                                             ref={hiddenFileInputReports}
                                             accept="image/*,application/pdf"
                                             style={{ display: 'none' }}
                                             onChange={handleFiles}
+                                            isInvalid={fileerrors?.insurance}
                                             />  
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{fileerrors?.insurance}</Form.Control.Feedback>
                                         </Form.Group>   
                                     </div>  
                                 </div>        
                                         
                                         
-                                        <Form.Group className='my-3'>
-                                            <Form.Check
-                                                name="terms-condition"
-                                                value={formValues.mobile}
-                                                type="checkbox"
-                                                label="I agree to terms & conditions."
-                                            />
-                                        </Form.Group>
+                                <Form.Group className='my-3'>
+                                    <Form.Check
+                                        name="terms-condition"
+                                        value={formValues.mobile}
+                                        type="checkbox"
+                                        label="I agree to terms & conditions."
+                                        onChange = {handleTermsCheckBox}
+                                        isInvalid={fileerrors?.terms}
+                                    />
+                                     <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{fileerrors?.terms}</Form.Control.Feedback>
+                                </Form.Group>
                                     <div className='text-center mt-4'>
                                         <button className="sign-up-button">
                                             SIGN UP
