@@ -78,7 +78,7 @@ function NewConsultation({handleModalShow}) {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
             data = JSON.parse(data)
-        setFormValues({ ...formValues, name: data.name });
+            setFormValues({ ...formValues, name: data.name });
         }
     }
 

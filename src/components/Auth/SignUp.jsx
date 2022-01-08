@@ -69,7 +69,7 @@ function SignUpScreen() {
         console.log(formValues);
         const err = await validate(formValues);
         setErrors(err);
-       if(Object.keys(err).length === 0){
+       if(Object.keys(err).length === 0 && insurance !== undefined && terms === true ){
         const formData = new FormData();
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
@@ -228,7 +228,7 @@ function SignUpScreen() {
                                             <div className="prepend-icon-auth">
                                             <MdUploadFile />
                                             </div>                
-                                            <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
+                                            <div role="button" onClick={handleFileReportsClick} className='global-file-input'>
                                                 <p>Upload Insurance</p>
                                             </div>
                                             <Form.Control

@@ -1,6 +1,6 @@
 import React, { forwardRef, useState,useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
+import { FaRegUser , FaDiagnoses } from 'react-icons/fa';
 import {
     MdInfoOutline, MdOutlineCalendarToday, MdOutlineFilePresent,
     MdRefresh, MdUploadFile
@@ -10,7 +10,7 @@ import * as auth_service from "../../service/auth_service";
 import {validationSchema} from "./freeopinionValidation";
 
 function FreeOpinion({handleModalShow}) {
-const hiddenFileInputInsurance = React.useRef(null);
+    const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     
     const [errors, setErrors] = useState();
@@ -22,9 +22,12 @@ const hiddenFileInputInsurance = React.useRef(null);
         dateOne:"",
         dateTwo:"",
     });
+    const [radioErr,setRadioErr] = useState("");
 
-    
-
+    const [opinion, setOpinion] = useState("");
+    const handleOpinionChange = (e) => {
+        setOpinion(e.target.value)
+    }
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -58,7 +61,7 @@ const hiddenFileInputInsurance = React.useRef(null);
             setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
-            
+            setRadioErr(opinion === "" ? "required" : "")
             await validationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
@@ -75,8 +78,7 @@ const hiddenFileInputInsurance = React.useRef(null);
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "" && dateerrors.dateOne === "" && dateerrors.dateTwo === "")  {  
+        if(Object.keys(err).length === 0 && fileerrors.insurance === "" && dateerrors.dateOne === "" && opinion )  {  
             console.log(formValues);
             const formData = new FormData();
 
@@ -85,8 +87,10 @@ const hiddenFileInputInsurance = React.useRef(null);
 
             formValues.patient_id = data._id;
             formValues.patient_name = data.name;
-            formValues.type = "free_surgical_opinion";
-            formValues.basetype = "second_consulation"
+            formValues.type = "second_consulation";
+            formValues.basetype = opinion;
+            formValues.dateOne = DateOne
+            formValues.dateTwo = DateTwo
 
 
             if (reports !== undefined) {
@@ -97,14 +101,19 @@ const hiddenFileInputInsurance = React.useRef(null);
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
-            const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(abc)
+            const freeOpinion = await auth_service.createNewenqurire(data.login_id, formData)
+            if(freeOpinion.payload){
+                handleModalShow();
+           }else{
+               alert(freeOpinion.message)
+           }
         }
     }
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
-            setReports(e.target.files)
+            setReports(e.target.files) 
+        
         } else {
             setInsurance(e.target.files[0])
         }
@@ -112,31 +121,34 @@ const hiddenFileInputInsurance = React.useRef(null);
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-                 
-                <div className='col-5'>
-                    <Form.Group>
+               
+                    <Form.Group className="row">
                         <Form.Check
-                            type='checkbox'
+                            className='col-5 offset-1'
+                            type='radio'
+                            id = "free_surgical_opinion"
                             name="Opinion"
+                            value="free_surgical_opinion"
                             label='Free Surgical Second Opinion Within The Country'
-                            onChange={handleChange}
+                            onChange={handleOpinionChange}
                         />
-                    </Form.Group>
-                </div>
-                <div className='col-5'>
-                    <Form.Group>
                         <Form.Check
-                            type='checkbox'
+                            className='col-5'
+                            type='radio'
+                            id = "interational_expert_opinion"
                             name="Opinion"
-                            label='International Expert Opinion'
-                            onChange={handleChange}
+                            value="interational_expert_opinion"
+                            label = "International Expert Opinion"
+                            onChange={handleOpinionChange}
                         />
+                        {radioErr ? (
+                            <Form.Label className='offset-4' style = {{color:"red"}} type = "valid">Field is required</Form.Label>)
+                        : null}  
                     </Form.Group>
-                </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            <FaRegUser />
+                            {/* <FaRegUser /> */}<FaDiagnoses/>
                         </div>
                         <Form.Control
                             type='text'
@@ -244,12 +256,12 @@ const hiddenFileInputInsurance = React.useRef(null);
                                 customInput={<DatePickerInput text='Preferred date of appointment (2) (not compulsory)' />}
                             />
                         </div>
-                        {dateerrors.dateTwo ? (
+                        {/* {dateerrors.dateTwo ? (
                             <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
-                        : null}  
+                        : null}   */}
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -270,15 +282,15 @@ const hiddenFileInputInsurance = React.useRef(null);
                                 <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                             : null}    
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
                         </div>
                         <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
                             <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
-                        </div>
+                        
                         <input
                             type="file"
                             name="reports"
@@ -288,6 +300,7 @@ const hiddenFileInputInsurance = React.useRef(null);
                             onChange={handleFiles}
                             multiple
                         />
+                        </div>
                     </Form.Group>
                 </div>
                 <div className='text-center mt-4'>
