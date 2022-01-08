@@ -22,7 +22,14 @@ function SignUpScreen() {
     const [terms,setTerms] = useState(false);
     const [insurance, setInsurance] = useState();
     const [formValues,setFormValues] = useState({
-        mobile:""
+        mobile:"",
+        name:'',
+        emailid:'',
+        age:'',
+        gender:'',
+        referrefby:'',
+        nationality:'',
+
     });
     const handleFileReportsClick = event => {
         hiddenFileInputReports.current.click();
@@ -36,8 +43,7 @@ function SignUpScreen() {
     }
      const validate = async (values) => {
         try {
-            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/insurance:insurance === undefined ? "Insurance File is Required" : ""});
-            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/terms:terms === false ? "CheckBox is Required" : ""});
+            setFileErrors({terms:terms === false ? "CheckBox is Required" : "" ,insurance:insurance === undefined ? "Insurance File is Required" : ""});    
             await signupvalidationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
