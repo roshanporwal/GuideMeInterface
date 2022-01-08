@@ -23,21 +23,8 @@ const hiddenFileInputInsurance = React.useRef(null);
         dateTwo:"",
     });
 
-    useEffect(() => {
+    
 
-        fetchData()
-    }, []);
-
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if(data !== null){
-            data = JSON.parse(data)
-        formValues = data
-        }
-        
-       
-
-    }
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
@@ -93,7 +80,7 @@ const hiddenFileInputInsurance = React.useRef(null);
             console.log(formValues);
             const formData = new FormData();
 
-            let data = localStorage.getItem("login")
+            let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
 
             formValues.patient_id = data._id;
