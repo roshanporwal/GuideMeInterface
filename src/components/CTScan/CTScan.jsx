@@ -88,7 +88,27 @@ function CTScan({handleModalShow}) {
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-                <div className='col-10'>
+            <div className='col-3'>
+                    <Form.Group className="d-flex">
+                        <Form.Check
+                            type='checkbox'
+                            name="myself"
+                            label='Myself'
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-6'>
+                    <Form.Group className="d-flex">
+                        <Form.Check
+                            type='checkbox'
+                            name="myself"
+                            label='For Family'
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </div>
+              <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaRegUser />
@@ -102,7 +122,7 @@ function CTScan({handleModalShow}) {
                         />
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                 {/*  <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -115,7 +135,7 @@ function CTScan({handleModalShow}) {
                             className="global-inputs"
                         />
                     </Form.Group>
-                </div>
+                </div> 
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -129,7 +149,7 @@ function CTScan({handleModalShow}) {
                             className="global-inputs"
                         />
                     </Form.Group>
-                </div>
+                </div>*/}
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
