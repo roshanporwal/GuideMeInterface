@@ -10,7 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    let user =localStorage.getItem("login")
+    let user =localStorage.getItem("login_patient")
     user =JSON.parse(user)
    /* const state = store.getState();
     const { user } = state.appReducer;*/
@@ -42,9 +42,7 @@ instance.interceptors.response.use(
     return resp.data;
   },
   error => {
-    console.log("error",error.response.status)
-    console.log(error)
-   // localStorage.removeItem("login")
+    
    
    // window.location = '/';
     if(error.message  ==="Network Error"){
@@ -53,8 +51,7 @@ instance.interceptors.response.use(
     else if(error.response.status===401){
       localStorage.removeItem("login")
    
-       window.location = '/';
-      console.log(error.status)
+      window.location = '/'; 
     }else { 
       
       //console.log(`Error requesting url ${error.config.url}: `, error.staus);

@@ -52,9 +52,21 @@ function NewConsultation({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
-    const [DateOne, setDateOne] = useState();
-    const [DateTwo, setDateTwo] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        insurance_card_copy: [],
+        mobile:'',
+        nationality:'',
+        symptoms:'',
+        location:'',
+        preferred_hospital_doctor:'',
+        preferred_date_first:'',
+        preferred_date_second:''
+    });
+    const [dateOne, setDateOne] = useState();
+    const [dateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
     useEffect(() => {
@@ -66,7 +78,7 @@ function NewConsultation({handleModalShow}) {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
             data = JSON.parse(data)
-        setFormValues(data) 
+        setFormValues({ ...formValues, name: data.name });
         }
         
        
@@ -82,14 +94,20 @@ function NewConsultation({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
         if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
             const formData = new FormData();
             let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
-            delete formValues._id
-            delete formValues.login_id
             formValues.type = "new_consulation";
+            formValues.current_diagnosis = formValues.symptoms
+            formValues.preferred_date_first = dateOne
+            formValues.preferred_date_second =dateTwo
+            formValues.age = data.age
+            formValues.gender =data.gender
+            formValues.insurance_card_copy = data.insurance_card_copy
+            formValues.mobile =data.login_id
+            formValues.patientid = data._id
+            formValues.nationality= data.nationality
 
 
             if (reports !== undefined) {
@@ -101,26 +119,25 @@ function NewConsultation({handleModalShow}) {
             formData.append('formValues', JSON.stringify(formValues));
 
             const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(createNewConsulation)
-            handleModalShow();
+            if(createNewConsulation.payload){
+                 handleModalShow();
+            }else{
+                alert(createNewConsulation.message)
+            }
         }
 
     }
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
-            
-            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
-            
+            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
+            setDateErrors({dateOne:dateOne === undefined ? "required" : "",dateTwo:dateTwo === undefined ? "required" : "" });
             await validationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
-            
             let errObj = {};
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
             return errObj;
         }
     }; 
@@ -141,9 +158,10 @@ function NewConsultation({handleModalShow}) {
                     <Form.Group className="d-flex">
                         <Form.Check
                             type='checkbox'
-                            name="myself"
+                            name="name"
                             label='Myself'
                             onChange={handleChange}
+                            
                         />
                     </Form.Group>
                 </div>
@@ -165,10 +183,12 @@ function NewConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
+                            disabled={true}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
 
@@ -246,13 +266,13 @@ function NewConsultation({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="hospital"
+                            name="preferred_hospital_doctor"
                             placeholder='Preferred doctor/hospital/specialization'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.hospital}
+                            isInvalid={errors?.preferred_hospital_doctor}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.hospital}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_hospital_doctor}</Form.Control.Feedback>
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -262,7 +282,7 @@ function NewConsultation({handleModalShow}) {
                         </div>
                         <div>
                             <DatePicker
-                                selected={DateOne}
+                                selected={dateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
                                 customInput={<DatePickerInput text='Preferred date 1 *' />}
@@ -281,7 +301,7 @@ function NewConsultation({handleModalShow}) {
                         </div>
                         <div>
                             <DatePicker
-                                selected={DateTwo}
+                                selected={dateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
                                 customInput={<DatePickerInput text='Preferred date 2 *' />}
@@ -293,9 +313,10 @@ function NewConsultation({handleModalShow}) {
                         </div>
                     </Form.Group>
                 </div>
+                {/*
                 <div className='col-10 col-md-5'>
                     <Form.Group>
-                        <div className="prepend-icon">
+                       <div className="prepend-icon">
                             <MdUploadFile />
                         </div>
                         
@@ -313,8 +334,11 @@ function NewConsultation({handleModalShow}) {
                         {fileerrors.insurance ? (
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}    
+                     
                     </Form.Group>
                 </div>
+                        */}
+
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">

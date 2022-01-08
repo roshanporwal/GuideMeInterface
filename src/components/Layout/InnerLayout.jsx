@@ -7,14 +7,15 @@ import * as auth_service from "../../service/auth_service";
 
 
 function InnerLayout(props) {
-    const data = JSON.parse(localStorage.getItem("login")) 
+    const data = JSON.parse(localStorage.getItem("login_patient")) 
     
     const [errors, setErrors] = useState();
 
     const navigate = useNavigate();
     
     const [formValues,setFormValues] = useState({
-        mobile:""
+        mobile:"",
+        name:''
     });
 
     const handleChange = (e) => {
