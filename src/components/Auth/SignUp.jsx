@@ -24,10 +24,10 @@ function SignUpScreen() {
     const [formValues,setFormValues] = useState({
         mobile:"",
         name:'',
-        emailid:'',
+        email:'',
         age:'',
         gender:'',
-        referrefby:'',
+        referredby:'',
         nationality:'',
 
     });
@@ -73,10 +73,14 @@ function SignUpScreen() {
         const formData = new FormData();
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
-
-            const createaccount = await auth_service.createaccount(formData)
-            console.log(createaccount)
+        const createaccount = await auth_service.createaccount(formData)
+        console.log(createaccount)
+        if(createaccount.payload){
             window.location = "/log-in"
+        }
+        else{
+            alert(createaccount.message)
+        }
         }
     }
     return ( 
@@ -139,14 +143,14 @@ function SignUpScreen() {
                                             </div>
                                             <Form.Control 
                                                 type='text'
-                                                name="emailid"
+                                                name="email"
                                                 placeholder='Email Id'
                                                 onChange={handleChange}
-                                                value={formValues.emailid}
+                                                value={formValues.email}
                                                 className="signup-inputs"
-                                                isInvalid={errors?.emailid}
+                                                isInvalid={errors?.email}
                                             />
-                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.emailid}</Form.Control.Feedback>
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.email}</Form.Control.Feedback>
                                         </Form.Group>
                                     </div>  
                                     <div className='col-md-6 mt-5 mt-lg-0'>
@@ -196,14 +200,14 @@ function SignUpScreen() {
                                             </div>
                                             <Form.Control 
                                                 type='text'
-                                                name="referrefby"
+                                                name="referredby"
                                                 placeholder='Pt referred by'
                                                 onChange={handleChange}
-                                                value={formValues.referrefby}
+                                                value={formValues.referredby}
                                                 className="signup-inputs"
-                                                isInvalid={errors?.referrefby}
+                                                isInvalid={errors?.referredby}
                                             />
-                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.referrefby}</Form.Control.Feedback>
+                                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.referredby}</Form.Control.Feedback>
                                         </Form.Group>
                                     </div> 
                                     <div className='col-md-6 mt-5 mt-lg-0'>

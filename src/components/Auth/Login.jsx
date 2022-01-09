@@ -49,6 +49,9 @@ function LoginScreen() {
                 localStorage.setItem('login_patient', JSON.stringify(login.payload));
                 window.location = '/';
             }
+            else{
+                alert(login.message)
+            }
             console.log(login)
             
         }

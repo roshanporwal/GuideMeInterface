@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -58,11 +58,36 @@ function DoctorVisit({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        address:'',
+        mobile:'',
+        insurance_card_copy: [],
+    });
     const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+    
+    useEffect(() => {
+        fetchData()
+    }, []);
 
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
+    const handleAddress = (e) => {
+        let { value } = e.target;
+        setFormValues({ ...formValues, address: formValues.address +", " + value });
+    }
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -77,12 +102,20 @@ function DoctorVisit({handleModalShow}) {
                 console.log(formValues);
                 const formData = new FormData();
 
-                let data = localStorage.getItem("login")
+                let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
-                formValues.patient_name = data.name;
-                formValues.type = "physiotherapy";
+                formValues.name = data.name;
+                formValues.age = data.age;
+                formValues.gender = data.gender;
+                formValues.nationality = data.nationality;
+                formValues.email = data.email;
+                formValues.referredby = data.referredby;
+                formValues.mobile = data.login_id;            
+                formValues.insurance_card_copy = data.insurance_card_copy
+                formValues.preferred_date_first = DateOne;
+                formValues.type = "doctorhomevist";
                 formValues.basetype = "home_service"
 
 
@@ -140,10 +173,12 @@ function DoctorVisit({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
+                            disabled = {true}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
 

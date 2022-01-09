@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -54,12 +54,32 @@ function RTPCR({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        mobile:'',
+        insurance_card_copy: [],
+        current_diagnosis:''
+    });
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+    useEffect(() => {
+        fetchData()
+    }, []);
 
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -73,13 +93,24 @@ function RTPCR({handleModalShow}) {
         if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
             const formData = new FormData();
 
-            let data = localStorage.getItem("login")
+            let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
 
             formValues.patient_id = data._id;
-            formValues.patient_name = data.name;
+            formValues.name = data.name;
+            formValues.age = data.age;
+            formValues.gender = data.gender;
+            formValues.current_diagnosis = formValues.symptoms
+            formValues.nationality = data.nationality;
+            formValues.email = data.email;
+            formValues.referredby = data.referredby;
+            formValues.mobile = data.login_id;            
+            formValues.insurance_card_copy = data.insurance_card_copy
+            formValues.preferred_date_first = DateOne
+            formValues.preferred_date_second = DateTwo
             formValues.type = "rcpcrtest";
             formValues.basetype = "home_service"
+            
 
 
             if (reports !== undefined) {
@@ -87,12 +118,17 @@ function RTPCR({handleModalShow}) {
                     formData.append('patient_reports', tp);
                 }
             }
-            formData.append('insurance_card_copy', insurance);
+            // formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
-
+            console.log(formValues)
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(abc)
-            handleModalShow();
+            console.log(abc.payload)
+            if(abc.payload){
+                handleModalShow();
+            }
+            else{
+                alert(abc.message)
+            }
         }
 
     }
@@ -135,10 +171,12 @@ function RTPCR({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
+                            disabled={true}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
 
@@ -199,7 +237,7 @@ function RTPCR({handleModalShow}) {
                             placeholder='Symptoms / Conditions'
                             onChange={handleChange}
                             className="global-inputs"
-                        isInvalid={errors?.symptoms}
+                            isInvalid={errors?.symptoms}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
 
@@ -258,7 +296,7 @@ function RTPCR({handleModalShow}) {
                             : null} 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -279,8 +317,8 @@ function RTPCR({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />

@@ -70,7 +70,6 @@ function NewConsultation({handleModalShow}) {
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
     useEffect(() => {
-
         fetchData()
     }, []);
 
@@ -105,6 +104,7 @@ function NewConsultation({handleModalShow}) {
             formValues.mobile =data.login_id
             formValues.patientid = data._id
             formValues.nationality= data.nationality
+            
 
 
             if (reports !== undefined) {
@@ -114,10 +114,11 @@ function NewConsultation({handleModalShow}) {
             }
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
-
+            console.log(formValues)
             const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
+            console.log(createNewConsulation.payload)
             if(createNewConsulation.payload){
-                 handleModalShow();
+                handleModalShow();
             }else{
                 alert(createNewConsulation.message)
             }

@@ -12,6 +12,7 @@ import {validationSchema} from "./freeopinionValidation";
 function FreeOpinion({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
+
     
     const [errors, setErrors] = useState();
     const [fileerrors,setFileErrors] = useState({
@@ -44,7 +45,16 @@ function FreeOpinion({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        mobile:'',
+        insurance_card_copy: []
+    });
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
@@ -86,11 +96,18 @@ function FreeOpinion({handleModalShow}) {
             data = JSON.parse(data)
 
             formValues.patient_id = data._id;
-            formValues.patient_name = data.name;
+            formValues.name = data.name;
+            formValues.age = data.age;
+            formValues.gender = data.gender;
+            formValues.nationality = data.nationality;
+            formValues.email = data.email;
+            formValues.referredby = data.referredby;
+            formValues.mobile = data.login_id;
+            formValues.insurance_card_copy = data.insurance_card_copy
             formValues.type = "second_consulation";
             formValues.basetype = opinion;
-            formValues.dateOne = DateOne
-            formValues.dateTwo = DateTwo
+            formValues.preferred_date_first = DateOne
+            formValues.preferred_date_second = DateTwo
 
 
             if (reports !== undefined) {
@@ -98,10 +115,11 @@ function FreeOpinion({handleModalShow}) {
                     formData.append('patient_reports', tp);
                 }
             }
-            formData.append('insurance_card_copy', insurance);
+            // formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
             const freeOpinion = await auth_service.createNewenqurire(data.login_id, formData)
+            console.log(freeOpinion);
             if(freeOpinion.payload){
                 handleModalShow();
            }else{
@@ -152,13 +170,13 @@ function FreeOpinion({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="condition"
+                            name="current_diagnosis"
                             placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared)'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.condition}
+                            isInvalid={errors?.current_diagnosis}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.condition}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>

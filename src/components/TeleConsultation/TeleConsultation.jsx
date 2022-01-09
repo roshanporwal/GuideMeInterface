@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -54,12 +54,32 @@ function TeleConsultation({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        mobile:'',
+        insurance_card_copy: [],
+        current_diagnosis:''
+    });
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+    useEffect(() => {
+        fetchData()
+    }, []);
 
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -74,13 +94,23 @@ function TeleConsultation({handleModalShow}) {
             console.log(formValues);
             const formData = new FormData();
 
-            let data = localStorage.getItem("login")
+            let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
 
             formValues.patient_id = data._id;
-            formValues.patient_name = data.name;
+            formValues.name = data.name;
+            formValues.age = data.age;
+            formValues.gender = data.gender;
+            formValues.nationality = data.nationality;
+            formValues.email = data.email;
+            formValues.referredby = data.referredby;
+            formValues.current_diagnosis = formValues.symptoms
+            formValues.mobile = data.login_id;
+            formValues.insurance_card_copy = data.insurance_card_copy
             formValues.type = "teleconsulation";
             formValues.basetype = "home_service"
+            formValues.preferred_date_first = DateOne
+            formValues.preferred_date_second = DateTwo
 
 
             if (reports !== undefined) {
@@ -91,9 +121,15 @@ function TeleConsultation({handleModalShow}) {
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
+            console.log(formValues)
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(abc)
-            handleModalShow();
+            console.log(abc.payload)
+            if(abc.payload){
+                handleModalShow();
+            }
+            else{
+                alert(abc.message)
+            }
         }
 
     }
@@ -136,10 +172,12 @@ function TeleConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
+                            disabled = {true}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
 
@@ -259,7 +297,7 @@ function TeleConsultation({handleModalShow}) {
                             : null} 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -280,8 +318,8 @@ function TeleConsultation({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />

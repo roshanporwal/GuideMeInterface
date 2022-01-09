@@ -6,7 +6,7 @@ export const validationSchema = yup.object().shape({
         location:yup.string().required("location is required"),
         emirates:yup.string().required("emirates is required"),
         landmark:yup.string().required("landmark is required"),
-        symptoms:yup.string().required("symptoms is required"),
+        // symptoms:yup.string().required("symptoms is required"),
         requirements:yup.string().required("requirements is required"),
         preffered_gender:yup.string().required("preffered gender is required"),
         preffered_language:yup.string().required("preffered language is required"),

@@ -81,7 +81,7 @@ function PhysioTherapy({handleModalShow}) {
 
                 formValues.patient_id = data._id;
                 formValues.patient_name = data.name;
-                formValues.type = "doctorhomevist";
+                formValues.type = "physiotherapy";
                 formValues.basetype = "home_service"
 
 
