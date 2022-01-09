@@ -65,7 +65,7 @@ function DoctorVisit({handleModalShow}) {
         nationality:'',
         email:'',
         referredby : '',
-        address:'',
+        address_patient:'',
         mobile:'',
         insurance_card_copy: [],
     });
@@ -84,9 +84,16 @@ function DoctorVisit({handleModalShow}) {
             setFormValues({ ...formValues, name: data.name });
         }
     }
-    const handleAddress = (e) => {
-        let { value } = e.target;
-        setFormValues({ ...formValues, address: formValues.address +", " + value });
+    const handleAddress = () => { 
+        formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
+                        + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
+        
+        delete formValues.flat_number
+        delete formValues.building_name
+        delete formValues.street_name
+        delete formValues.location
+        delete formValues.emirates
+        delete formValues.landmark
     }
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -104,7 +111,8 @@ function DoctorVisit({handleModalShow}) {
 
                 let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
-
+                handleAddress()
+                console.log(formValues);
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
                 formValues.age = data.age;
@@ -126,10 +134,15 @@ function DoctorVisit({handleModalShow}) {
                 }
                 formData.append('insurance_card_copy', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
-
+                console.log(formValues)
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 console.log(abc)
-            handleModalShow();
+                if(abc.payload){
+                    handleModalShow();
+                }
+                else{
+                    alert(abc.message)
+                }
         }
 
 
@@ -223,7 +236,7 @@ function DoctorVisit({handleModalShow}) {
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
-                                customInput={<DatePickerInput text='Date and Time of Delivery' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time' />}
                             />
                         </div>
                         {dateerrors.dateOne ? (
@@ -350,13 +363,13 @@ function DoctorVisit({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="mobile"
+                            name="alternate_number"
                             placeholder='Alternate Mobile Number'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.mobile}
+                            isInvalid={errors?.alternate_number}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.alternate_number}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -367,13 +380,13 @@ function DoctorVisit({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="requirements"
-                            placeholder='Select your requirement '
+                            name="symptoms"
+                            placeholder='Symptoms / Conditions'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.requirements}
+                            isInvalid={errors?.symptoms}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.requirements}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -384,13 +397,13 @@ function DoctorVisit({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="preffered_gender"
+                            name="preferred_gender"
                             placeholder='Prefered Gender of Care Giver '
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.preffered_gender}
+                            isInvalid={errors?.preferred_gender}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preffered_gender}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_gender}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -401,13 +414,13 @@ function DoctorVisit({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="preffered_language"
+                            name="languages_prefer"
                             placeholder='Language of the caregiver'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.preffered_language}
+                            isInvalid={errors?.languages_prefer}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preffered_language}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.languages_prefer}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -418,18 +431,18 @@ function DoctorVisit({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="payment_type"
+                            name="payment_mode"
                             placeholder='Mode of Payment'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.payment_type}
+                            isInvalid={errors?.payment_mode}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.payment_type}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.payment_mode}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
                 
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -450,8 +463,8 @@ function DoctorVisit({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
