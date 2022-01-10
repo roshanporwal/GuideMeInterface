@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
@@ -46,11 +46,31 @@ function CTScan({handleModalShow}) {
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        mobile:'',
+        insurance_card_copy: [],
+        preferred_date_first:''
+    });
     const [DateOne, setDateOne] = useState();
-    
     const [insurance, setInsurance] = useState();
 
+    useEffect(() => {
+        fetchData()
+    }, []);
+
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -65,11 +85,20 @@ function CTScan({handleModalShow}) {
                 console.log(formValues);
                 const formData = new FormData();
 
-                let data = localStorage.getItem("login")
+                let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
-                formValues.patient_name = data.name;
+                formValues.name = data.name;
+                formValues.age = data.age;
+                formValues.gender = data.gender;
+                formValues.nationality = data.nationality;
+                formValues.current_diagnosis = formValues.symptoms
+                formValues.email = data.email;
+                formValues.referredby = data.referredby;
+                formValues.mobile = data.login_id;            
+                formValues.insurance_card_copy = data.insurance_card_copy
+                formValues.preferred_date_first = DateOne
                 formValues.type = "ctscan";
                 formValues.basetype = "diagnostics"
 
@@ -78,7 +107,12 @@ function CTScan({handleModalShow}) {
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 console.log(abc)
-                handleModalShow();
+                if(abc.payload){
+                    handleModalShow();
+                }
+                else{
+                    alert(abc.message)
+                }
         }
 
     }
@@ -116,9 +150,11 @@ function CTScan({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            disabled = {true}
                         />
                     </Form.Group>
                 </div>
@@ -161,7 +197,7 @@ function CTScan({handleModalShow}) {
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
-                                customInput={<DatePickerInput text='Date and Time of Delivery' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time' />}
                             />
                         </div>
                         {dateerrors.dateOne ? (
@@ -195,18 +231,18 @@ function CTScan({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="requirements"
-                            placeholder='Select your requirement '
+                            name="symptoms"
+                            placeholder='Symptoms/Conditions'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.requirements}
+                            isInvalid={errors?.symptoms}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.requirements}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
                 
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -227,7 +263,7 @@ function CTScan({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}  
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <p className="sub-title text-center">payment would be done at the time of test in the lab center</p>
                 </div>

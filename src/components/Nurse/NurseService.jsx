@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
@@ -54,11 +54,42 @@ function NurseService({handleModalShow}) {
     /* const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     )); */
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        name:'',
+        age:'',
+        gender:'',
+        nationality:'',
+        email:'',
+        referredby : '',
+        address_patient:'',
+        mobile:'',
+        insurance_card_copy: [],
+    });
     //const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
+    useEffect(() => {
+        fetchData()
+    }, []);
 
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if(data !== null){
+            data = JSON.parse(data)
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
+    const handleAddress = () => { 
+        formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
+                        + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
+        
+        delete formValues.flat_number
+        delete formValues.building_name
+        delete formValues.street_name
+        delete formValues.location
+        delete formValues.emirates
+        delete formValues.landmark
+    }
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -74,14 +105,23 @@ function NurseService({handleModalShow}) {
                 console.log(formValues);
                 const formData = new FormData();
 
-                let data = localStorage.getItem("login")
+                let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
-
+                
+                handleAddress()
+            
                 formValues.patient_id = data._id;
-                formValues.patient_name = data.name;
+                formValues.name = data.name;
+                formValues.age = data.age;
+                formValues.gender = data.gender;
+                formValues.nationality = data.nationality;
+                formValues.email = data.email;
+                formValues.referredby = data.referredby;
+                formValues.mobile = data.login_id;            
+                formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.type = "nursingservice";
                 formValues.basetype = "home_service"
-
+                console.log(formValues)
 
                 if (reports !== undefined) {
                     for (const tp of reports) {
@@ -93,6 +133,12 @@ function NurseService({handleModalShow}) {
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 console.log(abc)
+                if(abc.payload){
+                    handleModalShow();
+                }
+                else{
+                    alert(abc.message)
+                }
         }
 
 
@@ -136,9 +182,11 @@ function NurseService({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            disabled = {true}
                         />
                     </Form.Group>
                 </div>
@@ -210,13 +258,13 @@ function NurseService({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="time_period"
+                            name="preferred_date_two"
                             placeholder='Time period for nursing service (number of days/months) '
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.time_period}
+                            isInvalid={errors?.preferred_date_two}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.time_period}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_date_two}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -339,18 +387,18 @@ function NurseService({handleModalShow}) {
                         </div>
                         <Form.Control
                             type='text'
-                            name="mobile"
+                            name="alternate_number"
                             placeholder='Alternate Mobile Number'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.mobile}
+                            isInvalid={errors?.alternate_number}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.alternate_number}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
                 
-                <div className='col-10 col-md-5'>
+                {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -371,8 +419,8 @@ function NurseService({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+                </div> */}
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />

@@ -12,6 +12,8 @@ import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './doctorValidation';
+import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+
 function DoctorVisit({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
@@ -112,7 +114,6 @@ function DoctorVisit({handleModalShow}) {
                 let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
                 handleAddress()
-                console.log(formValues);
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
                 formValues.age = data.age;
@@ -120,6 +121,7 @@ function DoctorVisit({handleModalShow}) {
                 formValues.nationality = data.nationality;
                 formValues.email = data.email;
                 formValues.referredby = data.referredby;
+                formValues.current_diagnosis = formValues.symptoms
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne;
@@ -238,6 +240,7 @@ function DoctorVisit({handleModalShow}) {
                                 showTimeSelect
                                 customInput={<DatePickerInput text='Preferred Date and Time' />}
                             />
+                            {/* <DayTimePicker timeSlotSizeMinutes={15} customInput={<DatePickerInput text='Preferred Date and Time' />}/>; */}
                         </div>
                         {dateerrors.dateOne ? (
                             <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
