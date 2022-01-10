@@ -218,13 +218,17 @@ function UltraSound({handleModalShow}) {
                             <MdOutlineCalendarToday />
                         </div>
                         <div>
-                            <DatePicker
+                         <DatePicker
                                 selected={DateTwo}
-                                onChange={date => setDateTwo(date)}
+                                onChange={date => { setDateTwo(date)}}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
-                                customInput={<DatePickerInput text='Date and Time of Reports' />}
-                            />
+                                minDate = {new Date()}
+                                minTime = {new Date().setHours(7, 0, 0, 0)}
+                                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals = {60}
+                                customInput={<DatePickerInput text='Preferred Date and Time' />}
+                            /> 
                         </div>
                         {dateerrors.dateTwo ? (
                             <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)

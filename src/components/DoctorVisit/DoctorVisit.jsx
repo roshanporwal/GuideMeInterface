@@ -12,7 +12,7 @@ import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './doctorValidation';
-import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+
 
 function DoctorVisit({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
@@ -149,6 +149,8 @@ function DoctorVisit({handleModalShow}) {
 
 
     }
+   
+
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
@@ -235,12 +237,15 @@ function DoctorVisit({handleModalShow}) {
                         <div>
                             <DatePicker
                                 selected={DateOne}
-                                onChange={date => setDateOne(date)}
+                                onChange={date => {console.log(date); setDateOne(date)}}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
+                                minDate = {new Date()}
+                                minTime = {new Date().setHours(7, 0, 0, 0)}
+                                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals = {60}
                                 customInput={<DatePickerInput text='Preferred Date and Time' />}
-                            />
-                            {/* <DayTimePicker timeSlotSizeMinutes={15} customInput={<DatePickerInput text='Preferred Date and Time' />}/>; */}
+                            />                            
                         </div>
                         {dateerrors.dateOne ? (
                             <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
