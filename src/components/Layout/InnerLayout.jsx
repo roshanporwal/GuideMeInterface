@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
-import { MdCall } from 'react-icons/md';
+import { MdCall, MdAccountCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { loginvalidationSchema } from '../Auth/authValidation';
 import * as auth_service from "../../service/auth_service";
@@ -97,7 +97,7 @@ function InnerLayout(props) {
                                             <div>
                                                 <Form.Group className="my-2">
                                                     <div className="prepend-icon-auth">
-                                                        <MdCall />
+                                                        <MdAccountCircle />
                                                     </div>
                                                     <Form.Control 
                                                         type='text'
