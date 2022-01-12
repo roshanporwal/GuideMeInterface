@@ -68,16 +68,12 @@ function NurseService({handleModalShow}) {
     //const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
+    const [data,setData] = useState({
+        name:''
+    })
     useEffect(() => {
-        fetchData()
-    }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if(data !== null){
-            data = JSON.parse(data)
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
+        setData(JSON.parse(localStorage.getItem("login_patient")))
+    },[]);
     const handleAddress = () => { 
         formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
                         + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
@@ -104,8 +100,8 @@ function NurseService({handleModalShow}) {
                 
                 const formData = new FormData();
 
-                let data = localStorage.getItem("login_patient")
-                data = JSON.parse(data)
+                // let data = localStorage.getItem("login_patient")
+                // data = JSON.parse(data)
                 
                 handleAddress()
             
@@ -182,7 +178,7 @@ function NurseService({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {data.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"

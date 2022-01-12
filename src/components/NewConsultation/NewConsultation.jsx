@@ -69,16 +69,12 @@ function NewConsultation({handleModalShow}) {
     const [dateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
+    const [data,setData] = useState({
+        name:''
+    })
     useEffect(() => {
-        fetchData()
-    }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if(data !== null){
-            data = JSON.parse(data)
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
+        setData(JSON.parse(localStorage.getItem("login_patient")))
+    },[]);
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -91,8 +87,10 @@ function NewConsultation({handleModalShow}) {
         setErrors(err);
         if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
             const formData = new FormData();
-            let data = localStorage.getItem("login_patient")
-            data = JSON.parse(data)
+
+            // let data = localStorage.getItem("login_patient")
+            // data = JSON.parse(data)
+
             formValues.type = "new_consulation";
             formValues.current_diagnosis = formValues.symptoms
             formValues.preferred_date_first = dateOne.toString()
@@ -180,7 +178,7 @@ function NewConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {data.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
