@@ -4,7 +4,6 @@ import { useAuthState } from '../../context';
 //Routes that need Authenticated User
 const PrivateRoute = ({ children }) => {
     const navigate = useNavigate();
-    console.log('In private route');
     const userDetails = useAuthState();
     let location = useLocation();
     if(!Boolean(userDetails.token))

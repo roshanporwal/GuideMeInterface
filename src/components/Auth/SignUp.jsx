@@ -11,7 +11,7 @@ import * as auth_service from "../../service/auth_service";
 import {signupvalidationSchema} from "./authValidation";
 function SignUpScreen() {
     const navigate = useNavigate();
-    const [patient_document, setPatient_document] = useState()
+    // const [patient_document, setPatient_document] = useState()
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
     const [fileerrors,setFileErrors] = useState({
@@ -59,14 +59,14 @@ function SignUpScreen() {
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'document') {
-            setPatient_document(e.target.files[0])
+            // setPatient_document(e.target.files[0])
         } else {
             setInsurance(e.target.files[0])
         }
     }
     const handleSubmit =async (e) => {
         e.preventDefault();
-        console.log(formValues);
+        
         const err = await validate(formValues);
         setErrors(err);
        if(Object.keys(err).length === 0 && insurance !== undefined && terms === true ){
@@ -74,7 +74,6 @@ function SignUpScreen() {
         formData.append('insurance_card_copy', insurance);
         formData.append('formValues', JSON.stringify(formValues));
         const createaccount = await auth_service.createaccount(formData)
-        console.log(createaccount)
         if(createaccount.payload){
             window.location = "/log-in"
         }

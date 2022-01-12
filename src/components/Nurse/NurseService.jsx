@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdUploadFile,MdFormatListNumbered,
+    MdLocationOn, MdOutlineFilePresent,
+    MdFormatListNumbered,
     MdOutlineApartment,MdCall
 } from 'react-icons/md';
 import {FaBuilding,FaGlobeAsia} from 'react-icons/fa'
@@ -13,17 +13,17 @@ import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './nurseValidation';
 function NurseService({handleModalShow}) {
     // Create a reference to the hidden file input element
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        reports:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     // insurance:"",
+    //     reports:"",
+    // });
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
+            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
             
         //    setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
             
@@ -42,9 +42,9 @@ function NurseService({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -67,11 +67,10 @@ function NurseService({handleModalShow}) {
     });
     //const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
     useEffect(() => {
         fetchData()
     }, []);
-
     async function fetchData() {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
@@ -99,10 +98,10 @@ function NurseService({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+        
+        if(Object.keys(err).length === 0/* && fileerrors.insurance === ""*/)  {    
                e.preventDefault();
-                console.log(formValues);
+                
                 const formData = new FormData();
 
                 let data = localStorage.getItem("login_patient")
@@ -120,19 +119,19 @@ function NurseService({handleModalShow}) {
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.type = "nursingservice";
-                formValues.basetype = "home_service"
-                console.log(formValues)
+                
+                
 
                 if (reports !== undefined) {
                     for (const tp of reports) {
                         formData.append('patient_reports', tp);
                     }
                 }
-                formData.append('insurance_card_copy', insurance);
+                // formData.append('insurance_card_copy', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
-                console.log(abc)
+                
                 if(abc.payload){
                     handleModalShow();
                 }
@@ -147,9 +146,10 @@ function NurseService({handleModalShow}) {
         const { name } = e.currentTarget
         if (name === 'reports') {
             setReports(e.target.files)
-        } else {
-            setInsurance(e.target.files[0])
-        }
+        } 
+        // else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">

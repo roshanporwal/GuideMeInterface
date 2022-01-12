@@ -24,8 +24,8 @@ function Dashboard() {
                 </Col>
                 <Col lg={{span:5}} xs={6} className="align-self-center">
                     <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h5>E Consult</h5>
-                        <h5>Support</h5>
+                        <h6>E Consult</h6>
+                        <h6>Support</h6>
                         <div className="btn btn-primary" onClick={() => navigate("/log-in")}>
                             Login
                         </div>

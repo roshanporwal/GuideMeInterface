@@ -1,24 +1,22 @@
-import React, { forwardRef, useState,useEffect } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser , FaDiagnoses } from 'react-icons/fa';
-import {
-    MdInfoOutline, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdRefresh, MdUploadFile
+import {  FaDiagnoses } from 'react-icons/fa';
+import { MdOutlineCalendarToday, MdOutlineFilePresent,
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import {validationSchema} from "./freeopinionValidation";
 
 function FreeOpinion({handleModalShow}) {
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
 
     
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        reports:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     // insurance:"",
+    //     reports:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         dateTwo:"",
@@ -32,9 +30,9 @@ function FreeOpinion({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -58,7 +56,7 @@ function FreeOpinion({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
 
 
     const handleChange = (e) => {
@@ -68,7 +66,7 @@ function FreeOpinion({handleModalShow}) {
     const validate = async (values) => {
         try {
             
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
+            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
             setRadioErr(opinion === "" ? "required" : "")
@@ -88,8 +86,8 @@ function FreeOpinion({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "" && dateerrors.dateOne === "" && opinion )  {  
-            console.log(formValues);
+        if(Object.keys(err).length === 0 /*&& fileerrors.insurance === "" */&& dateerrors.dateOne === "" && opinion )  {  
+            
             const formData = new FormData();
 
             let data = localStorage.getItem("login_patient")
@@ -104,10 +102,10 @@ function FreeOpinion({handleModalShow}) {
             formValues.referredby = data.referredby;
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
-            formValues.type = "second_consulation";
-            formValues.basetype = opinion;
-            formValues.preferred_date_first = DateOne
-            formValues.preferred_date_second = DateTwo
+            formValues.type = "free_surgical_opinion";
+            // formValues.basetype = opinion;
+            formValues.preferred_date_first = DateOne.toString()
+            formValues.preferred_date_second = DateTwo.toString()
 
 
             if (reports !== undefined) {
@@ -119,7 +117,6 @@ function FreeOpinion({handleModalShow}) {
             formData.append('formValues', JSON.stringify(formValues));
 
             const freeOpinion = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(freeOpinion);
             if(freeOpinion.payload){
                 handleModalShow();
            }else{
@@ -132,9 +129,10 @@ function FreeOpinion({handleModalShow}) {
         if (name === 'reports') {
             setReports(e.target.files) 
         
-        } else {
-            setInsurance(e.target.files[0])
         }
+        //  else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">
@@ -166,7 +164,7 @@ function FreeOpinion({handleModalShow}) {
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
-                            {/* <FaRegUser /> */}<FaDiagnoses/>
+                            <FaDiagnoses/>
                         </div>
                         <Form.Control
                             type='text'

@@ -2,34 +2,35 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdUploadFile,MdFormatListNumbered,
-    MdOutlineApartment,MdCall,MdTransgender,MdPayment
+    MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+    MdFormatListNumbered,
+    MdOutlineApartment, MdCall, MdTransgender, MdPayment
 } from 'react-icons/md';
-import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
-import {IoHomeOutline} from 'react-icons/io5'
-import {GiDirectionSigns} from 'react-icons/gi'
+import { FaBuilding, FaGlobeAsia, FaClipboardList, FaLanguage } from 'react-icons/fa'
+import { IoHomeOutline } from 'react-icons/io5'
+import { GiDirectionSigns } from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './physioTherapyValidation';
-function PhysioTherapy({handleModalShow}) {
-   const hiddenFileInputInsurance = React.useRef(null);
+
+function PhysioTherapy({ handleModalShow }) {
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        reports:"",
+    // const [fileerrors, setFileErrors] = useState({
+    //     // insurance: "",
+    //     reports: "",
+    // });
+    const [dateerrors, setDateErrors] = useState({
+        dateOne: "",
+        dateTwo: "",
     });
-    const [dateerrors,setDateErrors] = useState({
-        dateOne:"",
-        dateTwo:"",
-    });
-    
+
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -37,56 +38,58 @@ function PhysioTherapy({handleModalShow}) {
     };
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
-            
-            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
-            
+            // setFileErrors({ /*insurance: insurance === undefined ? "required" : "",*/ reports: reports === undefined ? "required" : "" });
+
+            setDateErrors({ dateOne: DateOne === undefined ? "required" : "", dateTwo: "" });
+
             await validationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
-            
+
             let errObj = {};
-             for (let { path, message } of err.inner) {
+            for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
+
             return errObj;
         }
-    }; 
-    
+    };
+
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
     const [formValues, setFormValues] = useState({
-        name:'',
-        age:'',
-        gender:'',
-        nationality:'',
-        email:'',
-        referredby : '',
-        address_patient:'',
-        mobile:'',
+        name: '',
+        age: '',
+        gender: '',
+        nationality: '',
+        email: '',
+        referredby: '',
+        address_patient: '',
+        mobile: '',
         insurance_card_copy: [],
     });
     const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
 
     useEffect(() => {
-        fetchData()
-    }, []);
-
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if(data !== null){
-            data = JSON.parse(data)
-            setFormValues({ ...formValues, name: data.name });
+        async function fetchData() {
+            let data = localStorage.getItem("login_patient")
+            if (data !== null) {
+                data = JSON.parse(data)
+                formValues.name = data.name
+                setFormValues({ ...formValues, name: data.name });
+            }
         }
-    }
-    const handleAddress = () => { 
-        formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
-                        + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
-        
+        fetchData()
+    }, [formValues]);
+
+    
+    const handleAddress = () => {
+        formValues.address_patient = formValues.flat_number + ", " + formValues.building_name + ", " + formValues.street_name
+            + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
+
         delete formValues.flat_number
         delete formValues.building_name
         delete formValues.street_name
@@ -103,46 +106,46 @@ function PhysioTherapy({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
-                console.log(formValues);
-                const formData = new FormData();
 
-                let data = localStorage.getItem("login_patient")
-                data = JSON.parse(data)
+        if (Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/) {
 
-                handleAddress()
-                formValues.patient_id = data._id;
-                formValues.name = data.name;
-                formValues.age = data.age;
-                formValues.gender = data.gender;
-                formValues.nationality = data.nationality;
-                formValues.email = data.email;
-                formValues.referredby = data.referredby;
-                formValues.current_diagnosis = formValues.symptoms
-                formValues.mobile = data.login_id;            
-                formValues.insurance_card_copy = data.insurance_card_copy
-                formValues.preferred_date_first = DateOne;
-                formValues.type = "physiotherapy";
-                formValues.basetype = "home_service"
+            const formData = new FormData();
+
+            let data = localStorage.getItem("login_patient")
+            data = JSON.parse(data)
+
+            handleAddress()
+            formValues.patient_id = data._id;
+            formValues.name = data.name;
+            formValues.age = data.age;
+            formValues.gender = data.gender;
+            formValues.nationality = data.nationality;
+            formValues.email = data.email;
+            formValues.referredby = data.referredby;
+            formValues.current_diagnosis = formValues.symptoms
+            formValues.mobile = data.login_id;
+            formValues.insurance_card_copy = data.insurance_card_copy
+            formValues.preferred_date_first = DateOne.toString();
+            formValues.type = "physiotherapy";
+            
 
 
-                if (reports !== undefined) {
-                    for (const tp of reports) {
-                        formData.append('patient_reports', tp);
-                    }
+            if (reports !== undefined) {
+                for (const tp of reports) {
+                    formData.append('patient_reports', tp);
                 }
-                formData.append('insurance_card_copy', insurance);
-                formData.append('formValues', JSON.stringify(formValues));
+            }
+            // formData.append('insurance_card_copy', insurance);
+            formData.append('formValues', JSON.stringify(formValues));
 
-                const abc = await auth_service.createNewenqurire(data.login_id, formData)
-                console.log(abc)
-                if(abc.payload){
-                    handleModalShow();
-                }
-                else{
-                    alert(abc.message)
-                }
+            const abc = await auth_service.createNewenqurire(data.login_id, formData)
+
+            if (abc.payload) {
+                handleModalShow();
+            }
+            else {
+                alert(abc.message)
+            }
         }
 
 
@@ -152,14 +155,15 @@ function PhysioTherapy({handleModalShow}) {
         const { name } = e.currentTarget
         if (name === 'reports') {
             setReports(e.target.files)
-        } else {
-            setInsurance(e.target.files[0])
-        }
+        } 
+        // else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-            <div className='col-3'>
+                <div className='col-3'>
                     <Form.Group className="d-flex">
                         <Form.Check
                             type='checkbox'
@@ -187,18 +191,18 @@ function PhysioTherapy({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value={formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
-                            disabled = {true}
+                            disabled={true}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.name}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
-               {/*  <div className='col-10 col-md-5'>
+                {/*  <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -232,27 +236,27 @@ function PhysioTherapy({handleModalShow}) {
                             <MdOutlineCalendarToday />
                         </div>
                         <div>
-                        <DatePicker
+                            <DatePicker
                                 selected={DateOne}
-                                onChange={date => {console.log(date); setDateOne(date)}}
+                                onChange={date => { setDateOne(date) }}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
-                                minDate = {new Date()}
-                                minTime = {new Date().setHours(7, 0, 0, 0)}
-                                maxTime = {new Date().setHours(19, 0, 0, 0)}
-                                timeIntervals = {60}
+                                minDate={new Date()}
+                                minTime={new Date().setHours(7, 0, 0, 0)}
+                                maxTime={new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals={60}
                                 customInput={<DatePickerInput text='Preferred Date and Time' />}
-                            /> 
+                            />
                         </div>
                         {dateerrors.dateOne ? (
-                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
-                        : null}
+                            <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                            : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
                     <div className='d-flex align-items-start justify-content-center mt-2'>
                         <div className="mx-1">
-                            <IoHomeOutline /> 
+                            <IoHomeOutline />
                         </div>
                         <div>
                             <span>Address </span>
@@ -272,7 +276,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.flat_number}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.flat_number}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.flat_number}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -289,7 +293,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.building_name}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.building_name}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.building_name}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -306,7 +310,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.street_name}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.street_name}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.street_name}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -321,9 +325,9 @@ function PhysioTherapy({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
-                           isInvalid={errors?.location}
+                            isInvalid={errors?.location}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -340,7 +344,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.emirates}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.emirates}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.emirates}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -355,9 +359,9 @@ function PhysioTherapy({handleModalShow}) {
                             placeholder='Nearest Landmark (Optional)'
                             onChange={handleChange}
                             className="global-inputs"
-                           isInvalid={errors?.landmark}
+                            isInvalid={errors?.landmark}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.landmark}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.landmark}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -374,11 +378,11 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.alternate_number}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.alternate_number}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.alternate_number}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
-                 <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaClipboardList />
@@ -391,7 +395,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.symptoms}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -408,7 +412,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.preferred_gender}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_gender}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.preferred_gender}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -425,7 +429,7 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.languages_prefer}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.languages_prefer}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.languages_prefer}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
@@ -442,11 +446,11 @@ function PhysioTherapy({handleModalShow}) {
                             className="global-inputs"
                             isInvalid={errors?.payment_mode}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.payment_mode}</Form.Control.Feedback>
+                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.payment_mode}</Form.Control.Feedback>
 
                     </Form.Group>
                 </div>
-                
+
                 {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -474,7 +478,7 @@ function PhysioTherapy({handleModalShow}) {
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
                         </div>
-                        <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
+                        <div role="button" onClick={handleFileReportsClick} className='global-file-input'>
                             <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
                         </div>
                         <input

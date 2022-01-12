@@ -2,18 +2,18 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlinePersonAdd, MdUploadFile,
+     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+    
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './mammogramValidation';
 function Mammogram({handleModalShow}) {
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
     const [fileerrors,setFileErrors] = useState({
-        insurance:"",
+        // insurance:"",
         reports:"",
     });
     const [dateerrors,setDateErrors] = useState({
@@ -23,7 +23,7 @@ function Mammogram({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports.length === 0 ? "required" : ""});
+            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports.length === 0 ? "required" : ""});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
             
@@ -48,9 +48,9 @@ function Mammogram({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
@@ -70,12 +70,11 @@ function Mammogram({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
 
     useEffect(() => {
         fetchData()
     }, []);
-
     async function fetchData() {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
@@ -92,10 +91,9 @@ function Mammogram({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(fileerrors);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
-                console.log(formValues);
+        
+        if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
+                
                 const formData = new FormData();
 
                 let data = localStorage.getItem("login_patient")
@@ -111,10 +109,10 @@ function Mammogram({handleModalShow}) {
                 formValues.referredby = data.referredby;
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
-                formValues.preferred_date_first = DateOne
-                formValues.preferred_date_second = DateTwo
+                formValues.preferred_date_first = DateOne.toString()
+                formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "mammogram";
-                formValues.basetype = "diagnostics"
+                
 
 
                 if (reports !== undefined) {
@@ -122,11 +120,11 @@ function Mammogram({handleModalShow}) {
                         formData.append('patient_reports', tp);
                     }
                 }
-                formData.append('prescription', insurance);
+                // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
-                console.log(abc)
+                
                 if(abc.payload){
                     handleModalShow();
                 }
@@ -140,9 +138,10 @@ function Mammogram({handleModalShow}) {
         const { name } = e.currentTarget
         if (name === 'reports') {
             setReports(e.target.files)
-        } else {
-            setInsurance(e.target.files[0])
-        }
+        } 
+        // else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">

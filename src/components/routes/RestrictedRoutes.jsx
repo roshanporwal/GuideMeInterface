@@ -4,7 +4,6 @@ import { useAuthState } from '../../service/authContext';
 //Routes that need to be bypassed if User is logged in
 const RestrictedRoute = ({ children }) => {
     const navigate = useNavigate();
-    console.log('In restricted route');
     const userDetails = useAuthState();
     if(Boolean(userDetails.token))
     {

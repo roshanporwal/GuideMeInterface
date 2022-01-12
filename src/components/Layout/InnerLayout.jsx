@@ -50,11 +50,10 @@ function InnerLayout(props) {
                 localStorage.setItem('login', JSON.stringify(login.payload));
                 window.location.reload(true)
             }
-            console.log(login)
             
         }
         
-        console.log(formValues);
+        
     }
     return ( 
         <div>

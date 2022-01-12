@@ -24,7 +24,7 @@ function AddPatient(props) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
+        
         if(Object.keys(err).length === 0)  {    
             const formData = new FormData();
             let data = localStorage.getItem("login")
@@ -37,7 +37,8 @@ function AddPatient(props) {
             formData.append('formValues', JSON.stringify(formValues));
 
             const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(createNewConsulation)
+            if(!createNewConsulation.payload)
+                alert(createNewConsulation.message)
 
         }
 

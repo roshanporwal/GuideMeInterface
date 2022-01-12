@@ -2,8 +2,8 @@ import React, { forwardRef, useState ,useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital, MdOutlinePersonAdd, MdStickyNote2, MdUploadFile
+     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+    MdOutlineLocalHospital,  MdStickyNote2
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
@@ -13,13 +13,13 @@ import AddFamily from '../AddFamily/AddFamily';
 import AddPatient from '../AddPatient/AddPatient';
 
 function NewConsultation({handleModalShow}) {
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        reports:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     // insurance:"",
+    //     reports:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         dateTwo:"",
@@ -29,20 +29,20 @@ function NewConsultation({handleModalShow}) {
     const handleFamilyClose = () =>{ 
         setAddFamilyShow(false)
     };
-    const handleFamilyShow = () => setAddFamilyShow(true);
+    // const handleFamilyShow = () => setAddFamilyShow(true);
 
     const [patientshow, setAddPatientShow] = useState(false);
     const handlePatientClose = () =>{ 
         setAddPatientShow(false)
     };
-    const handlePatientShow = () => setAddPatientShow(true);
+    // const handlePatientShow = () => setAddPatientShow(true);
 
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -68,11 +68,10 @@ function NewConsultation({handleModalShow}) {
     const [dateOne, setDateOne] = useState();
     const [dateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
     useEffect(() => {
         fetchData()
     }, []);
-
     async function fetchData() {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
@@ -90,14 +89,14 @@ function NewConsultation({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
+        if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
             const formData = new FormData();
             let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
             formValues.type = "new_consulation";
             formValues.current_diagnosis = formValues.symptoms
-            formValues.preferred_date_first = dateOne
-            formValues.preferred_date_second =dateTwo
+            formValues.preferred_date_first = dateOne.toString()
+            formValues.preferred_date_second =dateTwo.toString()
             formValues.age = data.age
             formValues.gender =data.gender
             formValues.insurance_card_copy = data.insurance_card_copy
@@ -112,11 +111,10 @@ function NewConsultation({handleModalShow}) {
                     formData.append('patient_reports', tp);
                 }
             }
-            formData.append('insurance_card_copy', insurance);
+            // formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
-            console.log(formValues)
+            
             const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(createNewConsulation.payload)
             if(createNewConsulation.payload){
                 handleModalShow();
             }else{
@@ -127,7 +125,7 @@ function NewConsultation({handleModalShow}) {
     }
     const validate = async (values) => {
         try {
-            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
+            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
             setDateErrors({dateOne:dateOne === undefined ? "required" : "",dateTwo:dateTwo === undefined ? "required" : "" });
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -143,9 +141,10 @@ function NewConsultation({handleModalShow}) {
         const { name } = e.currentTarget
         if (name === 'reports') {
             setReports(e.target.files)
-        } else {
-            setInsurance(e.target.files[0])
-        }
+        } 
+        // else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">

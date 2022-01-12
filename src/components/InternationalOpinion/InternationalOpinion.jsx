@@ -72,7 +72,7 @@ function InternationalOpinion({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
+        
         if(Object.keys(err).length === 0 && fileerrors.insurance === "" && dateerrors.dateOne === "" && dateerrors.dateTwo === "")  {  
             const formData = new FormData();
             let data = localStorage.getItem("login")
@@ -81,7 +81,7 @@ function InternationalOpinion({handleModalShow}) {
             formValues.patient_id = data._id;
             formValues.patient_name = data.name;
             formValues.type = "international_opinion";
-            formValues.basetype = "second_consulation"
+            // formValues.basetype = "second_consulation"
 
 
             if (reports !== undefined) {
@@ -92,8 +92,9 @@ function InternationalOpinion({handleModalShow}) {
             formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
-            const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(abc)
+            const createInternationalOpinion = await auth_service.createNewenqurire(data.login_id, formData)
+            if(!createInternationalOpinion.payload)
+                alert(createInternationalOpinion.message)
         }
     }
     const handleFiles = e => {

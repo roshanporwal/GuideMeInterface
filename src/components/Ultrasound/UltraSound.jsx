@@ -2,20 +2,18 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday,
-    MdOutlinePersonAdd, MdUploadFile
+     MdLocationOn, MdOutlineCalendarToday,
 } from 'react-icons/md';
 import {FaClipboardList} from 'react-icons/fa'
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './ultrasoundValidation';
-import {setMinutes, setHours} from "date-fns";
 function UltraSound({handleModalShow}) {
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     insurance:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         DateTwo:""
@@ -23,7 +21,7 @@ function UltraSound({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : ""});
+            // setFileErrors({insurance:insurance === undefined ? "required" : ""});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
             
@@ -41,9 +39,9 @@ function UltraSound({handleModalShow}) {
     };
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
@@ -63,12 +61,11 @@ function UltraSound({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
 
     useEffect(() => {
         fetchData()
     }, []);
-
     async function fetchData() {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
@@ -86,9 +83,9 @@ function UltraSound({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
-                console.log(formValues);
+        
+        if(Object.keys(err).length === 0/* && fileerrors.insurance === ""*/)  {    
+                
                 const formData = new FormData();
 
                 let data = localStorage.getItem("login_patient")
@@ -104,16 +101,16 @@ function UltraSound({handleModalShow}) {
                 formValues.referredby = data.referredby;
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
-                formValues.preferred_date_first = DateOne
-                formValues.preferred_date_second = DateTwo
+                formValues.preferred_date_first = DateOne.toString()
+                formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "ultrasound";
-                formValues.basetype = "diagnostics"
+                
 
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
-                console.log(abc)
+                
                 if(abc.payload){
                     handleModalShow();
                 }
@@ -123,9 +120,9 @@ function UltraSound({handleModalShow}) {
         }
 
     }
-    const handleFiles = e => {
-            setInsurance(e.target.files[0])
-    }
+    // const handleFiles = e => {
+    //         setInsurance(e.target.files[0])
+    // }
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">

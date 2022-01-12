@@ -52,11 +52,10 @@ function LoginScreen() {
             else{
                 alert(login.message)
             }
-            console.log(login)
             
         }
         
-        console.log(formValues);
+        
     }
 
     return ( 

@@ -2,20 +2,20 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdFamilyRestroom, MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital, MdOutlinePersonAdd, MdStickyNote2, MdUploadFile
+     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+    MdOutlineLocalHospital,  MdStickyNote2
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './teleValidation';
 function TeleConsultation({handleModalShow}) {
-    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputInsurance = React.useRef(null);
     const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        reports:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     // insurance:"",
+    //     reports:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         dateTwo:"",
@@ -23,7 +23,7 @@ function TeleConsultation({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports.length === 0 ? "required" : ""});
+            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports.length === 0 ? "required" : ""});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
             
@@ -42,9 +42,9 @@ function TeleConsultation({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileInsuranceClick = event => {
-        hiddenFileInputInsurance.current.click();
-    };
+    // const handleFileInsuranceClick = event => {
+    //     hiddenFileInputInsurance.current.click();
+    // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleFileReportsClick = event => {
@@ -68,11 +68,10 @@ function TeleConsultation({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
-    const [insurance, setInsurance] = useState();
+    // const [insurance, setInsurance] = useState();
     useEffect(() => {
         fetchData()
     }, []);
-
     async function fetchData() {
         let data = localStorage.getItem("login_patient")
         if(data !== null){
@@ -80,6 +79,8 @@ function TeleConsultation({handleModalShow}) {
             setFormValues({ ...formValues, name: data.name });
         }
     }
+
+    
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -89,9 +90,9 @@ function TeleConsultation({handleModalShow}) {
         e.preventDefault();
          const err = await validate(formValues);
         setErrors(err);
-        console.log(err)
-        if(Object.keys(err).length === 0 && fileerrors.insurance === "")  {    
-            console.log(formValues);
+        
+        if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
+            
             const formData = new FormData();
 
             let data = localStorage.getItem("login_patient")
@@ -108,9 +109,9 @@ function TeleConsultation({handleModalShow}) {
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.type = "teleconsulation";
-            formValues.basetype = "home_service"
-            formValues.preferred_date_first = DateOne
-            formValues.preferred_date_second = DateTwo
+            
+            formValues.preferred_date_first = DateOne.toString()
+            formValues.preferred_date_second = DateTwo.toString()
 
 
             if (reports !== undefined) {
@@ -118,12 +119,11 @@ function TeleConsultation({handleModalShow}) {
                     formData.append('patient_reports', tp);
                 }
             }
-            formData.append('insurance_card_copy', insurance);
+            // formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
 
-            console.log(formValues)
+            
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            console.log(abc.payload)
             if(abc.payload){
                 handleModalShow();
             }
@@ -137,9 +137,10 @@ function TeleConsultation({handleModalShow}) {
         const { name } = e.currentTarget
         if (name === 'reports') {
             setReports(e.target.files)
-        } else {
-            setInsurance(e.target.files[0])
-        }
+        } 
+        // else {
+        //     setInsurance(e.target.files[0])
+        // }
     }
     return (
         <div className="form-container">

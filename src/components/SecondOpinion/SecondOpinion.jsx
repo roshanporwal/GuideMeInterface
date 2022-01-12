@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
-import {
-    MdFamilyRestroom,MdOutlinePersonAdd,
-} from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import FreeOpinion from '../../assets/second-op-logo.png';
 import InternationalOpinion from '../../assets/international-opi.png';
@@ -11,28 +7,30 @@ import InternationalOpinion from '../../assets/international-opi.png';
 import * as auth_service from "../../service/auth_service";
 function SecondOpinion() {
     const navigate = useNavigate();
-    const [formValues, setFormValues] = useState();
-    const handleChange = (e) => {
-        let { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-    }
+    // const [formValues, setFormValues] = useState();
+    // const handleChange = (e) => {
+    //     let { name, value } = e.target;
+    //     setFormValues({ ...formValues, [name]: value });
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);       
+               
         const formData = new FormData();
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
 
-        formValues.patient_id = data._id;
-        formValues.patient_name = data.name;
-        formValues.type = "new_consulation";
+        // formValues.patient_id = data._id;
+        // formValues.patient_name = data.name;
+        // formValues.type = "new_consulation";
 
 
-        formData.append('formValues', JSON.stringify(formValues));
+        // formData.append('formValues', JSON.stringify(formValues));
 
         const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
-        console.log(createNewConsulation)
+        if(!createNewConsulation.payload)
+            alert(createNewConsulation.message)
+        
     }
 
     return (
