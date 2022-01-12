@@ -32,7 +32,6 @@ function InnerLayout(props) {
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
             return errObj;
         }
     }; 

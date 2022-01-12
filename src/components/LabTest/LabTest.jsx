@@ -234,11 +234,15 @@ function LabTest({handleModalShow}) {
                         <div>
                             <DatePicker
                                 selected={DateOne}
-                                onChange={date => setDateOne(date)}
+                                onChange={date => {setDateOne(date)}}
                                 dateFormat="dd/MM/yyyy"
                                 showTimeSelect
+                                minDate = {new Date()}
+                                minTime = {new Date().setHours(7, 0, 0, 0)}
+                                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals = {60}
                                 customInput={<DatePickerInput text='Preferred Date and Time' />}
-                            />
+                            />  
                         </div>
                         {dateerrors.dateOne ? (
                             <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
