@@ -102,7 +102,7 @@ function FreeOpinion({handleModalShow}) {
             formValues.referredby = data.referredby;
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
-            formValues.type = "free_surgical_opinion";
+            formValues.type = opinion;
             // formValues.basetype = opinion;
             formValues.preferred_date_first = DateOne.toString()
             formValues.preferred_date_second = DateTwo.toString()

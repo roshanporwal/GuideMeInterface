@@ -1,31 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaClock, FaRegUser } from 'react-icons/fa';
+import { FaRegUser } from 'react-icons/fa';
 import {
-    MdLocationOn, MdOutlineFilePresent,
+     MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
     MdFormatListNumbered,
-    MdOutlineApartment,MdCall
+    MdOutlineApartment,MdCall,MdTransgender,MdPayment
 } from 'react-icons/md';
-import {FaBuilding,FaGlobeAsia} from 'react-icons/fa'
+import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
 import {IoHomeOutline} from 'react-icons/io5'
 import {GiDirectionSigns} from 'react-icons/gi'
+import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
-import { validationSchema } from './nurseValidation';
-function NurseService({handleModalShow}) {
-    // Create a reference to the hidden file input element
-    // const hiddenFileInputInsurance = React.useRef(null);
-    const hiddenFileInputReports = React.useRef(null);
+import { validationSchema } from './pharmacyValidation';
+
+function Pharmacy({handleModalShow}) {
+    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    // const [fileerrors,setFileErrors] = useState({
-    //     // insurance:"",
-    //     reports:"",
-    // });
+    const [fileerrors,setFileErrors] = useState({
+         insurance:"",
+        // reports:"",
+    });
+    const [dateerrors,setDateErrors] = useState({
+        dateOne:"",
+        dateTwo:"",
+    });
 
     const validate = async (values) => {
         try {
-            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
+            setFileErrors({insurance:insurance === undefined ? "required" : ""/*,reports:reports === undefined ? "required" : ""*/});
             
-        //    setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
+            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
             
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -42,18 +47,18 @@ function NurseService({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    // const handleFileInsuranceClick = event => {
-    //     hiddenFileInputInsurance.current.click();
-    // };
+    const handleFileInsuranceClick = event => {
+        hiddenFileInputInsurance.current.click();
+    };
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileReportsClick = event => {
-        hiddenFileInputReports.current.click();
-    };
+    // const handleFileReportsClick = event => {
+    //     hiddenFileInputReports.current.click();
+    // };
     
-    /* const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
+    const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
-    )); */
+    ));
     const [formValues, setFormValues] = useState({
         name:'',
         age:'',
@@ -65,10 +70,10 @@ function NurseService({handleModalShow}) {
         mobile:'',
         insurance_card_copy: [],
     });
-    //const [DateOne, setDateOne] = useState();
-    const [reports, setReports] = useState([]);
-    // const [insurance, setInsurance] = useState();
-    
+    const [DateOne, setDateOne] = useState();
+    // const [reports, setReports] = useState([]);
+    const [insurance, setInsurance] = useState();
+
     useEffect(() => {
         fetchData()
     }, []);
@@ -80,6 +85,7 @@ function NurseService({handleModalShow}) {
             setFormValues({ ...formValues, name: data.name });
         }
     }
+
     const handleAddress = () => { 
         formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
                         + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
@@ -94,16 +100,15 @@ function NurseService({handleModalShow}) {
         const err = await validate(formValues);
         setErrors(err);
         
-        if(Object.keys(err).length === 0/* && fileerrors.insurance === ""*/)  {    
-               e.preventDefault();
+        if(Object.keys(err).length === 0 && insurance )  {  
+                e.preventDefault();
                 
                 const formData = new FormData();
 
                 let data = localStorage.getItem("login_patient")
                 data = JSON.parse(data)
-                
+
                 handleAddress()
-            
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
                 formValues.age = data.age;
@@ -111,18 +116,19 @@ function NurseService({handleModalShow}) {
                 formValues.nationality = data.nationality;
                 formValues.email = data.email;
                 formValues.referredby = data.referredby;
+                formValues.current_diagnosis = formValues.symptoms
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
-                formValues.type = "nursingservice";
-                
-                
+                formValues.preferred_date_first = DateOne.toString();
+                formValues.type = "pharmacy";
 
-                if (reports !== undefined) {
-                    for (const tp of reports) {
-                        formData.append('patient_reports', tp);
-                    }
-                }
-                // formData.append('insurance_card_copy', insurance);
+
+                // if (reports !== undefined) {
+                //     for (const tp of reports) {
+                //         formData.append('patient_reports', tp);
+                //     }
+                // }
+                formData.append('insurance_card_copy', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
@@ -135,16 +141,15 @@ function NurseService({handleModalShow}) {
                 }
         }
 
-
     }
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
-            setReports(e.target.files)
+            // setReports(e.target.files)
         } 
-        // else {
-        //     setInsurance(e.target.files[0])
-        // }
+        else {
+            setInsurance(e.target.files[0])
+        }
     }
     return (
         <div className="form-container">
@@ -181,8 +186,11 @@ function NurseService({handleModalShow}) {
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
+                            isInvalid={errors?.name}
                             disabled = {true}
                         />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
+
                     </Form.Group>
                 </div>
                 {/* <div className='col-10 col-md-5'>
@@ -213,7 +221,7 @@ function NurseService({handleModalShow}) {
                         />
                     </Form.Group>
                 </div> */}
-                {/* <div className='col-10'>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineCalendarToday />
@@ -221,51 +229,24 @@ function NurseService({handleModalShow}) {
                         <div>
                             <DatePicker
                                 selected={DateOne}
-                                onChange={date => setDateOne(date)}
-                                dateFormat="dd/MM/yyyy"
+                                onChange={date => {setDateOne(date)}}
+                                dateFormat="dd/MM/yyyy hhaa"
                                 showTimeSelect
-                                customInput={<DatePickerInput text='Date and Time of Delivery' />}
-                            />
+                                minDate = {new Date()}
+                                minTime = {new Date().setHours(7, 0, 0, 0)}
+                                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals = {60}
+                                customInput={<DatePickerInput text='Preferred Date and Time' />}
+                            />  
                         </div>
-                    </Form.Group>
-                </div>*/}
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdFormatListNumbered />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="current_diagnosis"
-                            placeholder='Current diagnosis (compulsory)'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.current_diagnosis}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaClock />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="preferred_date_two"
-                            placeholder='Time period for nursing service (number of days/months) '
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.preferred_date_two}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_date_two}</Form.Control.Feedback>
-
+                        {dateerrors.dateOne ? (
+                            <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                        : null}
                     </Form.Group>
                 </div>
                 <div className='col-10'>
                     <div className='d-flex align-items-start justify-content-center mt-2'>
-                        <div className="mx-1 mb-1">
+                        <div className="mx-1">
                             <IoHomeOutline /> 
                         </div>
                         <div>
@@ -304,7 +285,7 @@ function NurseService({handleModalShow}) {
                             isInvalid={errors?.building_name}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.building_name}</Form.Control.Feedback>
-  
+
                     </Form.Group>
                 </div>
                 <div className='col-10 col-md-5'>
@@ -335,7 +316,7 @@ function NurseService({handleModalShow}) {
                             placeholder='Area / Location'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.location}
+                           isInvalid={errors?.location}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
 
@@ -369,7 +350,7 @@ function NurseService({handleModalShow}) {
                             placeholder='Nearest Landmark (Optional)'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.landmark}
+                           isInvalid={errors?.landmark}
                         />
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.landmark}</Form.Control.Feedback>
 
@@ -392,15 +373,83 @@ function NurseService({handleModalShow}) {
 
                     </Form.Group>
                 </div>
+                 <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaClipboardList />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="symptoms"
+                            placeholder='Symptoms/Conditions'
+                            onChange={handleChange}
+                            className="global-inputs"
+                            isInvalid={errors?.symptoms}
+                        />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
+
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdTransgender />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="preferred_gender"
+                            placeholder='Prefered Gender of Care Giver '
+                            onChange={handleChange}
+                            className="global-inputs"
+                            isInvalid={errors?.preferred_gender}
+                        />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_gender}</Form.Control.Feedback>
+
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <FaLanguage />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="languages_prefer"
+                            placeholder='Language of the caregiver'
+                            onChange={handleChange}
+                            className="global-inputs"
+                            isInvalid={errors?.languages_prefer}
+                        />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.languages_prefer}</Form.Control.Feedback>
+
+                    </Form.Group>
+                </div>
+                <div className='col-10 col-md-5'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdPayment />
+                        </div>
+                        <Form.Control
+                            type='text'
+                            name="payment_mode"
+                            placeholder='Mode of Payment'
+                            onChange={handleChange}
+                            className="global-inputs"
+                            isInvalid={errors?.payment_mode}
+                        />
+                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.payment_mode}</Form.Control.Feedback>
+
+                    </Form.Group>
+                </div>
                 
-                {/* <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -414,14 +463,14 @@ function NurseService({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div> */}
-                <div className='col-10 col-md-7'>
+                </div>
+                {/* <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
                         </div>
                         <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
-                            <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
+                            <p>{reports.length === 0 ? "Upload Prescriptions (If Any)" : reports.length + " File(s) Uploaded"}</p>
                         </div>
                         <input
                             type="file"
@@ -433,7 +482,7 @@ function NurseService({handleModalShow}) {
                             multiple
                         />
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='text-center mt-4'>
                     <input className="form-button" type="submit" value="SUBMIT" />
                 </div>
@@ -442,4 +491,4 @@ function NurseService({handleModalShow}) {
     );
 }
 
-export default NurseService;
+export default Pharmacy;

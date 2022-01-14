@@ -74,28 +74,20 @@ function PhysioTherapy({ handleModalShow }) {
     // const [insurance, setInsurance] = useState();
 
     useEffect(() => {
-        async function fetchData() {
-            let data = localStorage.getItem("login_patient")
-            if (data !== null) {
-                data = JSON.parse(data)
-                formValues.name = data.name
-                setFormValues({ ...formValues, name: data.name });
-            }
-        }
         fetchData()
-    }, [formValues]);
-
+    }, []);
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if (data !== null) {
+            data = JSON.parse(data)
+            formValues.name = data.name
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     
     const handleAddress = () => {
         formValues.address_patient = formValues.flat_number + ", " + formValues.building_name + ", " + formValues.street_name
             + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
-
-        delete formValues.flat_number
-        delete formValues.building_name
-        delete formValues.street_name
-        delete formValues.location
-        delete formValues.emirates
-        delete formValues.landmark
     }
     const handleChange = (e) => {
         let { name, value } = e.target;

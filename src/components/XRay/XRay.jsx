@@ -55,12 +55,17 @@ function XRay({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     
     // const [insurance, setInsurance] = useState();
-    const [data,setData] = useState({
-        name:''
-    })
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem("login_patient")))
-    },[]);
+        fetchData()
+    }, []);
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if (data !== null) {
+            data = JSON.parse(data)
+            formValues.name = data.name
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -75,6 +80,9 @@ function XRay({handleModalShow}) {
         if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
                 
                 const formData = new FormData();
+
+                let data = localStorage.getItem("login_patient")
+                data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
@@ -92,9 +100,7 @@ function XRay({handleModalShow}) {
 
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
-                console.log(formValues)
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
-                console.log(abc)
                 if(abc.payload){
                     handleModalShow();
                 }
@@ -138,7 +144,7 @@ function XRay({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {data.name}
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"

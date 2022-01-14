@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+     MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
     MdFormatListNumbered,
     MdOutlineApartment,MdCall,MdTransgender,MdPayment
 } from 'react-icons/md';
@@ -13,13 +13,13 @@ import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './labValidation';
 function LabTest({handleModalShow}) {
-    // const hiddenFileInputInsurance = React.useRef(null);
-    const hiddenFileInputReports = React.useRef(null);
+    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    // const [fileerrors,setFileErrors] = useState({
-    //      insurance:"",
-    //     reports:"",
-    // });
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+        // reports:"",
+    });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         dateTwo:"",
@@ -27,7 +27,7 @@ function LabTest({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
+            setFileErrors({insurance:insurance === undefined ? "required" : "",/*reports:reports === undefined ? "required" : ""*/});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
             
@@ -46,14 +46,14 @@ function LabTest({handleModalShow}) {
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    // const handleFileInsuranceClick = event => {
-    //     hiddenFileInputInsurance.current.click();
-    // };
+    const handleFileInsuranceClick = event => {
+        hiddenFileInputInsurance.current.click();
+    };
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileReportsClick = event => {
-        hiddenFileInputReports.current.click();
-    };
+    // const handleFileReportsClick = event => {
+    //     hiddenFileInputReports.current.click();
+    // };
     
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
@@ -70,26 +70,24 @@ function LabTest({handleModalShow}) {
         insurance_card_copy: [],
     });
     const [DateOne, setDateOne] = useState();
-    const [reports, setReports] = useState([]);
-    // const [insurance, setInsurance] = useState();
+    // const [reports, setReports] = useState([]);
+    const [insurance, setInsurance] = useState();
 
-    const [data,setData] = useState({
-        name:''
-    })
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem("login_patient")))
-    },[]);
+        fetchData()
+    }, []);
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if (data !== null) {
+            data = JSON.parse(data)
+            formValues.name = data.name
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
 
     const handleAddress = () => { 
         formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
                         + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
-        
-        delete formValues.flat_number
-        delete formValues.building_name
-        delete formValues.street_name
-        delete formValues.location
-        delete formValues.emirates
-        delete formValues.landmark
     }
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -100,14 +98,13 @@ function LabTest({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        
-        if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
+        if(Object.keys(err).length === 0 && insurance)  {    
                 e.preventDefault();
                 
                 const formData = new FormData();
 
-                // let data = localStorage.getItem("login_patient")
-                // data = JSON.parse(data)
+                let data = localStorage.getItem("login_patient")
+                data = JSON.parse(data)
 
                 handleAddress()
                 formValues.patient_id = data._id;
@@ -124,12 +121,12 @@ function LabTest({handleModalShow}) {
                 formValues.type = "lab";
 
 
-                if (reports !== undefined) {
+               /* if (reports !== undefined) {
                     for (const tp of reports) {
                         formData.append('patient_reports', tp);
                     }
-                }
-                // formData.append('insurance_card_copy', insurance);
+                }*/
+                formData.append('insurance_card_copy', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
@@ -146,11 +143,11 @@ function LabTest({handleModalShow}) {
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
-            setReports(e.target.files)
+            // setReports(e.target.files)
         } 
-        // else {
-        //     setInsurance(e.target.files[0])
-        // }
+        else {
+            setInsurance(e.target.files[0])
+        }
     }
     return (
         <div className="form-container">
@@ -183,7 +180,7 @@ function LabTest({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {data.name}
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
@@ -231,7 +228,7 @@ function LabTest({handleModalShow}) {
                             <DatePicker
                                 selected={DateOne}
                                 onChange={date => {setDateOne(date)}}
-                                dateFormat="dd/MM/yyyy"
+                                dateFormat="dd/MM/yyyy hhaa"
                                 showTimeSelect
                                 minDate = {new Date()}
                                 minTime = {new Date().setHours(7, 0, 0, 0)}
@@ -443,14 +440,14 @@ function LabTest({handleModalShow}) {
                     </Form.Group>
                 </div>
                 
-                {/* <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -464,14 +461,14 @@ function LabTest({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}   
                     </Form.Group>
-                </div> */}
-                <div className='col-10 col-md-7'>
+                </div>
+                {/* <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
                         </div>
                         <div  role="button" onClick={handleFileReportsClick} className='global-file-input'>
-                            <p>{reports.length === 0 ? "Upload Reports (If Any)" : reports.length + " File(s) Uploaded"}</p>
+                            <p>{reports.length === 0 ? "Upload Prescription" : reports.length + " File(s) Uploaded"}</p>
                         </div>
                         <input
                             type="file"
@@ -482,8 +479,11 @@ function LabTest({handleModalShow}) {
                             onChange={handleFiles}
                             multiple
                         />
+                        {fileerrors.reports ? (
+                                <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
+                            : null}  
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='text-center mt-4'>
                     <input className="form-button" type="submit" value="SUBMIT" />
                 </div>

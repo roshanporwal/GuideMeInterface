@@ -24,7 +24,7 @@ function Dashboard() {
                 </Col>
                 <Col lg={{span:5}} xs={6} className="align-self-center">
                     <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h6>E Consult</h6>
+                        <h6>E-Consult</h6>
                         <h6>Support</h6>
                         <div className="btn btn-primary" onClick={() => navigate("/log-in")}>
                             Login
@@ -78,7 +78,7 @@ function Dashboard() {
                                     <DashboardItem 
                                         item_desc="Pharmacy"
                                         item_img={MedicineLogo}
-                                        item_link={"#"}
+                                        item_link={"/pharmacy"}
                                         navigate = {navigate}
                                     />    
                                 </Col>

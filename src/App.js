@@ -18,6 +18,7 @@ import DoctorVisitContent from "./components/DoctorVisit/DoctorVisitContent";
 import PhysioTherapyContent from "./components/PhysioTherapy/PhysioTherapyContent";
 import NurseServiceContent from "./components/Nurse/NurseServiceContent";
 import LabTestContent from "./components/LabTest/LabTestContent";
+import PharmacyContent from "./components/Pharmacy/PharmacyContent";
 import DiagnosticContent from "./components/Diagnostic/DiagnosticContent";
 import XRayContent from "./components/XRay/XRayContent";
 import MammogramContent from "./components/Mammogram/MammogramContent";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/nursing-service" element={<NurseServiceContent />} />
               <Route path="/nursing-service" element={<NurseServiceContent />} />
               <Route path="/lab-tests" element={<LabTestContent />} />
+              <Route path="/pharmacy" element={<PharmacyContent />} />
               <Route path="/diagnostic" element={<DiagnosticContent />} />
               <Route path="/x-ray" element={<XRayContent />} />
               <Route path="/mammogram" element={<MammogramContent />} />

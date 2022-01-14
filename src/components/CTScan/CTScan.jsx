@@ -59,12 +59,17 @@ function CTScan({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     // const [insurance, setInsurance] = useState();
 
-    const [data,setData] = useState({
-        name:''
-    })
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem("login_patient")))
-    },[]);
+        fetchData()
+    }, []);
+    async function fetchData() {
+        let data = localStorage.getItem("login_patient")
+        if (data !== null) {
+            data = JSON.parse(data)
+            formValues.name = data.name
+            setFormValues({ ...formValues, name: data.name });
+        }
+    }
     
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -80,8 +85,8 @@ function CTScan({handleModalShow}) {
                 
                 const formData = new FormData();
 
-                // let data = localStorage.getItem("login_patient")
-                // data = JSON.parse(data)
+                let data = localStorage.getItem("login_patient")
+                data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
@@ -145,7 +150,7 @@ function CTScan({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {data.name}
+                            value = {formValues.name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"

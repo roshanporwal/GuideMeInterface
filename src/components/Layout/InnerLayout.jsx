@@ -42,7 +42,7 @@ function InnerLayout(props) {
         if(Object.keys(err).length === 0){
             const req ={
                 login_id:formValues.mobile,
-
+                name: formValues.name
             }
             const login = await auth_service.login(req)
             if(login.payload){
