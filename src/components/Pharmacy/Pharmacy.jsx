@@ -74,17 +74,17 @@ function Pharmacy({handleModalShow}) {
     // const [reports, setReports] = useState([]);
     const [insurance, setInsurance] = useState();
 
+    const [name,setName] = useState("")
     useEffect(() => {
+        async function fetchData() {
+            let data = localStorage.getItem("login_patient")
+            if (data !== null) {
+                data = JSON.parse(data)
+                setName(data.name)
+            }
+        }
         fetchData()
     }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if (data !== null) {
-            data = JSON.parse(data)
-            formValues.name = data.name
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
 
     const handleAddress = () => { 
         formValues.address_patient = formValues.flat_number +", " + formValues.building_name + ", " + formValues.street_name 
@@ -182,9 +182,9 @@ function Pharmacy({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {name}
                             placeholder='Person Name'
-                            onChange={handleChange}
+                            // onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
                             disabled = {true}

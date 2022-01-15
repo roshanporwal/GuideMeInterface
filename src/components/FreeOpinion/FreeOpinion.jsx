@@ -51,7 +51,8 @@ function FreeOpinion({handleModalShow}) {
         email:'',
         referredby : '',
         mobile:'',
-        insurance_card_copy: []
+        insurance_card_copy: [],
+        current_diagnosis : ''
     });
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
@@ -103,6 +104,8 @@ function FreeOpinion({handleModalShow}) {
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.type = opinion;
+            formValues.status = "New"
+            formValues.insurance_name = data.insurance_name
             // formValues.basetype = opinion;
             formValues.preferred_date_first = DateOne.toString()
             formValues.preferred_date_second = DateTwo.toString()
@@ -119,6 +122,19 @@ function FreeOpinion({handleModalShow}) {
             const freeOpinion = await auth_service.createNewenqurire(data.login_id, formData)
             if(freeOpinion.payload){
                 handleModalShow();
+                setFormValues({
+                    name:'',
+                    age:'',
+                    gender:'',
+                    nationality:'',
+                    email:'',
+                    referredby : '',
+                    mobile:'',
+                    insurance_card_copy: [],
+                    current_diagnosis : ''
+                })
+                setDateOne()
+                setDateTwo()
            }else{
                alert(freeOpinion.message)
            }
@@ -249,6 +265,7 @@ function FreeOpinion({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date of appointment (1) (compulsory)' />}
                             />
                             
@@ -269,6 +286,7 @@ function FreeOpinion({handleModalShow}) {
                                 selected={DateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date of appointment (2) (not compulsory)' />}
                             />
                         </div>

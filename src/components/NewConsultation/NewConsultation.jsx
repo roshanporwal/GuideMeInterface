@@ -60,27 +60,31 @@ function NewConsultation({handleModalShow}) {
         mobile:'',
         nationality:'',
         symptoms:'',
+        email:'',
+        referredby : '',
         location:'',
         preferred_hospital_doctor:'',
         preferred_date_first:'',
-        preferred_date_second:''
+        preferred_date_second:'',
+        insurance_name:'',
+        status : ''
     });
     const [dateOne, setDateOne] = useState();
     const [dateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
     
+    const [name,setName] = useState("")
     useEffect(() => {
+        async function fetchData() {
+            let data = localStorage.getItem("login_patient")
+            if (data !== null) {
+                data = JSON.parse(data)
+                setName(data.name)
+            }
+        }
         fetchData()
     }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if (data !== null) {
-            data = JSON.parse(data)
-            formValues.name = data.name
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -97,7 +101,9 @@ function NewConsultation({handleModalShow}) {
             let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
 
-            formValues.type = "new_consulation";
+            formValues.type = "new_consultation";
+            formValues.name = data.name
+            formValues.email = data.email
             formValues.current_diagnosis = formValues.symptoms
             formValues.preferred_date_first = dateOne.toString()
             formValues.preferred_date_second =dateTwo.toString()
@@ -107,6 +113,9 @@ function NewConsultation({handleModalShow}) {
             formValues.mobile =data.login_id
             formValues.patientid = data._id
             formValues.nationality= data.nationality
+            formValues.referredby = data.referredby;
+            formValues.insurance_name = data.insurance_name
+            formValues.status = "New"
             
 
 
@@ -121,6 +130,23 @@ function NewConsultation({handleModalShow}) {
             const createNewConsulation = await auth_service.createNewenqurire(data.login_id, formData)
             if(createNewConsulation.payload){
                 handleModalShow();
+                setFormValues({
+                    name:'',
+                    age:'',
+                    gender:'',
+                    insurance_card_copy: [],
+                    mobile:'',
+                    nationality:'',
+                    symptoms:'',
+                    email:'',
+                    location:'',
+                    referredby : '',
+                    preferred_hospital_doctor:'',
+                    preferred_date_first:'',
+                    preferred_date_second:'',
+                    insurance_name:'',
+                    status : ''
+                })
             }else{
                 alert(createNewConsulation.message)
             }
@@ -184,9 +210,9 @@ function NewConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {name}
                             placeholder='Person Name'
-                            onChange={handleChange}
+                            // onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
                             disabled={true}
@@ -286,6 +312,7 @@ function NewConsultation({handleModalShow}) {
                                 selected={dateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 1 *' />}
                                 isInvalid={errors?.dateOne}
                             />
@@ -305,6 +332,7 @@ function NewConsultation({handleModalShow}) {
                                 selected={dateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 2 *' />}
                                 isInvalid={errors?.dateTwo}
                             />
@@ -340,7 +368,7 @@ function NewConsultation({handleModalShow}) {
                 </div>
                         */}
 
-                <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />

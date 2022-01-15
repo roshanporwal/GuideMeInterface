@@ -55,17 +55,17 @@ function XRay({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     
     // const [insurance, setInsurance] = useState();
+    const [name,setName] = useState("")
     useEffect(() => {
+        async function fetchData() {
+            let data = localStorage.getItem("login_patient")
+            if (data !== null) {
+                data = JSON.parse(data)
+                setName(data.name)
+            }
+        }
         fetchData()
     }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if (data !== null) {
-            data = JSON.parse(data)
-            formValues.name = data.name
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
     
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -144,7 +144,7 @@ function XRay({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {name}
                             placeholder='Person Name'
                             onChange={handleChange}
                             className="global-inputs"
@@ -189,7 +189,7 @@ function XRay({handleModalShow}) {
                         <DatePicker
                                 selected={DateOne}
                                 onChange={date => {setDateOne(date)}}
-                                dateFormat="dd/MM/yyyy"
+                                dateFormat="dd/MM/yyyy hhaa"
                                 showTimeSelect
                                 minDate = {new Date()}
                                 minTime = {new Date().setHours(7, 0, 0, 0)}

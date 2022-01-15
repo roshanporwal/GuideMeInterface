@@ -46,7 +46,7 @@ function InnerLayout(props) {
             }
             const login = await auth_service.login(req)
             if(login.payload){
-                localStorage.setItem('login', JSON.stringify(login.payload));
+                localStorage.setItem('login_patient', JSON.stringify(login.payload));
                 window.location.reload(true)
             }
             

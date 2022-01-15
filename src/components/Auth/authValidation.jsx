@@ -23,6 +23,7 @@ export const signupvalidationSchema = yup.object().shape({
         email: yup.string().required("Email is required").matches(emailReg, {message:'Please Enter a valid Email-ID',excludeEmptyString:true}),
         age: yup.string().required("Age is required").test("age",'Please Enter a valid Age',(age) => {if(age <0 || age > 200) {return false;}else {return true}}),
         gender: yup.string().required("Gender is required"),
+        insurance_name: yup.string().required("Insurance Name is required."),
         referredby: yup.string().required("Referref By is required"),
         nationality: yup.string().required("Nationality is required"),
         // insurance_card_copy: yup.mixed().required("Patient insurance card copy is required"),

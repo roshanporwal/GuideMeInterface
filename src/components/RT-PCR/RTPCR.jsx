@@ -69,17 +69,17 @@ function RTPCR({handleModalShow}) {
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
+    const [name,setName] = useState("")
     useEffect(() => {
+        async function fetchData() {
+            let data = localStorage.getItem("login_patient")
+            if (data !== null) {
+                data = JSON.parse(data)
+                setName(data.name)
+            }
+        }
         fetchData()
     }, []);
-    async function fetchData() {
-        let data = localStorage.getItem("login_patient")
-        if (data !== null) {
-            data = JSON.parse(data)
-            formValues.name = data.name
-            setFormValues({ ...formValues, name: data.name });
-        }
-    }
 
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -172,9 +172,8 @@ function RTPCR({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="name"
-                            value = {formValues.name}
+                            value = {name}
                             placeholder='Person Name'
-                            onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
                             disabled={true}
