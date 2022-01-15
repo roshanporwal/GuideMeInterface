@@ -261,10 +261,13 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                   <div className="patient_details">
                     <p className="card-text">Id: {target.id}</p>
                     <p className="card-text">Mobile Number: {target.mobile}</p>
+                    {target.alternate_number ? <p className="card-text">Alternate Mobile Number: {target.alternate_number}</p>:null}
                     <p className="card-text">Email: {target.email}</p>
                     <p className="card-text">Age: {target.age}</p>
                     <p className="card-text">Gender: {target.gender}</p>
+                    <p className="card-text">Insurance Name: {target.insurance_name}</p>
                     {target.location ? <p className="card-text">Location:{target.location}</p> : null }
+                    {target.address_patient ? <p className= "card-text">Address:{target.address_patient}</p> :null}
                     <p className="card-text">
                       Nationality: {target.nationality}
                     </p>
@@ -298,7 +301,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                         {convert(target.preferred_date_first)}
                       </p>
                     ) : null}
-                    {convertTime(target.preferred_date_first) !== "0:00 am" ? (
+                    {target.preferred_date_first && convertTime(target.preferred_date_first) !== "0:00 am" ? (
                       <p className="card-text">
                         <b>Proposed Time:</b>
                         <br />
@@ -312,7 +315,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                         {convert(target.preferred_date_second)}
                       </p>
                     ) : null}
-                    {convertTime(target.preferred_date_second) !== "0:00 am" ? (
+                    {target.preferred_date_second && convertTime(target.preferred_date_second) !== "0:00 am"  ? (
                       <p className="card-text">
                         <b>Proposed Time:</b>
                         <br />
