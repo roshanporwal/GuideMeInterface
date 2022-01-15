@@ -100,6 +100,8 @@ function MRI({handleModalShow}) {
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne.toString()
                 formValues.type = "mri";
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
                 
 
                 // formData.append('prescription', insurance);

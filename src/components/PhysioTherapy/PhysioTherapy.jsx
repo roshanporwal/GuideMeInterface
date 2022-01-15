@@ -119,8 +119,9 @@ function PhysioTherapy({ handleModalShow }) {
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.preferred_date_first = DateOne.toString();
             formValues.type = "physiotherapy";
+            formValues.status = "New"
+            formValues.insurance_name = data.insurance_name
             
-
 
             if (reports !== undefined) {
                 for (const tp of reports) {
@@ -134,6 +135,8 @@ function PhysioTherapy({ handleModalShow }) {
 
             if (abc.payload) {
                 handleModalShow();
+                setFormValues({})
+                setDateOne()
             }
             else {
                 alert(abc.message)

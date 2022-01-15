@@ -110,6 +110,8 @@ function TeleConsultation({handleModalShow}) {
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.type = "teleconsulation";
+            formValues.status = "New"
+            formValues.insurance_name = data.insurance_name 
             
             formValues.preferred_date_first = DateOne.toString()
             formValues.preferred_date_second = DateTwo.toString()
@@ -127,6 +129,9 @@ function TeleConsultation({handleModalShow}) {
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
             if(abc.payload){
                 handleModalShow();
+                setDateOne()
+                setDateTwo()
+                setFormValues({})
             }
             else{
                 alert(abc.message)
@@ -273,6 +278,7 @@ function TeleConsultation({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 1 *' />}
                             />
                         </div>
@@ -291,6 +297,7 @@ function TeleConsultation({handleModalShow}) {
                                 selected={DateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 2 *' />}
                             />
                         </div>

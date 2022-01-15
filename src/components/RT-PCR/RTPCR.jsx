@@ -109,9 +109,9 @@ function RTPCR({handleModalShow}) {
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.preferred_date_first = DateOne.toString()
             formValues.preferred_date_second = DateTwo.toString()
-            formValues.type = "rcpcrtest";
-            
-            
+            formValues.type = "rcpcrtest"
+            formValues.status = "New"
+            formValues.insurance_name = data.insurance_name            
 
 
             if (reports !== undefined) {
@@ -125,6 +125,19 @@ function RTPCR({handleModalShow}) {
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
             if(abc.payload){
                 handleModalShow();
+                setFormValues({
+                    name:'',
+                    age:'',
+                    gender:'',
+                    nationality:'',
+                    email:'',
+                    referredby : '',
+                    mobile:'',
+                    insurance_card_copy: [],
+                    current_diagnosis:''
+                })
+                setDateOne()
+                setDateTwo()
             }
             else{
                 alert(abc.message)
@@ -270,6 +283,7 @@ function RTPCR({handleModalShow}) {
                                 selected={DateOne}
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 1 *' />}
                             />
                         </div>
@@ -288,6 +302,7 @@ function RTPCR({handleModalShow}) {
                                 selected={DateTwo}
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
+                                minDate = {new Date()}
                                 customInput={<DatePickerInput text='Preferred date 2 *' />}
                             />
                         </div>

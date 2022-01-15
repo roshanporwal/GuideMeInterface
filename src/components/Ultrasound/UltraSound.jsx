@@ -106,7 +106,8 @@ function UltraSound({handleModalShow}) {
                 formValues.preferred_date_first = DateOne.toString()
                 formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "ultrasound";
-                
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
 
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));

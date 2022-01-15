@@ -97,7 +97,8 @@ function XRay({handleModalShow}) {
                 formValues.preferred_date_first = DateOne.toString()
                 formValues.type = "xray";
                 // formValues.type = "diagnostics"
-
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)

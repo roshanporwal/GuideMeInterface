@@ -114,7 +114,8 @@ function NurseService({handleModalShow}) {
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.type = "nursingservice";
-                
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
                 
 
                 if (reports !== undefined) {
@@ -129,6 +130,7 @@ function NurseService({handleModalShow}) {
                 
                 if(abc.payload){
                     handleModalShow();
+                
                 }
                 else{
                     alert(abc.message)

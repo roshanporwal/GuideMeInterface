@@ -121,6 +121,8 @@ function Pharmacy({handleModalShow}) {
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne.toString();
                 formValues.type = "pharmacy";
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
 
 
                 // if (reports !== undefined) {
@@ -135,6 +137,7 @@ function Pharmacy({handleModalShow}) {
                 
                 if(abc.payload){
                     handleModalShow();
+                    setDateOne()
                 }
                 else{
                     alert(abc.message)

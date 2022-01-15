@@ -115,7 +115,8 @@ function Mammogram({handleModalShow}) {
                 formValues.preferred_date_first = DateOne.toString()
                 formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "mammogram";
-                
+                formValues.status = "New"
+                formValues.insurance_name = data.insurance_name
 
 
                 if (reports !== undefined) {
