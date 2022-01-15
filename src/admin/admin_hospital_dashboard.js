@@ -61,8 +61,6 @@ import "react-data-components/css/table-twbs.css";
     { title: 'To', prop: 'to_date' },
     { title: 'Status', prop: 'status' }
   ];
-
-
  */
 
   const customStyles = {
@@ -316,5 +314,3 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             </>
         );
 }
-
-

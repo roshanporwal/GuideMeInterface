@@ -143,6 +143,7 @@ function PATIENT_DASHBOARD(props) {
 
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
+        
         const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id, props.location.state)
 
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)

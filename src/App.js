@@ -9,8 +9,10 @@ import DoctorsHospital from "./pages/doctor_list.js";
 import HOSPITAL_PROFILE from "./pages/hospital_profile";
 import PATIENT_FORM from "./admin/patient_form";
 import ADMIN_HOSPITAL_DASHBOARD from "./admin/admin_hospital_dashboard";
+import ADMIN_ENQUIRY_DASHBOARD from "./admin/admin_enquiry_dashboard";
 import ADMIN_HOSPITAL_PROFILE from "./admin/admin_hospital_profile";
 import ADMIN_PATIENT_DASHBOARD from "./admin/admin_patient_dashboard";
+import ADMIN_ENQUIRY_INFO from "./admin/admin_enquiry_info";
 import ADMIN_Home from "./admin/admin_home.js";
 //import HospitalNavbar from './Navbar/hospital_navbar';
 //import ADMIN_NAVBAR from './Navbar/admin_navbar';
@@ -29,7 +31,10 @@ export default function App(props) {
         <Route path="/home" exact component={Home} />
         <Route path="/admin" exact component={ADMIN_Home} />
         <Route path="/" exact component={Landing} />
-
+        <Route path='/feedback' component={() => { 
+            window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSfcPrt4Zu-EryLavYYpNKQYWoGWlXZ2_eOMR5Nz4Y_sZeY-DA/viewform'; 
+            return null;
+        }}/>
         <Route path="/hospital/sendquota" exact component={PATIENT_DASHBOARD} />
         <Route
           path="/hospital/dashboard"
@@ -46,6 +51,11 @@ export default function App(props) {
           component={ADMIN_HOSPITAL_DASHBOARD}
         />
         <Route
+          path="/admin/enquiry"
+          exact
+          component={ADMIN_ENQUIRY_DASHBOARD}
+        />
+        <Route
           path="/admin/hospital/profile"
           exact
           component={ADMIN_HOSPITAL_PROFILE}
@@ -54,6 +64,11 @@ export default function App(props) {
           path="/admin/sendquota"
           exact
           component={ADMIN_PATIENT_DASHBOARD}
+        />
+        <Route
+          path="/admin/enquiry/info"
+          exact
+          component={ADMIN_ENQUIRY_INFO}
         />
         <Route path="/admin/smartsearch" exact component={SMART_SEARCH} />
         <Route path="/admin/mis" exact component={mis} />

@@ -11,7 +11,7 @@ function SMART_SEARCH(){
         search_location: "",
         search_speciality: ""
     })
-    const [ideal, setIdeal] = useState();
+    // const [ideal, setIdeal] = useState();
 
     const handleChange = e => {
        
@@ -33,7 +33,7 @@ function SMART_SEARCH(){
        
         const idealdata = await auth_service.idealdata()
         console.log(idealdata.payload)
-        setIdeal(idealdata.payload)
+        // setIdeal(idealdata.payload)
 
     }
 

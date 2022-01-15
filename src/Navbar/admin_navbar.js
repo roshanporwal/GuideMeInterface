@@ -4,7 +4,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import {  Link,useHistory } from 'react-router-dom';
 import './style.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHospital } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,7 @@ export default function ADMIN_NAVBAR(props) {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav>
+      {/* <div className="row"> */}
         <div className = "col-md-2">
       <FontAwesomeIcon icon={faUserAlt} style = {{fontSize: 22, color: "#164473"}} />
       <Nav.Link className = "text-dark" as={Link} to= '/admin/dashboard'><p style = {{color:"#164473"}}>Patients</p></Nav.Link>
@@ -50,12 +51,17 @@ export default function ADMIN_NAVBAR(props) {
         <Nav.Link  className = "text-dark" as={Link} to= '/admin/smartsearch'><p style = {{color:"#164473"}}>Smart Search</p></Nav.Link>
         </div>
         <div className = "col-md-2">
+        <FontAwesomeIcon icon={faQuestionCircle} style = {{fontSize: 22, color: "#164473"}} />
+        <Nav.Link  className = "text-dark" as={Link} to= '/admin/enquiry'><p style = {{color:"#164473"}}>Enquiry</p></Nav.Link>
+        </div>
+        <div className = "col-md-2">
         <FontAwesomeIcon icon={faPaperclip} style = {{fontSize: 22, color: "#164473"}} />
         <Nav.Link  className = "text-dark" as={Link} to= '/admin/mis'  ><p style = {{color:"#164473"}}>MIS</p></Nav.Link>
         </div>
-        <div className = "col-md-2">
-        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473", marginLeft: "1rem"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "20rem", color: "#164473"}} /></p></Nav.Link> 
+        <div className = "col-md-1">
+        <Nav.Link  className = "text-dark" onClick={logout}><p style = {{color: "#164473"}}><FontAwesomeIcon icon={faSignOutAlt}  style ={{fontSize: 22, marginLeft: "17rem", color: "#164473"}} /></p></Nav.Link> 
         </div>
+        {/* </div> */}
        
       </Nav>
     </Navbar.Collapse>
