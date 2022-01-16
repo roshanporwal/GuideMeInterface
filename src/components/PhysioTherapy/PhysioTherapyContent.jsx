@@ -9,7 +9,10 @@ import PhysioTherapy from './PhysioTherapy';
 function PhysioTherapyContent() {
     
     const [modalshow, setModalShow] = useState(false);
-    const handleModalClose = () => setModalShow(false);
+    const handleModalClose = () =>{ 
+        setModalShow(false)
+        window.location.reload();
+    };
     const handleModalShow = () => setModalShow(true);
 
     return ( 

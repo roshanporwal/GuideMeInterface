@@ -2,29 +2,29 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
+     MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
     
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './mammogramValidation';
 function Mammogram({handleModalShow}) {
-    // const hiddenFileInputInsurance = React.useRef(null);
-    const hiddenFileInputReports = React.useRef(null);
+    const hiddenFileInputInsurance = React.useRef(null);
+    // const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
     const [fileerrors,setFileErrors] = useState({
-        // insurance:"",
-        reports:"",
+        insurance:"",
+        // reports:"",
     });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         DateTwo:""
     });
-    const [reports, setReports] = useState([]);
+    // const [reports, setReports] = useState([]);
 
     const validate = async (values) => {
         try {
-            setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports.length === 0 ? "required" : ""});
+            setFileErrors({insurance:insurance === undefined ? "required" : ""/*,reports:reports.length === 0 ? "required" : ""*/});
             
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
             
@@ -42,16 +42,16 @@ function Mammogram({handleModalShow}) {
     };
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileReportsClick = event => {
-        hiddenFileInputReports.current.click();
-    };
+    // const handleFileReportsClick = event => {
+    //     hiddenFileInputReports.current.click();
+    // };
     
     
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    // const handleFileInsuranceClick = event => {
-    //     hiddenFileInputInsurance.current.click();
-    // };
+    const handleFileInsuranceClick = event => {
+        hiddenFileInputInsurance.current.click();
+    };
     
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
@@ -71,7 +71,7 @@ function Mammogram({handleModalShow}) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     
-    // const [insurance, setInsurance] = useState();
+    const [insurance, setInsurance] = useState();
 
     const [name,setName] = useState("")
     useEffect(() => {
@@ -94,8 +94,8 @@ function Mammogram({handleModalShow}) {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        
-        if(Object.keys(err).length === 0 && fileerrors.reports)  {    
+        // console.log(reports)
+        if(Object.keys(err).length === 0 && insurance)  {    
                 
                 const formData = new FormData();
 
@@ -119,18 +119,20 @@ function Mammogram({handleModalShow}) {
                 formValues.insurance_name = data.insurance_name
 
 
-                if (reports !== undefined) {
-                    for (const tp of reports) {
-                        formData.append('patient_reports', tp);
-                    }
-                }
-                // formData.append('prescription', insurance);
+                // if (reports !== undefined) {
+                //     for (const tp of reports) {
+                //         formData.append('patient_reports', tp);
+                //     }
+                // }
+                formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 
                 if(abc.payload){
                     handleModalShow();
+                    setDateOne()
+                    setDateTwo()
                 }
                 else{
                     alert(abc.message)
@@ -141,11 +143,11 @@ function Mammogram({handleModalShow}) {
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
-            setReports(e.target.files)
+            // setReports(e.target.files)
         } 
-        // else {
-        //     setInsurance(e.target.files[0])
-        // }
+        else {
+            setInsurance(e.target.files[0])
+        }
     }
     return (
         <div className="form-container">
@@ -278,14 +280,14 @@ function Mammogram({handleModalShow}) {
                     </Form.Group>
                 </div>
                 
-                {/* <div className='col-10 col-md-5'>
+                <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -299,8 +301,8 @@ function Mammogram({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}  
                     </Form.Group>
-                </div> */}
-                <div className='col-10 col-md-7'>
+                </div>
+                {/* <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
@@ -321,7 +323,7 @@ function Mammogram({handleModalShow}) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}  
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <p className="sub-title text-center">payment would be done at the time of test in the lab center</p>
                 </div>

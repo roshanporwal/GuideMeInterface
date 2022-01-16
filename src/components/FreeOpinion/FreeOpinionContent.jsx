@@ -8,7 +8,10 @@ import ThankYouModal from '../Layout/ThankYouModal';
 function FreeOpinionContent() {
 
     const [modalshow, setModalShow] = useState(false);
-    const handleModalClose = () => setModalShow(false);
+    const handleModalClose = () =>{ 
+        setModalShow(false)
+        window.location.reload();
+    };
     const handleModalShow = () => setModalShow(true);
 
 

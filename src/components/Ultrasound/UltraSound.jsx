@@ -116,6 +116,8 @@ function UltraSound({handleModalShow}) {
                 
                 if(abc.payload){
                     handleModalShow();
+                    setDateOne()
+                    setDateTwo()
                 }
                 else{
                     alert(abc.message)

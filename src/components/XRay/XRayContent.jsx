@@ -9,7 +9,10 @@ import XRay from './XRay';
 function XRayContent() {
     
     const [modalshow, setModalShow] = useState(false);
-    const handleModalClose = () => setModalShow(false);
+    const handleModalClose = () =>{ 
+        setModalShow(false)
+        window.location.reload();
+    };
     const handleModalShow = () => setModalShow(true);
 
     return ( 

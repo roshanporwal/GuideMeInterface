@@ -8,7 +8,10 @@ import InternationalOpinion from './InternationalOpinion';
 function InternationalOpinionContent() {
 
     const [modalshow, setModalShow] = useState(false);
-    const handleModalClose = () => setModalShow(false);
+    const handleModalClose = () =>{ 
+        setModalShow(false)
+        window.location.reload();
+    };
     const handleModalShow = () => setModalShow(true);
 
 

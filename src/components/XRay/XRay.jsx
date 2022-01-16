@@ -104,6 +104,7 @@ function XRay({handleModalShow}) {
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 if(abc.payload){
                     handleModalShow();
+                    setDateOne()
                 }
                 else{
                     alert(abc.message)

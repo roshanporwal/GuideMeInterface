@@ -8,7 +8,10 @@ import RTPCR from './RTPCR';
 function RTPCRContent() {
     
     const [modalshow, setModalShow] = useState(false);
-    const handleModalClose = () => setModalShow(false);
+    const handleModalClose = () =>{ 
+        setModalShow(false)
+        window.location.reload();
+    };
     const handleModalShow = () => setModalShow(true);
 
     return ( 

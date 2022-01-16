@@ -111,6 +111,7 @@ function CTScan({handleModalShow}) {
                 
                 if(abc.payload){
                     handleModalShow();
+                    setDateOne()
                 }
                 else{
                     alert(abc.message)
