@@ -476,7 +476,7 @@
     box-shadow: rgb(136 136 136) 5px 5px 8px;
 }
 .HospitalTitle{
-	font-size: 16px;
+	font-size: 14px;
     color: #fff;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -742,3 +742,106 @@
     font-weight: 900;
     background-color: #f8f9fa;
 }
+
+
+.table-scroll {
+    position: relative;
+    width:100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+  }
+  .table-scroll table {
+    width: 100%;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .table-wrap {
+    position: relative;
+  }
+  .table-scroll th,
+  .table-scroll td {
+    border: 1px solid #fff;
+    background: #fff;
+  }
+  .table-scroll th p{
+    height: 45px;
+    margin: 0px;
+    padding: 10px;
+    border-bottom: 1px solid #164473ed;
+  }
+  .table-scroll th p:last-child {
+    border-bottom: 0px;
+    height: 30px;
+  }
+  .table-scroll td {
+    padding:10px 0px;
+  }
+  .table-scroll thead th {
+   padding: 0px 10px;
+    background: #164473;
+    color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+  /* safari and ios need the tfoot itself to be position:sticky also */
+  .table-scroll tfoot,
+  .table-scroll tfoot th,
+  .table-scroll tfoot td {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    background: #666;
+    color: #fff;
+    z-index:4;
+  }
+  
+  a:focus {
+    background: red;
+  } /* testing links*/
+  
+  th:first-child {  
+    width:200px;
+    max-width:200px;
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #ccc;
+  }
+  thead th:first-child{
+    width:200px;
+    max-width:200px;   
+    z-index: 5;  
+  }
+  .targetData p{
+    height: 45px;
+    margin: 0px;
+    padding: 10px;
+    border-bottom: 1px solid #164473;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 225px;
+  }
+  .targetData p:last-child {
+    border-bottom: 0px;
+    height: 30px;
+  }
+
+  @media (max-width: 768px){
+    th:first-child {  
+        width:500px;
+        max-width:500px;
+      }
+      thead th:first-child{
+        width:500px;
+        max-width:500px;   
+      }
+      .table-scroll th p{
+          padding: 5px;
+          width: 160px;
+      }
+  }

@@ -127,72 +127,74 @@ export default function PATIENT_VIEW(props) {
                 </div>
             </div>
 		</div>	
-			
-			
-            {show_quota ?
+		{show_quota ?
 				<div className="container my-5">
-                    <div className="row mb-3" style={{background:"#164473"}} >
-                        <div className="col-md-2">{/* empty column for table headling */}</div>
+                    <div id="table-scroll" className="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                {
+                                    hopital_enq.map((target, index) => (
+                                    <th scope="col" key={index} >
+                                        <h2 className="HospitalTitle">{target.hospital_name}</h2>
+                                    </th>
+                                ))}                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>
+                                <p><b>Estimate Price</b></p>
+                                <p><b>Treatment Plan</b></p>
+                                <p><b>Inclusions</b></p>
+                                <p><b>Exclusions</b></p>
+                                <p><b>Copay Required</b></p>
+                                <p><b>Types of Anesthesia</b></p>
+                                <p><b>Type of room</b></p>
+                                <p><b>Length of stay</b></p>
+                                <p><b>Free room upgrade</b></p>
+                                <p><b>Free Physiotherapy</b></p>
+                                <p><b>Pickup and drop</b></p>
+                                <p><b>Other free consultation</b></p>
+                                <p><b>Free Annual checkup</b></p>         
+                            </th>
                             {
                                 hopital_enq.map((target, index) => (
-                                <div className="col-md-2" key={index} >
-                                    <h2 className="HospitalTitle">{target.hospital_name}</h2>
-                                </div>
-                            ))}
-                    </div>	
-					 <div className="row" >	
-                        <div className="col-md-2" style={{ textAlign: "center" }}>
-                            <p><b>Estimate Price</b></p>
-                            <p><b>Treatment Plan</b></p>
-                            <p><b>Inclusions</b></p>
-                            <p><b>Exclusions</b></p>
-                            <p><b>Copay Required</b></p>
-                            <p><b>Types of Anesthesia</b></p>
-                            <p><b>Type of room</b></p>
-                            <p><b>Length of stay</b></p>
-                            <p><b>Free room upgrade</b></p>
-                            <p><b>Free Physiotherapy</b></p>
-                            <p><b>Pickup and drop</b></p>
-                            <p><b>Other free consultation</b></p>
-                            <p><b>Free Annual checkup</b></p>
-                        </div>
-						
-						
-                        {
-                            hopital_enq.map((target, index) => (
-                                 <div className="col-md-2" key={index}>
-                                    {target.estimate_price ?
-
-                                        <div>
-                                            <p>{target.estimate_price}</p>
-                                            <p>{target.treatment_plan}</p>
-                                            <p>{target.inclusion}</p>
-                                            <p>{target.exclusion}</p>
-                                            <p>{target.estimate_copay}</p>
-                                            <p>{target.type_of_anesthesia}</p>
-                                            <p>{target.type_of_room}</p>
-                                            <p>{target.free_room_upgrade}</p>
-                                            <p>{target.free_physiotherapy}</p>
-                                            <p>{target.pickup_and_drop}</p>
-                                            <p>{target.free_other_speciality_consultant}</p>
-                                            <p>{target.free_other_speciality_consultant}</p>
-                                            <p>{target.free_other_speciality_consultant}</p>
+                                    <td key={index} >
+                                        {target.estimate_price ?
+                                        <div className="targetData">
+                                        <p>{target.estimate_price}</p>
+                                        <p>{target.treatment_plan}</p>
+                                        <p>{target.inclusion}</p>
+                                        <p>{target.exclusion}</p>
+                                        <p>{target.estimate_copay}</p>
+                                        <p>{target.type_of_anesthesia}</p>
+                                        <p>{target.type_of_room}</p>
+                                        <p>{target.free_room_upgrade}</p>
+                                        <p>{target.free_physiotherapy}</p>
+                                        <p>{target.pickup_and_drop}</p>
+                                        <p>{target.free_other_speciality_consultant}</p>
+                                        <p>{target.free_other_speciality_consultant}</p>
+                                        <p>{target.free_other_speciality_consultant}</p>   
                                         </div>
-
-                                        : <div className="col-md-3">
-                                            <p>AWAITING FOR QUOTATION</p>
-                                        </div>
-                                    }
-
-                                </div>
-                            ))}
-
-                    </div>
-
-                </div> : null}
+                                        : <div>AWAITING FOR QUOTATION</div>
+                                    }                           
+                                    </td>
+                            ))
+                            }       
+                        </tr>
+                        </tbody>
+                     </table>
+                </div>
+            </div> : null}
         </>
     );
 }
+
+
+
+
 
 
 
