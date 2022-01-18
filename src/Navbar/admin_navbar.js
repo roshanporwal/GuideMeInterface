@@ -44,6 +44,10 @@ export default function ADMIN_NAVBAR(props) {
                             <Link className = "nav-link" to = '/admin/smartsearch'><span style = {{color:"#164473"}}>Smart Search</span></Link>
                           </li>
                           <li className="nav-item d-flex justify-content-center align-items-center">
+                            <img src="/assets/images/icons/total_enquiries.png" alt=""/>
+                            <Link className = "nav-link" to = '/admin/enquiry'><span style = {{color:"#164473"}}>Enquiry</span></Link>
+                          </li>
+                          <li className="nav-item d-flex justify-content-center align-items-center">
                             <img src="/assets/images/icons/MIS.png" alt=""/>
                             <Link className = "nav-link" as={Link} to= '/admin/mis'><span style = {{color:"#164473"}}>MIS</span></Link>
                           </li>

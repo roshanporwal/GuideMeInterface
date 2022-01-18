@@ -10,7 +10,7 @@ export default function Landing(){
             <Link to="/home"  className="hospital">Hospital</Link>
             <Link to="/admin"  className="login">Admin</Link>
             <Link to={{ pathname: "https://consultation.med.live:8000/"}} target="_blank" className="consultation">E Consult</Link>
-            <Link to={{ pathname: "https://docs.google.com/forms/d/1Gptzh28zSTLISeAPt5qc3Va3Gwz1cRDjVHGLGA1h8O4/viewform?ts=611788a1&edit_requested=true"}} target="_blank" className="feedback">Feedback</Link>
+            <Link to="/feedback" target="_blank" className="feedback">Feedback</Link>
             <Link className="callus" to="tel:04 3562356">Call Us</Link>
 	</div>
         </>

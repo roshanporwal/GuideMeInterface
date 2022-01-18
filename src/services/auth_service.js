@@ -48,6 +48,10 @@ function getenquriesbyid(login_id, _id) {
   const req = instance.get(`/enquries/${login_id}/id?_id=${_id}`);
   return req
 }
+function getenquriesinfo(login_id, _id) {
+  const req = instance.get(`/patientenquries/${login_id}/enquiry/${_id}`);
+  return req
+}
 function getfeedback(login_id, _id) {
   const req = instance.get(`/enquries/${login_id}/allfeedback?_id=${_id}`);
   return req
@@ -76,7 +80,10 @@ function getenquries(login_id) {
   const req = instance.get(`/enquries/${login_id}`);
   return req
 }
-
+function getenquriesSpecific(login_id,proposed_treatment_plan) {
+  const req = instance.get(`/patientenquries/${login_id}/${proposed_treatment_plan}`);
+  return req
+}
 function deleteenquries(login_id,_id) {
   const req = instance.delete(`/enquries/${login_id}/remove?id=${_id}`);
   return req
@@ -152,9 +159,11 @@ export {
   uploadexcelfile,
   getenquries,
   getenquriesbyid,
+  getenquriesinfo,
   getfeedback,
   gethospitals,
   updateenquries,
+  getenquriesSpecific,
   getdoctorbyhospital,
   getenquriesbyhospitals,
   sendquote,
