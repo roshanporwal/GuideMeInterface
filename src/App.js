@@ -1,5 +1,5 @@
+/* eslint-disable react/jsx-pascal-case */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
 import { AuthProvider } from "./service/authContext";
 import LoginScreen from "./components/Auth/Login";
 import RestrictedRoute from "./components/routes/RestrictedRoutes";
@@ -25,36 +25,123 @@ import MammogramContent from "./components/Mammogram/MammogramContent";
 import CTScanContent from "./components/CTScan/CTScanContent";
 import MRIContent from "./components/MRI/MRIContent";
 import UltraSoundContent from "./components/Ultrasound/UltraSoundContent";
+import Home from "./pages/home";
+
+import PATIENT_DASHBOARD from "./pages/patient_dashboard";
+import HOSPITAL_DASHBOARD from "./pages/hospital_dashboard";
+import ADMIN_ENQUIRY_DASHBOARD from "./admin/admin_enquiry_dashboard";
+import DoctorsHospital from "./pages/doctor_list.js";
+import HOSPITAL_PROFILE from "./pages/hospital_profile";
+import PATIENT_FORM from "./admin/patient_form";
+import ADMIN_HOSPITAL_DASHBOARD from "./admin/admin_hospital_dashboard";
+import ADMIN_HOSPITAL_PROFILE from "./admin/admin_hospital_profile";
+import ADMIN_PATIENT_DASHBOARD from "./admin/admin_patient_dashboard";
+import ADMIN_ENQUIRY_INFO from "./admin/admin_enquiry_info";
+import ADMIN_Home from "./admin/admin_home";
+import PATIENT_VIEW from "./admin/patient_view";
+import SMART_SEARCH from "./admin/smart_search";
+// import Landing from "./pages/landing";
+import Mis from "./admin/mis";
+
+import "./App.css";
+import "react-bootstrap";
+
+// function admin_home(){return <ADMIN_Home/>}
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-            <Route path="/log-in" element={<RestrictedRoute><LoginScreen/></RestrictedRoute>} />
-            <Route path="/sign-up" element={<RestrictedRoute><SignUpScreen/></RestrictedRoute>} />
-            <Route path="/" element={<Dashboard />} />
-            <Route element={<Layout />} >
-              <Route path="/new-consultation" element={<NewConsultation />} />
-              <Route path="/second-opinion" element={<SecondOpinionContent />} />
-              <Route path="/free-opinion" element={<FreeOpinionContent />} />
-              <Route path="/international-opinion" element={<InternationalOpinionContent />} />
-              <Route path="/home-care-services" element={<HomeCareContent />} />
-              <Route path="/rt-pcr" element={<RTPCRContent />} />
-              <Route path="/teleconsultation" element={<TeleConsultationContent />} />
-              <Route path="/doctor-home-visit" element={<DoctorVisitContent />} />
-              <Route path="/physiotherapy" element={<PhysioTherapyContent />} />
-              <Route path="/nursing-service" element={<NurseServiceContent />} />
-              <Route path="/nursing-service" element={<NurseServiceContent />} />
-              <Route path="/lab-tests" element={<LabTestContent />} />
-              <Route path="/pharmacy" element={<PharmacyContent />} />
-              <Route path="/diagnostic" element={<DiagnosticContent />} />
-              <Route path="/x-ray" element={<XRayContent />} />
-              <Route path="/mammogram" element={<MammogramContent />} />
-              <Route path="/ct-scan" element={<CTScanContent />} />
-              <Route path="/mri" element={<MRIContent />} />
-              <Route path="/ultrasound" element={<UltraSoundContent />} />
+          <Route path="/home" element={<Home/>} />
+          <Route path="/admin" element = {<ADMIN_Home />} />
+          <Route
+            path="/feedback"
+            component={() => {
+              window.location.href =
+                "https://docs.google.com/forms/d/e/1FAIpQLSfcPrt4Zu-EryLavYYpNKQYWoGWlXZ2_eOMR5Nz4Y_sZeY-DA/viewform";
+              return null;
+            }}
+          />
+          <Route
+            path="/hospital/sendquota"
+            element={<PATIENT_DASHBOARD/>}
+          />
+          <Route
+            path="/hospital/dashboard"
+            element={<HOSPITAL_DASHBOARD/>}
+          />
+          <Route
+            path="/admin/enquiry"
+            element={<ADMIN_ENQUIRY_DASHBOARD/>}
+          />
+          <Route path="/hospital/doctors" element={<DoctorsHospital/>} />
+          <Route path="/hospital/profile" element={<HOSPITAL_PROFILE/>} />
 
-            </Route>
+          <Route path="/admin/enqurie_form" element={<PATIENT_FORM/>} />
+          <Route
+            path="/admin/dashboard"
+            element={<ADMIN_HOSPITAL_DASHBOARD/>}
+          />
+          <Route
+            path="/admin/hospital/profile"
+            element={<ADMIN_HOSPITAL_PROFILE/>}
+          />
+          <Route
+            path="/admin/sendquota"
+            element={<ADMIN_PATIENT_DASHBOARD/>}
+          />
+          <Route
+            path="/admin/enquiry/info"
+            element={<ADMIN_ENQUIRY_INFO/>}
+          />
+          <Route path="/admin/smartsearch" element={<SMART_SEARCH/>} />
+          <Route path="/admin/mis" element={<Mis/>} />
+
+          <Route path="/patient_view" element={<PATIENT_VIEW/>} />
+          <Route
+            path="/log-in"
+            element={
+              <RestrictedRoute>
+                <LoginScreen />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/sign-up"
+            element={
+              <RestrictedRoute>
+                <SignUpScreen />
+              </RestrictedRoute>
+            }
+          />
+          <Route path="/" element={<Dashboard />} />
+          <Route element={<Layout />}>
+            <Route path="/new-consultation" element={<NewConsultation />} />
+            <Route path="/second-opinion" element={<SecondOpinionContent />} />
+            <Route path="/free-opinion" element={<FreeOpinionContent />} />
+            <Route
+              path="/international-opinion"
+              element={<InternationalOpinionContent />}
+            />
+            <Route path="/home-care-services" element={<HomeCareContent />} />
+            <Route path="/rt-pcr" element={<RTPCRContent />} />
+            <Route
+              path="/teleconsultation"
+              element={<TeleConsultationContent />}
+            />
+            <Route path="/doctor-home-visit" element={<DoctorVisitContent />} />
+            <Route path="/physiotherapy" element={<PhysioTherapyContent />} />
+            <Route path="/nursing-service" element={<NurseServiceContent />} />
+            <Route path="/nursing-service" element={<NurseServiceContent />} />
+            <Route path="/lab-tests" element={<LabTestContent />} />
+            <Route path="/pharmacy" element={<PharmacyContent />} />
+            <Route path="/diagnostic" element={<DiagnosticContent />} />
+            <Route path="/x-ray" element={<XRayContent />} />
+            <Route path="/mammogram" element={<MammogramContent />} />
+            <Route path="/ct-scan" element={<CTScanContent />} />
+            <Route path="/mri" element={<MRIContent />} />
+            <Route path="/ultrasound" element={<UltraSoundContent />} />
+          </Route>
         </Routes>
       </Router>
     </AuthProvider>

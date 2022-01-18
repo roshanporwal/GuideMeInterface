@@ -1,0 +1,44 @@
+#AdminNavBar, #HospitalNavBar{
+	background-color:#f8f9fa!important;
+}
+.HeaderLogo{
+	width:200px;
+}
+#AdminNavBar .navbar-nav,#HospitalNavBar .navbar-nav{
+	width:70%;
+	margin:auto;
+}
+#AdminNavBar .nav-item, #HospitalNavBar .nav-item{
+	width: 25%;
+}
+#HospitalNavBar .navbar-text img{
+	width: 85%;
+}
+#AdminNavBar .nav-link, #HospitalNavBar .nav-link{
+	padding: 0px;
+	color: #164473;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+@media (max-width: 768px){
+	#AdminNavBar .navbar-nav{
+		width:100%;
+	}
+	#AdminNavBar .nav-item {
+		width: 100%;
+		padding: 10px 0px;
+	}
+	#HospitalNavBar .navbar-nav{
+		width:100%;
+	}
+	#HospitalNavBar .nav-item {
+		width: 100%;
+		padding: 10px 0px;
+	}
+	#HospitalNavBar .navbar-text img{
+		width: 10%;
+		float:left;
+		display:inline-block;
+	}
+}
