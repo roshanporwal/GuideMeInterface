@@ -318,7 +318,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
             <h1>{title ? title + " :" : ""}</h1>
           </div>
           <div className="data_table">
-            <div className="col-md-12">
+            <div className="offset-lg-10 col-md-3 pb-2">
               <label htmlFor="search">
                 Search by Patient Name:
                 <br />
