@@ -52,7 +52,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/home" element={<Home/>} />
+          <Route path="/hospital" element={<Home/>} />
           <Route path="/admin" element = {<ADMIN_Home />} />
           <Route
             path="/feedback"
