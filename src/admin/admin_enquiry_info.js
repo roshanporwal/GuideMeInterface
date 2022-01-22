@@ -78,7 +78,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
       data.login_id,
       props.id
     );
-    setEnqurie_data(getenquriesbyid.payload.reverse());
+    setEnqurie_data(getenquriesbyid.payload);
     // console.log(getenquriesbyid.payload);
     // const enq = getenquriesbyid.payload[0].hospitals;
     // setHopital_enq(enq);
