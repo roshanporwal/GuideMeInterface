@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "react-bootstrap";
 import * as auth_service from "../services/auth_service";
@@ -73,6 +73,15 @@ const columns = [
     selector: (row) => row["status"],
     sortable: true,
   },
+  // {
+  //   name: "Insurance Status",
+  //   selector: (row) => (
+  //   <select>
+  //     <option>{row["status"]}</option>
+  //     <option>Pending</option>
+  //   </select>),
+  //   sortable: true,
+  // },
 ];
 
 const customStyles = {
@@ -145,166 +154,54 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     return (
       <>
         <ADMIN_NAVBAR />
-        <div className="text-center">
-          <h1 className="mt-0 p-4 " style={{ color: "#164572" }}>
-            Enquiry Dashboard
-          </h1>
-          {/* <h2 style={{ color: "#787575" }}>Quick Stats</h2> */}
-        </div>
-        {/* {enquriesstatus.map((target, index) => (
-          <div key={index} {...target}>
-            <div className="enquiries container-fluid">
-              <div className="col-md-2 col-sm-6 total_enquiries text-center">
-                <div className="text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className="fa fa-file"
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.total}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  Total Enquiries
-                </h3>
-              </div>
-              <div className="col-md-2 col-sm-6 new_enquiries text-center">
-                <div className=" text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className="fa fa-plus"
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.new}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  New Enquiries
-                </h3>
-              </div>
-              <div className="col-md-2 col-sm-6 won_enquiries text-center">
-                <div className="text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className=" fa fa-smile-o "
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.won}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  Won Enquiries
-                </h3>
-              </div>
-              <div className="col-md-2 col-sm-6 awaiting_enquiries text-center">
-                <div className="text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className="fa fa-frown-o"
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.lost}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  Lost Enquiries
-                </h3>
-              </div>
-
-              <div className="col-md-2 col-sm-6 lost_enquiries text-center">
-                <div className="text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className="fa fa-tasks"
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.inprogress}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  In Progress
-                </h3>
-              </div>
-              <div className="col-md-2 col-sm-6 sent_quote text-center">
-                <div className="text-center">
-                  <i
-                    style={{
-                      fontSize: 26,
-                      marginTop: "25px",
-                      color: "#000000",
-                    }}
-                    className="fa fa-share"
-                  ></i>
-                  <h1 style={{ paddingLeft: "1rem", color: "#000000" }}>
-                    {target.sentquote}
-                  </h1>
-                </div>
-                <h3 className="mt-0 pb-3" style={{ color: "#000000" }}>
-                  Quote Sent
-                </h3>
-              </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <h1 className="mt-0 p-4 " style={{ color: "#164572" }}>
+                Enquiry Dashboard
+              </h1>
             </div>
           </div>
-        ))} */}
+        </div>
 
-        <div className="container-fluid justify-content-center align-items-center">
+        <div className="container">
           <div className="row">
-            <div className="col-md-2 col-sm-6">
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="New Consultation"
                 item_img={ConsultationLogo}
                 item_link={"new_consultation"}
               />
-            </div>
-            <div className="col-md-2 col-sm-6">
+              </div>
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="Second Opinion"
                 item_img={SecLogo}
                 item_link={"free_opinion"}
               />
             </div>
-            <div className="col-md-2 col-sm-6">
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="Home Service"
                 item_img={HomeLogo}
                 item_link={"home_care_services"}
               />
             </div>
-            <div className="col-md-2 col-sm-6">
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="Pharmacy"
                 item_img={MedicineLogo}
                 item_link={"pharmacy"}
               />
             </div>
-            <div className="col-md-2 col-sm-6">
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="Lab Tests"
                 item_img={LabLogo}
                 item_link={"lab_tests"}
               />
             </div>
-            <div className="col-md-2  col-sm-6">
+            <div className="col-md-2">
               <DashboardItem
                 item_desc="Diagnostics/ Radiology"
                 item_img={XRayLogo}
@@ -313,40 +210,42 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
             </div>
           </div>
         </div>
-        <div className="patient_table_container">
-          <div className="text-center">
-            <h1>{title ? title + " :" : ""}</h1>
-          </div>
-          <div className="data_table">
-            <div className="offset-lg-10 col-md-3 pb-2">
-              <label htmlFor="search">
-                Search by Patient Name:
-                <br />
-                <input id="search" type="text" onChange={handleSearch} />
-              </label>
+        <div className="container ">
+          <div className="patient_table_container">
+            <div className="text-center">
+              <h1>{title ? title + " :" : ""}</h1>
             </div>
+            <div className="data_table">
+              <div className="offset-lg-10 col-md-3 pb-2">
+                <label htmlFor="search">
+                  Search by Patient Name:
+                  <br />
+                  <input id="search" type="text" onChange={handleSearch} />
+                </label>
+              </div>
 
-            <DataTable
-              className="react_table"
-              style={{ paddingTop: "30px" }}
-              columns={columns}
-              data={enquries.filter((item) =>
-                item.name.toLowerCase().includes(search.toLowerCase())
-              )}
-              highlightOnHover
-              pagination
-              paginationPerPage={5}
-              defaultSortField="name"
-              onRowClicked={(target) => handleSubmit(target)}
-              paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
-              customStyles={customStyles}
-              theme="default"
-              fixedHeader
-              paginationComponentOptions={{
-                rowsPerPageText: "Records per page:",
-                rangeSeparatorText: "out of",
-              }}
-            />
+              <DataTable
+                className="react_table"
+                style={{ paddingTop: "30px" }}
+                columns={columns}
+                data={enquries.filter((item) =>
+                  item.name.toLowerCase().includes(search.toLowerCase())
+                )}
+                highlightOnHover
+                pagination
+                paginationPerPage={5}
+                defaultSortField="name"
+                onRowClicked={(target) => handleSubmit(target)}
+                paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+                customStyles={customStyles}
+                theme="default"
+                fixedHeader
+                paginationComponentOptions={{
+                  rowsPerPageText: "Records per page:",
+                  rangeSeparatorText: "out of",
+                }}
+              />
+            </div>
           </div>
         </div>
       </>

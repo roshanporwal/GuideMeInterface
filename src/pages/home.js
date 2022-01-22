@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
 import * as auth_service from "../services/auth_service";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
@@ -66,7 +66,7 @@ function Home(props) {
   return (
 
 
-    <Router>
+    // <Router>
       <div className = "container-fluid">
 		<div className="content row">
 			<div className="col-md-4 m-0 text-center">
@@ -97,7 +97,7 @@ function Home(props) {
 			</div>
 		</div>
     </div>
-    </Router>
+    // </Router>
   );
 
 }

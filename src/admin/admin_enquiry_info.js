@@ -9,6 +9,8 @@ import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 // import constants from "../constant";
 import { useLocation } from 'react-router-dom'
+// import { Form } from 'react-bootstrap';
+
 function convert(str) {
   var date = new Date(str),
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -159,6 +161,12 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                         <span>{target.address_patient}</span>
                       </p>
                     ) : null}
+                    {target.map_link ? (
+                      <p>
+                        <b>Map Link : </b>
+                        <span><a href={target.map_link}>{target.map_link.slice(28,)}</a></span>
+                      </p>
+                    ) : null}
                     <p>
                       <b>Nationality : </b>
                       <span>{target.nationality}</span>
@@ -225,9 +233,26 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                 </div>
               ))}
             </div>
-
             <div className="col-md-8">
               <div className="row">
+                {/* <div className="col-md-12">
+                  <div className="statusBox my-2">
+                    <h2>Status</h2>
+                    <select>
+                      <option value = "">{enqurie_data[0].status}</option>
+                      <option value = "Pending">Pending</option>
+                    </select> 
+                    <Form.Control
+                        required
+                        style={{ border: "2px solid #164473", borderRadius: 10 }}
+                        type="text"
+                        name="patient_name"
+                    />
+                    <button type="submit">Submit</button>
+                  </div>
+                </div>
+              </div>
+              <div className="row"> */}
                 {enqurie_data.map((target, index) => (
                   <div key={index} {...target}>
                     <div className="col-md-12">

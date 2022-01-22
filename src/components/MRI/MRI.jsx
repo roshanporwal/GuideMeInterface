@@ -271,10 +271,10 @@ function MRI({handleModalShow}) {
                         : null}  
                     </Form.Group>
                 </div> */}
-                <div className='col-10'>
-                    <p className="sub-title text-center">payment would be done at the time of test in the lab center</p>
+                <div className='col-10 mt-4'>
+                    <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
                 </div>
-                <div className='text-center mt-4'>
+                <div className='text-center mt-2'>
                     <input className="form-button" type="submit" value="SUBMIT" />
                 </div>
             </Form>

@@ -6,6 +6,7 @@ import {
     MdFormatListNumbered,
     MdOutlineApartment, MdCall, MdTransgender, MdPayment
 } from 'react-icons/md';
+import { SiGooglemaps } from 'react-icons/si';
 import { FaBuilding, FaGlobeAsia, FaClipboardList, FaLanguage } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
@@ -72,7 +73,8 @@ function PhysioTherapy({ handleModalShow }) {
     const [DateOne, setDateOne] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
-
+    const [link,setLink] = useState(false);
+    const [addressForm,setAddressForm] = useState(false);
     const [name,setName] = useState("")
     useEffect(() => {
         async function fetchData() {
@@ -85,10 +87,35 @@ function PhysioTherapy({ handleModalShow }) {
         fetchData()
     }, []);
     
+    const [addressErr,setAddressErr] = useState("")
     const handleAddress = () => {
-        formValues.address_patient = formValues.flat_number + ", " + formValues.building_name + ", " + formValues.street_name
-            + ", " + formValues.location + ", " + formValues.emirates + ", " + formValues.landmark
-    }
+    setAddressErr("")
+      if (
+        (formValues.flat_number &&
+        formValues.building_name &&
+        formValues.street_name &&
+        formValues.location &&
+        formValues.emirates ) 
+      ) {
+        formValues.address_patient =
+          formValues.flat_number +
+          ", " +
+          formValues.building_name +
+          ", " +
+          formValues.street_name +
+          ", " +
+          formValues.location +
+          ", " +
+          formValues.emirates +
+          ", " +
+          formValues.landmark;
+      }
+      if(!formValues.address_patient){
+        if(!formValues.map_link){
+            setAddressErr("Address Field is Required.")
+        }
+      }
+    };
     const handleChange = (e) => {
         let { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -96,17 +123,17 @@ function PhysioTherapy({ handleModalShow }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        handleAddress()
         const err = await validate(formValues);
         setErrors(err);
 
-        if (Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/) {
+        if (Object.keys(err).length === 0 && addressErr  === "" /*&& fileerrors.insurance === ""*/) {
 
             const formData = new FormData();
 
             let data = localStorage.getItem("login_patient")
             data = JSON.parse(data)
 
-            handleAddress()
             formValues.patient_id = data._id;
             formValues.name = data.name;
             formValues.age = data.age;
@@ -135,8 +162,6 @@ function PhysioTherapy({ handleModalShow }) {
 
             if (abc.payload) {
                 handleModalShow();
-                setFormValues({})
-                setDateOne()
             }
             else {
                 alert(abc.message)
@@ -249,116 +274,172 @@ function PhysioTherapy({ handleModalShow }) {
                 </div>
                 <div className='col-10'>
                     <div className='d-flex align-items-start justify-content-center mt-2'>
-                        <div className="mx-1">
-                            <IoHomeOutline />
+                        <div className="mx-1 mb-1">
+                            <IoHomeOutline /> 
                         </div>
                         <div>
                             <span>Address </span>
                         </div>
                     </div>
                 </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdFormatListNumbered />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="flat_number"
-                            placeholder='Flat Number / Apartment Number'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.flat_number}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.flat_number}</Form.Control.Feedback>
+                <div className = "row">
+            <Form.Group className="d-flex">
+              <Form.Check
+                type="checkbox"
+                name="address_field"
+                label="Address Form"
+                className = "col-5 offset-1 global-inputs-check"
+                onChange={() => setAddressForm(!addressForm)}
+                isInvalid = {addressErr}
+              />
+              <Form.Check
+                type="checkbox"
+                name="location_link"
+                label="Location Link"
+                className = "col-5 global-inputs-check"
+                onChange={() => setLink(!link)}
+                isInvalid = {addressErr}
+              />
+              
+            </Form.Group>
+                {/* { addressErr ? 
+                <>{
+                (!link) ? 
+                <>
+                    {(!addressForm) ?
+                    <Form.Label style={{ color: "red" }} type="invalid">
+                    Atleast One field Should be checked.
+                    </Form.Label>  : null }
+                </>
+                : null 
+                }</>:null} */}
+            </div>
+            { addressForm ? <>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdFormatListNumbered />
+            </div>
+            <Form.Control
+              type="text"
+              name="flat_number"
+              placeholder="Flat Number / Apartment Number"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={addressErr}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+            Flat Number is required
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <FaBuilding />
+            </div>
+            <Form.Control
+              type="text"
+              name="building_name"
+              placeholder="Building Name (Mandatory)"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={addressErr}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+            Building Name is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <GiDirectionSigns />
+            </div>
+            <Form.Control
+              type="text"
+              name="street_name"
+              placeholder="Street Name"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={addressErr}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              Street Name is Required.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdLocationOn />
+            </div>
+            <Form.Control
+              type="text"
+              name="location"
+              placeholder="Area / Location"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={addressErr}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              Area is Required.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <FaGlobeAsia />
+            </div>
+            <Form.Control
+              type="text"
+              name="emirates"
+              placeholder="Emirates"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={addressErr}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              Emirates is Required.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+        <div className="col-10 col-md-5">
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdOutlineApartment />
+            </div>
+            <Form.Control
+              type="text"
+              name="landmark"
+              placeholder="Nearest Landmark (Optional)"
+              onChange={handleChange}
+              className="global-inputs"
+            /> 
+            {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              {errors?.landmark}
+            </Form.Control.Feedback> */}
+          </Form.Group>
+        </div> </>: null }
+        {link ? 
+        <div className="col-10">
+          <Form.Group>
+            <div className="prepend-icon">
+              <SiGooglemaps />
+            </div>
+            <Form.Control
+              type="text"
+              name="map_link"
+              placeholder="Google Maps Location"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid = {addressErr}
+            />
 
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaBuilding />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="building_name"
-                            placeholder='Building Name (Mandatory)'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.building_name}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.building_name}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <GiDirectionSigns />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="street_name"
-                            placeholder='Street Name'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.street_name}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.street_name}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdLocationOn />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="location"
-                            placeholder='Area / Location'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.location}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaGlobeAsia />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="emirates"
-                            placeholder='Emirates'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.emirates}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.emirates}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineApartment />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="landmark"
-                            placeholder='Nearest Landmark (Optional)'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.landmark}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.landmark}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
+            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">Location Link is Required.</Form.Control.Feedback>
+          </Form.Group>
+        </div> : null }
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -393,23 +474,34 @@ function PhysioTherapy({ handleModalShow }) {
 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdTransgender />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="preferred_gender"
-                            placeholder='Prefered Gender of Care Giver '
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.preferred_gender}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.preferred_gender}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
+                <div className="col-10 col-md-5">
+            <Form.Group>
+            <div className="prepend-icon">
+                <MdTransgender />
+            </div>
+            <Form.Control
+                as="select"
+                name="preferred_gender"
+                placeholder="Prefered Gender of Care Giver "
+                onChange={handleChange}
+                value={formValues.preferred_gender}
+                className="global-inputs"
+                style = {{fontSize: "small", color:"#727A82"}}
+                isInvalid={errors?.preferred_gender}
+            >
+                <option value="">Select Gender of Care Giver</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </Form.Control>
+                <Form.Control.Feedback
+                    style={{ color: "red" }}
+                    type="invalid"
+                >
+                    {errors?.preferred_gender}
+                </Form.Control.Feedback>
+            </Form.Group>
+        </div>
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
