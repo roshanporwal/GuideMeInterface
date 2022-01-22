@@ -118,7 +118,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
       enquiryField
     );
     // console.log(getenquries)
-    setEnquries(getenquries.payload);
+    setEnquries(getenquries.payload.reverse());
   }
 
   const handleSubmit = async (event) => {
