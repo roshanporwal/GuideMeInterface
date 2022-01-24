@@ -12,16 +12,22 @@ function createNewenqurire(login_id,data) {
   const req = instance.post(`/patientenquries/${login_id}/create`, data);
   return req
 }
+function addFamilyMember(login_id,data){
+  const req = instance.post(`/patient/${login_id}/addfamily`, data);
+  return req
+}
+function getFamilyMembers(login_id){
+  const req = instance.get(`/patient/${login_id}/getfamily`);
+  return req
+}
 
 
 
 
 export {
   login,
-  createNewenqurire,
-  
-  
-  
+  createNewenqurire,  
+  addFamilyMember,
   createaccount,
-  
+  getFamilyMembers,
 }

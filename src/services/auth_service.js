@@ -141,7 +141,14 @@ function smartsearch(insurance, speciality) {
   const req = instance.get(`/smartsearch?insurance=${insurance}&&speciality=${speciality}`);
   return req
 }
-
+function setenquiriesstatus(_id,data){
+  const req = instance.post(`/patientenquries/${_id}/status`, data);
+  return req
+}
+function getenquiriesstatus(login_id){
+  const req = instance.get(`/patientenquries/${login_id}/admin/status`);
+  return req
+}
 export {
   login,
   enquries,
@@ -154,6 +161,7 @@ export {
   updatedoctor,
   createdoctor,
   getadminstaus,
+  getenquiriesstatus,
   won,
   loss,
   uploadexcelfile,
@@ -171,5 +179,6 @@ export {
   loginadmin,
   idealdata,
   smartsearch,
-  deleteenquries
+  deleteenquries,
+  setenquiriesstatus
 }
