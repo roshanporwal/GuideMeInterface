@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "react-bootstrap";
 import * as auth_service from "../services/auth_service";
@@ -33,7 +33,7 @@ function convertTime(str) {
     hr -= 12;
     ampm = "pm";
   }
-  return hr + ":" + min+ " " + ampm;
+  return hr + ":" + min + " " + ampm;
 }
 const columns = [
   {
@@ -87,7 +87,7 @@ const columns = [
 const customStyles = {
   rows: {
     style: {
-      cursor: "pointer", 
+      cursor: "pointer",
     },
   },
 };
@@ -95,7 +95,7 @@ const customStyles = {
 export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  // const [enquriesstatus, setEnquriesstatus] = useState([]);
+  const [enquriesstatus, setEnquriesstatus] = useState([]);
   const [search, setSearch] = useState("");
   const [enquries, setEnquries] = useState([]);
   const [title, setTitle] = useState("");
@@ -110,9 +110,9 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   async function fetchData(enquiryField) {
     let data = localStorage.getItem("login");
     data = JSON.parse(data);
-    // const getadminstaus = await auth_service.getadminstaus(data.login_id);
-    // setEnquriesstatus(getadminstaus.payload);
-
+    const getadminstaus = await auth_service.getenquiriesstatus(data.login_id);
+    setEnquriesstatus(getadminstaus.payload);
+    console.log(getadminstaus.payload);
     const getenquries = await auth_service.getenquriesSpecific(
       data.login_id,
       enquiryField
@@ -122,7 +122,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   }
 
   const handleSubmit = async (event) => {
-    navigate("/admin/enquiry/info",{state: {id:event._id}});
+    navigate("/admin/enquiry/info", { state: { id: event._id } });
   };
   const DashboardItem = ({ item_img, item_desc, item_link }) => {
     return (
@@ -160,10 +160,71 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
               <h1 className="mt-0 p-4 " style={{ color: "#164572" }}>
                 Enquiry Dashboard
               </h1>
+              <h2 style={{ color: "#787575" }}>Quick Stats</h2>
             </div>
           </div>
         </div>
-
+        {enquriesstatus.map((target, index) => (
+          <div className="container pb-5" key={index} {...target}>
+            <div className="row">
+              <div className="col-md-2 offset-1 col-sm-6 total_enquiries text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <img
+                    src="/assets/images/icons/total_enquiries.png"
+                    className="IconFont"
+                    alt=""
+                  />
+                  <h2>{target.total}</h2>
+                </div>
+                <h3>Total Enquiries</h3>
+              </div>
+              <div className="col-md-2 col-sm-6 new_enquiries text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <img
+                    src="/assets/images/icons/new_enquiries.png"
+                    className="IconFont"
+                    alt=""
+                  />
+                  <h2>{target.new}</h2>
+                </div>
+                <h3>New Enquiries</h3>
+              </div>
+              <div className="col-md-2 col-sm-6 awaiting_enquiries text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <img
+                    src="/assets/images/icons/lost_enquiries.png"
+                    className="IconFont"
+                    alt=""
+                  />
+                  <h2>{target.lost}</h2>
+                </div>
+                <h3>Lost Enquiries</h3>
+              </div>
+              <div className="col-md-2 col-sm-6 won_enquiries text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <img
+                    src="/assets/images/icons/won_enquiries.png"
+                    className="IconFont"
+                    alt=""
+                  />
+                  <h2>{target.completed}</h2>
+                </div>
+                <h3>Completed Enquiries</h3>
+              </div>
+              <div className="col-md-2 col-sm-6 lost_enquiries text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <img
+                    src="/assets/images/icons/in_progress.png"
+                    className="IconFont"
+                    alt=""
+                  />
+                  <h2>{target.inprogress}</h2>
+                </div>
+                <h3>In Progress</h3>
+              </div>
+            </div>
+          </div>
+        ))}
         <div className="container">
           <div className="row">
             <div className="col-md-2">
@@ -172,7 +233,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
                 item_img={ConsultationLogo}
                 item_link={"new_consultation"}
               />
-              </div>
+            </div>
             <div className="col-md-2">
               <DashboardItem
                 item_desc="Second Opinion"

@@ -286,26 +286,27 @@ function Pharmacy({handleModalShow}) {
                         </div>
                     </div>
                 </div>
-                <div className = "row">
-            <Form.Group className="d-flex">
-              <Form.Check
-                type="checkbox"
-                name="address_field"
-                label="Address Form"
-                className = "col-5 offset-1 global-inputs-check"
-                onChange={() => setAddressForm(!addressForm)}
-                isInvalid = {addressErr}
-              />
-              <Form.Check
-                type="checkbox"
-                name="location_link"
-                label="Location Link"
-                className = "col-5 global-inputs-check"
-                onChange={() => setLink(!link)}
-                isInvalid = {addressErr}
-              />
-              
-            </Form.Group>
+                <div className = "col-10">
+                    <Form.Group className="d-flex">
+                        <div className = "col-5 global-inputs-check">
+                            <Form.Check
+                                type="checkbox"
+                                name="address_field"
+                                label="Address Form"
+                                onChange={() => setAddressForm(!addressForm)}
+                                isInvalid = {addressErr}
+                            />
+                        </div>
+                        <div className = "col-5 global-inputs-check">
+                            <Form.Check
+                                type="checkbox"
+                                name="location_link"
+                                label="Location Link"
+                                onChange={() => setLink(!link)}
+                                isInvalid = {addressErr}
+                            />
+                        </div>
+                    </Form.Group>
                 {/* { addressErr ? 
                 <>{
                 (!link) ? 

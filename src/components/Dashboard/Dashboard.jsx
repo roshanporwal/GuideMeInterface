@@ -134,7 +134,11 @@ function Dashboard() {
           </div>
         </div>
       </Container>
-      <div className="footer-row-global"></div>
+      <footer class="page-footer font-small blue">
+      <div class="footer-copyright text-center py-3">
+       All Rights Reserved @ Medi Connect International
+      </div>
+    </footer>
     </>
   );
 }
