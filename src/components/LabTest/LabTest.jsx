@@ -157,7 +157,7 @@ function LabTest({handleModalShow}) {
                         formData.append('patient_reports', tp);
                     }
                 }*/
-                formData.append('insurance_card_copy', insurance);
+                formData.append('patient_reports', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)

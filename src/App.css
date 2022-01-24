@@ -487,6 +487,19 @@ align-items: center;
 	text-align: center;
 	line-height:1.5;
 }
+.statusBox{
+    padding:15px;
+    background: #164473;
+    border-radius: 10px;
+    /* cursor: pointer; */
+}
+.statusBox h2{
+    color:#fff;
+	font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+	margin-bottom: 20px;
+}
 .queryBox,.diagnosisBox{
 	padding:15px;
     background: #164473;

@@ -124,7 +124,7 @@ function Mammogram({handleModalShow}) {
                 //         formData.append('patient_reports', tp);
                 //     }
                 // }
-                formData.append('prescription', insurance);
+                formData.append('patient_reports', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)

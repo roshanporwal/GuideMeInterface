@@ -8,8 +8,9 @@ import "./style.css";
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 // import constants from "../constant";
-import { useLocation } from 'react-router-dom'
-// import { Form } from 'react-bootstrap';
+import { useLocation } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import { FaComment } from "react-icons/fa";
 
 function convert(str) {
   var date = new Date(str),
@@ -88,6 +89,26 @@ export default function ADMIN_ENQUIRY_INFO(props) {
     // const getenquries = await auth_service.gethospitals(data.login_id);
     // setHospitals(getenquries.payload);
   }
+  const [status, setStatus] = useState("");
+  const [comment, setComment] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('comment',comment);
+    formData.append('status',status);
+
+    const setstatus = await auth_service.setenquiriesstatus(
+      enqurie_data[0]._id,
+      formData
+    );
+    if(setstatus.payload){
+      setStatus("")
+    }
+    else{
+      alert(setstatus.message)
+    }
+  };
+
   const DownloadReports = (element) => {
     window.open(element, "_blank");
   };
@@ -164,7 +185,11 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                     {target.map_link ? (
                       <p>
                         <b>Map Link : </b>
-                        <span><a href={target.map_link}>{target.map_link.slice(28,)}</a></span>
+                        <span>
+                          <a href={target.map_link}>
+                            {target.map_link.slice(28)}
+                          </a>
+                        </span>
                       </p>
                     ) : null}
                     <p>
@@ -235,44 +260,95 @@ export default function ADMIN_ENQUIRY_INFO(props) {
             </div>
             <div className="col-md-8">
               <div className="row">
-                {/* <div className="col-md-12">
+                <div className="col-md-12">
                   <div className="statusBox my-2">
-                    <h2>Status</h2>
-                    <select>
-                      <option value = "">{enqurie_data[0].status}</option>
-                      <option value = "Pending">Pending</option>
-                    </select> 
-                    <Form.Control
-                        required
-                        style={{ border: "2px solid #164473", borderRadius: 10 }}
-                        type="text"
-                        name="patient_name"
-                    />
-                    <button type="submit">Submit</button>
+                    <div className="row">
+                      <div className="col-4">
+                        <h2>Status</h2>
+                      </div>
+                      <div className="col-6">
+                        <select onChange={(e) => setStatus(e.target.value)}>
+                          <option value="New">{enqurie_data[0].status}</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Completed">Completed</option>
+                          <option value="Lost">Lost</option>
+                        </select>
+                      </div>
+                    </div>
+                    {status ? (
+                      <Form
+                        // onSubmit={(e) => handleSubmit(e)}
+                        className="row justify-content-center"
+                      >
+                        <div className="row">
+                          <div className="col-9">
+                            <div
+                              style={{
+                                position: "relative",
+                                width: "20px",
+                                bottom: "-28px",
+                                zIndex: "2",
+                                left: "0",
+                                marginLeft: "9px",
+                                color: "color: rgba(26, 73, 129, 1)",
+                              }}
+                            >
+                              <FaComment />
+                            </div>
+                            <textarea
+                              placeholder="Comments"
+                              style={{
+                                paddingLeft: "40px",
+                                width: "100%",
+                                backgroundColor: "rgba(245, 245, 245, 1)",
+                              }}
+                              onChange={(e) => setComment(e.target.value)}
+                            />
+                            {/* <Form.Control
+                              type="text"
+                              name="name"
+                              // value={name}
+                              placeholder="Comments" style={{
+                                paddingLeft: "40px",
+                                width: "100%",
+                                backgroundColor: "rgba(245, 245, 245, 1)",
+                              }}
+                              
+                            /> */}
+                          </div>
+                          <div
+                            style={{ marginTop: "28px" }}
+                            className="col-2 text-center"
+                          >
+                            <input
+                              className="form-button"
+                              type="button"
+                              value="UPDATE"
+                              onClick={handleSubmit}
+                            />
+                          </div>
+                        </div>
+                      </Form>
+                    ) : null}
                   </div>
                 </div>
               </div>
-              <div className="row"> */}
-                {enqurie_data.map((target, index) => (
-                  <div key={index} {...target}>
-                    <div className="col-md-12">
-                      <div className="queryBox my-2">
-                        <h2>Query</h2>
-                        <p>{target.type}</p>
-                      </div>
-                    </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="queryBox my-2">
+                    <h2>Query</h2>
+                    <p>{enqurie_data[0].type}</p>
                   </div>
-                ))}
-                {enqurie_data.map((target, index) => (
-                  <div key={index} {...target}>
+                </div>
+
+                { enqurie_data[0].symptoms ? 
                     <div className="col-md-12">
                       <div className="queryBox my-2">
                         <h2>Symptoms</h2>
-                        <p>{target.symptoms}</p>
+                        <p>{enqurie_data[0].symptoms}</p>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </div> : null
+                }
                 {enqurie_data[0].reports[1] ? (
                   <div className="row m-2">
                     <div className="col-md-5 d-flex justify-content-between">
@@ -309,16 +385,14 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                     </div>
                   </div>
                 ) : null}
-                {enqurie_data.map((target, index) => (
-                  <div key={index} {...target}>
+                {enqurie_data[0].current_diagnosis ?
                     <div className="col-md-12">
                       <div className="queryBox my-2">
                         <h2>Current Diagnosis</h2>
-                        <p>{target.current_diagnosis}</p>
+                        <p>{enqurie_data[0].current_diagnosis}</p>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </div> : null
+                }
               </div>
             </div>
           </div>
