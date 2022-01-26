@@ -109,7 +109,7 @@ function App() {
           />
           <Route path="/" element={<Dashboard />} />
           <Route element={<Layout />}>
-            <Route path="/feedback" element = {<FeedbackContent/>}/>
+            <Route path="/feedback/:type" element = {<FeedbackContent/>}/>
             <Route path="/new-consultation" element={<NewConsultation />} />
             <Route path="/second-opinion" element={<SecondOpinionContent />} />
             <Route path="/free-opinion" element={<FreeOpinionContent />} />

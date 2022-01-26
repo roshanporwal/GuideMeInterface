@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import * as auth_service from "../../services/auth_service";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import ReactStars from "react-rating-stars-component";
+import { useParams } from "react-router-dom";
 
 function Feedback({ handleModalShow }) {
+
+  const { type } = useParams();
   const [loading, setLoading] = useState(true);
   const [rating, setRating] = useState(0);
   const [show, setShow] = useState(false);
@@ -51,16 +54,17 @@ function Feedback({ handleModalShow }) {
         feedbackmessage: feedbackmessage,
         feedbackrating: rating,
         patient_name: data.name,
-        current_diagnosis: data.current_diagnosis,
+        current_diagnosis: type,
         id: data._id,
       };
       const feedback = await auth_service.feedback(
         data._id,
-        data.login_id,
+        "admin",
         res
       );
       if (feedback.payload) {
         setIsLowRating(false);
+        handleModalShow()
       }
     }
   };
@@ -74,17 +78,23 @@ function Feedback({ handleModalShow }) {
     return (
       <>
         <div className="form-container">
-          <div className="row text-center">
-            <h2 className="rating">Please rate us!</h2>
-            <div className="offset-md-3">
+          <div className="row">
+            <h2 className="rating text-center">Please rate us!</h2>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+
                 <ReactStars
                 count={5}
                 onChange={ratingChanged}
                 size={42}
                 activeColor="#ffd700"
                 />
+            {/* </div> */}
             </div>
-          </div>
+          </div> 
           {islowrating ? (
             <div className="col-md-12">
               <div className="ratingBox">
@@ -190,6 +200,7 @@ function Feedback({ handleModalShow }) {
                           name="rating"
                           className="form-control"
                           style={{ width: "5 rem" }}
+                          onChange={(e) => setFeedbackmessgae(e.target.value)}
                         />
                       </div>
                     ) : (
@@ -206,15 +217,20 @@ function Feedback({ handleModalShow }) {
               <h3>Thankyou!</h3>
             </div>
           )}
-          <div className="offset-lg-5 col-md-2 my-2">
-            <div
-              style={{ width: "150%", letterSpecing: 1 }}
-              onClick={checklowRating}
-              className="btn btn-warning"
-            >
-              SEND
-            </div>
-          </div>
+          <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+
+                  <div
+                    style={{ width: "20%", letterSpecing: 1 }}
+                    onClick={checklowRating}
+                    className="btn btn-warning col-md-2 my-2"
+                  >
+                    SEND
+                  </div>
+                </div>
         </div>
       </>
     );
