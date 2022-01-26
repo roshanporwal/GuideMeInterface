@@ -25,6 +25,7 @@ import MammogramContent from "./components/Mammogram/MammogramContent";
 import CTScanContent from "./components/CTScan/CTScanContent";
 import MRIContent from "./components/MRI/MRIContent";
 import UltraSoundContent from "./components/Ultrasound/UltraSoundContent";
+import FeedbackContent from "./components/Feedback/FeedbackContent";
 import Home from "./pages/home";
 
 import PATIENT_DASHBOARD from "./pages/patient_dashboard";
@@ -54,14 +55,6 @@ function App() {
         <Routes>
           <Route path="/hospital" element={<Home/>} />
           <Route path="/admin" element = {<ADMIN_Home />} />
-          <Route
-            path="/feedback"
-            component={() => {
-              window.location.href =
-                "https://docs.google.com/forms/d/e/1FAIpQLSfcPrt4Zu-EryLavYYpNKQYWoGWlXZ2_eOMR5Nz4Y_sZeY-DA/viewform";
-              return null;
-            }}
-          />
           <Route
             path="/hospital/sendquota"
             element={<PATIENT_DASHBOARD/>}
@@ -116,6 +109,7 @@ function App() {
           />
           <Route path="/" element={<Dashboard />} />
           <Route element={<Layout />}>
+            <Route path="/feedback" element = {<FeedbackContent/>}/>
             <Route path="/new-consultation" element={<NewConsultation />} />
             <Route path="/second-opinion" element={<SecondOpinionContent />} />
             <Route path="/free-opinion" element={<FreeOpinionContent />} />
