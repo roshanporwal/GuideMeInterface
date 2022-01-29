@@ -8,7 +8,7 @@ import { Form } from 'react-bootstrap';
 import HospitalNavbar from "../Navbar/hospital_navbar";
 import './style.css'
 import ReactGifLoader from '../interfacecomponents/gif_loader';
-
+import { useLocation } from "react-router-dom";
 
 const res = {
     "patient_details": [
@@ -92,7 +92,7 @@ const res = {
 
 function PATIENT_DASHBOARD(props) {
 
-
+    const { state } = useLocation();
     const [validated, setValidated] = useState(false)
     const [loading, setLoading] = useState(true);
     const [formValues, setFormValue] = useState({
@@ -135,15 +135,14 @@ function PATIENT_DASHBOARD(props) {
 
     useEffect(() => {
 
-        fetchData(props).then(() => setLoading(false));;
-    }, [props]);
+        fetchData(state).then(() => setLoading(false));;
+    }, [state]);
 
 
     async function fetchData(props) {
-
         let data = localStorage.getItem("login")
         data = JSON.parse(data)
-        const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id, props.location.state)
+        const getenquriesbyid = await auth_service.getenquriesbyid(data.login_id, props)
 
         const getdoctor = await auth_service.getdoctorbyhospital(data._id, data.login_id)
         if(getdoctor.payload){
