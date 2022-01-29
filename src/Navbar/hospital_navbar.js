@@ -36,8 +36,8 @@ export default function HospitalNavbar(props) {
   }
 
   function logout() {
-   localStorage.clear()
-    //localStorage.removeItem("login")
+    localStorage.clear()
+     
     navigate('/');
  }
 
@@ -81,13 +81,13 @@ export default function HospitalNavbar(props) {
                           </li>
                           </ul>
                           <span className="navbar-text">
-                            <Link className = "nav-link" to = '/hospital/profile'><span style = {{color: "#164473"}}>
-                            <img src="/assets/images/icons/patients.png" alt=""/></span></Link> 
+                            <div className = "nav-link" to = '/hospital/profile'><span style = {{color: "#164473"}}>
+                            <img src="/assets/images/icons/patients.png" alt=""/></span></div> 
                           </span>
                           
                           <span className="navbar-text">
-                            <Link className = "nav-link" to ='#' onClick={logout}><span style = {{color: "#164473"}}>
-                            <img src="/assets/images/icons/logout.png" alt=""/></span></Link>  
+                            <div className = "nav-link" onClick={logout}><span style = {{color: "#164473"}}>
+                            <img src="/assets/images/icons/logout.png" alt=""/></span></div>  
                           </span>
                         </div>
                     </nav>
