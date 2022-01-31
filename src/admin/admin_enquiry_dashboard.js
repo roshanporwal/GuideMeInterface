@@ -14,6 +14,8 @@ import HomeLogo from ".././assets/home-service.png";
 import MedicineLogo from ".././assets/medicine.png";
 import LabLogo from ".././assets/labtest-logo.png";
 import XRayLogo from ".././assets/x-ray-logo.png";
+import { Form, Modal } from "react-bootstrap";
+import {  FaRegHospital, FaRegMoneyBillAlt, FaFileInvoiceDollar } from "react-icons/fa";
 
 function convert(str) {
   var date = new Date(str),
@@ -35,54 +37,7 @@ function convertTime(str) {
   }
   return hr + ":" + min + " " + ampm;
 }
-const columns = [
-  {
-    name: "Name",
-    selector: (row) => row["name"],
-    sortable: true,
-  },
-  {
-    name: "Location",
-    selector: (row) => row["location"],
-    sortable: true,
-  },
-  {
-    name: "Condition /Symptoms",
-    selector: (row) => row["symptoms"],
-    sortable: true,
-  },
-  {
-    name: "Date",
-    selector: (row) => convert(row["preferred_date_first"]),
-    sortable: true,
-  },
-  {
-    name: "Time",
-    selector: (row) => {
-      return convertTime(row["preferred_date_first"]);
-    },
-    sortable: true,
-  },
-  {
-    name: "Type",
-    selector: (row) => row["type"],
-    sortable: true,
-  },
-  {
-    name: "Insurance",
-    selector: (row) => row["status"],
-    sortable: true,
-  },
-  // {
-  //   name: "Insurance Status",
-  //   selector: (row) => (
-  //   <select>
-  //     <option>{row["status"]}</option>
-  //     <option>Pending</option>
-  //   </select>),
-  //   sortable: true,
-  // },
-];
+
 
 const customStyles = {
   rows: {
@@ -99,7 +54,91 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   const [search, setSearch] = useState("");
   const [enquries, setEnquries] = useState([]);
   const [title, setTitle] = useState("");
+  const [status, setStatus] = useState("");
+  const [patient1,setPatient1] = useState()
+  const [completedShow,setCompletedShow] = useState(false)
+  const [progressShow,setProgressShow] = useState(false)
 
+  const columns = [
+    {
+      name: "Name",
+      selector: (row) => row["name"],
+      sortable: true,
+    },
+    {
+      name: "Location",
+      selector: (row) => row["location"],
+      sortable: true,
+    },
+    {
+      name: "Condition /Symptoms",
+      selector: (row) => row["symptoms"],
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: (row) => convert(row["preferred_date_first"]),
+      sortable: true,
+    },
+    {
+      name: "Time",
+      selector: (row) => {
+        return convertTime(row["preferred_date_first"]);
+      },
+      sortable: true,
+    },
+    {
+      name: "Type",
+      selector: (row) => row["type"],
+      sortable: true,
+    },
+    // {
+    //   name: "Status",
+    //   selector: (row) => row["status"],
+    //   sortable: true,
+    // },
+    {
+      name: "Status",
+      selector: (row) => {
+        if (row["status"] === "New") {
+          return (
+            <select
+              onClick={(e) => {
+                handleStatusChanges(e, row["_id"]);
+              }}
+            >
+              <option value={row["status"]}>{row["status"]}</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Lost">Lost</option>
+            </select>
+          );
+        }
+        else{
+          return(row["status"])
+        }
+      },
+      sortable: true,
+    },
+  ];
+  const handleStatusChanges = async  (e,patient) =>{
+    setStatus(e.target.value)
+    setPatient1(patient)
+    if(e.target.value === "Completed")
+      setCompletedShow(true)
+    else if(e.target.value === "In Progress")
+      setProgressShow(true)
+    else if(e.target.value === "Lost"){
+      await postForm(patient,e.target.value)
+    }
+  }
+  const handleCompletedClose = () => {
+    setCompletedShow(false)
+  }
+  const handleProgressClose = () => {
+    setProgressShow(false)
+  }
+  
   useEffect(() => {
     fetchData("null").then(() => setLoading(false));
   }, []);
@@ -112,7 +151,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     data = JSON.parse(data);
     const getadminstaus = await auth_service.getenquiriesstatus(data.login_id);
     setEnquriesstatus(getadminstaus.payload);
-    console.log(getadminstaus.payload);
+    // console.log(getadminstaus.payload);
     const getenquries = await auth_service.getenquriesSpecific(
       data.login_id,
       enquiryField
@@ -120,9 +159,82 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     // console.log(getenquries)
     setEnquries(getenquries.payload.reverse());
   }
-
-  const handleSubmit = async (event) => {
+  const handleClick = async (event) => {
     navigate("/admin/enquiry/info", { state: { id: event._id } });
+  };
+
+  const [formValues, setFormValues] = useState({
+    hospital_name : "",
+    commision_value: "",
+    bill_amount: ""
+  });
+  const [errors, setErrors] = useState({
+    hospital_name : "",
+    commision_value: "",
+    bill_amount: ""
+  });
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+  const postForm = async (patient,status1) => {
+    const formData = new FormData();
+    formData.append('status',status1);
+    formData.append("formValues", JSON.stringify(formValues));
+    const setstatus = await auth_service.setenquiriesstatus(
+      patient,
+      formData
+    );
+    if(setstatus.payload){
+      setStatus("")
+      setFormValues({
+        hospital_name : "",
+        commision_value: "",
+        bill_amount: ""
+      })
+      setErrors({
+          hospital_name : "",
+          commision_value: "",
+          bill_amount: ""
+        })
+        setPatient1("")
+        handleProgressClose()
+        handleCompletedClose()
+    }
+    else{
+      alert(setstatus.message)
+    }
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await validate();
+    if (errors.hospital_name === "" && errors.commision_value === "" && errors.bill_amount === "" && status) {
+      // console.log("in ", patient1)
+      await postForm(patient1,status)
+    }
+  }
+
+  const validate = async () => {
+      setErrors({
+        hospital_name:formValues.hospital_name !== "" ? "":"Hospital name is Required",
+        commision_value:formValues.commision_value !== "" ?"":"Commision Value is Required",
+        bill_amount:formValues.bill_amount !== "" ?  "": "Bill Amount is Required"
+      })
+      return 
+  };
+  const handleProgressSubmit = async (e) => {
+    e.preventDefault();
+    await validateProgress();
+    if (errors.hospital_name === "" && status) {
+      await postForm(patient1,status)
+    }
+  }
+  
+  const validateProgress = async () => {
+    setErrors({
+      hospital_name:formValues.hospital_name !== "" ? "":"Hospital name is Required"
+    })
+    return 
   };
   const DashboardItem = ({ item_img, item_desc, item_link }) => {
     return (
@@ -153,6 +265,120 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   else
     return (
       <>
+        <Modal show={completedShow} onHide={handleCompletedClose} centered>
+        <div className="form-container m-5">
+          <h2 className="p-1 card-title text-center">Status Complete</h2>
+          <Form
+            onSubmit={(e) => handleSubmit(e)}
+            className="row justify-content-center"
+          >
+            <div className="row justify-content-center">
+              <div className="col-10">
+                <Form.Group>
+                  <div className="prepend-icon">
+                    <FaRegHospital />
+                  </div>
+                  <Form.Control
+                    type="text"
+                    name="hospital_name"
+                    placeholder="Hospital Name"
+                    onChange={handleChange}
+                    className="global-inputs"
+                    isInvalid={errors?.hospital_name}
+                  />
+                  <Form.Control.Feedback
+                    style={{ color: "red" }}
+                    type="invalid"
+                  >
+                    {errors?.hospital_name}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-10">
+                <Form.Group>
+                  <div className="prepend-icon">
+                    <FaRegMoneyBillAlt />
+                  </div>
+                  <Form.Control
+                    type="text"
+                    name="bill_amount"
+                    placeholder="Bill Amount"
+                    onChange={handleChange}
+                    className="global-inputs"
+                    isInvalid={errors?.bill_amount}
+                  />
+                  <Form.Control.Feedback
+                    style={{ color: "red" }}
+                    type="invalid"
+                  >
+                    {errors?.bill_amount}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-10">
+                <Form.Group>
+                  <div className="prepend-icon">
+                    <FaFileInvoiceDollar />
+                  </div>
+                  <Form.Control
+                    type="text"
+                    name="commision_value"
+                    placeholder="Commission Value"
+                    onChange={handleChange}
+                    className="global-inputs"
+                    isInvalid={errors?.commision_value}
+                  />
+                  <Form.Control.Feedback
+                    style={{ color: "red" }}
+                    type="invalid"
+                  >
+                    {errors?.commision_value}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="text-center mt-4">
+                <input className="form-button" type="submit" value="SUBMIT" />
+              </div>
+            </div>
+          </Form>
+        </div>
+        </Modal>
+        <Modal show={progressShow} onHide={handleProgressClose} centered>
+        <div className="form-container m-5">
+          <h2 className="p-1 card-title text-center">Status In-Progress</h2>
+          <Form
+            onSubmit={(e) => handleProgressSubmit(e)}
+            className="row justify-content-center"
+          >
+            <div className="row justify-content-center">
+              <div className="col-10">
+                <Form.Group>
+                  <div className="prepend-icon">
+                    <FaRegHospital />
+                  </div>
+                  <Form.Control
+                    type="text"
+                    name="hospital_name"
+                    placeholder="Hospital Name"
+                    onChange={handleChange}
+                    className="global-inputs"
+                    isInvalid={errors?.hospital_name}
+                  />
+                  <Form.Control.Feedback
+                    style={{ color: "red" }}
+                    type="invalid"
+                  >
+                    {errors?.hospital_name}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="text-center mt-4">
+                <input className="form-button" type="submit" value="SUBMIT" />
+              </div>
+            </div>
+          </Form>
+        </div>
+        </Modal>
         <ADMIN_NAVBAR />
         <div className="container">
           <div className="row">
@@ -296,7 +522,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
                 pagination
                 paginationPerPage={5}
                 defaultSortField="name"
-                onRowClicked={(target) => handleSubmit(target)}
+                onRowClicked={(target) => handleClick(target)}
                 paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
                 customStyles={customStyles}
                 theme="default"

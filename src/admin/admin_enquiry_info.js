@@ -9,8 +9,8 @@ import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 // import constants from "../constant";
 import { useLocation } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import { FaComment } from "react-icons/fa";
+// import { Form } from "react-bootstrap";
+// import { FaComment } from "react-icons/fa";
 
 function convert(str) {
   var date = new Date(str),
@@ -80,7 +80,6 @@ export default function ADMIN_ENQUIRY_INFO(props) {
       props.id
     );
     setEnqurie_data(getenquriesbyid.payload);
-    // console.log(getenquriesbyid.payload);
     // const enq = getenquriesbyid.payload[0].hospitals;
     // setHopital_enq(enq);
     // if (enq.length !== 0) {
@@ -89,25 +88,25 @@ export default function ADMIN_ENQUIRY_INFO(props) {
     // const getenquries = await auth_service.gethospitals(data.login_id);
     // setHospitals(getenquries.payload);
   }
-  const [status, setStatus] = useState("");
-  const [comment, setComment] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('comment',comment);
-    formData.append('status',status);
+  // const [status, setStatus] = useState("");
+  // const [comment, setComment] = useState("");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append('comment',comment);
+  //   formData.append('status',status);
 
-    const setstatus = await auth_service.setenquiriesstatus(
-      enqurie_data[0]._id,
-      formData
-    );
-    if(setstatus.payload){
-      setStatus("")
-    }
-    else{
-      alert(setstatus.message)
-    }
-  };
+  //   const setstatus = await auth_service.setenquiriesstatus(
+  //     enqurie_data[0]._id,
+  //     formData
+  //   );
+  //   if(setstatus.payload){
+  //     setStatus("")
+  //   }
+  //   else{
+  //     alert(setstatus.message)
+  //   }
+  // };
 
   const DownloadReports = (element) => {
     window.open(element, "_blank");
@@ -144,6 +143,12 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       <b>Id :</b>
                       <span>{target.id}</span>
                     </p>
+                    { target.family ?
+                      <p>
+                        <b>For Family Member : </b>
+                        <span>{target.family.first_name} {target.family.last_name}</span>
+                      </p> : null
+                    }
                     <p>
                       <b>Mobile Number : </b>
                       <span>{target.mobile}</span>
@@ -260,7 +265,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
             </div>
             <div className="col-md-8">
               <div className="row">
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
                   <div className="statusBox my-2">
                     <div className="row">
                       <div className="col-4">
@@ -315,7 +320,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                               }}
                               
                             /> */}
-                          </div>
+                       {/*}   </div>
                           <div
                             style={{ marginTop: "28px" }}
                             className="col-2 text-center"
@@ -329,9 +334,9 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                           </div>
                         </div>
                       </Form>
-                    ) : null}
+                    ) 
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="row">
                 <div className="col-md-12">
