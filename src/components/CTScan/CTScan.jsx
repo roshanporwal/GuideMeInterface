@@ -5,9 +5,12 @@ import {
      MdLocationOn, MdOutlineCalendarToday
 } from 'react-icons/md';
 import {FaClipboardList} from 'react-icons/fa'
+import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import DatePicker from "react-datepicker";
 import { validationSchema } from './ctscanValidation';
 import * as auth_service from "../../service/auth_service";
+import ForFamily from "../AddFamily/ForFamily";
+
 function CTScan({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
     const [errors, setErrors] = useState();
@@ -17,22 +20,19 @@ function CTScan({handleModalShow}) {
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
     });
+  const [loading, setLoading] = useState(false);
 
     const validate = async (values) => {
         try {
             // setFileErrors({insurance:insurance === undefined ? "required" : ""});
-            
             setDateErrors({dateOne:DateOne === undefined ? "required" : ""});
-            
             await validationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
-            
             let errObj = {};
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
             return errObj;
         }
     };
@@ -60,17 +60,27 @@ function CTScan({handleModalShow}) {
     // const [insurance, setInsurance] = useState();
     
     const [name,setName] = useState("")
+    const [familyCheckBox, setFamilyCheckBox] = useState(false);
+    const [data, setData] = useState();
+    const [selectedMember, setSelectedMember] = useState();
     useEffect(() => {
         async function fetchData() {
             let data = localStorage.getItem("login_patient")
             if (data !== null) {
                 data = JSON.parse(data)
                 setName(data.name)
+                setData(data)
             }
         }
         fetchData()
     }, []);
-    
+    const handleForFamily = async (e) => {
+        if (!familyCheckBox) {
+            setFamilyCheckBox(true);
+        } else {
+            setFamilyCheckBox(false);
+        }
+    };
     
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -83,11 +93,8 @@ function CTScan({handleModalShow}) {
         setErrors(err);
         
         if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
-                
+                setLoading(true)
                 const formData = new FormData();
-
-                let data = localStorage.getItem("login_patient")
-                data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
@@ -103,25 +110,31 @@ function CTScan({handleModalShow}) {
                 formValues.type = "ctscan";
                 formValues.status = "New"
                 formValues.insurance_name = data.insurance_name
-
+                formValues.family = selectedMember;
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
 
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 
                 if(abc.payload){
+                    setLoading(false)
                     handleModalShow();
-                    setDateOne()
                 }
                 else{
                     alert(abc.message)
                 }
         }
-
     }
     // const handleFiles = e => {
     //         setInsurance(e.target.files[0])
     // }
+    if (loading === true)
+    return (
+      <>
+        <ReactGifLoader />
+      </>
+    );
+  else
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
@@ -141,7 +154,7 @@ function CTScan({handleModalShow}) {
                             type='checkbox'
                             name="myself"
                             label='For Family'
-                            onChange={handleChange}
+                            onChange={handleForFamily}
                         />
                     </Form.Group>
                 </div>
@@ -160,6 +173,10 @@ function CTScan({handleModalShow}) {
                         />
                     </Form.Group>
                 </div>
+                {familyCheckBox ? (
+                    <div className="row justify-content-center">
+                    <ForFamily setSelectedMember = {setSelectedMember} /></div>
+                ):null}
                  {/*  <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">

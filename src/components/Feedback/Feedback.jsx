@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import * as auth_service from "../../services/auth_service";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import ReactStars from "react-rating-stars-component";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 function Feedback({ handleModalShow }) {
-
+  const navigate = useNavigate();
   const { type } = useParams();
   const [loading, setLoading] = useState(true);
   const [rating, setRating] = useState(0);
@@ -55,7 +55,7 @@ function Feedback({ handleModalShow }) {
         feedbackrating: rating,
         patient_name: data.name,
         current_diagnosis: type,
-        id: data._id,
+        patient_id: data._id,
       };
       const feedback = await auth_service.feedback(
         data._id,
@@ -64,7 +64,7 @@ function Feedback({ handleModalShow }) {
       );
       if (feedback.payload) {
         setIsLowRating(false);
-        handleModalShow()
+        navigate('/')
       }
     }
   };

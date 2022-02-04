@@ -21,13 +21,16 @@ import {
 import { IoHomeOutline } from "react-icons/io5";
 import { GiDirectionSigns } from "react-icons/gi";
 import DatePicker from "react-datepicker";
+import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from "./doctorValidation";
+import ForFamily from "../AddFamily/ForFamily";
 
 function DoctorVisit({ handleModalShow }) {
   // const hiddenFileInputInsurance = React.useRef(null);
   const hiddenFileInputReports = React.useRef(null);
   const [errors, setErrors] = useState();
+  const [loading, setLoading] = useState(false);
   // const [fileerrors,setFileErrors] = useState({
   //     insurance:"",
   //     reports:"",
@@ -53,7 +56,6 @@ function DoctorVisit({ handleModalShow }) {
       for (let { path, message } of err.inner) {
         errObj[path] = message;
       }
-
       return errObj;
     }
   };
@@ -94,19 +96,31 @@ function DoctorVisit({ handleModalShow }) {
   const [reports, setReports] = useState([]);
   // const [insurance, setInsurance] = useState();
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState("")
+  const [familyCheckBox, setFamilyCheckBox] = useState(false);
+  const [data, setData] = useState();
+  const [selectedMember, setSelectedMember] = useState();
   useEffect(() => {
     async function fetchData() {
-      let data = localStorage.getItem("login_patient");
+      let data = localStorage.getItem("login_patient")
       if (data !== null) {
-        data = JSON.parse(data);
-        setName(data.name);
+        data = JSON.parse(data)
+        setName(data.name)
+        setData(data)
       }
     }
-    fetchData();
+    fetchData()
   }, []);
-  const [link,setLink] = useState(false);
-  const [addressForm,setAddressForm] = useState(false);
+  const handleForFamily = async (e) => {
+    if (!familyCheckBox) {
+      setFamilyCheckBox(true);
+    } else {
+      setFamilyCheckBox(false);
+    }
+  };
+
+  const [link, setLink] = useState(false);
+  const [addressForm, setAddressForm] = useState(false);
   const [addressErr, setAddressErr] = useState("");
   const handleAddress = () => {
     setAddressErr("");
@@ -115,7 +129,7 @@ function DoctorVisit({ handleModalShow }) {
       formValues.building_name &&
       formValues.street_name &&
       formValues.location &&
-      formValues.emirates 
+      formValues.emirates
     ) {
       formValues.address_patient =
         formValues.flat_number +
@@ -151,10 +165,8 @@ function DoctorVisit({ handleModalShow }) {
       Object.keys(err).length === 0 &&
       addressErr === "" /*&& fileerrors.insurance === ""*/
     ) {
+      setLoading(true);
       const formData = new FormData();
-
-      let data = localStorage.getItem("login_patient");
-      data = JSON.parse(data);
 
       formValues.patient_id = data._id;
       formValues.name = data.name;
@@ -170,6 +182,7 @@ function DoctorVisit({ handleModalShow }) {
       formValues.type = "doctorhomevist";
       formValues.status = "New";
       formValues.insurance_name = data.insurance_name;
+      formValues.family = selectedMember;
 
       if (reports !== undefined) {
         for (const tp of reports) {
@@ -181,6 +194,7 @@ function DoctorVisit({ handleModalShow }) {
       const abc = await auth_service.createNewenqurire(data.login_id, formData);
 
       if (abc.payload) {
+        setLoading(false);
         handleModalShow();
       } else {
         alert(abc.message);
@@ -197,6 +211,13 @@ function DoctorVisit({ handleModalShow }) {
     //     setInsurance(e.target.files[0])
     // }
   };
+  if (loading === true)
+    return (
+      <>
+        <ReactGifLoader />
+      </>
+    );
+  else
   return (
     <div className="form-container">
       <Form
@@ -219,7 +240,7 @@ function DoctorVisit({ handleModalShow }) {
               type="checkbox"
               name="myself"
               label="For Family"
-              onChange={handleChange}
+              onChange={handleForFamily}
             />
           </Form.Group>
         </div>
@@ -243,6 +264,10 @@ function DoctorVisit({ handleModalShow }) {
             </Form.Control.Feedback>
           </Form.Group>
         </div>
+        {familyCheckBox ? (
+          <div className="row justify-content-center">
+            <ForFamily setSelectedMember={setSelectedMember} /></div>
+        ) : null}
         {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -308,28 +333,28 @@ function DoctorVisit({ handleModalShow }) {
             </div>
           </div>
         </div>
-        <div className = "col-10">
-                    <Form.Group className="d-flex">
-                        <div className = "col-5 global-inputs-check">
-                            <Form.Check
-                                type="checkbox"
-                                name="address_field"
-                                label="Address Form"
-                                onChange={() => setAddressForm(!addressForm)}
-                                isInvalid = {addressErr}
-                            />
-                        </div>
-                        <div className = "col-5 global-inputs-check">
-                            <Form.Check
-                                type="checkbox"
-                                name="location_link"
-                                label="Location Link"
-                                onChange={() => setLink(!link)}
-                                isInvalid = {addressErr}
-                            />
-                        </div>
-                    </Form.Group>
-            {/* { addressErr ? 
+        <div className="col-10">
+          <Form.Group className="d-flex">
+            <div className="col-5 global-inputs-check">
+              <Form.Check
+                type="checkbox"
+                name="address_field"
+                label="Address Form"
+                onChange={() => setAddressForm(!addressForm)}
+                isInvalid={addressErr}
+              />
+            </div>
+            <div className="col-5 global-inputs-check">
+              <Form.Check
+                type="checkbox"
+                name="location_link"
+                label="Location Link"
+                onChange={() => setLink(!link)}
+                isInvalid={addressErr}
+              />
+            </div>
+          </Form.Group>
+          {/* { addressErr ? 
               <>{
               (!link) ? 
               <>
@@ -341,132 +366,132 @@ function DoctorVisit({ handleModalShow }) {
               : null 
             }</>:null} */}
         </div>
-        { addressForm ? <>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdFormatListNumbered />
-            </div>
-            <Form.Control
-              type="text"
-              name="flat_number"
-              placeholder="Flat Number / Apartment Number"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-            Flat Number is required
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <FaBuilding />
-            </div>
-            <Form.Control
-              type="text"
-              name="building_name"
-              placeholder="Building Name (Mandatory)"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-            Building Name is required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <GiDirectionSigns />
-            </div>
-            <Form.Control
-              type="text"
-              name="street_name"
-              placeholder="Street Name"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              Street Name is Required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdLocationOn />
-            </div>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Area / Location"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              Area is Required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <FaGlobeAsia />
-            </div>
-            <Form.Control
-              type="text"
-              name="emirates"
-              placeholder="Emirates"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              Emirates is Required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdOutlineApartment />
-            </div>
-            <Form.Control
-              type="text"
-              name="landmark"
-              placeholder="Nearest Landmark (Optional)"
-              onChange={handleChange}
-              className="global-inputs"
-            /> 
-            {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+        {addressForm ? <>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdFormatListNumbered />
+              </div>
+              <Form.Control
+                type="text"
+                name="flat_number"
+                placeholder="Flat Number / Apartment Number"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Flat Number is required
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaBuilding />
+              </div>
+              <Form.Control
+                type="text"
+                name="building_name"
+                placeholder="Building Name (Mandatory)"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Building Name is required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <GiDirectionSigns />
+              </div>
+              <Form.Control
+                type="text"
+                name="street_name"
+                placeholder="Street Name"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Street Name is Required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdLocationOn />
+              </div>
+              <Form.Control
+                type="text"
+                name="location"
+                placeholder="Area / Location"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Area is Required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                type="text"
+                name="emirates"
+                placeholder="Emirates"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Emirates is Required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10 col-md-5">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineApartment />
+              </div>
+              <Form.Control
+                type="text"
+                name="landmark"
+                placeholder="Nearest Landmark (Optional)"
+                onChange={handleChange}
+                className="global-inputs"
+              />
+              {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.landmark}
             </Form.Control.Feedback> */}
-          </Form.Group>
-        </div> </>: null }
-        {link ? 
-        <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <SiGooglemaps />
-            </div>
-            <Form.Control
-              type="text"
-              name="map_link"
-              placeholder="Google Maps Location"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid = {addressErr}
-            />
+            </Form.Group>
+          </div> </> : null}
+        {link ?
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <SiGooglemaps />
+              </div>
+              <Form.Control
+                type="text"
+                name="map_link"
+                placeholder="Google Maps Location"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={addressErr}
+              />
 
-            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">Location Link is Required.</Form.Control.Feedback>
-          </Form.Group>
-        </div> : null }
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">Location Link is Required.</Form.Control.Feedback>
+            </Form.Group>
+          </div> : null}
         <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
@@ -515,7 +540,7 @@ function DoctorVisit({ handleModalShow }) {
               onChange={handleChange}
               value={formValues.preferred_gender}
               className="global-inputs"
-              style = {{fontSize: "small", color:"#727A82"}}
+              style={{ fontSize: "small", color: "#727A82" }}
               isInvalid={errors?.preferred_gender}
             >
               <option value="">Select Gender of Care Giver</option>

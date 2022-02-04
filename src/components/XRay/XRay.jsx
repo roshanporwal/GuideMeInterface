@@ -3,12 +3,14 @@ import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
      MdLocationOn, MdOutlineCalendarToday,
-    
 } from 'react-icons/md';
 import {FaClipboardList} from 'react-icons/fa'
 import DatePicker from "react-datepicker";
+import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './xrayValidation';
+import ForFamily from "../AddFamily/ForFamily";
+
 function XRay({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
     const [errors, setErrors] = useState();
@@ -18,17 +20,14 @@ function XRay({handleModalShow}) {
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
     });
-
+    const [loading, setLoading] = useState(false);
     const validate = async (values) => {
         try {
             // setFileErrors({insurance:insurance === undefined ? "required" : ""});
-            
             setDateErrors({dateOne:DateOne === undefined ? "required" : ""});
-            
             await validationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
-            
             let errObj = {};
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
@@ -56,16 +55,27 @@ function XRay({handleModalShow}) {
     
     // const [insurance, setInsurance] = useState();
     const [name,setName] = useState("")
+    const [familyCheckBox, setFamilyCheckBox] = useState(false);
+    const [data, setData] = useState();
+    const [selectedMember, setSelectedMember] = useState();
     useEffect(() => {
         async function fetchData() {
             let data = localStorage.getItem("login_patient")
             if (data !== null) {
                 data = JSON.parse(data)
                 setName(data.name)
+                setData(data)
             }
         }
         fetchData()
     }, []);
+    const handleForFamily = async (e) => {
+        if (!familyCheckBox) {
+            setFamilyCheckBox(true);
+        } else {
+            setFamilyCheckBox(false);
+        }
+    };
     
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -78,11 +88,8 @@ function XRay({handleModalShow}) {
         setErrors(err);
         
         if(Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/)  {    
-                
+                setLoading(true)
                 const formData = new FormData();
-
-                let data = localStorage.getItem("login_patient")
-                data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
@@ -96,15 +103,15 @@ function XRay({handleModalShow}) {
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne.toString()
                 formValues.type = "xray";
-                // formValues.type = "diagnostics"
                 formValues.status = "New"
+                formValues.family = selectedMember;
                 formValues.insurance_name = data.insurance_name
                 // formData.append('prescription', insurance);
                 formData.append('formValues', JSON.stringify(formValues));
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 if(abc.payload){
+                    setLoading(false)
                     handleModalShow();
-                    setDateOne()
                 }
                 else{
                     alert(abc.message)
@@ -115,6 +122,13 @@ function XRay({handleModalShow}) {
     // const handleFiles = e => {
     //         setInsurance(e.target.files[0])
     // }
+    if (loading === true)
+    return (
+      <>
+        <ReactGifLoader />
+      </>
+    );
+  else
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
@@ -134,7 +148,7 @@ function XRay({handleModalShow}) {
                             type='checkbox'
                             name="myself"
                             label='For Family'
-                            onChange={handleChange}
+                            onChange={handleForFamily}
                         />
                     </Form.Group>
                 </div>
@@ -154,6 +168,10 @@ function XRay({handleModalShow}) {
                         />
                     </Form.Group>
                 </div>
+                {familyCheckBox ? (
+                    <div className="row justify-content-center">
+                    <ForFamily setSelectedMember = {setSelectedMember} /></div>
+                ):null}
                 {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">

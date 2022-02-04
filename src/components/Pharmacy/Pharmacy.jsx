@@ -11,8 +11,10 @@ import {FaBuilding,FaGlobeAsia,FaClipboardList,FaLanguage} from 'react-icons/fa'
 import {IoHomeOutline} from 'react-icons/io5'
 import {GiDirectionSigns} from 'react-icons/gi'
 import DatePicker from "react-datepicker";
+import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './pharmacyValidation';
+import ForFamily from "../AddFamily/ForFamily";
 
 function Pharmacy({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
@@ -26,7 +28,8 @@ function Pharmacy({handleModalShow}) {
         dateOne:"",
         dateTwo:"",
     });
-
+  const [loading, setLoading] = useState(false);
+    
     const validate = async (values) => {
         try {
             setFileErrors({insurance:insurance === undefined ? "required" : ""/*,reports:reports === undefined ? "required" : ""*/});
@@ -79,16 +82,27 @@ function Pharmacy({handleModalShow}) {
     const [addressForm,setAddressForm] = useState(false);
 
     const [name,setName] = useState("")
+    const [familyCheckBox, setFamilyCheckBox] = useState(false);
+    const [data, setData] = useState();
+    const [selectedMember, setSelectedMember] = useState();
     useEffect(() => {
         async function fetchData() {
             let data = localStorage.getItem("login_patient")
             if (data !== null) {
                 data = JSON.parse(data)
                 setName(data.name)
+                setData(data)
             }
         }
         fetchData()
     }, []);
+    const handleForFamily = async (e) => {
+        if (!familyCheckBox) {
+            setFamilyCheckBox(true);
+        } else {
+            setFamilyCheckBox(false);
+        }
+    };
 
     const [addressErr, setAddressErr] = useState("");
   const handleAddress = () => {
@@ -132,12 +146,9 @@ function Pharmacy({handleModalShow}) {
         
         if(Object.keys(err).length === 0 && insurance &&
         addressErr === "" )  {  
-                e.preventDefault();
+                setLoading(true)
                 
                 const formData = new FormData();
-
-                let data = localStorage.getItem("login_patient")
-                data = JSON.parse(data)
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
@@ -153,7 +164,7 @@ function Pharmacy({handleModalShow}) {
                 formValues.type = "pharmacy";
                 formValues.status = "New"
                 formValues.insurance_name = data.insurance_name
-
+                formValues.family = selectedMember;
 
                 // if (reports !== undefined) {
                 //     for (const tp of reports) {
@@ -166,6 +177,7 @@ function Pharmacy({handleModalShow}) {
                 const abc = await auth_service.createNewenqurire(data.login_id, formData)
                 
                 if(abc.payload){
+                    setLoading(false)
                     handleModalShow();
                 }
                 else{
@@ -183,6 +195,13 @@ function Pharmacy({handleModalShow}) {
             setInsurance(e.target.files[0])
         }
     }
+    if (loading === true)
+    return (
+      <>
+        <ReactGifLoader />
+      </>
+    );
+  else
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
@@ -202,7 +221,7 @@ function Pharmacy({handleModalShow}) {
                             type='checkbox'
                             name="myself"
                             label='For Family'
-                            onChange={handleChange}
+                            onChange={handleForFamily}
                         />
                     </Form.Group>
                 </div>
@@ -225,6 +244,10 @@ function Pharmacy({handleModalShow}) {
 
                     </Form.Group>
                 </div>
+                {familyCheckBox ? (
+                    <div className="row justify-content-center">
+                    <ForFamily setSelectedMember = {setSelectedMember} /></div>
+                ):null}
                 {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">

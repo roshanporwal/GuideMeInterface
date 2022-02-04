@@ -181,7 +181,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         patient_name: enqurie_data[0].patient_name,
         current_diagnosis: enqurie_data[0].current_diagnosis,
         hospital_name: enqurie_data[0].hospital_name,
-        id: enqurie_data[0]._id,
+        patient_id: enqurie_data[0]._id,
       };
       const feedback = await auth_service.feedback(
         enqurie_data[0]._id,
