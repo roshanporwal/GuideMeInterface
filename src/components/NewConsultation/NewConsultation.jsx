@@ -185,21 +185,22 @@ function NewConsultation({ handleModalShow }) {
         onSubmit={(e) => handleSubmit(e)}
         className="row justify-content-center"
       >
-        <div className="col-3">
+       <div className="col-3">
           <Form.Group className="d-flex">
             <Form.Check
-              type="checkbox"
-              name="name"
+              type="radio"
+              name="form-type"
               label="Myself"
-              onChange={handleChange}
+              onChange={() => {setFamilyCheckBox(false); setSelectedMember()}}
+              defaultChecked = {true}
             />
           </Form.Group>
         </div>
         <div className="col-6">
           <Form.Group className="d-flex">
             <Form.Check
-              type="checkbox"
-              name="myself"
+              type="radio"
+              name="form-type"
               label="For Family"
               onChange={handleForFamily}
             />

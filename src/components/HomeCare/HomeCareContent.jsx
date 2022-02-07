@@ -8,7 +8,7 @@ function HomeCareContent() {
     return ( 
         <InnerLayout 
             HeroImage={HeroImage}
-            pageName={"Second Opinion"}
+            pageName={"Home Care Services"}
             NestedComponent={<HomeCare />}
         />
     );

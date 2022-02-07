@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import InnerLayout from '../Layout/InnerLayout';
-import HeroImage from '../../assets/Labtest-hero.png';
+import HeroImage from '../../assets/medicine.png';
 import ThankYouModal from '../Layout/ThankYouModal';
 import Pharmacy from './Pharmacy';
 

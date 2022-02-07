@@ -4,7 +4,7 @@ import HeroImagelg from "../../assets/dashboard-lg-hero.png";
 //import HeroImagesm from '../../assets/dashboard-sm-hero.png';
 
 import Logo from "../../assets/guidemedoc-logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DashboardItem from "./DashboardItem";
 import ConsultationLogo from "../../assets/consultation.png";
 import SecLogo from "../../assets/second-op-logo.png";
@@ -19,6 +19,10 @@ function Dashboard() {
     if(data){
         data = JSON.parse(data)
     }
+    let data1 = localStorage.getItem("login")
+    if(data1){
+        data1 = JSON.parse(data1)
+    }
   return (
     <>
       <div className="container-fluid">
@@ -26,23 +30,28 @@ function Dashboard() {
           <Navbar bg="light" expand="lg">
             <Container>
               <Navbar.Brand>
-                <img src={Logo} alt="Company-Logo" width={166} />
+                <img src={Logo} alt="Company-Logo" width={200} />
               </Navbar.Brand>
 
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="align-items-right">
-                  <Col lg={{ offset: 8 }} sm={5}>
+                  {/* <Col lg={{ offset: 8 }} sm={5}>
                     <p style={{ color: "#164473" }}>E Consult</p>
                   </Col>
                   <Col lg={{ offset: 3 }} sm={5}>
                     <p style={{ color: "#164473" }}>Support</p>
-                  </Col>
+                  </Col> */}
                   <Col lg={{ offset: 3 }} sm={5}>
-                      {data ? 
+                      {data || data1 ? 
                         <div
                         className="btn btn-primary"
-                        onClick={() =>{ localStorage.removeItem("login_patient");window.location.reload()}}
+                        onClick={() =>
+                          { 
+                            localStorage.removeItem("login");
+                            localStorage.removeItem("login_patient");
+                            window.location.reload()
+                          }}
                         >
                         Logout
                         </div> : 
@@ -51,6 +60,17 @@ function Dashboard() {
                             onClick={() => navigate("/log-in")}
                         >
                         Login
+                        </div> 
+                    }
+                  </Col>
+                  <Col lg={{ offset: 3 }} sm={10}>
+                      {data || data1 ? 
+                        null : 
+                        <div
+                            className="btn btn-primary"
+                            onClick={() => navigate("/hospital")}
+                        >
+                        Hospital Login
                         </div> 
                     }
                   </Col>
@@ -66,14 +86,14 @@ function Dashboard() {
             <div className="col-md-4 col-11">
               <div className="text-center ">
                 <p className="heading text-dark">
-                  Think Healthcare ,<br />
+                  Simplify Healthcare ,<br />
                   Dial <span className="heading"> Guide Me Doc:</span>
                 </p>
               </div>
               <div className="text-center">
-                <Link className="dashboard-call-button" to="#">
-                  [04] 356 2 356
-                </Link>
+                <a className="dashboard-call-button" href="tel:+971 3562356">
+                  +971 3562356
+                </a>
               </div>
               <div className="mt-5 dashboard-logo">
                 <img src={HeroImagelg} width="100%" alt="company-logo" />

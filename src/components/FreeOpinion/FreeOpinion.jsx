@@ -6,6 +6,9 @@ import { MdOutlineCalendarToday, MdOutlineFilePresent,
 import DatePicker from "react-datepicker";
 import * as auth_service from "../../service/auth_service";
 import {validationSchema} from "./freeopinionValidation";
+import ReactGifLoader from "../../interfacecomponents/gif_loader";
+import ThankYouModal from '../Layout/ThankYouModal';
+
 
 function FreeOpinion({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -22,7 +25,8 @@ function FreeOpinion({handleModalShow}) {
         dateTwo:"",
     });
     const [radioErr,setRadioErr] = useState("");
-
+    const [loading, setLoading] = useState(false)
+    const [submitted,setSubmitted ] = useState(false)
     const [opinion, setOpinion] = useState("");
     const handleOpinionChange = (e) => {
         setOpinion(e.target.value)
@@ -79,7 +83,6 @@ function FreeOpinion({handleModalShow}) {
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
             return errObj;
         }
     };
@@ -88,7 +91,7 @@ function FreeOpinion({handleModalShow}) {
         const err = await validate(formValues);
         setErrors(err);
         if(Object.keys(err).length === 0 /*&& fileerrors.insurance === "" */&& dateerrors.dateOne === "" && opinion )  {  
-            
+            setLoading(true)
             const formData = new FormData();
 
             let data = localStorage.getItem("login_patient")
@@ -121,20 +124,10 @@ function FreeOpinion({handleModalShow}) {
 
             const freeOpinion = await auth_service.createNewenqurire(data.login_id, formData)
             if(freeOpinion.payload){
-                handleModalShow();
-                setFormValues({
-                    name:'',
-                    age:'',
-                    gender:'',
-                    nationality:'',
-                    email:'',
-                    referredby : '',
-                    mobile:'',
-                    insurance_card_copy: [],
-                    current_diagnosis : ''
-                })
-                setDateOne()
-                setDateTwo()
+                setLoading(false)
+                setSubmitted(true)
+                // handleModalShow();
+                
            }else{
                alert(freeOpinion.message)
            }
@@ -150,6 +143,20 @@ function FreeOpinion({handleModalShow}) {
         //     setInsurance(e.target.files[0])
         // }
     }
+    if(submitted === true){
+        return(
+            <>
+              <ThankYouModal />
+            </>
+        )
+    }
+    else if (loading === true)
+    return (
+      <>
+        <ReactGifLoader />
+      </>
+    );
+  else
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">

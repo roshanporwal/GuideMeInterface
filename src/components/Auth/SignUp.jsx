@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Logo from "../../assets/guidemedoc-logo.png";
@@ -10,16 +10,22 @@ import {
   MdEmail,
   MdTransgender,
   MdFlag,
+  MdOutlineCalendarToday
 } from "react-icons/md";
+import DatePicker from "react-datepicker";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import * as auth_service from "../../service/auth_service";
 import { signupvalidationSchema } from "./authValidation";
+import { Country } from "country-state-city";
 function SignUpScreen() {
   const navigate = useNavigate();
   // const [patient_document, setPatient_document] = useState()
   const hiddenFileInputReports = React.useRef(null);
   const [errors, setErrors] = useState();
+  const [dateerrors, setDateErrors] = useState({
+    dateOne: "",
+  });
   const [fileerrors, setFileErrors] = useState({
     insurance: "",
     document: "",
@@ -35,11 +41,15 @@ function SignUpScreen() {
     gender: "",
     referredby: "",
     nationality: "",
-    insurance_name:"",
+    insurance_name: "",
+    first_name: "",
+    family_name: ""
   });
+  const [DateOne, setDateOne] = useState();
   const handleFileReportsClick = (event) => {
     hiddenFileInputReports.current.click();
   };
+  
   const handleTermsCheckBox = (e) => {
     setTerms(e.target.checked);
   };
@@ -47,8 +57,12 @@ function SignUpScreen() {
     let { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  const countries = Country.getAllCountries();
   const validate = async (values) => {
     try {
+      setDateErrors({
+        dateOne: DateOne === undefined ? "required" : "",
+      });
       setFileErrors({
         terms: terms === false ? "CheckBox is Required" : "",
         insurance: insurance === undefined ? "Insurance File is Required" : "",
@@ -64,6 +78,16 @@ function SignUpScreen() {
       return errObj;
     }
   };
+  const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
+    <input
+      readOnly
+      placeholder={text}
+      className="form-control signup-inputs"
+      onClick={onClick}
+      ref={ref}
+      value={value}
+    />
+  ));
   const handleFiles = (e) => {
     const { name } = e.currentTarget;
     if (name === "document") {
@@ -74,7 +98,6 @@ function SignUpScreen() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const err = await validate(formValues);
     setErrors(err);
     if (
@@ -82,6 +105,8 @@ function SignUpScreen() {
       insurance &&
       terms === true
     ) {
+      formValues.name = formValues.first_name + " " + formValues.family_name
+      formValues.dob = DateOne
       const formData = new FormData();
       formData.append("insurance_card_copy", insurance);
       formData.append("formValues", JSON.stringify(formValues));
@@ -93,6 +118,7 @@ function SignUpScreen() {
         alert(createaccount.message);
       }
     }
+    console.log(err)
   };
   return (
     <>
@@ -125,18 +151,40 @@ function SignUpScreen() {
                         </div>
                         <Form.Control
                           type="text"
-                          name="name"
-                          placeholder="Full Name"
+                          name="first_name"
+                          placeholder="First Name"
                           onChange={handleChange}
-                          value={formValues.name}
+                          value={formValues.first_name}
                           className="signup-inputs"
-                          isInvalid={errors?.name}
+                          isInvalid={errors?.first_name}
                         />
                         <Form.Control.Feedback
                           style={{ color: "red" }}
                           type="invalid"
                         >
-                          {errors?.name}
+                          {errors?.first_name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className="col-md-6 mt-5 mt-lg-0">
+                      <Form.Group className="my-3">
+                        <div className="prepend-icon-auth">
+                          <FaUserAlt />
+                        </div>
+                        <Form.Control
+                          type="text"
+                          name="family_name"
+                          placeholder="Family Name"
+                          onChange={handleChange}
+                          value={formValues.family_name}
+                          className="signup-inputs"
+                          isInvalid={errors?.family_name}
+                        />
+                        <Form.Control.Feedback
+                          style={{ color: "red" }}
+                          type="invalid"
+                        >
+                          {errors?.family_name}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
@@ -184,28 +232,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
-                      <Form.Group className="my-3">
-                        <div className="prepend-icon-auth">
-                          <FaUserAlt />
-                        </div>
-                        <Form.Control
-                          type="text"
-                          name="age"
-                          placeholder="Age"
-                          onChange={handleChange}
-                          value={formValues.age}
-                          className="signup-inputs"
-                          isInvalid={errors?.age}
-                        />
-                        <Form.Control.Feedback
-                          style={{ color: "red" }}
-                          type="invalid"
-                        >
-                          {errors?.age}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </div>
+                    
                     <div className="col-md-6 mt-5 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
@@ -231,6 +258,30 @@ function SignUpScreen() {
                         >
                           {errors?.gender}
                         </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <Form.Group className="my-3">
+                        <div className="prepend-icon-auth">
+                          <MdOutlineCalendarToday />
+                        </div>
+                          <DatePicker
+                            selected={DateOne}
+                            onChange={(date) => {
+                              setDateOne(date);
+                            }}
+                            peekNextMonth
+                            showMonthDropdown
+                            showYearDropdown
+                            dateFormat="dd/MM/yyyy"
+                            dropdownMode="select"
+                            customInput={<DatePickerInput text="Date of Birth" />}
+                          />
+                        {dateerrors?.dateOne ? (
+                          <Form.Label style={{ color: "red" }} type="valid">
+                            Date of Birth is required
+                          </Form.Label>
+                        ) : null}
                       </Form.Group>
                     </div>
                     <div className="col-md-6 mt-5 mt-lg-0">
@@ -261,14 +312,21 @@ function SignUpScreen() {
                           <FaUserAlt />
                         </div>
                         <Form.Control
-                          type="text"
+                          as="select"
                           name="referredby"
                           placeholder="Pt referred by"
                           onChange={handleChange}
                           value={formValues.referredby}
                           className="signup-inputs"
                           isInvalid={errors?.referredby}
-                        />
+                        >
+                          <option value="">Select an option</option>
+                          <option key="Internal reference" value="Internal reference">Internal reference</option>
+                          <option key="Patient reference" value="Patient reference">Patient reference</option>
+                          <option key="Social media" value="Social media">Social media</option>
+                          <option key="Insurance" value="Insurance">Insurance</option>
+                          <option key="TPA" value="TPA">TPA</option>
+                        </Form.Control>
                         <Form.Control.Feedback
                           style={{ color: "red" }}
                           type="invalid"
@@ -283,20 +341,29 @@ function SignUpScreen() {
                           <MdFlag />
                         </div>
                         <Form.Control
-                          type="text"
+                          as="select"
                           name="nationality"
                           placeholder="Nationality"
                           onChange={handleChange}
                           value={formValues.nationality}
                           className="signup-inputs"
                           isInvalid={errors?.nationality}
-                        />
+                        >
+                          <option key={1} value = "">Nationality</option>
+                          {
+
+                            // console.log(countries)
+                            countries.map((e) => 
+                              <option key = {e.name} value = {e.name}>{e.name} {e.flag}</option>)
+                          }
+                        </Form.Control>
                         <Form.Control.Feedback
                           style={{ color: "red" }}
                           type="invalid"
                         >
                           {errors?.nationality}
                         </Form.Control.Feedback>
+                        
                       </Form.Group>
                     </div>
                     <div className="col-md-6 mt-5 mt-lg-0">

@@ -9,7 +9,7 @@ function Header() {
         <div className='container-fluid'>
             <Row className="header-row">
                 <Col role="button" lg={{span:2,offset:1}} xs={6} onClick={() => navigate('/')}>
-                    <img src={Logo} width={166}  alt='company-logo' />
+                    <img src={Logo} width={200}  alt='company-logo' />
                 </Col>
             </Row>
         </div>

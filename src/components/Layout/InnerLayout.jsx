@@ -56,7 +56,7 @@ function InnerLayout(props) {
     }
     return ( 
         <div>
-            {props.ThankYouModal}
+            {/* {props.ThankYouModal} */}
             <Container>
                 <div className="mt-4">
                     <div className="row  align-items-stretch justify-content-around">

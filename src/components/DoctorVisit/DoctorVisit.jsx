@@ -227,18 +227,19 @@ function DoctorVisit({ handleModalShow }) {
         <div className="col-3">
           <Form.Group className="d-flex">
             <Form.Check
-              type="checkbox"
-              name="myself"
+              type="radio"
+              name="form-type"
               label="Myself"
-              onChange={handleChange}
+              onChange={() => {setFamilyCheckBox(false); setSelectedMember()}}
+              defaultChecked = {true}
             />
           </Form.Group>
         </div>
         <div className="col-6">
           <Form.Group className="d-flex">
             <Form.Check
-              type="checkbox"
-              name="myself"
+              type="radio"
+              name="form-type"
               label="For Family"
               onChange={handleForFamily}
             />

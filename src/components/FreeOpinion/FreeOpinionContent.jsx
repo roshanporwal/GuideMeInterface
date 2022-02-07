@@ -18,7 +18,7 @@ function FreeOpinionContent() {
     return ( 
         <InnerLayout 
             HeroImage={HeroImage}
-            pageName={"Free Surgical Second Opinion Within The Country"}
+            pageName={"Free Surgical Second Opinion"}
             NestedComponent={<FreeOpinion handleModalShow={handleModalShow} />}
             ThankYouModal = {<ThankYouModal modalshow={modalshow} handleModalClose={handleModalClose} />}
         />

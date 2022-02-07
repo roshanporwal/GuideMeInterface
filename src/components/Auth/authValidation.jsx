@@ -18,12 +18,13 @@ export const loginvalidationSchema = yup.object().shape({
         // transport_support_needed: yup.string().required("Please select an option"),
 })
 export const signupvalidationSchema = yup.object().shape({
-        name: yup.string().required("Name is required").matches(nameReg, {message:'Please Enter a valid Name',excludeEmptyString:true}),
+        first_name: yup.string().required("First Name is required").matches(nameReg, {message:'Please Enter a valid First Name',excludeEmptyString:true}),
+        family_name: yup.string().required("Family Name is required").matches(nameReg, {message:'Please Enter a valid Family Name',excludeEmptyString:true}),
         mobile: yup.string().required("Mobile is required").matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
         email: yup.string().required("Email is required").matches(emailReg, {message:'Please Enter a valid Email-ID',excludeEmptyString:true}),
-        age: yup.string().required("Age is required").test("age",'Please Enter a valid Age',(age) => {if(age <0 || age > 200) {return false;}else {return true}}),
+        // dob: yup.string().required("Date of Birth is required"),
         gender: yup.string().required("Gender is required"),
-        insurance_name: yup.string().required("Insurance Name is required."),
+        // insurance_name: yup.string().required("Insurance Name is required."),
         referredby: yup.string().required("Referref By is required"),
         nationality: yup.string().required("Nationality is required"),
         // insurance_card_copy: yup.mixed().required("Patient insurance card copy is required"),

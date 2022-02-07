@@ -161,26 +161,27 @@ function RTPCR({handleModalShow}) {
     return (
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-            <div className='col-3'>
-                <Form.Group className="d-flex">
-                        <Form.Check
-                            type='checkbox'
-                            name="myself"
-                            label='Myself'
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-6'>
-                    <Form.Group className="d-flex">
-                        <Form.Check
-                            type='checkbox'
-                            name="myself"
-                            label='For Family'
-                            onChange={handleForFamily}
-                        />
-                    </Form.Group>
-                </div>
+            <div className="col-3">
+          <Form.Group className="d-flex">
+            <Form.Check
+              type="radio"
+              name="form-type"
+              label="Myself"
+              onChange={() => {setFamilyCheckBox(false); setSelectedMember()}}
+              defaultChecked = {true}
+            />
+          </Form.Group>
+        </div>
+        <div className="col-6">
+          <Form.Group className="d-flex">
+            <Form.Check
+              type="radio"
+              name="form-type"
+              label="For Family"
+              onChange={handleForFamily}
+            />
+          </Form.Group>
+        </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
