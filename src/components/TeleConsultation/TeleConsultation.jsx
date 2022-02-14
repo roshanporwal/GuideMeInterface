@@ -2,14 +2,16 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital,  MdStickyNote2
+     MdOutlineCalendarToday, MdOutlineFilePresent,
+    MdOutlineLocalHospital,  MdStickyNote2, MdLocationOn
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './teleValidation';
 import ForFamily from "../AddFamily/ForFamily";
+// import Location from '../../interfacecomponents/location'
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function TeleConsultation({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -24,6 +26,12 @@ function TeleConsultation({handleModalShow}) {
         dateTwo:"",
     });
   const [loading, setLoading] = useState(false);
+  const [submitted,setSubmitted] = useState(false)
+//   const [location,setLocation ] = useState({
+//     country : "",
+//     state: "",
+//     city: ""
+//   })
     const validate = async (values) => {
         try {
             // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports.length === 0 ? "required" : ""});
@@ -108,7 +116,7 @@ function TeleConsultation({handleModalShow}) {
 
             formValues.patient_id = data._id;
             formValues.name = data.name;
-            formValues.age = data.age;
+            formValues.dob = data.dob;
             formValues.gender = data.gender;
             formValues.nationality = data.nationality;
             formValues.email = data.email;
@@ -120,9 +128,10 @@ function TeleConsultation({handleModalShow}) {
             formValues.status = "New"
             formValues.insurance_name = data.insurance_name 
             formValues.family = selectedMember;         
-            
+            // formValues.location = location
             formValues.preferred_date_first = DateOne.toString()
-            formValues.preferred_date_second = DateTwo.toString()
+            if(DateTwo)
+                formValues.preferred_date_second = DateTwo.toString()
 
 
             if (reports !== undefined) {
@@ -137,10 +146,12 @@ function TeleConsultation({handleModalShow}) {
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
             if(abc.payload){
                 setLoading(false)
+                setSubmitted(true)
                 handleModalShow();
             }
             else{
                 alert(abc.message)
+                    setLoading(false)
             }
         }
 
@@ -154,7 +165,9 @@ function TeleConsultation({handleModalShow}) {
         //     setInsurance(e.target.files[0])
         // }
     }
-    if (loading === true)
+    if(submitted === true)
+    return(<ThankYouModal/>)
+    else if (loading === true)
     return (
       <>
         <ReactGifLoader />
@@ -236,22 +249,25 @@ function TeleConsultation({handleModalShow}) {
                         />
                     </Form.Group>
                 </div> */}
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdLocationOn />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="location"
-                            placeholder='Location *'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.location}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
-                    </Form.Group>
-                </div>
+               {/* <Location setLocation = {setLocation}/> */}
+               <div className="col-10"> 
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdLocationOn />
+            </div>
+            <Form.Control
+              type="text"
+              name="location"
+              placeholder="Location *"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={errors?.location}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              {errors?.location}
+            </Form.Control.Feedback>
+          </Form.Group> 
+         </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">

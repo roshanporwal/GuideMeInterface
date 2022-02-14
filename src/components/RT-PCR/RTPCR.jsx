@@ -2,18 +2,22 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-     MdLocationOn, MdOutlineCalendarToday, MdOutlineFilePresent,
-    MdOutlineLocalHospital,  MdStickyNote2
+     MdOutlineCalendarToday,
+     MdLocationOn
+    //  , MdOutlineFilePresent,
+    // MdOutlineLocalHospital,  MdStickyNote2
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import {validationSchema} from "./rtpcrValidation";
 import * as auth_service from "../../service/auth_service";
 import ForFamily from "../AddFamily/ForFamily";
+// import Location from '../../interfacecomponents/location'
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function RTPCR({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
-    const hiddenFileInputReports = React.useRef(null);
+    // const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
     // const [fileerrors,setFileErrors] = useState({
     //     // insurance:"",
@@ -24,6 +28,7 @@ function RTPCR({handleModalShow}) {
         dateTwo:"",
     });
   const [loading, setLoading] = useState(false);
+  const [submitted,setSubmitted] = useState(false)
     const validate = async (values) => {
         try {
             // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
@@ -46,9 +51,9 @@ function RTPCR({handleModalShow}) {
     // };
     // Programatically click the hidden file input element
     // when the Button component is clicked
-    const handleFileReportsClick = event => {
-        hiddenFileInputReports.current.click();
-    };
+    // const handleFileReportsClick = event => {
+    //     hiddenFileInputReports.current.click();
+    // };
      
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
@@ -64,9 +69,15 @@ function RTPCR({handleModalShow}) {
         insurance_card_copy: [],
         current_diagnosis:''
     });
+    // const [location,setLocation ] = useState({
+    //     country : "",
+    //     state: "",
+    //     city: ""
+    //   })
+
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
-    const [reports, setReports] = useState([]);
+    // const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
     const [name,setName] = useState("")
     const [familyCheckBox, setFamilyCheckBox] = useState(false);
@@ -105,9 +116,10 @@ function RTPCR({handleModalShow}) {
             setLoading(true)  
             const formData = new FormData();
 
-            formValues.patient_id = data._id;
+            setFormValues({ ...formValues, patient_id: data.id });
+            formValues.patient_id = data.id
             formValues.name = data.name;
-            formValues.age = data.age;
+            formValues.dob = data.dob;
             formValues.gender = data.gender;
             formValues.current_diagnosis = formValues.symptoms
             formValues.nationality = data.nationality;
@@ -116,41 +128,47 @@ function RTPCR({handleModalShow}) {
             formValues.mobile = data.login_id;            
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.preferred_date_first = DateOne.toString()
-            formValues.preferred_date_second = DateTwo.toString()
+            if(DateTwo)
+                formValues.preferred_date_second = DateTwo.toString()
             formValues.type = "rcpcrtest"
             formValues.status = "New"
             formValues.insurance_name = data.insurance_name   
-            formValues.family = selectedMember;         
+            formValues.family = selectedMember;    
 
 
-            if (reports !== undefined) {
-                for (const tp of reports) {
-                    formData.append('patient_reports', tp);
-                }
-            }
+            // if (reports !== undefined) {
+            //     for (const tp of reports) {
+            //         formData.append('patient_reports', tp);
+            //     }
+            // }
             // formData.append('insurance_card_copy', insurance);
             formData.append('formValues', JSON.stringify(formValues));
             
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
             if(abc.payload){
+                setSubmitted(true)
                 setLoading(false)
                 handleModalShow();
             }
             else{
                 alert(abc.message)
+                    setLoading(false)
             }
         }
 
     }
-    const handleFiles = e => {
-        const { name } = e.currentTarget
-        if (name === 'reports') {
-            setReports(e.target.files)
-        }
-        // else {
-        //     setInsurance(e.target.files[0])
-        // }
-    }
+    // const handleFiles = e => {
+    //     const { name } = e.currentTarget
+    //     if (name === 'reports') {
+    //         setReports(e.target.files)
+    //     }
+    //     // else {
+    //     //     setInsurance(e.target.files[0])
+    //     // }
+    // }
+    if(submitted === true)
+    return(<ThankYouModal/>)
+  else
     if (loading === true)
     return (
       <>
@@ -232,23 +250,27 @@ function RTPCR({handleModalShow}) {
                         />
                     </Form.Group>
                 </div> */}
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdLocationOn />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="location"
-                            placeholder='Location *'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.location}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
-                    </Form.Group>
-                </div>
-                <div className='col-10'>
+
+                {/* <Location setLocation = {setLocation}/> */}
+                <div className="col-10"> 
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdLocationOn />
+            </div>
+            <Form.Control
+              type="text"
+              name="location"
+              placeholder="Location *"
+              onChange={handleChange}
+              className="global-inputs"
+              isInvalid={errors?.location}
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              {errors?.location}
+            </Form.Control.Feedback>
+          </Form.Group> 
+         </div>
+                {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdStickyNote2 />
@@ -264,8 +286,8 @@ function RTPCR({handleModalShow}) {
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
 
                     </Form.Group>
-                </div>
-                <div className='col-10'>
+                </div> */}
+                {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineLocalHospital />
@@ -281,7 +303,7 @@ function RTPCR({handleModalShow}) {
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.hospital}</Form.Control.Feedback>
                     
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -290,14 +312,18 @@ function RTPCR({handleModalShow}) {
                         <div>
                             <DatePicker
                                 selected={DateOne}
-                                onChange={date => setDateOne(date)}
-                                dateFormat="dd/MM/yyyy"
-                                minDate = {new Date()}
-                                customInput={<DatePickerInput text='Preferred date 1 *' />}
+                                onChange={date => { setDateOne(date) }}
+                                dateFormat="dd/MM/yyyy hhaa"
+                                showTimeSelect
+                                minDate={new Date()}
+                                minTime={new Date().setHours(7, 0, 0, 0)}
+                                maxTime={new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals={60}
+                                customInput={<DatePickerInput text='Preferred Date and Time 1' />}
                             />
                         </div>
                         {dateerrors.dateOne ? (
-                                <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
+                            <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
                             : null}
                     </Form.Group>
                 </div>
@@ -309,15 +335,19 @@ function RTPCR({handleModalShow}) {
                         <div>
                             <DatePicker
                                 selected={DateTwo}
-                                onChange={date => setDateTwo(date)}
-                                dateFormat="dd/MM/yyyy"
-                                minDate = {new Date()}
-                                customInput={<DatePickerInput text='Preferred date 2 *' />}
+                                onChange={date => { setDateTwo(date) }}
+                                dateFormat="dd/MM/yyyy hhaa"
+                                showTimeSelect
+                                minDate={new Date()}
+                                minTime={new Date().setHours(7, 0, 0, 0)}
+                                maxTime={new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals={60}
+                                customInput={<DatePickerInput text='Preferred Date and Time 2' />}
                             />
+                            {dateerrors.dateTwo ? (
+                            <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                            : null}
                         </div>
-                        {dateerrors.dateTwo ? (
-                                <Form.Label style = {{color:"red"}} type = "valid">Date is required</Form.Label>)
-                            : null} 
                     </Form.Group>
                 </div>
                 {/* <div className='col-10 col-md-5'>
@@ -342,7 +372,7 @@ function RTPCR({handleModalShow}) {
                         : null}   
                     </Form.Group>
                 </div> */}
-                <div className='col-10 col-md-7'>
+                {/* <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
@@ -361,7 +391,7 @@ function RTPCR({handleModalShow}) {
                         />
                         
                     </Form.Group>
-                </div>
+                </div> */}
                 <div className='text-center mt-4'>
                     <input className="form-button" type="submit" value="SUBMIT" />
                 </div>

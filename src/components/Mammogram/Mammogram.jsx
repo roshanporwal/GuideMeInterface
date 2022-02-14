@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
+import { FaRegUser, FaGlobeAsia } from 'react-icons/fa';
 import {
      MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
     
@@ -10,6 +10,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './mammogramValidation';
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function Mammogram({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
@@ -24,6 +25,7 @@ function Mammogram({handleModalShow}) {
         DateTwo:""
     });
     const [loading,setLoading]= useState(false)
+    const [submitted, setSubmitted] = useState(false)
     // const [reports, setReports] = useState([]);
 
     const validate = async (values) => {
@@ -112,7 +114,7 @@ function Mammogram({handleModalShow}) {
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
-                formValues.age = data.age;
+                formValues.dob = data.dob;
                 formValues.gender = data.gender;
                 formValues.nationality = data.nationality;
                 formValues.current_diagnosis = formValues.symptoms
@@ -121,6 +123,7 @@ function Mammogram({handleModalShow}) {
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne.toString()
+                if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "mammogram";
                 formValues.status = "New"
@@ -140,10 +143,12 @@ function Mammogram({handleModalShow}) {
                 
                 if(abc.payload){
                     setLoading(false)
+                    setSubmitted(true)
                     handleModalShow();
                 }
                 else{
                     alert(abc.message)
+                    setLoading(false)
                 }
         }
 
@@ -157,6 +162,9 @@ function Mammogram({handleModalShow}) {
             setInsurance(e.target.files[0])
         }
     }
+    if (submitted === true)
+    return (<ThankYouModal />)
+  else
     if (loading === true)
     return (
       <>
@@ -282,6 +290,34 @@ function Mammogram({handleModalShow}) {
                         : null}
                     </Form.Group>
                 </div>
+                <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                as="select"
+                name="address_patient"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.address_patient}
+                className="global-inputs"
+                isInvalid={errors?.address_patient}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+
+            </Form.Group>
+          </div>
                 <div className='col-10'>
                     <Form.Group >
                         <div className="prepend-icon">

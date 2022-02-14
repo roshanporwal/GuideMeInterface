@@ -28,7 +28,16 @@
 .global-inputs:focus{
     background-color: rgba(34, 34, 34, 0.1)!important;
 }
-
+.rmsc.dark {
+    /* --rmsc-main: #4285f4;
+    --rmsc-hover: #0e0c0a;
+    --rmsc-selected: #1d1915;
+    --rmsc-border: #333333;
+    --rmsc-gray: #555555;
+    --rmsc-bg: #000000; */
+    /* color: #fff; */
+    z-index: 100;
+  }
 .global-inputs-check label{
     font-size: 12px!important;
 }

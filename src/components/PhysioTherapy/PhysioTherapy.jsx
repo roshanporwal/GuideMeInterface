@@ -15,6 +15,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './physioTherapyValidation';
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function PhysioTherapy({ handleModalShow }) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -29,7 +30,7 @@ function PhysioTherapy({ handleModalShow }) {
         dateTwo: "",
     });
   const [loading, setLoading] = useState(false);
-
+  const [submitted,setSubmitted] = useState(false)
     // Programatically click the hidden file input element
     // when the Button component is clicked
     // const handleFileInsuranceClick = event => {
@@ -70,6 +71,7 @@ function PhysioTherapy({ handleModalShow }) {
         insurance_card_copy: [],
     });
     const [DateOne, setDateOne] = useState();
+    const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
     // const [insurance, setInsurance] = useState();
     const [link,setLink] = useState(false);
@@ -143,7 +145,7 @@ function PhysioTherapy({ handleModalShow }) {
 
             formValues.patient_id = data._id;
             formValues.name = data.name;
-            formValues.age = data.age;
+            formValues.dob = data.dob;
             formValues.gender = data.gender;
             formValues.nationality = data.nationality;
             formValues.email = data.email;
@@ -169,10 +171,12 @@ function PhysioTherapy({ handleModalShow }) {
 
             if (abc.payload) {
                 setLoading(false)
+                setSubmitted(true)
                 handleModalShow();
             }
             else {
                 alert(abc.message)
+                    setLoading(false)
             }
         }
     }
@@ -185,7 +189,9 @@ function PhysioTherapy({ handleModalShow }) {
         //     setInsurance(e.target.files[0])
         // }
     }
-    if (loading === true)
+    if(submitted === true)
+    return(<ThankYouModal/>)
+    else if (loading === true)
     return (
       <>
         <ReactGifLoader />
@@ -281,12 +287,32 @@ function PhysioTherapy({ handleModalShow }) {
                                 minTime={new Date().setHours(7, 0, 0, 0)}
                                 maxTime={new Date().setHours(19, 0, 0, 0)}
                                 timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time 1' />}
                             />
                         </div>
                         {dateerrors.dateOne ? (
                             <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
                             : null}
+                    </Form.Group>
+                </div>
+                <div className='col-10'>
+                    <Form.Group>
+                        <div className="prepend-icon">
+                            <MdOutlineCalendarToday />
+                        </div>
+                        <div>
+                            <DatePicker
+                                selected={DateTwo}
+                                onChange={date => { setDateTwo(date) }}
+                                dateFormat="dd/MM/yyyy hhaa"
+                                showTimeSelect
+                                minDate={new Date()}
+                                minTime={new Date().setHours(7, 0, 0, 0)}
+                                maxTime={new Date().setHours(19, 0, 0, 0)}
+                                timeIntervals={60}
+                                customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                            />
+                        </div>
                     </Form.Group>
                 </div>
                 <div className='col-10'>
@@ -406,23 +432,34 @@ function PhysioTherapy({ handleModalShow }) {
           </Form.Group>
         </div>
         <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <FaGlobeAsia />
-            </div>
-            <Form.Control
-              type="text"
-              name="emirates"
-              placeholder="Emirates"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              Emirates is Required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                as="select"
+                name="emirates"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.emirates}
+                className="global-inputs"
+                isInvalid={addressErr}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Emirates is Required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
         <div className="col-10 col-md-5">
           <Form.Group>
             <div className="prepend-icon">
@@ -504,13 +541,12 @@ function PhysioTherapy({ handleModalShow }) {
                 onChange={handleChange}
                 value={formValues.preferred_gender}
                 className="global-inputs"
-                style = {{fontSize: "small", color:"#727A82"}}
+                style = {{fontSize: "small", color:"black"}}
                 isInvalid={errors?.preferred_gender}
             >
                 <option value="">Select Gender of Care Giver</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Other">Other</option>
             </Form.Control>
                 <Form.Control.Feedback
                     style={{ color: "red" }}
@@ -543,13 +579,19 @@ function PhysioTherapy({ handleModalShow }) {
                             <MdPayment />
                         </div>
                         <Form.Control
-                            type='text'
-                            name="payment_mode"
-                            placeholder='Mode of Payment'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.payment_mode}
-                        />
+              as="select"
+              name="payment_mode"
+              placeholder="Mode of Payment"
+              onChange={handleChange}
+              value={formValues.payment_mode}
+              className="global-inputs mt-1"
+              style={{ fontSize: "small", color: "black" }}
+              isInvalid={errors?.payment_mode}
+            >
+              <option value ="">Payment Code</option>
+              <option value = "Cash">Cash</option>
+              <option value = "Credit Card">Credit Card</option>
+            </Form.Control>
                         <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.payment_mode}</Form.Control.Feedback>
 
                     </Form.Group>

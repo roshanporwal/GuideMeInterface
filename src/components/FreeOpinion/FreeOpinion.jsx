@@ -72,7 +72,7 @@ function FreeOpinion({handleModalShow}) {
         try {
             
             // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
-            
+            console.log(DateOne)
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
             setRadioErr(opinion === "" ? "required" : "")
             await validationSchema.validate(values, { abortEarly: false });
@@ -99,7 +99,7 @@ function FreeOpinion({handleModalShow}) {
 
             formValues.patient_id = data._id;
             formValues.name = data.name;
-            formValues.age = data.age;
+            formValues.dob = data.dob;
             formValues.gender = data.gender;
             formValues.nationality = data.nationality;
             formValues.email = data.email;
@@ -111,7 +111,8 @@ function FreeOpinion({handleModalShow}) {
             formValues.insurance_name = data.insurance_name
             // formValues.basetype = opinion;
             formValues.preferred_date_first = DateOne.toString()
-            formValues.preferred_date_second = DateTwo.toString()
+            if(DateTwo)
+                formValues.preferred_date_second = DateTwo.toString()
 
 
             if (reports !== undefined) {

@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Container, Row, Navbar, Nav } from "react-bootstrap";
 import HeroImagelg from "../../assets/dashboard-lg-hero.png";
 //import HeroImagesm from '../../assets/dashboard-sm-hero.png';
-
 import Logo from "../../assets/guidemedoc-logo.png";
 import { useNavigate } from "react-router-dom";
 import DashboardItem from "./DashboardItem";
@@ -35,45 +34,45 @@ function Dashboard() {
 
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="align-items-right">
-                  {/* <Col lg={{ offset: 8 }} sm={5}>
-                    <p style={{ color: "#164473" }}>E Consult</p>
+                <Nav>
+                  <Col lg={{ offset: 8 }} sm={7}>
+                    <a style={{textDecorations: "none"}} href="https://econsult.guidemedoc.com:8000/"><p style={{ color: "#164473" }}>E Consult</p></a>
                   </Col>
-                  <Col lg={{ offset: 3 }} sm={5}>
+                  {/* <Col lg={{ offset: 3 }} sm={5}>
                     <p style={{ color: "#164473" }}>Support</p>
                   </Col> */}
-                  <Col lg={{ offset: 3 }} sm={5}>
-                      {data || data1 ? 
-                        <div
-                        className="btn btn-primary"
-                        onClick={() =>
-                          { 
-                            localStorage.removeItem("login");
-                            localStorage.removeItem("login_patient");
-                            window.location.reload()
-                          }}
-                        >
-                        Logout
-                        </div> : 
-                        <div
-                            className="btn btn-primary"
-                            onClick={() => navigate("/log-in")}
-                        >
-                        Login
-                        </div> 
-                    }
-                  </Col>
-                  <Col lg={{ offset: 3 }} sm={10}>
-                      {data || data1 ? 
-                        null : 
-                        <div
-                            className="btn btn-primary"
-                            onClick={() => navigate("/hospital")}
-                        >
-                        Hospital Login
-                        </div> 
-                    }
-                  </Col>
+                    <Col lg={{ offset: 3 }} sm={5}>
+                        {data || data1 ? 
+                          <div
+                          className="btn btn-primary"
+                          onClick={() =>
+                            { 
+                              localStorage.removeItem("login");
+                              localStorage.removeItem("login_patient");
+                              window.location.reload()
+                            }}
+                          >
+                          Logout
+                          </div> : 
+                          <div
+                              className="btn btn-primary"
+                              onClick={() => navigate("/log-in")}
+                          >
+                          Login
+                          </div> 
+                      }
+                    </Col>
+                    <Col lg={{ offset: 3 }} sm={10}>
+                        {data || data1 ? 
+                          null : 
+                          <div
+                              className="btn btn-primary"
+                              onClick={() => navigate("/hospital")}
+                          >
+                          Hospital Login
+                          </div> 
+                      }
+                    </Col>
                 </Nav>
               </Navbar.Collapse>
             </Container>
@@ -91,8 +90,8 @@ function Dashboard() {
                 </p>
               </div>
               <div className="text-center">
-                <a className="dashboard-call-button" href="tel:+971 3562356">
-                  +971 3562356
+                <a className="dashboard-call-button" href="tel:+971 43562356">
+                +971 4 356 2 356
                 </a>
               </div>
               <div className="mt-5 dashboard-logo">

@@ -67,7 +67,11 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     },
     {
       name: "Location",
-      selector: (row) => row["location"],
+      selector: (row) => {
+          return row["location"]
+        // if(row["location"])
+        //   return `${row["location"].country} ${row["location"].state} ${row["location"].city}`
+      },
       sortable: true,
     },
     {
@@ -108,6 +112,19 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
               }}
             >
               <option value={row["status"]}>{row["status"]}</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Lost">Lost</option>
+            </select>
+          );
+        }
+        else if(row["status"] === "In Progress"){
+          return (
+            <select
+              onClick={(e) => {
+                handleStatusChanges(e, row["_id"]);
+              }}
+            >
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
               <option value="Lost">Lost</option>

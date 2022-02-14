@@ -4,10 +4,10 @@ import { FaRegUser } from 'react-icons/fa';
 import {
   MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
   MdFormatListNumbered,
-  MdOutlineApartment, MdCall, MdTransgender, MdPayment
+  MdOutlineApartment, MdCall, MdPayment
 } from 'react-icons/md';
 import { SiGooglemaps } from 'react-icons/si';
-import { FaBuilding, FaGlobeAsia, FaClipboardList, FaLanguage } from 'react-icons/fa'
+import { FaBuilding, FaGlobeAsia } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
 import DatePicker from "react-datepicker";
@@ -15,6 +15,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './pharmacyValidation';
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function Pharmacy({ handleModalShow }) {
   const hiddenFileInputInsurance = React.useRef(null);
@@ -29,7 +30,7 @@ function Pharmacy({ handleModalShow }) {
     dateTwo: "",
   });
   const [loading, setLoading] = useState(false);
-
+  const [submitted,setSubmitted] = useState(false)
   const validate = async (values) => {
     try {
       setFileErrors({ insurance: insurance === undefined ? "required" : ""/*,reports:reports === undefined ? "required" : ""*/ });
@@ -152,7 +153,7 @@ function Pharmacy({ handleModalShow }) {
 
       formValues.patient_id = data._id;
       formValues.name = data.name;
-      formValues.age = data.age;
+      formValues.dob = data.dob;
       formValues.gender = data.gender;
       formValues.nationality = data.nationality;
       formValues.email = data.email;
@@ -178,10 +179,12 @@ function Pharmacy({ handleModalShow }) {
 
       if (abc.payload) {
         setLoading(false)
+        setSubmitted(true)
         handleModalShow();
       }
       else {
         alert(abc.message)
+                    setLoading(false)
       }
     }
 
@@ -195,6 +198,9 @@ function Pharmacy({ handleModalShow }) {
       setInsurance(e.target.files[0])
     }
   }
+  if(submitted === true)
+    return(<ThankYouModal/>)
+  else
   if (loading === true)
     return (
       <>
@@ -321,7 +327,7 @@ function Pharmacy({ handleModalShow }) {
                   isInvalid={addressErr}
                 />
               </div>
-              <div className="col-5 global-inputs-check">
+              <div className="col-7 global-inputs-check">
                 <Form.Check
                   type="checkbox"
                   name="location_link"
@@ -422,13 +428,24 @@ function Pharmacy({ handleModalShow }) {
                   <FaGlobeAsia />
                 </div>
                 <Form.Control
-                  type="text"
+                  as="select"
                   name="emirates"
                   placeholder="Emirates"
                   onChange={handleChange}
+                  value={formValues.emirates}
                   className="global-inputs"
                   isInvalid={addressErr}
-                />
+                  style={{ fontSize: "small", color: "black" }}
+                >
+                  <option value="">Emirates</option>
+                  <option value="Abu Dhabi">Abu Dhabi</option>
+                  <option value="Dubai">Dubai</option>
+                  <option value="Sharjah">Sharjah</option>
+                  <option value="Ajman">Ajman</option>
+                  <option value="Umm Al Quwain">Umm Al Quwain</option>
+                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                  <option value="Fujairah">Fujairah</option>
+                </Form.Control>
                 <Form.Control.Feedback style={{ color: "red" }} type="invalid">
                   Emirates is Required.
                 </Form.Control.Feedback>
@@ -486,24 +503,7 @@ function Pharmacy({ handleModalShow }) {
 
             </Form.Group>
           </div>
-          <div className='col-10 col-md-5'>
-            <Form.Group>
-              <div className="prepend-icon">
-                <FaClipboardList />
-              </div>
-              <Form.Control
-                type='text'
-                name="symptoms"
-                placeholder='Symptoms/Conditions'
-                onChange={handleChange}
-                className="global-inputs"
-                isInvalid={errors?.symptoms}
-              />
-              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback>
-
-            </Form.Group>
-          </div>
-          <div className="col-10 col-md-5">
+          {/* <div className="col-10 col-md-5">
             <Form.Group>
               <div className="prepend-icon">
                 <MdTransgender />
@@ -515,7 +515,7 @@ function Pharmacy({ handleModalShow }) {
                 onChange={handleChange}
                 value={formValues.preferred_gender}
                 className="global-inputs"
-                style={{ fontSize: "small", color: "#727A82" }}
+                style={{ fontSize: "small", color: "black" }}
                 isInvalid={errors?.preferred_gender}
               >
                 <option value="">Select Gender of Care Giver</option>
@@ -530,8 +530,8 @@ function Pharmacy({ handleModalShow }) {
                 {errors?.preferred_gender}
               </Form.Control.Feedback>
             </Form.Group>
-          </div>
-          <div className='col-10 col-md-5'>
+          </div> */}
+          {/* <div className='col-10 col-md-5'>
             <Form.Group>
               <div className="prepend-icon">
                 <FaLanguage />
@@ -547,20 +547,26 @@ function Pharmacy({ handleModalShow }) {
               <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.languages_prefer}</Form.Control.Feedback>
 
             </Form.Group>
-          </div>
-          <div className='col-10 col-md-5'>
+          </div> */}
+          <div className='col-10'>
             <Form.Group>
               <div className="prepend-icon">
                 <MdPayment />
               </div>
               <Form.Control
-                type='text'
+                as="select"
                 name="payment_mode"
-                placeholder='Mode of Payment'
+                placeholder="Mode of Payment"
                 onChange={handleChange}
-                className="global-inputs"
+                value={formValues.payment_mode}
+                className="global-inputs mt-1"
+                style={{ fontSize: "small", color: "black" }}
                 isInvalid={errors?.payment_mode}
-              />
+              >
+                <option value="">Payment Code</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit Card">Credit Card</option>
+              </Form.Control>
               <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.payment_mode}</Form.Control.Feedback>
 
             </Form.Group>

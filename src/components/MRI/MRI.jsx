@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
+import { FaRegUser, FaGlobeAsia } from 'react-icons/fa';
 import {
      MdLocationOn, MdOutlineCalendarToday,
 } from 'react-icons/md';
@@ -10,6 +10,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import { validationSchema } from './mriValidation';
 import * as auth_service from "../../service/auth_service";
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function MRI({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -21,6 +22,8 @@ function MRI({handleModalShow}) {
         dateOne:"",
     });
     const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false)
+
     const validate = async (values) => {
         try {
             // setFileErrors({insurance:insurance === undefined ? "required" : ""});
@@ -56,6 +59,7 @@ function MRI({handleModalShow}) {
         preferred_date_first: ''
     });
     const [DateOne, setDateOne] = useState();
+    const [DateTwo, setDateTwo] = useState();
     
     // const [insurance, setInsurance] = useState();
     const [name,setName] = useState("")
@@ -97,7 +101,7 @@ function MRI({handleModalShow}) {
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
-                formValues.age = data.age;
+                formValues.dob = data.dob;
                 formValues.gender = data.gender;
                 formValues.nationality = data.nationality;
                 formValues.current_diagnosis = formValues.symptoms
@@ -119,10 +123,12 @@ function MRI({handleModalShow}) {
                 
                 if(abc.payload){
                     setLoading(false)
+                    setSubmitted(true)
                     handleModalShow();
                 }
                 else{
                     alert(abc.message)
+                    setLoading(false)
                 }
         }
 
@@ -130,6 +136,9 @@ function MRI({handleModalShow}) {
     // const handleFiles = e => {
     //         setInsurance(e.target.files[0])
     // }
+    if (submitted === true)
+    return (<ThankYouModal />)
+  else
     if (loading === true)
     return (
       <>
@@ -232,8 +241,55 @@ function MRI({handleModalShow}) {
                         : null}
                     </Form.Group>
                 </div>
-            
-                <div className='col-10 col-md-5'>
+                <div className='col-10'>
+                        <Form.Group>
+                            <div className="prepend-icon">
+                                <MdOutlineCalendarToday />
+                            </div>
+                            <div>
+                                <DatePicker
+                                    selected={DateTwo}
+                                    onChange={date => { setDateTwo(date) }}
+                                    dateFormat="dd/MM/yyyy hhaa"
+                                    showTimeSelect
+                                    minDate={new Date()}
+                                    minTime={new Date().setHours(7, 0, 0, 0)}
+                                    maxTime={new Date().setHours(19, 0, 0, 0)}
+                                    timeIntervals={60}
+                                    customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                                />
+                            </div>
+                        </Form.Group>
+                    </div>  
+                    <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                as="select"
+                name="address_patient"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.address_patient}
+                className="global-inputs"
+                isInvalid={errors?.address_patient}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+
+            </Form.Group>
+          </div>  
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdLocationOn />
@@ -251,7 +307,7 @@ function MRI({handleModalShow}) {
                     </Form.Group>
                 </div>
                 
-                 <div className='col-10 col-md-5'>
+                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaClipboardList />

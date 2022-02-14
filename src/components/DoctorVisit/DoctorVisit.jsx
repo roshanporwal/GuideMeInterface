@@ -7,9 +7,9 @@ import {
   MdOutlineFilePresent,
   MdFormatListNumbered,
   MdOutlineApartment,
-  MdCall,
   MdTransgender,
   MdPayment,
+  MdCall
 } from "react-icons/md";
 import { SiGooglemaps } from "react-icons/si";
 import {
@@ -25,6 +25,10 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from "./doctorValidation";
 import ForFamily from "../AddFamily/ForFamily";
+import Input from 'react-phone-number-input/input'
+import 'react-phone-number-input/style.css'
+// import { MultiSelect } from "react-multi-select-component";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function DoctorVisit({ handleModalShow }) {
   // const hiddenFileInputInsurance = React.useRef(null);
@@ -39,6 +43,7 @@ function DoctorVisit({ handleModalShow }) {
     dateOne: "",
     dateTwo: "",
   });
+  const [submitted,setSubmitted] = useState(false)
 
   const validate = async (values) => {
     try {
@@ -91,8 +96,10 @@ function DoctorVisit({ handleModalShow }) {
     address_patient: "",
     mobile: "",
     insurance_card_copy: [],
+    alternate_number : ""
   });
   const [DateOne, setDateOne] = useState();
+  const [DateTwo, setDateTwo] = useState();
   const [reports, setReports] = useState([]);
   // const [insurance, setInsurance] = useState();
 
@@ -122,6 +129,10 @@ function DoctorVisit({ handleModalShow }) {
   const [link, setLink] = useState(false);
   const [addressForm, setAddressForm] = useState(false);
   const [addressErr, setAddressErr] = useState("");
+//   const languages= [{ label: "English", value:"English" }, { label: "Arabic", value:"Arabic"},{ label: "Hindi", value:"Hindi"},{ label: "Urdu", value:"Urdu"}, {label:"Tagaloug", value:"Tagaloug"},{label: "French", value:"French"}, {label:"Afrikaans", value:"Afrikaans"},
+//   {label: "Malayalam", value:"Malayalam"}, {label:"Bengali", value:"Bengali"}
+// ];
+//   const [selected, setSelected] = useState([]);
   const handleAddress = () => {
     setAddressErr("");
     if (
@@ -154,6 +165,10 @@ function DoctorVisit({ handleModalShow }) {
     let { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  const handleNumber = (e) => {
+    if(e)
+      formValues.alternate_number = e.toString()
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,7 +185,7 @@ function DoctorVisit({ handleModalShow }) {
 
       formValues.patient_id = data._id;
       formValues.name = data.name;
-      formValues.age = data.age;
+      formValues.dob = data.dob;
       formValues.gender = data.gender;
       formValues.nationality = data.nationality;
       formValues.email = data.email;
@@ -179,6 +194,8 @@ function DoctorVisit({ handleModalShow }) {
       formValues.mobile = data.login_id;
       formValues.insurance_card_copy = data.insurance_card_copy;
       formValues.preferred_date_first = DateOne.toString();
+      if(DateTwo)
+                formValues.preferred_date_second = DateTwo.toString();
       formValues.type = "doctorhomevist";
       formValues.status = "New";
       formValues.insurance_name = data.insurance_name;
@@ -195,13 +212,14 @@ function DoctorVisit({ handleModalShow }) {
 
       if (abc.payload) {
         setLoading(false);
+        setSubmitted(true)
         handleModalShow();
       } else {
-        alert(abc.message);
+        alert(abc.message)
+                    setLoading(false);
       }
     }
   };
-
   const handleFiles = (e) => {
     const { name } = e.currentTarget;
     if (name === "reports") {
@@ -211,7 +229,9 @@ function DoctorVisit({ handleModalShow }) {
     //     setInsurance(e.target.files[0])
     // }
   };
-  if (loading === true)
+  if(submitted === true)
+  return(<ThankYouModal/>)
+  else if (loading === true)
     return (
       <>
         <ReactGifLoader />
@@ -314,7 +334,7 @@ function DoctorVisit({ handleModalShow }) {
                 minTime={new Date().setHours(7, 0, 0, 0)}
                 maxTime={new Date().setHours(19, 0, 0, 0)}
                 timeIntervals={60}
-                customInput={<DatePickerInput text="Preferred Date and Time" />}
+                customInput={<DatePickerInput text="Preferred Date and Time 1" />}
               />
             </div>
             {dateerrors.dateOne ? (
@@ -322,6 +342,28 @@ function DoctorVisit({ handleModalShow }) {
                 Date is required
               </Form.Label>
             ) : null}
+          </Form.Group>
+        </div>
+        <div className="col-10">
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdOutlineCalendarToday />
+            </div>
+            <div>
+              <DatePicker
+                selected={DateTwo}
+                onChange={(date) => {
+                  setDateTwo(date);
+                }}
+                dateFormat="dd/MM/yyyy hhaa"
+                showTimeSelect
+                minDate={new Date()}
+                minTime={new Date().setHours(7, 0, 0, 0)}
+                maxTime={new Date().setHours(19, 0, 0, 0)}
+                timeIntervals={60}
+                customInput={<DatePickerInput text="Preferred Date and Time 2" />}
+              />
+            </div>
           </Form.Group>
         </div>
         <div className="col-10">
@@ -345,7 +387,7 @@ function DoctorVisit({ handleModalShow }) {
                 isInvalid={addressErr}
               />
             </div>
-            <div className="col-5 global-inputs-check">
+            <div className="col-7 global-inputs-check">
               <Form.Check
                 type="checkbox"
                 name="location_link"
@@ -446,13 +488,24 @@ function DoctorVisit({ handleModalShow }) {
                 <FaGlobeAsia />
               </div>
               <Form.Control
-                type="text"
+                as="select"
                 name="emirates"
                 placeholder="Emirates"
                 onChange={handleChange}
+                value = {formValues.emirates}
                 className="global-inputs"
                 isInvalid={addressErr}
-              />
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
               <Form.Control.Feedback style={{ color: "red" }} type="invalid">
                 Emirates is Required.
               </Form.Control.Feedback>
@@ -498,13 +551,19 @@ function DoctorVisit({ handleModalShow }) {
             <div className="prepend-icon">
               <MdCall />
             </div>
-            <Form.Control
+            {/* <Form.Control
               type="text"
               name="alternate_number"
               placeholder="Alternate Mobile Number"
               onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.alternate_number}
+            /> */}
+            <Input
+              placeholder = "Alternate Mobile Number (with Country Code)"
+              value={formValues.alternate_number}
+              onChange={handleNumber}
+              className = "global-inputs form-control"
             />
             <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.alternate_number}
@@ -537,40 +596,38 @@ function DoctorVisit({ handleModalShow }) {
             <Form.Control
               as="select"
               name="preferred_gender"
-              placeholder="Prefered Gender of Care Giver "
+              placeholder="Prefered Gender of Doctor "
               onChange={handleChange}
               value={formValues.preferred_gender}
-              className="global-inputs"
-              style={{ fontSize: "small", color: "#727A82" }}
+              className="global-inputs mt-1"
+              style={{ fontSize: "small", color: "black" }}
               isInvalid={errors?.preferred_gender}
             >
-              <option value="">Select Gender of Care Giver</option>
+              <option value="">Select Gender of Doctor</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-              <option value="Other">Other</option>
             </Form.Control>
             <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.preferred_gender}
             </Form.Control.Feedback>
           </Form.Group>
         </div>
-        {/* <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdTransgender />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="preferred_gender"
-                            placeholder='Prefered Gender of Care Giver '
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.preferred_gender}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.preferred_gender}</Form.Control.Feedback>
+        {/* <div className="col-10">
+          <Form.Group>
+            <div className="prepend-icon">
+              <FaLanguage />
+            </div>
+            <MultiSelect
+              className="dark global-inputs"
+              options = {languages}
+              hasSelectAll = {false}
+              value={selected}
+              onChange = {setSelected}
+              labelledBy="Language of the caregiver"
+            />
 
-                    </Form.Group>
-                </div> */}
+          </Form.Group>
+        </div> */}
         <div className="col-10 col-md-5">
           <Form.Group>
             <div className="prepend-icon">
@@ -595,13 +652,19 @@ function DoctorVisit({ handleModalShow }) {
               <MdPayment />
             </div>
             <Form.Control
-              type="text"
+              as="select"
               name="payment_mode"
               placeholder="Mode of Payment"
               onChange={handleChange}
-              className="global-inputs"
+              value={formValues.payment_mode}
+              className="global-inputs mt-1"
+              style={{ fontSize: "small", color: "black" }}
               isInvalid={errors?.payment_mode}
-            />
+            >
+              <option value ="">Payment Code</option>
+              <option value = "Cash">Cash</option>
+              <option value = "Credit Card">Credit Card</option>
+            </Form.Control>
             <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.payment_mode}
             </Form.Control.Feedback>

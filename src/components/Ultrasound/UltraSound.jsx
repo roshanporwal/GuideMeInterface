@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FaRegUser } from 'react-icons/fa';
+import { FaRegUser, FaGlobeAsia } from 'react-icons/fa';
 import {
      MdLocationOn, MdOutlineCalendarToday,
 } from 'react-icons/md';
@@ -10,6 +10,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './ultrasoundValidation';
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function UltraSound({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -22,6 +23,7 @@ function UltraSound({handleModalShow}) {
         DateTwo:""
     });
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false)
 
     const validate = async (values) => {
         try {
@@ -103,7 +105,7 @@ function UltraSound({handleModalShow}) {
 
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
-                formValues.age = data.age;
+                formValues.dob = data.dob;
                 formValues.gender = data.gender;
                 formValues.nationality = data.nationality;
                 formValues.current_diagnosis = formValues.symptoms
@@ -112,6 +114,7 @@ function UltraSound({handleModalShow}) {
                 formValues.mobile = data.login_id;            
                 formValues.insurance_card_copy = data.insurance_card_copy
                 formValues.preferred_date_first = DateOne.toString()
+                if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
                 formValues.type = "ultrasound";
                 formValues.status = "New"
@@ -125,10 +128,12 @@ function UltraSound({handleModalShow}) {
                 
                 if(abc.payload){
                     setLoading(false)
+                    setSubmitted(true)
                     handleModalShow();
                 }
                 else{
                     alert(abc.message)
+                    setLoading(false)
                 }
         }
 
@@ -136,6 +141,9 @@ function UltraSound({handleModalShow}) {
     // const handleFiles = e => {
     //         setInsurance(e.target.files[0])
     // }
+    if (submitted === true)
+    return (<ThankYouModal />)
+  else
     if (loading === true)
     return (
       <>
@@ -261,7 +269,35 @@ function UltraSound({handleModalShow}) {
                         : null}
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                as="select"
+                name="address_patient"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.address_patient}
+                className="global-inputs"
+                isInvalid={errors?.address_patient}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+
+            </Form.Group>
+          </div>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdLocationOn />
@@ -279,7 +315,7 @@ function UltraSound({handleModalShow}) {
                     </Form.Group>
                 </div>
                 
-                 <div className='col-10 col-md-5'>
+                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaClipboardList />
@@ -296,29 +332,6 @@ function UltraSound({handleModalShow}) {
 
                     </Form.Group>
                 </div>
-                
-                {/* <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdUploadFile />
-                        </div>
-                        
-                        <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
-                        </div>
-                        <input
-                            type="file"
-                            name="insurance"
-                            ref={hiddenFileInputInsurance}
-                            accept="image/*,application/pdf"
-                            style={{ display: 'none' }}
-                            onChange={handleFiles}
-                        />
-                    </Form.Group>
-                    {fileerrors.insurance ? (
-                            <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
-                        : null}  
-                </div> */}
                 <div className='col-10 mt-4'>
                     <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
                 </div>

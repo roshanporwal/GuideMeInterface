@@ -26,6 +26,7 @@ import CTScanContent from "./components/CTScan/CTScanContent";
 import MRIContent from "./components/MRI/MRIContent";
 import UltraSoundContent from "./components/Ultrasound/UltraSoundContent";
 import FeedbackContent from "./components/Feedback/FeedbackContent";
+import TandC from "./components/TandC/TandC";
 import Home from "./pages/home";
 
 import PATIENT_DASHBOARD from "./pages/patient_dashboard";
@@ -53,6 +54,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/terms-and-conditions" element={<TandC/>} />
           <Route path="/hospital" element={<Home/>} />
           <Route path="/admin" element = {<ADMIN_Home />} />
           <Route

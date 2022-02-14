@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import * as auth_service from "../../service/auth_service";
 import { signupvalidationSchema } from "./authValidation";
 import { Country } from "country-state-city";
+
 function SignUpScreen() {
   const navigate = useNavigate();
   // const [patient_document, setPatient_document] = useState()
@@ -65,7 +66,7 @@ function SignUpScreen() {
       });
       setFileErrors({
         terms: terms === false ? "CheckBox is Required" : "",
-        insurance: insurance === undefined ? "Insurance File is Required" : "",
+        // insurance: insurance === undefined ? "Insurance File is Required" : "",
       });
       await signupvalidationSchema.validate(values, { abortEarly: false });
       return {};
@@ -102,7 +103,6 @@ function SignUpScreen() {
     setErrors(err);
     if (
       Object.keys(err).length === 0 &&
-      insurance &&
       terms === true
     ) {
       formValues.name = formValues.first_name + " " + formValues.family_name
@@ -111,9 +111,9 @@ function SignUpScreen() {
       formData.append("insurance_card_copy", insurance);
       formData.append("formValues", JSON.stringify(formValues));
       const createaccount = await auth_service.createaccount(formData);
-      console.log(createaccount)
+      // console.log(createaccount)
       if (createaccount.payload) {
-        window.location = "/log-in";
+        navigate("/log-in");
       } else {
         alert(createaccount.message);
       }
@@ -385,27 +385,28 @@ function SignUpScreen() {
                           accept="image/*,application/pdf"
                           style={{ display: "none" }}
                           onChange={handleFiles}
-                          isInvalid={fileerrors?.insurance}
                         />
-                        <Form.Control.Feedback
-                          style={{ color: "red" }}
-                          type="invalid"
-                        >
-                          {fileerrors?.insurance}
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </div>
                   </div>
 
                   <Form.Group className="my-3">
-                    <Form.Check
-                      name="terms-condition"
-                      value={formValues.mobile}
-                      type="checkbox"
-                      label="I agree to terms & conditions."
-                      onChange={handleTermsCheckBox}
-                      isInvalid={fileerrors?.terms}
-                    />
+                    <div className = "row">
+                      <div className="col-1">
+                      <Form.Check
+                        id = "terms-condition"
+                        name="terms-condition"
+                        value={formValues.mobile}
+                        type="checkbox"
+                        // label="I agree to terms & conditions."
+                        onChange={handleTermsCheckBox}
+                        isInvalid={fileerrors?.terms}
+                      />
+                      </div>
+                      <div className="col-10">
+                        <Form.Label for="terms-condition">I agree to <a href="/terms-and-conditions" target="_blank">terms & conditions.</a></Form.Label>
+                      </div>
+                    </div>
                     <Form.Control.Feedback
                       style={{ color: "red" }}
                       type="invalid"

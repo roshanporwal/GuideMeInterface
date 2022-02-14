@@ -165,8 +165,8 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       <span>{target.email}</span>
                     </p>
                     <p>
-                      <b>Age : </b>
-                      <span>{target.age}</span>
+                      <b>Date of Birth : </b>
+                      <span>{convert(target.dob)}</span>
                     </p>
                     <p>
                       <b>Gender : </b>
@@ -176,12 +176,14 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       <b>Insurance Name : </b>
                       <span>{target.insurance_name}</span>
                     </p>
-                    {target.location ? (
-                      <p>
-                        <b>Location : </b>
-                        <span>{target.location}</span>
-                      </p>
-                    ) : null}
+                    {target.location ? 
+                    <p>
+                      <b>Location : </b>
+                      <span>{target.location ? target.location : null }</span> 
+                      {/* <span>{target.location.city ? target.location.city : null }</span> 
+                      <span>{target.location.state ? target.location.state : null }</span> 
+                      <span>{target.location.country ? target.location.country : null }</span>  */}
+                    </p> : null }
                     {target.address_patient ? (
                       <p>
                         <b>Address : </b>

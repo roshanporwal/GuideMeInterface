@@ -2,17 +2,19 @@ import React, { forwardRef, useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { FaRegUser } from "react-icons/fa";
 import {
-  MdLocationOn,
   MdOutlineCalendarToday,
   MdOutlineFilePresent,
   MdOutlineLocalHospital,
   MdStickyNote2,
+  MdLocationOn
 } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from "./consultationValidation";
 import ForFamily from "../AddFamily/ForFamily";
+// import Location from '../../interfacecomponents/location'
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function NewConsultation({ handleModalShow }) {
   // const hiddenFileInputInsurance = React.useRef(null);
@@ -73,7 +75,14 @@ function NewConsultation({ handleModalShow }) {
   const [reports, setReports] = useState([]);
   // const [insurance, setInsurance] = useState();
 
-  const [name,setName] = useState("")
+  // const [location,setLocation ] = useState({
+  //   country : "",
+  //   state: "",
+  //   city: ""
+  // })
+  const [submitted,setSubmitted] = useState(false)
+
+    const [name,setName] = useState("")
     const [familyCheckBox, setFamilyCheckBox] = useState(false);
     const [data, setData] = useState();
     const [selectedMember, setSelectedMember] = useState();
@@ -114,8 +123,9 @@ function NewConsultation({ handleModalShow }) {
       formValues.email = data.email;
       formValues.current_diagnosis = formValues.symptoms;
       formValues.preferred_date_first = dateOne.toString();
-      formValues.preferred_date_second = dateTwo.toString();
-      formValues.age = data.age;
+      if(dateTwo)
+                formValues.preferred_date_second = dateTwo.toString();
+      formValues.dob = data.dob;
       formValues.gender = data.gender;
       formValues.insurance_card_copy = data.insurance_card_copy;
       formValues.mobile = data.login_id;
@@ -125,6 +135,7 @@ function NewConsultation({ handleModalShow }) {
       formValues.insurance_name = data.insurance_name;
       formValues.status = "New";
       formValues.family = selectedMember
+      // formValues.location = location
 
       if (reports !== undefined) {
         for (const tp of reports) {
@@ -140,12 +151,15 @@ function NewConsultation({ handleModalShow }) {
       );
       if (createNewConsulation.payload) {
         setLoading(false)
+        setSubmitted(true)
         handleModalShow();
       } else {
         alert(createNewConsulation.message);
       }
     }
   };
+  
+
   const validate = async (values) => {
     try {
       // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
@@ -172,7 +186,9 @@ function NewConsultation({ handleModalShow }) {
     //     setInsurance(e.target.files[0])
     // }
   };
-  if (loading === true)
+  if(submitted === true)
+    return(<ThankYouModal/>)
+  else if (loading === true)
     return (
       <>
         <ReactGifLoader />
@@ -180,6 +196,7 @@ function NewConsultation({ handleModalShow }) {
     );
   else
   return (
+    
     <div className="form-container">
       <Form
         onSubmit={(e) => handleSubmit(e)}
@@ -264,8 +281,8 @@ function NewConsultation({ handleModalShow }) {
                         />
                     </Form.Group>
                 </div> */}
-
-        <div className="col-10">
+        {/* <Location setLocation={setLocation} /> */}
+        <div className="col-10"> 
           <Form.Group>
             <div className="prepend-icon">
               <MdLocationOn />
@@ -281,9 +298,9 @@ function NewConsultation({ handleModalShow }) {
             <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.location}
             </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10">
+          </Form.Group> 
+         </div>
+      <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
               <MdStickyNote2 />

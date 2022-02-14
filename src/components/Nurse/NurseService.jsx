@@ -4,7 +4,7 @@ import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
     MdLocationOn, MdOutlineFilePresent,
     MdFormatListNumbered,
-    MdOutlineApartment,MdCall
+    MdOutlineApartment,MdCall, MdTransgender
 } from 'react-icons/md';
 import { SiGooglemaps } from 'react-icons/si';
 import {FaBuilding,FaGlobeAsia} from 'react-icons/fa'
@@ -14,6 +14,7 @@ import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './nurseValidation';
 import ForFamily from "../AddFamily/ForFamily";
+import ThankYouModal from '../Layout/ThankYouModal'
 
 function NurseService({handleModalShow}) {
     // Create a reference to the hidden file input element
@@ -25,6 +26,7 @@ function NurseService({handleModalShow}) {
     //     reports:"",
     // });
     const [loading, setLoading] = useState(false);
+    const [submitted,setSubmitted] = useState(false)
 
     const validate = async (values) => {
         try {
@@ -142,7 +144,7 @@ function NurseService({handleModalShow}) {
             
                 formValues.patient_id = data._id;
                 formValues.name = data.name;
-                formValues.age = data.age;
+                formValues.dob = data.dob;
                 formValues.gender = data.gender;
                 formValues.nationality = data.nationality;
                 formValues.email = data.email;
@@ -166,10 +168,12 @@ function NurseService({handleModalShow}) {
                 
                 if(abc.payload){
                     setLoading(false)
+                    setSubmitted(true)
                     handleModalShow();
                 }
                 else{
                     alert(abc.message)
+                    setLoading(false)
                 }
         }
 
@@ -184,6 +188,9 @@ function NurseService({handleModalShow}) {
         //     setInsurance(e.target.files[0])
         // }
     }
+    if(submitted === true)
+  return(<ThankYouModal/>)
+  else
     if (loading === true)
     return (
       <>
@@ -279,7 +286,7 @@ function NurseService({handleModalShow}) {
                         </div>
                     </Form.Group>
                 </div>*/}
-                <div className='col-10 col-md-5'>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFormatListNumbered />
@@ -296,7 +303,7 @@ function NurseService({handleModalShow}) {
 
                     </Form.Group>
                 </div>
-                <div className='col-10 col-md-5'>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <FaClock />
@@ -334,7 +341,7 @@ function NurseService({handleModalShow}) {
                                 isInvalid = {addressErr}
                             />
                         </div>
-                        <div className = "col-5 global-inputs-check">
+                        <div className = "col-7 global-inputs-check">
                             <Form.Check
                                 type="checkbox"
                                 name="location_link"
@@ -430,23 +437,34 @@ function NurseService({handleModalShow}) {
           </Form.Group>
         </div>
         <div className="col-10 col-md-5">
-          <Form.Group>
-            <div className="prepend-icon">
-              <FaGlobeAsia />
-            </div>
-            <Form.Control
-              type="text"
-              name="emirates"
-              placeholder="Emirates"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={addressErr}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              Emirates is Required.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaGlobeAsia />
+              </div>
+              <Form.Control
+                as="select"
+                name="emirates"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.emirates}
+                className="global-inputs"
+                isInvalid={addressErr}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Emirates</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                Emirates is Required.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
         <div className="col-10 col-md-5">
           <Form.Group>
             <div className="prepend-icon">
@@ -482,6 +500,30 @@ function NurseService({handleModalShow}) {
             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">Location Link is Required.</Form.Control.Feedback>
           </Form.Group>
         </div> : null }
+        <div className="col-10">
+          <Form.Group>
+            <div className="prepend-icon">
+              <MdTransgender />
+            </div>
+            <Form.Control
+              as="select"
+              name="preferred_gender"
+              placeholder="Prefered Gender of Doctor "
+              onChange={handleChange}
+              value={formValues.preferred_gender}
+              className="global-inputs mt-1"
+              style={{ fontSize: "small", color: "black" }}
+              isInvalid={errors?.preferred_gender}
+            >
+              <option value="">Select Gender of Doctor</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Form.Control>
+            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              {errors?.preferred_gender}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
