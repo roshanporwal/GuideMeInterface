@@ -16,6 +16,7 @@ import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './physioTherapyValidation';
 import ForFamily from "../AddFamily/ForFamily";
 import ThankYouModal from '../Layout/ThankYouModal'
+import { MultiSelect } from "react-multi-select-component";
 
 function PhysioTherapy({ handleModalShow }) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -44,6 +45,10 @@ function PhysioTherapy({ handleModalShow }) {
     const validate = async (values) => {
         try {
             // setFileErrors({ /*insurance: insurance === undefined ? "required" : "",*/ reports: reports === undefined ? "required" : "" });
+            if(formValues.languages_prefer === "")
+                setLanguageErr("Preferred Language is Required.")
+            else 
+                setLanguageErr("")
             setDateErrors({ dateOne: DateOne === undefined ? "required" : "", dateTwo: "" });
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -73,6 +78,11 @@ function PhysioTherapy({ handleModalShow }) {
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
     const [reports, setReports] = useState([]);
+    const [languageErr,setLanguageErr] = useState("")
+    const languages= [{ label: "English", value:"English" }, { label: "Arabic", value:"Arabic"},{ label: "Hindi", value:"Hindi"},{ label: "Urdu", value:"Urdu"}, {label:"Tagaloug", value:"Tagaloug"},{label: "French", value:"French"}, {label:"Afrikaans", value:"Afrikaans"},
+  {label: "Malayalam", value:"Malayalam"}, {label:"Bengali", value:"Bengali"}
+];
+  const [selected, setSelected] = useState([]);
     // const [insurance, setInsurance] = useState();
     const [link,setLink] = useState(false);
     const [addressForm,setAddressForm] = useState(false);
@@ -135,11 +145,13 @@ function PhysioTherapy({ handleModalShow }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        formValues.languages_prefer  = ""
+        selected.map((select) => formValues.languages_prefer += (select.value + ", "))
         handleAddress()
         const err = await validate(formValues);
         setErrors(err);
-
-        if (Object.keys(err).length === 0 && addressErr  === "" /*&& fileerrors.insurance === ""*/) {
+ 
+        if (Object.keys(err).length === 0 && addressErr  === "" && languageErr === "" /*&& fileerrors.insurance === ""*/) {
             setLoading(true)
             const formData = new FormData();
 
@@ -556,24 +568,25 @@ function PhysioTherapy({ handleModalShow }) {
                 </Form.Control.Feedback>
             </Form.Group>
         </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaLanguage />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="languages_prefer"
-                            placeholder='Language of the caregiver'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.languages_prefer}
-                        />
-                        <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.languages_prefer}</Form.Control.Feedback>
-
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
+        <div className="col-10">
+          <Form.Group>
+            <div className="prepend-icon">
+              <FaLanguage />
+            </div>
+            <MultiSelect
+              className="dark global-inputs"
+              options = {languages}
+              hasSelectAll = {false}
+              value={selected}
+              onChange = {setSelected}
+              labelledBy="Language of the caregiver"
+            />
+            <Form.Control.Feedback style={{ color: "red" }} type="">
+              {languageErr}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+                <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdPayment />

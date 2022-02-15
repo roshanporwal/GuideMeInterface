@@ -27,7 +27,7 @@ import { validationSchema } from "./doctorValidation";
 import ForFamily from "../AddFamily/ForFamily";
 import Input from 'react-phone-number-input/input'
 import 'react-phone-number-input/style.css'
-// import { MultiSelect } from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 import ThankYouModal from '../Layout/ThankYouModal'
 
 function DoctorVisit({ handleModalShow }) {
@@ -48,7 +48,10 @@ function DoctorVisit({ handleModalShow }) {
   const validate = async (values) => {
     try {
       // setFileErrors({insurance:insurance === undefined ? "required" : "",reports:reports === undefined ? "required" : ""});
-
+      if(formValues.languages_prefer === "")
+        setLanguageErr("Preferred Language is Required.")
+      else 
+        setLanguageErr("")
       setDateErrors({
         dateOne: DateOne === undefined ? "required" : "",
         dateTwo: "",
@@ -96,8 +99,10 @@ function DoctorVisit({ handleModalShow }) {
     address_patient: "",
     mobile: "",
     insurance_card_copy: [],
-    alternate_number : ""
+    alternate_number : "",
+    languages_prefer: ""
   });
+  const [languageErr,setLanguageErr] = useState("")
   const [DateOne, setDateOne] = useState();
   const [DateTwo, setDateTwo] = useState();
   const [reports, setReports] = useState([]);
@@ -129,10 +134,10 @@ function DoctorVisit({ handleModalShow }) {
   const [link, setLink] = useState(false);
   const [addressForm, setAddressForm] = useState(false);
   const [addressErr, setAddressErr] = useState("");
-//   const languages= [{ label: "English", value:"English" }, { label: "Arabic", value:"Arabic"},{ label: "Hindi", value:"Hindi"},{ label: "Urdu", value:"Urdu"}, {label:"Tagaloug", value:"Tagaloug"},{label: "French", value:"French"}, {label:"Afrikaans", value:"Afrikaans"},
-//   {label: "Malayalam", value:"Malayalam"}, {label:"Bengali", value:"Bengali"}
-// ];
-//   const [selected, setSelected] = useState([]);
+  const languages= [{ label: "English", value:"English" }, { label: "Arabic", value:"Arabic"},{ label: "Hindi", value:"Hindi"},{ label: "Urdu", value:"Urdu"}, {label:"Tagaloug", value:"Tagaloug"},{label: "French", value:"French"}, {label:"Afrikaans", value:"Afrikaans"},
+  {label: "Malayalam", value:"Malayalam"}, {label:"Bengali", value:"Bengali"}
+];
+  const [selected, setSelected] = useState([]);
   const handleAddress = () => {
     setAddressErr("");
     if (
@@ -169,16 +174,16 @@ function DoctorVisit({ handleModalShow }) {
     if(e)
       formValues.alternate_number = e.toString()
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    formValues.languages_prefer  = ""
+    selected.map((select) => formValues.languages_prefer += (select.value + ", "))
     handleAddress();
     const err = await validate(formValues);
     setErrors(err);
-
     if (
       Object.keys(err).length === 0 &&
-      addressErr === "" /*&& fileerrors.insurance === ""*/
+      addressErr === "" && languageErr === "" /*&& fileerrors.insurance === ""*/
     ) {
       setLoading(true);
       const formData = new FormData();
@@ -612,7 +617,7 @@ function DoctorVisit({ handleModalShow }) {
             </Form.Control.Feedback>
           </Form.Group>
         </div>
-        {/* <div className="col-10">
+        <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
               <FaLanguage />
@@ -625,10 +630,12 @@ function DoctorVisit({ handleModalShow }) {
               onChange = {setSelected}
               labelledBy="Language of the caregiver"
             />
-
+            <Form.Control.Feedback style={{ color: "red" }} type="">
+              {languageErr}
+            </Form.Control.Feedback>
           </Form.Group>
-        </div> */}
-        <div className="col-10 col-md-5">
+        </div>
+        {/* <div className="col-10 col-md-5">
           <Form.Group>
             <div className="prepend-icon">
               <FaLanguage />
@@ -645,8 +652,8 @@ function DoctorVisit({ handleModalShow }) {
               {errors?.languages_prefer}
             </Form.Control.Feedback>
           </Form.Group>
-        </div>
-        <div className="col-10 col-md-5">
+        </div> */}
+        <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
               <MdPayment />

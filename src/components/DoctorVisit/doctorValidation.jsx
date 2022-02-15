@@ -10,7 +10,7 @@ export const validationSchema = yup.object().shape({
         symptoms:yup.string().required("symptoms is required"),
         // requirements:yup.string().required("requirements is required"),
         preferred_gender:yup.string().required("preffered gender is required"),
-        languages_prefer:yup.string().required("preffered language is required"),
+        // languages_prefer:yup.string().required("preffered language is required"),
         payment_mode:yup.string().required("payment type is required"),
         alternate_number:yup.string().matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
 })
