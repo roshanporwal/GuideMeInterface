@@ -11,6 +11,7 @@ import HomeLogo from "../../assets/home-service.png";
 import MedicineLogo from "../../assets/medicine.png";
 import LabLogo from "../../assets/labtest-logo.png";
 import XRayLogo from "../../assets/x-ray-logo.png";
+import { FiLogOut } from 'react-icons/fi'
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -34,16 +35,27 @@ function Dashboard() {
 
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav>
-                  <Col lg={{ offset: 8 }} sm={7}>
-                    <a style={{textDecorations: "none"}} href="https://econsult.guidemedoc.com:8000/"><p style={{ color: "#164473" }}>E Consult</p></a>
-                  </Col>
+                <Nav style = {{width : "100%"}}>
+                  <div className = "offset-lg-1 col-sm-2">
+                    <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
+                  </div>
                   {/* <Col lg={{ offset: 3 }} sm={5}>
                     <p style={{ color: "#164473" }}>Support</p>
                   </Col> */}
-                    <Col lg={{ offset: 3 }} sm={5}>
+                    <div className = "offset-lg-5 col-sm-2">
                         {data || data1 ? 
+                          null : 
                           <div
+                              className="btn btn-primary"
+                              onClick={() => navigate("/log-in")}
+                          >
+                          Login
+                          </div> 
+                      }
+                    </div>
+                    <div className = "col-sm-2">
+                        {data || data1 ? 
+                         <> <div
                           className="btn btn-primary"
                           onClick={() =>
                             { 
@@ -52,19 +64,11 @@ function Dashboard() {
                               window.location.reload()
                             }}
                           >
-                          Logout
-                          </div> : 
-                          <div
-                              className="btn btn-primary"
-                              onClick={() => navigate("/log-in")}
-                          >
-                          Login
-                          </div> 
-                      }
-                    </Col>
-                    <Col lg={{ offset: 3 }} sm={10}>
-                        {data || data1 ? 
-                          null : 
+                            <div className="row">
+                            &nbsp;{data.name || data1.name}
+                          <div className ="col-2"><FiLogOut/></div>
+                          </div>
+                          </div>  </> : 
                           <div
                               className="btn btn-primary"
                               onClick={() => navigate("/hospital")}
@@ -72,7 +76,7 @@ function Dashboard() {
                           Hospital Login
                           </div> 
                       }
-                    </Col>
+                    </div>
                 </Nav>
               </Navbar.Collapse>
             </Container>
@@ -100,7 +104,7 @@ function Dashboard() {
             </div>
             <div className="col-md-6 col-11 mt-5 mt-lg-0">
               <Row>
-                <Col lg={{ span: 4 }} xs={6}>
+                <Col lg={{ span: 4 }} xs={6} >
                   <DashboardItem
                     item_desc="New Consultation"
                     item_img={ConsultationLogo}
@@ -124,30 +128,30 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </Col>
-                <Col lg={{ span: 4 }} xs={6}>
+                <div className ="col-lg-4 col-6 mt-2">
                   <DashboardItem
                     item_desc="Pharmacy"
                     item_img={MedicineLogo}
                     item_link={"/pharmacy"}
                     navigate={navigate}
                   />
-                </Col>
-                <Col lg={{ span: 4 }} xs={6}>
+                </div>
+                <div className ="col-lg-4 col-6 mt-2">
                   <DashboardItem
                     item_desc="Lab Tests"
                     item_img={LabLogo}
                     item_link={"/lab-tests"}
                     navigate={navigate}
                   />
-                </Col>
-                <Col lg={{ span: 4 }} xs={6}>
+                </div>
+                <div className ="col-lg-4 col-6 mt-2">
                   <DashboardItem
                     item_desc="Diagnostics/ Radiology"
                     item_img={XRayLogo}
                     item_link={"/diagnostic"}
                     navigate={navigate}
                   />
-                </Col>
+                </div>
               </Row>
             </div>
           </div>

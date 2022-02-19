@@ -400,17 +400,18 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
-              <h1 className="mt-0 p-4 " style={{ color: "#164572" }}>
+              <h1 className="mt-0 pt-4 pb-2" style={{ color: "#164572" }}>
                 Enquiry Dashboard
               </h1>
               <h2 style={{ color: "#787575" }}>Quick Stats</h2>
             </div>
           </div>
         </div>
+        <br />
         {enquriesstatus.map((target, index) => (
           <div className="container pb-5" key={index} {...target}>
             <div className="row">
-              <div className="col-md-2 offset-1 col-sm-6 total_enquiries text-center">
+              <div className="col-md-2 offset-lg-1 col-sm-6 total_enquiries text-center">
                 <div className="d-flex justify-content-center align-items-center">
                   <img
                     src="/assets/images/icons/total_enquiries.png"
@@ -470,42 +471,42 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
         ))}
         <div className="container">
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-2  col-6">
               <DashboardItem
                 item_desc="New Consultation"
                 item_img={ConsultationLogo}
                 item_link={"new_consultation"}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2 col-6">
               <DashboardItem
                 item_desc="Second Opinion"
                 item_img={SecLogo}
                 item_link={"free_opinion"}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2 col-6">
               <DashboardItem
                 item_desc="Home Service"
                 item_img={HomeLogo}
                 item_link={"home_care_services"}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2 col-6">
               <DashboardItem
                 item_desc="Pharmacy"
                 item_img={MedicineLogo}
                 item_link={"pharmacy"}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2 col-6">
               <DashboardItem
                 item_desc="Lab Tests"
                 item_img={LabLogo}
                 item_link={"lab_tests"}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2 col-6">
               <DashboardItem
                 item_desc="Diagnostics/ Radiology"
                 item_img={XRayLogo}
@@ -514,10 +515,10 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
             </div>
           </div>
         </div>
-        <div className="container ">
+        <div className="container mt-5">
           <div className="patient_table_container">
             <div className="text-center">
-              <h1>{title ? title + " :" : ""}</h1>
+              <h2>{title ? title + " :" : " "}</h2>
             </div>
             <div className="data_table">
               <div className="offset-lg-10 col-md-3 pb-2">

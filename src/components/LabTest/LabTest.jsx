@@ -295,7 +295,7 @@ function LabTest({ handleModalShow }) {
                     minTime={new Date().setHours(7, 0, 0, 0)}
                     maxTime={new Date().setHours(19, 0, 0, 0)}
                     timeIntervals={60}
-                    customInput={<DatePickerInput text='Preferred Date and Time 1' />}
+                    customInput={<DatePickerInput text='Date and Time of Sample Collection 1' />}
                   />
                 </div>
                 {dateerrors.dateOne ? (
@@ -318,7 +318,7 @@ function LabTest({ handleModalShow }) {
                     minTime={new Date().setHours(7, 0, 0, 0)}
                     maxTime={new Date().setHours(19, 0, 0, 0)}
                     timeIntervals={60}
-                    customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                    customInput={<DatePickerInput text='Date and Time of Sample Collection 2' />}
                   />
                 </div>
               </Form.Group>
@@ -439,7 +439,7 @@ function LabTest({ handleModalShow }) {
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
-              <div className="col-10 col-md-5">
+              <div className="col-10">
                 <Form.Group>
                   <div className="prepend-icon">
                     <FaGlobeAsia />
@@ -462,13 +462,14 @@ function LabTest({ handleModalShow }) {
                     <option value="Umm Al Quwain">Umm Al Quwain</option>
                     <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                     <option value="Fujairah">Fujairah</option>
+                    <option value="Al Ain">Al Ain</option>
                   </Form.Control>
                   <Form.Control.Feedback style={{ color: "red" }} type="invalid">
                     Emirates is Required.
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
-              <div className="col-10 col-md-5">
+              <div className="col-10">
                 <Form.Group>
                   <div className="prepend-icon">
                     <MdOutlineApartment />

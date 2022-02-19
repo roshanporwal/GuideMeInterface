@@ -8,7 +8,7 @@
 }
 .signup-inputs{
     background-color: rgba(34, 34, 34, 0.1)!important;
-    width: 11rem!important;
+    width: 100%;
     padding-left: 40px!important;
 }
 .grey-inputs:focus,.signup-inputs:focus{

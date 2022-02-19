@@ -266,21 +266,22 @@ function CTScan({handleModalShow}) {
               <Form.Control
                 as="select"
                 name="address_patient"
-                placeholder="Emirates"
+                // placeholder="Emirates"
                 onChange={handleChange}
                 value = {formValues.address_patient}
                 className="global-inputs"
                 isInvalid={errors?.address_patient}
-                style={{ fontSize: "small", color: "black" }}
+                style={{ fontSize: "small", color: "#212529" }}
               >
-                <option value="">Emirates</option>
+                <option disabled selected value="">Select Emirates</option>
                 <option value="Abu Dhabi">Abu Dhabi</option>
                 <option value="Dubai">Dubai</option>
                 <option value="Sharjah">Sharjah</option>
                 <option value="Ajman">Ajman</option>
                 <option value="Umm Al Quwain">Umm Al Quwain</option>
-                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                 <option value="Fujairah">Fujairah</option>
+               <option value="Al Ain">Al Ain</option>
               </Form.Control>
               <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
 

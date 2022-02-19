@@ -76,6 +76,8 @@ function Pharmacy({ handleModalShow }) {
     insurance_card_copy: [],
   });
   const [DateOne, setDateOne] = useState();
+  const [DateTwo, setDateTwo] = useState();
+
   // const [reports, setReports] = useState([]);
   const [insurance, setInsurance] = useState();
 
@@ -162,6 +164,8 @@ function Pharmacy({ handleModalShow }) {
       formValues.mobile = data.login_id;
       formValues.insurance_card_copy = data.insurance_card_copy
       formValues.preferred_date_first = DateOne.toString();
+      if(DateTwo)
+        formValues.preferred_date_second = DateTwo.toString()
       formValues.type = "pharmacy";
       formValues.status = "New"
       formValues.insurance_name = data.insurance_name
@@ -298,12 +302,32 @@ function Pharmacy({ handleModalShow }) {
                   minTime={new Date().setHours(7, 0, 0, 0)}
                   maxTime={new Date().setHours(19, 0, 0, 0)}
                   timeIntervals={60}
-                  customInput={<DatePickerInput text='Preferred Date and Time' />}
+                  customInput={<DatePickerInput text='Preferred Date and Time 1' />}
                 />
               </div>
               {dateerrors.dateOne ? (
                 <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
                 : null}
+            </Form.Group>
+          </div>
+          <div className='col-10'>
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineCalendarToday />
+              </div>
+              <div>
+                <DatePicker
+                  selected={DateTwo}
+                  onChange={date => { setDateTwo(date) }}
+                  dateFormat="dd/MM/yyyy hhaa"
+                  showTimeSelect
+                  minDate={new Date()}
+                  minTime={new Date().setHours(7, 0, 0, 0)}
+                  maxTime={new Date().setHours(19, 0, 0, 0)}
+                  timeIntervals={60}
+                  customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                />
+              </div>
             </Form.Group>
           </div>
           <div className='col-10'>
@@ -422,7 +446,7 @@ function Pharmacy({ handleModalShow }) {
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
+            <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
                   <FaGlobeAsia />
@@ -445,13 +469,14 @@ function Pharmacy({ handleModalShow }) {
                   <option value="Umm Al Quwain">Umm Al Quwain</option>
                   <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                   <option value="Fujairah">Fujairah</option>
+                  <option value="Al Ain">Al Ain</option>
                 </Form.Control>
                 <Form.Control.Feedback style={{ color: "red" }} type="invalid">
                   Emirates is Required.
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
+            <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
                   <MdOutlineApartment />

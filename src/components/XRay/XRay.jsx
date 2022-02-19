@@ -119,7 +119,7 @@ function XRay({ handleModalShow }) {
             }
             else {
                 alert(abc.message)
-                    setLoading(false)
+                setLoading(false)
             }
         }
 
@@ -128,60 +128,60 @@ function XRay({ handleModalShow }) {
     //         setInsurance(e.target.files[0])
     // }
     if (submitted === true)
-    return (<ThankYouModal />)
-  else
-    if (loading === true)
-        return (
-            <>
-                <ReactGifLoader />
-            </>
-        );
+        return (<ThankYouModal />)
     else
-        return (
-            <div className="form-container">
-                <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
-                    <div className="col-3">
-                        <Form.Group className="d-flex">
-                            <Form.Check
-                                type="radio"
-                                name="form-type"
-                                label="Myself"
-                                onChange={() => { setFamilyCheckBox(false); setSelectedMember() }}
-                                defaultChecked={true}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="col-6">
-                        <Form.Group className="d-flex">
-                            <Form.Check
-                                type="radio"
-                                name="form-type"
-                                label="For Family"
-                                onChange={handleForFamily}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className='col-10'>
-                        <Form.Group>
-                            <div className="prepend-icon">
-                                <FaRegUser />
-                            </div>
-                            <Form.Control
-                                type='text'
-                                name="name"
-                                value={name}
-                                placeholder='Person Name'
-                                onChange={handleChange}
-                                className="global-inputs"
-                                disabled={true}
-                            />
-                        </Form.Group>
-                    </div>
-                    {familyCheckBox ? (
-                        <div className="row justify-content-center">
-                            <ForFamily setSelectedMember={setSelectedMember} /></div>
-                    ) : null}
-                    {/* <div className='col-10 col-md-5'>
+        if (loading === true)
+            return (
+                <>
+                    <ReactGifLoader />
+                </>
+            );
+        else
+            return (
+                <div className="form-container">
+                    <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
+                        <div className="col-3">
+                            <Form.Group className="d-flex">
+                                <Form.Check
+                                    type="radio"
+                                    name="form-type"
+                                    label="Myself"
+                                    onChange={() => { setFamilyCheckBox(false); setSelectedMember() }}
+                                    defaultChecked={true}
+                                />
+                            </Form.Group>
+                        </div>
+                        <div className="col-6">
+                            <Form.Group className="d-flex">
+                                <Form.Check
+                                    type="radio"
+                                    name="form-type"
+                                    label="For Family"
+                                    onChange={handleForFamily}
+                                />
+                            </Form.Group>
+                        </div>
+                        <div className='col-10'>
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <FaRegUser />
+                                </div>
+                                <Form.Control
+                                    type='text'
+                                    name="name"
+                                    value={name}
+                                    placeholder='Person Name'
+                                    onChange={handleChange}
+                                    className="global-inputs"
+                                    disabled={true}
+                                />
+                            </Form.Group>
+                        </div>
+                        {familyCheckBox ? (
+                            <div className="row justify-content-center">
+                                <ForFamily setSelectedMember={setSelectedMember} /></div>
+                        ) : null}
+                        {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -209,115 +209,116 @@ function XRay({ handleModalShow }) {
                         />
                     </Form.Group>
                 </div> */}
-                    <div className='col-10'>
-                        <Form.Group>
-                            <div className="prepend-icon">
-                                <MdOutlineCalendarToday />
-                            </div>
-                            <div>
-                                <DatePicker
-                                    selected={DateOne}
-                                    onChange={date => { setDateOne(date) }}
-                                    dateFormat="dd/MM/yyyy hhaa"
-                                    showTimeSelect
-                                    minDate={new Date()}
-                                    minTime={new Date().setHours(7, 0, 0, 0)}
-                                    maxTime={new Date().setHours(19, 0, 0, 0)}
-                                    timeIntervals={60}
-                                    customInput={<DatePickerInput text='Preferred Date and Time 1' />}
+                        <div className='col-10'>
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <MdOutlineCalendarToday />
+                                </div>
+                                <div>
+                                    <DatePicker
+                                        selected={DateOne}
+                                        onChange={date => { setDateOne(date) }}
+                                        dateFormat="dd/MM/yyyy hhaa"
+                                        showTimeSelect
+                                        minDate={new Date()}
+                                        minTime={new Date().setHours(7, 0, 0, 0)}
+                                        maxTime={new Date().setHours(19, 0, 0, 0)}
+                                        timeIntervals={60}
+                                        customInput={<DatePickerInput text='Preferred Date and Time of Test' />}
+                                    />
+                                </div>
+                                {dateerrors.dateOne ? (
+                                    <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                                    : null}
+                            </Form.Group>
+                        </div>
+
+                        <div className='col-10'>
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <MdOutlineCalendarToday />
+                                </div>
+                                <div>
+                                    <DatePicker
+                                        selected={DateTwo}
+                                        onChange={date => { setDateTwo(date) }}
+                                        dateFormat="dd/MM/yyyy hhaa"
+                                        showTimeSelect
+                                        minDate={new Date()}
+                                        minTime={new Date().setHours(7, 0, 0, 0)}
+                                        maxTime={new Date().setHours(19, 0, 0, 0)}
+                                        timeIntervals={60}
+                                        customInput={<DatePickerInput text='Preferred Date and Time of Test' />}
+                                    />
+                                </div>
+                            </Form.Group>
+                        </div>
+                        <div className="col-10">
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <FaGlobeAsia />
+                                </div>
+                                <Form.Control
+                                    as="select"
+                                    name="address_patient"
+                                    placeholder="Emirates"
+                                    onChange={handleChange}
+                                    value={formValues.address_patient}
+                                    className="global-inputs"
+                                    isInvalid={errors?.address_patient}
+                                    style={{ fontSize: "small", color: "black" }}
+                                >
+                                    <option value="">Emirates</option>
+                                    <option value="Abu Dhabi">Abu Dhabi</option>
+                                    <option value="Dubai">Dubai</option>
+                                    <option value="Sharjah">Sharjah</option>
+                                    <option value="Ajman">Ajman</option>
+                                    <option value="Umm Al Quwain">Umm Al Quwain</option>
+                                    <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                    <option value="Fujairah">Fujairah</option>
+                                    <option value="Al Ain">Al Ain</option>
+                                </Form.Control>
+                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+
+                            </Form.Group>
+                        </div>
+                        <div className='col-10'>
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <MdLocationOn />
+                                </div>
+                                <Form.Control
+                                    type='text'
+                                    name="location"
+                                    placeholder='Area / Location'
+                                    onChange={handleChange}
+                                    className="global-inputs"
+                                    isInvalid={errors?.location}
                                 />
-                            </div>
-                            {dateerrors.dateOne ? (
-                                <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
-                                : null}
-                        </Form.Group>
-                    </div>
+                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
 
-                    <div className='col-10'>
-                        <Form.Group>
-                            <div className="prepend-icon">
-                                <MdOutlineCalendarToday />
-                            </div>
-                            <div>
-                                <DatePicker
-                                    selected={DateTwo}
-                                    onChange={date => { setDateTwo(date) }}
-                                    dateFormat="dd/MM/yyyy hhaa"
-                                    showTimeSelect
-                                    minDate={new Date()}
-                                    minTime={new Date().setHours(7, 0, 0, 0)}
-                                    maxTime={new Date().setHours(19, 0, 0, 0)}
-                                    timeIntervals={60}
-                                    customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                            </Form.Group>
+                        </div>
+
+                        <div className='col-10'>
+                            <Form.Group>
+                                <div className="prepend-icon">
+                                    <FaClipboardList />
+                                </div>
+                                <Form.Control
+                                    type='text'
+                                    name="symptoms"
+                                    placeholder='Symptoms/Conditions'
+                                    onChange={handleChange}
+                                    className="global-inputs"
+                                    isInvalid={errors?.symptoms}
                                 />
-                            </div>
-                        </Form.Group>
-                    </div>
-                    <div className="col-10">
-            <Form.Group>
-              <div className="prepend-icon">
-                <FaGlobeAsia />
-              </div>
-              <Form.Control
-                as="select"
-                name="address_patient"
-                placeholder="Emirates"
-                onChange={handleChange}
-                value = {formValues.address_patient}
-                className="global-inputs"
-                isInvalid={errors?.address_patient}
-                style={{ fontSize: "small", color: "black" }}
-              >
-                <option value="">Emirates</option>
-                <option value="Abu Dhabi">Abu Dhabi</option>
-                <option value="Dubai">Dubai</option>
-                <option value="Sharjah">Sharjah</option>
-                <option value="Ajman">Ajman</option>
-                <option value="Umm Al Quwain">Umm Al Quwain</option>
-                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                <option value="Fujairah">Fujairah</option>
-              </Form.Control>
-              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+                                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback>
 
-            </Form.Group>
-          </div>
-                    <div className='col-10'>
-                        <Form.Group>
-                            <div className="prepend-icon">
-                                <MdLocationOn />
-                            </div>
-                            <Form.Control
-                                type='text'
-                                name="location"
-                                placeholder='Area / Location'
-                                onChange={handleChange}
-                                className="global-inputs"
-                                isInvalid={errors?.location}
-                            />
-                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
+                            </Form.Group>
+                        </div>
 
-                        </Form.Group>
-                    </div>
-
-                    <div className='col-10'>
-                        <Form.Group>
-                            <div className="prepend-icon">
-                                <FaClipboardList />
-                            </div>
-                            <Form.Control
-                                type='text'
-                                name="symptoms"
-                                placeholder='Symptoms/Conditions'
-                                onChange={handleChange}
-                                className="global-inputs"
-                                isInvalid={errors?.symptoms}
-                            />
-                            <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback>
-
-                        </Form.Group>
-                    </div>
-
-                    {/* <div className='col-10 col-md-5'>
+                        {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -339,15 +340,15 @@ function XRay({ handleModalShow }) {
                         : null}  
                     </Form.Group>
                 </div> */}
-                    <div className='col-10 mt-4'>
-                        <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
-                    </div>
-                    <div className='text-center mt-2'>
-                        <input className="form-button" type="submit" value="SUBMIT" />
-                    </div>
-                </Form>
-            </div>
-        );
+                        <div className='col-10 mt-4'>
+                            <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
+                        </div>
+                        <div className='text-center mt-2'>
+                            <input className="form-button" type="submit" value="SUBMIT" />
+                        </div>
+                    </Form>
+                </div>
+            );
 }
 
 export default XRay;

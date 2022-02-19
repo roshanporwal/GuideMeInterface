@@ -28,6 +28,9 @@
 .global-inputs:focus{
     background-color: rgba(34, 34, 34, 0.1)!important;
 }
+a{
+    text-decoration: none !important;
+}
 .rmsc.dark {
     /* --rmsc-main: #4285f4;
     --rmsc-hover: #0e0c0a;
@@ -36,7 +39,7 @@
     --rmsc-gray: #555555;
     --rmsc-bg: #000000; */
     /* color: #fff; */
-    z-index: 100;
+    opacity: 100;
   }
 .global-inputs-check label{
     font-size: 12px!important;
@@ -65,9 +68,13 @@
 .react-datepicker-popper{
     z-index: 999!important;
 }
+.dropdown-content{
+    position: relative;
+    z-index: 999!important;
+}
 .prepend-icon{
     position: relative;
-    z-index: 2;
+    z-index: 1;
     left: 0;
     bottom: -26px;
     margin-left: 9px;
@@ -140,6 +147,12 @@
 }
 .large-buts img{
     width:50px;
+}
+.dashboarditem{
+    width: 100% !important;
+}
+.dashboarditem p{
+    letter-spacing: 1px;
 }
 .large-buts p{
     flex-basis: 0;

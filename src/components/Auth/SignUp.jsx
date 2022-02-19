@@ -137,14 +137,14 @@ function SignUpScreen() {
       <Container>
         <div className="content-container">
           <div className="row  align-items-center justify-content-center">
-            <div className="col-md-4 mt-5 mt-lg-0">
+            <div className="col-md-6 mt-3 mt-lg-0">
               <div className="login-form-container d-flex flex-column align-items-center">
                 <div className="sub-heading mt-3 mb-2">
                   <h5>Create An Account</h5>
                 </div>
                 <Form onSubmit={(e) => handleSubmit(e)} className="login-form">
                   <div className="row  align-items-center justify-content-center">
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <FaUserAlt />
@@ -166,7 +166,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <FaUserAlt />
@@ -188,7 +188,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdCall />
@@ -210,7 +210,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdEmail />
@@ -233,7 +233,7 @@ function SignUpScreen() {
                       </Form.Group>
                     </div>
                     
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdTransgender />
@@ -260,7 +260,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                     <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdOutlineCalendarToday />
@@ -284,7 +284,7 @@ function SignUpScreen() {
                         ) : null}
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <FaShieldAlt />
@@ -306,7 +306,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <FaUserAlt />
@@ -335,7 +335,7 @@ function SignUpScreen() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdFlag />
@@ -366,7 +366,7 @@ function SignUpScreen() {
                         
                       </Form.Group>
                     </div>
-                    <div className="col-md-6 mt-5 mt-lg-0">
+                    <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <MdUploadFile />
@@ -420,7 +420,7 @@ function SignUpScreen() {
                 </Form>
               </div>
             </div>
-            <div className="col-md-4 col-11 offset-md-2">
+            <div className="col-md-4 col-11 offset-md-1 mt-5">
               <div className="text-center">
                 <h1 className="heading">Welcome!</h1>
               </div>

@@ -487,7 +487,7 @@ function DoctorVisit({ handleModalShow }) {
               </Form.Control.Feedback>
             </Form.Group>
           </div>
-          <div className="col-10 col-md-5">
+          <div className="col-10">
             <Form.Group>
               <div className="prepend-icon">
                 <FaGlobeAsia />
@@ -508,15 +508,16 @@ function DoctorVisit({ handleModalShow }) {
                 <option value="Sharjah">Sharjah</option>
                 <option value="Ajman">Ajman</option>
                 <option value="Umm Al Quwain">Umm Al Quwain</option>
-                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                 <option value="Fujairah">Fujairah</option>
+               <option value="Al Ain">Al Ain</option>
               </Form.Control>
               <Form.Control.Feedback style={{ color: "red" }} type="invalid">
                 Emirates is Required.
               </Form.Control.Feedback>
             </Form.Group>
           </div>
-          <div className="col-10 col-md-5">
+          <div className="col-10">
             <Form.Group>
               <div className="prepend-icon">
                 <MdOutlineApartment />
