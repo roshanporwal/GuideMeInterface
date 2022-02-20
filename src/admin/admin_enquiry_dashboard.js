@@ -80,17 +80,19 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
       sortable: true,
     },
     {
-      name: "Date",
-      selector: (row) => convert(row["preferred_date_first"]),
-      sortable: true,
-    },
-    {
-      name: "Time",
-      selector: (row) => {
-        return convertTime(row["preferred_date_first"]);
+      name: "Date & Time",
+      selector: (row) =>{ 
+        return convert(row["preferred_date_first"]) + " " + (convertTime(row["preferred_date_first"]) !== "0:00 am" ? convertTime(row["preferred_date_first"]) : "")
       },
       sortable: true,
     },
+    // {
+    //   name: "Time",
+    //   selector: (row) => {
+    //     return convertTime(row["preferred_date_first"]);
+    //   },
+    //   sortable: true,
+    // },
     {
       name: "Type",
       selector: (row) => row["subtype"],
