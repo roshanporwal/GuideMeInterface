@@ -345,9 +345,11 @@ function NewConsultation({ handleModalShow }) {
               <DatePicker
                 selected={dateOne}
                 onChange={(date) => setDateOne(date)}
-                dateFormat="dd/MM/yyyy"
-                minDate={new Date()}
-                customInput={<DatePickerInput text="Preferred date 1 *" />}
+                showTimeSelect
+                minDate = {new Date()}
+                minTime = {new Date().setHours(7, 0, 0, 0)}
+                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                customInput={<DatePickerInput text="Preferred Date and Time 1 *" />}
                 isInvalid={errors?.dateOne}
               />
               {dateerrors.dateOne ? (
@@ -367,9 +369,12 @@ function NewConsultation({ handleModalShow }) {
               <DatePicker
                 selected={dateTwo}
                 onChange={(date) => setDateTwo(date)}
-                dateFormat="dd/MM/yyyy"
-                minDate={new Date()}
-                customInput={<DatePickerInput text="Preferred date 2 *" />}
+                dateFormat="dd/MM/yyyy hhaa"
+                showTimeSelect
+                minDate = {new Date()}
+                minTime = {new Date().setHours(7, 0, 0, 0)}
+                maxTime = {new Date().setHours(19, 0, 0, 0)}
+                customInput={<DatePickerInput text="Preferred Date and Time 2 *" />}
                 isInvalid={errors?.dateTwo}
               />
               {dateerrors.dateTwo ? (

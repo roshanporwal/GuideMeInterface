@@ -93,7 +93,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     },
     {
       name: "Type",
-      selector: (row) => row["type"],
+      selector: (row) => row["subtype"],
       sortable: true,
     },
     // {
@@ -168,12 +168,13 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     data = JSON.parse(data);
     const getadminstaus = await auth_service.getenquiriesstatus(data.login_id);
     setEnquriesstatus(getadminstaus.payload);
-    // console.log(getadminstaus.payload);
+    console.log(enquiryField);
+
     const getenquries = await auth_service.getenquriesSpecific(
       data.login_id,
       enquiryField
     );
-    // console.log(getenquries)
+    console.log(getenquries)
     setEnquries(getenquries.payload.reverse());
   }
   const handleClick = async (event) => {
@@ -259,7 +260,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
         role={"button"}
         className="dashboard-item-container text-center p-3"
         onClick={() => {
-          fetchData(item_link);
+          fetchData(item_desc);
           setTitle(item_desc);
         }}
       >
@@ -508,7 +509,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
             </div>
             <div className="col-md-2 col-6">
               <DashboardItem
-                item_desc="Diagnostics/ Radiology"
+                item_desc="Diagnostics or Radiology"
                 item_img={XRayLogo}
                 item_link={"diagnostic"}
               />

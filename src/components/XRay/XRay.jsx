@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-    MdLocationOn, MdOutlineCalendarToday,
+    MdLocationOn, MdOutlineCalendarToday,MdUploadFile
 } from 'react-icons/md';
 import { FaClipboardList, FaGlobeAsia } from 'react-icons/fa'
 import DatePicker from "react-datepicker";
@@ -13,11 +13,11 @@ import ForFamily from "../AddFamily/ForFamily";
 import ThankYouModal from '../Layout/ThankYouModal'
 
 function XRay({ handleModalShow }) {
-    // const hiddenFileInputInsurance = React.useRef(null);
+    const hiddenFileInputInsurance = React.useRef(null);
     const [errors, setErrors] = useState();
-    // const [fileerrors,setFileErrors] = useState({
-    //     insurance:"",
-    // });
+    const [fileerrors,setFileErrors] = useState({
+        insurance:"",
+    });
     const [dateerrors, setDateErrors] = useState({
         dateOne: "",
     });
@@ -26,7 +26,7 @@ function XRay({ handleModalShow }) {
 
     const validate = async (values) => {
         try {
-            // setFileErrors({insurance:insurance === undefined ? "required" : ""});
+            setFileErrors({insurance:insurance === undefined ? "required" : ""});
             setDateErrors({ dateOne: DateOne === undefined ? "required" : "" });
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -39,7 +39,11 @@ function XRay({ handleModalShow }) {
         }
     };
 
-
+    // Programatically click the hidden file input element
+    // when the Button component is clicked
+    const handleFileInsuranceClick = event => {
+        hiddenFileInputInsurance.current.click();
+    };
     const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
@@ -56,7 +60,7 @@ function XRay({ handleModalShow }) {
     });
     const [DateOne, setDateOne] = useState();
     const [DateTwo, setDateTwo] = useState();
-    // const [insurance, setInsurance] = useState();
+    const [insurance, setInsurance] = useState();
     const [name, setName] = useState("")
     const [familyCheckBox, setFamilyCheckBox] = useState(false);
     const [data, setData] = useState();
@@ -90,7 +94,7 @@ function XRay({ handleModalShow }) {
         const err = await validate(formValues);
         setErrors(err);
 
-        if (Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/) {
+        if (Object.keys(err).length === 0 && insurance) {
             setLoading(true)
             const formData = new FormData();
 
@@ -105,11 +109,13 @@ function XRay({ handleModalShow }) {
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
             formValues.preferred_date_first = DateOne.toString()
-            formValues.type = "xray";
+            formValues.type = "Diagnostics or Radiology";
+            formValues.subtype = "X-ray"
             formValues.status = "New"
             formValues.family = selectedMember;
             formValues.insurance_name = data.insurance_name
-            // formData.append('prescription', insurance);
+
+            formData.append('patient_reports', insurance);
             formData.append('formValues', JSON.stringify(formValues));
             const abc = await auth_service.createNewenqurire(data.login_id, formData)
             if (abc.payload) {
@@ -124,9 +130,15 @@ function XRay({ handleModalShow }) {
         }
 
     }
-    // const handleFiles = e => {
-    //         setInsurance(e.target.files[0])
-    // }
+    const handleFiles = e => {
+        const { name } = e.currentTarget
+        if (name === 'reports') {
+            // setReports(e.target.files)
+        } 
+        else {
+            setInsurance(e.target.files[0])
+        }
+    }
     if (submitted === true)
         return (<ThankYouModal />)
     else
@@ -317,15 +329,14 @@ function XRay({ handleModalShow }) {
 
                             </Form.Group>
                         </div>
-
-                        {/* <div className='col-10 col-md-5'>
+                        <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Insurance Details" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -339,8 +350,8 @@ function XRay({ handleModalShow }) {
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
                         : null}  
                     </Form.Group>
-                </div> */}
-                        <div className='col-10 mt-4'>
+                </div>
+                        <div className='col-10 mt-2'>
                             <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
                         </div>
                         <div className='text-center mt-2'>

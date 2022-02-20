@@ -124,7 +124,8 @@ function TeleConsultation({handleModalShow}) {
             formValues.current_diagnosis = formValues.symptoms
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
-            formValues.type = "teleconsulation";
+            formValues.type = "Home Service"
+            formValues.subtype = "Teleconsultation";
             formValues.status = "New"
             formValues.insurance_name = data.insurance_name 
             formValues.family = selectedMember;         

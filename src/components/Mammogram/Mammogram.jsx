@@ -125,7 +125,8 @@ function Mammogram({handleModalShow}) {
                 formValues.preferred_date_first = DateOne.toString()
                 if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
-                formValues.type = "mammogram";
+                formValues.type = "Diagnostics or Radiology";
+                formValues.subtype = "Mammogram"
                 formValues.status = "New"
                 formValues.insurance_name = data.insurance_name
                 formValues.family = selectedMember;
@@ -381,7 +382,7 @@ function Mammogram({handleModalShow}) {
                         : null}  
                     </Form.Group>
                 </div> */}
-                <div className='col-10 mt-4'>
+                <div className='col-10 mt-2'>
                     <p className="sub-title text-center">Payment would be done at the time of test in the lab center.</p>
                 </div>
                 <div className='text-center mt-2'>

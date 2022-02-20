@@ -345,7 +345,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                 <div className="col-md-12">
                   <div className="queryBox my-2">
                     <h2>Query</h2>
-                    <p>{enqurie_data[0].type}</p>
+                    <p>{enqurie_data[0].type} ---&gt; {enqurie_data[0].subtype}</p>
                   </div>
                 </div>
 

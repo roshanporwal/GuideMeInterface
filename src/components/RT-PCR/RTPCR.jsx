@@ -130,7 +130,8 @@ function RTPCR({handleModalShow}) {
             formValues.preferred_date_first = DateOne.toString()
             if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
-            formValues.type = "rcpcrtest"
+            formValues.type = "Home Service"
+            formValues.subtype = "RT PCR Test";
             formValues.status = "New"
             formValues.insurance_name = data.insurance_name   
             formValues.family = selectedMember;    

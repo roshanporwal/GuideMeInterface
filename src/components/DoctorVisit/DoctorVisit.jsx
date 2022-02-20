@@ -201,7 +201,8 @@ function DoctorVisit({ handleModalShow }) {
       formValues.preferred_date_first = DateOne.toString();
       if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString();
-      formValues.type = "doctorhomevist";
+      formValues.type = "Home Service";
+      formValues.subtype = "Doctor Home Visit"
       formValues.status = "New";
       formValues.insurance_name = data.insurance_name;
       formValues.family = selectedMember;

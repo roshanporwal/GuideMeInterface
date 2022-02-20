@@ -159,7 +159,8 @@ function LabTest({ handleModalShow }) {
       formValues.mobile = data.login_id;
       formValues.insurance_card_copy = data.insurance_card_copy
       formValues.preferred_date_first = DateOne.toString();
-      formValues.type = "lab";
+      formValues.type = "Lab Tests";
+      formValues.subtype = "Lab Test";
       formValues.status = "New"
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;

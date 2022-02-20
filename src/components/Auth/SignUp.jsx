@@ -320,7 +320,7 @@ function SignUpScreen() {
                           className="signup-inputs"
                           isInvalid={errors?.referredby}
                         >
-                          <option value="">Select an option</option>
+                          <option value="">Pt referred by</option>
                           <option key="Internal reference" value="Internal reference">Internal reference</option>
                           <option key="Patient reference" value="Patient reference">Patient reference</option>
                           <option key="Social media" value="Social media">Social media</option>

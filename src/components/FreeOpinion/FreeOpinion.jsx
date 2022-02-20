@@ -106,7 +106,8 @@ function FreeOpinion({handleModalShow}) {
             formValues.referredby = data.referredby;
             formValues.mobile = data.login_id;
             formValues.insurance_card_copy = data.insurance_card_copy
-            formValues.type = opinion;
+            formValues.type = "Second Opinion"
+            formValues.subtype = opinion;
             formValues.status = "New"
             formValues.insurance_name = data.insurance_name
             // formValues.basetype = opinion;
@@ -130,6 +131,7 @@ function FreeOpinion({handleModalShow}) {
                 // handleModalShow();
                 
            }else{
+                setLoading(false)
                alert(freeOpinion.message)
            }
         }
@@ -168,7 +170,7 @@ function FreeOpinion({handleModalShow}) {
                             type='radio'
                             id = "free_surgical_opinion"
                             name="Opinion"
-                            value="free_surgical_opinion"
+                            value="Free Surgical Opinion"
                             label='Free Surgical Second Opinion Within The Country'
                             onChange={handleOpinionChange}
                         />
@@ -177,7 +179,7 @@ function FreeOpinion({handleModalShow}) {
                             type='radio'
                             id = "interational_expert_opinion"
                             name="Opinion"
-                            value="interational_expert_opinion"
+                            value="Interational Expert Opinion"
                             label = "International Expert Opinion"
                             onChange={handleOpinionChange}
                         />

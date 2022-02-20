@@ -39,7 +39,7 @@ function HomeCare() {
                 <div className='col-10 col-md-5'>
                     <div className="large-buts-for-homecare" role="button" onClick={() => navigate('/nursing-service')}>
                         <img src={Nurse} alt="im"/>
-                        <p>Nursing service</p>
+                        <p>Nursing Service</p>
                     </div>
                 </div>
             </div>
