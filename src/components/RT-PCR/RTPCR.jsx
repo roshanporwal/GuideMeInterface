@@ -116,7 +116,7 @@ function RTPCR({handleModalShow}) {
             setLoading(true)  
             const formData = new FormData();
 
-            setFormValues({ ...formValues, patient_id: data.id });
+            // setFormValues({ ...formValues, patient_id: data.id });
             formValues.patient_id = data.id
             formValues.name = data.name;
             formValues.dob = data.dob;
