@@ -30,7 +30,7 @@ export default function HospitalNavbar(props) {
    setAllhospital(islogin)
   }
   async function onSubmit(data) {
-    console.log(data)
+    // console.log(data)
     localStorage.setItem('login', JSON.stringify(data));
     window.location.reload();
   }

@@ -3,7 +3,7 @@
 import { useNavigate } from "react-router-dom";
 function ThankYouModal(props) {
   const navigate = useNavigate();
-  console.log(props.formValues)
+  // console.log(props.formValues)
   
 
   function convert(str) {

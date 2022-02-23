@@ -73,7 +73,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     }
     const getenquries = await auth_service.gethospitals(data.login_id);
     setHospitals(getenquries.payload);
-    console.log(getenquries.payload);
+    // console.log(getenquries.payload);
   }
 
   const handleSubmit = async (event) => {
@@ -111,7 +111,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         name: enqurie_data[0].patient_name,
       };
       const getenquries = await auth_service.sendmail(data.login_id, url);
-      console.log(getenquries.payload);
+      // console.log(getenquries.payload);
       if (getenquries.payload) {
         alert("sent successfully");
         fetchData(props)
@@ -127,7 +127,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
     window.open(element, "_blank");
   };
   const viewInsurance = () => {
-    console.log(enqurie_data[0]);
+    // console.log(enqurie_data[0]);
     if (enqurie_data[0].insurance_card_copy.length === 0) {
       return alert("No reports found");
     }
