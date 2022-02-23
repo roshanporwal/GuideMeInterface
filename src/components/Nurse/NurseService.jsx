@@ -213,7 +213,7 @@ function NurseService({ handleModalShow }) {
     // }
   }
   if (submitted === true)
-    return (<ThankYouModal />)
+    return (<ThankYouModal formValues = {formValues}/>)
   else
     if (loading === true)
       return (

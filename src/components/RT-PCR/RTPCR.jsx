@@ -149,7 +149,7 @@ function RTPCR({handleModalShow}) {
             if(abc.payload){
                 setSubmitted(true)
                 setLoading(false)
-                handleModalShow();
+                // handleModalShow();
             }
             else{
                 alert(abc.message)
@@ -168,7 +168,7 @@ function RTPCR({handleModalShow}) {
     //     // }
     // }
     if(submitted === true)
-    return(<ThankYouModal/>)
+    return(<ThankYouModal formValues = {formValues}/>)
   else
     if (loading === true)
     return (

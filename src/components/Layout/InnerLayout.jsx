@@ -143,13 +143,15 @@ function InnerLayout(props) {
                                                 <h5>{props.pageName}</h5>
                                             </div>
                                         </div>
-                                        </div></div>
-                                        <div className='col-md-5 col-11 mt-5 mt-lg-0' >
-                                            <div className='d-flex align-items-center h-100 overflow-hidden'>
-
-                                                {props.NestedComponent}
-                                            </div>
                                         </div>
+                                    </div>
+                                    <div className="col-1 divider-page"></div>
+                                    <div className='col-md-5 col-11 mt-5 mt-lg-0' >
+                                        <div className='d-flex align-items-center h-100 overflow-hidden'>
+
+                                            {props.NestedComponent}
+                                        </div>
+                                    </div>
 
                             </div>
                         </div>

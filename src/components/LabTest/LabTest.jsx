@@ -197,7 +197,7 @@ function LabTest({ handleModalShow }) {
     }
   }
   if (submitted === true)
-    return (<ThankYouModal />)
+    return (<ThankYouModal formValues = {formValues}/>)
   else
     if (loading === true)
       return (
@@ -615,7 +615,7 @@ function LabTest({ handleModalShow }) {
                 </div>
 
                 <div role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                  <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
+                  <p>{insurance === undefined ? "Upload Prescription Details *" : insurance.name}</p>
                 </div>
                 <input
                   type="file"

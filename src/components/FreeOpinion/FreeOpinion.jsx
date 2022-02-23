@@ -155,7 +155,7 @@ function FreeOpinion({handleModalShow}) {
     if(submitted === true){
         return(
             <>
-              <ThankYouModal />
+              <ThankYouModal formValues = {formValues}/>
             </>
         )
     }

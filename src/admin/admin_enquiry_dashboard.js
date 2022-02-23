@@ -170,13 +170,13 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     data = JSON.parse(data);
     const getadminstaus = await auth_service.getenquiriesstatus(data.login_id);
     setEnquriesstatus(getadminstaus.payload);
-    console.log(enquiryField);
+    // console.log(enquiryField);
 
     const getenquries = await auth_service.getenquriesSpecific(
       data.login_id,
       enquiryField
     );
-    console.log(getenquries)
+    // console.log(getenquries)
     setEnquries(getenquries.payload.reverse());
   }
   const handleClick = async (event) => {
