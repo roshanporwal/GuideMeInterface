@@ -8,7 +8,8 @@ import * as auth_service from "../../service/auth_service";
 import {validationSchema} from "./freeopinionValidation";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import ThankYouModal from '../Layout/ThankYouModal';
-
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 function FreeOpinion({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -136,6 +137,11 @@ function FreeOpinion({handleModalShow}) {
            }
         }
     }
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared) *
+        </Tooltip>
+        )
     const handleFiles = e => {
         const { name } = e.currentTarget
         if (name === 'reports') {
@@ -164,45 +170,55 @@ function FreeOpinion({handleModalShow}) {
         <div className="form-container">
             <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
                
-                    <Form.Group className="row">
+                    <Form.Group>
                         <Form.Check
-                            className='col-5 offset-1'
+                            className='col-12 offset-1'
                             type='radio'
+                            style = {{fontSize:"15px"}}
                             id = "free_surgical_opinion"
                             name="Opinion"
                             value="Free Surgical Opinion"
                             label='Free Surgical Second Opinion Within The Country'
                             onChange={handleOpinionChange}
+                            isInvalid = {radioErr}
                         />
                         <Form.Check
-                            className='col-5'
+                            className='col-12 offset-1'
                             type='radio'
                             id = "interational_expert_opinion"
                             name="Opinion"
                             value="Interational Expert Opinion"
                             label = "International Expert Opinion"
                             onChange={handleOpinionChange}
+                            isInvalid = {radioErr}
                         />
                         {radioErr ? (
                             <Form.Label className='offset-4' style = {{color:"red"}} type = "valid">Field is required</Form.Label>)
                         : null}  
                     </Form.Group>
                 <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaDiagnoses/>
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="current_diagnosis"
-                            placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared)'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            isInvalid={errors?.current_diagnosis}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
+                        <Form.Group>
+                            <div className="prepend-icon">
+                                <FaDiagnoses/>
+                            </div>
+                            <OverlayTrigger
+                        placement="top-end"
+                        delay={{ show: 250, hide: 200 }}
+                        overlay={renderTooltip}
+                    >
+                            <Form.Control
+                                type='text'
+                                name="current_diagnosis"
+                                placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared) *'
+                                onChange={handleChange}
+                                className="global-inputs"
+                                isInvalid={errors?.current_diagnosis}
+                            />
+                            </OverlayTrigger>
+                            <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.current_diagnosis}</Form.Control.Feedback>
 
-                    </Form.Group>
+                        </Form.Group>
+                    
                 </div>
                {/*  <div className='col-10'>
                     <Form.Group>
@@ -276,7 +292,7 @@ function FreeOpinion({handleModalShow}) {
                                 onChange={date => setDateOne(date)}
                                 dateFormat="dd/MM/yyyy"
                                 minDate = {new Date()}
-                                customInput={<DatePickerInput text='Preferred date of appointment (1) (compulsory)' />}
+                                customInput={<DatePickerInput text='Preferred date of appointment (1) *' />}
                             />
                             
                         </div>
@@ -297,7 +313,7 @@ function FreeOpinion({handleModalShow}) {
                                 onChange={date => setDateTwo(date)}
                                 dateFormat="dd/MM/yyyy"
                                 minDate = {new Date()}
-                                customInput={<DatePickerInput text='Preferred date of appointment (2) (not compulsory)' />}
+                                customInput={<DatePickerInput text='Preferred date of appointment (2)' />}
                             />
                         </div>
                         {/* {dateerrors.dateTwo ? (

@@ -218,6 +218,12 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                     <h2 className="PatientPreferences py-3">
                       Patient Preferences
                     </h2>
+                    {target.preferred_hospital_doctor ? (
+                      <p className="card-text">
+                        <b>Hospital/ Doctor/ Specialization : </b>
+                        {target.preferred_hospital_doctor}
+                      </p>
+                    ) : null}
                     {target.preferred_date_first ? (
                       <p className="card-text">
                         <b>Proposed Date : </b>

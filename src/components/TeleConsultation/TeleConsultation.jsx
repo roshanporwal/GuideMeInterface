@@ -208,7 +208,7 @@ function TeleConsultation({handleModalShow}) {
                             type='text'
                             name="name"
                             value = {name}
-                            placeholder='Person Name'
+                            placeholder='Person Name *'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.name}
@@ -277,7 +277,7 @@ function TeleConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="symptoms"
-                            placeholder='Symptoms / Conditions'
+                            placeholder='Symptoms / Conditions *'
                             onChange={handleChange}
                             className="global-inputs"
                         isInvalid={errors?.symptoms}
@@ -294,7 +294,7 @@ function TeleConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="hospital"
-                            placeholder='Preferred doctor/hospital/specialization'
+                            placeholder='Preferred doctor/hospital/specialization *'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.hospital}

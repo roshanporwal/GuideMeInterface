@@ -44,7 +44,7 @@ function SecondOpinion() {
                         <Form.Control
                             type='text'
                             name="name"
-                            placeholder='Person Name'
+                            placeholder='Person Name *'
                             onChange={handleChange}
                             className="global-inputs"
                         />

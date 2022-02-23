@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import InnerLayout from '../Layout/InnerLayout';
-import HeroImage from '../../assets/x-ray-hero.png';
+import HeroImage from '../../assets/x-ray-hero.jpeg';
 import ThankYouModal from '../Layout/ThankYouModal';
 import XRay from './XRay';
 

@@ -118,7 +118,8 @@ function NewConsultation({ handleModalShow }) {
       setLoading(true)
       const formData = new FormData();
 
-      formValues.type = "new_consultation";
+      formValues.type = "New Consultation";
+      formValues.subtype = "New Consultaion"
       formValues.name = data.name;
       formValues.email = data.email;
       formValues.current_diagnosis = formValues.symptoms;
@@ -232,7 +233,7 @@ function NewConsultation({ handleModalShow }) {
               type="text"
               name="name"
               value={name}
-              placeholder="Person Name"
+              placeholder="Person Name *"
               // onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.name}
@@ -308,7 +309,7 @@ function NewConsultation({ handleModalShow }) {
             <Form.Control
               type="text"
               name="symptoms"
-              placeholder="Symptoms / Conditions"
+              placeholder="Symptoms / Conditions *"
               onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.symptoms}
@@ -326,7 +327,7 @@ function NewConsultation({ handleModalShow }) {
             <Form.Control
               type="text"
               name="preferred_hospital_doctor"
-              placeholder="Preferred doctor/hospital/specialization"
+              placeholder="Preferred doctor/hospital/specialization *"
               onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.preferred_hospital_doctor}
@@ -346,6 +347,7 @@ function NewConsultation({ handleModalShow }) {
                 selected={dateOne}
                 onChange={(date) => setDateOne(date)}
                 showTimeSelect
+                dateFormat="dd/MM/yyyy hhaa"
                 minDate = {new Date()}
                 minTime = {new Date().setHours(7, 0, 0, 0)}
                 maxTime = {new Date().setHours(19, 0, 0, 0)}

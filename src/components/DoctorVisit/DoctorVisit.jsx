@@ -166,6 +166,17 @@ function DoctorVisit({ handleModalShow }) {
       }
     }
   };
+  
+  const valueRenderer = (selected) => {
+    if (!selected.length) {
+      return "Language of the Care Giver *";
+    }
+
+    // return selected.length === 1
+    //   ? `${selected[0].label} 😶`
+    //   : selected.map(({ label }) => "✔️ " + label);
+  };
+
   const handleChange = (e) => {
     let { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -176,8 +187,10 @@ function DoctorVisit({ handleModalShow }) {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formValues.languages_prefer  = ""
-    selected.map((select) => formValues.languages_prefer += (select.value + ", "))
+    var languages = []
+    formValues.languages_prefer = ""
+    selected.map((select) => languages.push(select.value))
+    formValues.languages_prefer = languages.join(", ")
     handleAddress();
     const err = await validate(formValues);
     setErrors(err);
@@ -199,8 +212,9 @@ function DoctorVisit({ handleModalShow }) {
       formValues.mobile = data.login_id;
       formValues.insurance_card_copy = data.insurance_card_copy;
       formValues.preferred_date_first = DateOne.toString();
-      if(DateTwo)
+      if(DateTwo){
                 formValues.preferred_date_second = DateTwo.toString();
+      }
       formValues.type = "Home Service";
       formValues.subtype = "Doctor Home Visit"
       formValues.status = "New";
@@ -280,7 +294,7 @@ function DoctorVisit({ handleModalShow }) {
               type="text"
               name="name"
               value={name}
-              placeholder="Person Name"
+              placeholder="Person Name *"
               // onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.name}
@@ -340,7 +354,7 @@ function DoctorVisit({ handleModalShow }) {
                 minTime={new Date().setHours(7, 0, 0, 0)}
                 maxTime={new Date().setHours(19, 0, 0, 0)}
                 timeIntervals={60}
-                customInput={<DatePickerInput text="Preferred Date and Time 1" />}
+                customInput={<DatePickerInput text="Preferred Date and Time of Visit 1*" />}
               />
             </div>
             {dateerrors.dateOne ? (
@@ -367,7 +381,7 @@ function DoctorVisit({ handleModalShow }) {
                 minTime={new Date().setHours(7, 0, 0, 0)}
                 maxTime={new Date().setHours(19, 0, 0, 0)}
                 timeIntervals={60}
-                customInput={<DatePickerInput text="Preferred Date and Time 2" />}
+                customInput={<DatePickerInput text="Preferred Date and Time of Visit 2" />}
               />
             </div>
           </Form.Group>
@@ -424,7 +438,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="flat_number"
-                placeholder="Flat Number / Apartment Number"
+                placeholder="Flat Number / Apartment Number *"
                 onChange={handleChange}
                 className="global-inputs"
                 isInvalid={addressErr}
@@ -442,7 +456,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="building_name"
-                placeholder="Building Name (Mandatory)"
+                placeholder="Building Name *"
                 onChange={handleChange}
                 className="global-inputs"
                 isInvalid={addressErr}
@@ -460,7 +474,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="street_name"
-                placeholder="Street Name"
+                placeholder="Street Name *"
                 onChange={handleChange}
                 className="global-inputs"
                 isInvalid={addressErr}
@@ -478,7 +492,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="location"
-                placeholder="Area / Location"
+                placeholder="Area / Location *"
                 onChange={handleChange}
                 className="global-inputs"
                 isInvalid={addressErr}
@@ -503,7 +517,7 @@ function DoctorVisit({ handleModalShow }) {
                 isInvalid={addressErr}
                 style={{ fontSize: "small", color: "black" }}
               >
-                <option value="">Emirates</option>
+                <option value="">Select Emirates *</option>
                 <option value="Abu Dhabi">Abu Dhabi</option>
                 <option value="Dubai">Dubai</option>
                 <option value="Sharjah">Sharjah</option>
@@ -526,7 +540,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="landmark"
-                placeholder="Nearest Landmark (Optional)"
+                placeholder="Nearest Landmark "
                 onChange={handleChange}
                 className="global-inputs"
               />
@@ -544,7 +558,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="map_link"
-                placeholder="Google Maps Location"
+                placeholder="Google Maps Location (Link) *"
                 onChange={handleChange}
                 className="global-inputs"
                 isInvalid={addressErr}
@@ -577,7 +591,7 @@ function DoctorVisit({ handleModalShow }) {
             </Form.Control.Feedback>
           </Form.Group>
         </div>
-        <div className="col-10 col-md-5">
+        <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
               <FaClipboardList />
@@ -585,7 +599,7 @@ function DoctorVisit({ handleModalShow }) {
             <Form.Control
               type="text"
               name="symptoms"
-              placeholder="Symptoms / Conditions"
+              placeholder="Symptoms / Conditions *"
               onChange={handleChange}
               className="global-inputs"
               isInvalid={errors?.symptoms}
@@ -595,7 +609,7 @@ function DoctorVisit({ handleModalShow }) {
             </Form.Control.Feedback>
           </Form.Group>
         </div>
-        <div className="col-10 col-md-5">
+        <div className="col-10">
           <Form.Group>
             <div className="prepend-icon">
               <MdTransgender />
@@ -610,7 +624,7 @@ function DoctorVisit({ handleModalShow }) {
               style={{ fontSize: "small", color: "black" }}
               isInvalid={errors?.preferred_gender}
             >
-              <option value="">Select Gender of Doctor</option>
+              <option value="">Select Gender of Doctor *</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </Form.Control>
@@ -630,7 +644,7 @@ function DoctorVisit({ handleModalShow }) {
               hasSelectAll = {false}
               value={selected}
               onChange = {setSelected}
-              labelledBy="Language of the caregiver"
+              valueRenderer={valueRenderer}
             />
             <Form.Control.Feedback style={{ color: "red" }} type="">
               {languageErr}
@@ -670,7 +684,7 @@ function DoctorVisit({ handleModalShow }) {
               style={{ fontSize: "small", color: "black" }}
               isInvalid={errors?.payment_mode}
             >
-              <option value ="">Payment Code</option>
+              <option value ="">Payment Code *</option>
               <option value = "Cash">Cash</option>
               <option value = "Credit Card">Credit Card</option>
             </Form.Control>

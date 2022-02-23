@@ -182,7 +182,7 @@ function XRay({ handleModalShow }) {
                                     type='text'
                                     name="name"
                                     value={name}
-                                    placeholder='Person Name'
+                                    placeholder='Person Name *'
                                     onChange={handleChange}
                                     className="global-inputs"
                                     disabled={true}
@@ -236,7 +236,7 @@ function XRay({ handleModalShow }) {
                                         minTime={new Date().setHours(7, 0, 0, 0)}
                                         maxTime={new Date().setHours(19, 0, 0, 0)}
                                         timeIntervals={60}
-                                        customInput={<DatePickerInput text='Preferred Date and Time of Test' />}
+                                        customInput={<DatePickerInput text='Preferred Date and Time of Test 1 *' />}
                                     />
                                 </div>
                                 {dateerrors.dateOne ? (
@@ -260,7 +260,7 @@ function XRay({ handleModalShow }) {
                                         minTime={new Date().setHours(7, 0, 0, 0)}
                                         maxTime={new Date().setHours(19, 0, 0, 0)}
                                         timeIntervals={60}
-                                        customInput={<DatePickerInput text='Preferred Date and Time of Test' />}
+                                        customInput={<DatePickerInput text='Preferred Date and Time of Test 2' />}
                                     />
                                 </div>
                             </Form.Group>
@@ -280,7 +280,7 @@ function XRay({ handleModalShow }) {
                                     isInvalid={errors?.address_patient}
                                     style={{ fontSize: "small", color: "black" }}
                                 >
-                                    <option value="">Emirates</option>
+                                    <option value="">Select Emirates *</option>
                                     <option value="Abu Dhabi">Abu Dhabi</option>
                                     <option value="Dubai">Dubai</option>
                                     <option value="Sharjah">Sharjah</option>
@@ -302,7 +302,7 @@ function XRay({ handleModalShow }) {
                                 <Form.Control
                                     type='text'
                                     name="location"
-                                    placeholder='Area / Location'
+                                    placeholder='Area / Location *'
                                     onChange={handleChange}
                                     className="global-inputs"
                                     isInvalid={errors?.location}
@@ -320,7 +320,7 @@ function XRay({ handleModalShow }) {
                                 <Form.Control
                                     type='text'
                                     name="symptoms"
-                                    placeholder='Symptoms/Conditions'
+                                    placeholder='Symptoms/ Conditions *'
                                     onChange={handleChange}
                                     className="global-inputs"
                                     isInvalid={errors?.symptoms}
@@ -336,7 +336,7 @@ function XRay({ handleModalShow }) {
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details *" : insurance.name}</p>
                         </div>
                         <input
                             type="file"

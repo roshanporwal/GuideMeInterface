@@ -152,7 +152,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="first_name"
-                          placeholder="First Name"
+                          placeholder="First Name *"
                           onChange={handleChange}
                           value={formValues.first_name}
                           className="signup-inputs"
@@ -174,7 +174,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="family_name"
-                          placeholder="Family Name"
+                          placeholder="Family Name *"
                           onChange={handleChange}
                           value={formValues.family_name}
                           className="signup-inputs"
@@ -196,7 +196,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="mobile"
-                          placeholder="Mobile Number"
+                          placeholder="Mobile Number *"
                           onChange={handleChange}
                           value={formValues.mobile}
                           className="signup-inputs"
@@ -218,7 +218,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="email"
-                          placeholder="Email Id"
+                          placeholder="Email Id *"
                           onChange={handleChange}
                           value={formValues.email}
                           className="signup-inputs"
@@ -247,7 +247,7 @@ function SignUpScreen() {
                           className="signup-inputs"
                           isInvalid={errors?.gender}
                         >
-                          <option value="">Select Gender</option>
+                          <option value="">Select Gender *</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                           <option value="Other">Other</option>
@@ -275,7 +275,7 @@ function SignUpScreen() {
                             showYearDropdown
                             dateFormat="dd/MM/yyyy"
                             dropdownMode="select"
-                            customInput={<DatePickerInput text="Date of Birth" />}
+                            customInput={<DatePickerInput text="Date of Birth *" />}
                           />
                         {dateerrors?.dateOne ? (
                           <Form.Label style={{ color: "red" }} type="valid">
@@ -292,7 +292,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="insurance_name"
-                          placeholder="Insurance Name"
+                          placeholder="Insurance Name *"
                           onChange={handleChange}
                           value={formValues.insurance_name}
                           className="signup-inputs"
@@ -314,7 +314,7 @@ function SignUpScreen() {
                         <Form.Control
                           as="select"
                           name="referredby"
-                          placeholder="Pt referred by"
+                          placeholder="Pt referred by *"
                           onChange={handleChange}
                           value={formValues.referredby}
                           className="signup-inputs"
@@ -349,7 +349,7 @@ function SignUpScreen() {
                           className="signup-inputs"
                           isInvalid={errors?.nationality}
                         >
-                          <option key={1} value = "">Nationality</option>
+                          <option key={1} value = "">Nationality *</option>
                           {
 
                             // console.log(countries)
@@ -404,7 +404,7 @@ function SignUpScreen() {
                       />
                       </div>
                       <div className="col-10">
-                        <Form.Label for="terms-condition">I agree to <a href="/terms-and-conditions" target="_blank">terms & conditions.</a></Form.Label>
+                        <Form.Label for="terms-condition">I agree to <a href="/terms-and-conditions" target="_blank">terms & conditions. *</a></Form.Label>
                       </div>
                     </div>
                     <Form.Control.Feedback

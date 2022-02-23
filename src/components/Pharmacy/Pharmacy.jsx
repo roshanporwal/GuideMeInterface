@@ -246,7 +246,7 @@ function Pharmacy({ handleModalShow }) {
                 type='text'
                 name="name"
                 value={name}
-                placeholder='Person Name'
+                placeholder='Person Name *'
                 // onChange={handleChange}
                 className="global-inputs"
                 isInvalid={errors?.name}
@@ -303,7 +303,7 @@ function Pharmacy({ handleModalShow }) {
                   minTime={new Date().setHours(7, 0, 0, 0)}
                   maxTime={new Date().setHours(19, 0, 0, 0)}
                   timeIntervals={60}
-                  customInput={<DatePickerInput text='Preferred Date and Time 1' />}
+                  customInput={<DatePickerInput text='Preferred Date and Time of Delivery 1*' />}
                 />
               </div>
               {dateerrors.dateOne ? (
@@ -326,7 +326,7 @@ function Pharmacy({ handleModalShow }) {
                   minTime={new Date().setHours(7, 0, 0, 0)}
                   maxTime={new Date().setHours(19, 0, 0, 0)}
                   timeIntervals={60}
-                  customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                  customInput={<DatePickerInput text='Preferred Date and Time of Delivery 2' />}
                 />
               </div>
             </Form.Group>
@@ -383,7 +383,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="flat_number"
-                  placeholder="Flat Number / Apartment Number"
+                  placeholder="Flat Number / Apartment Number *"
                   onChange={handleChange}
                   className="global-inputs"
                   isInvalid={addressErr}
@@ -401,7 +401,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="building_name"
-                  placeholder="Building Name (Mandatory)"
+                  placeholder="Building Name *"
                   onChange={handleChange}
                   className="global-inputs"
                   isInvalid={addressErr}
@@ -419,7 +419,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="street_name"
-                  placeholder="Street Name"
+                  placeholder="Street Name *"
                   onChange={handleChange}
                   className="global-inputs"
                   isInvalid={addressErr}
@@ -437,7 +437,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="location"
-                  placeholder="Area / Location"
+                  placeholder="Area / Location *"
                   onChange={handleChange}
                   className="global-inputs"
                   isInvalid={addressErr}
@@ -462,7 +462,7 @@ function Pharmacy({ handleModalShow }) {
                   isInvalid={addressErr}
                   style={{ fontSize: "small", color: "black" }}
                 >
-                  <option value="">Emirates</option>
+                  <option value="">Select Emirates *</option>
                   <option value="Abu Dhabi">Abu Dhabi</option>
                   <option value="Dubai">Dubai</option>
                   <option value="Sharjah">Sharjah</option>
@@ -485,7 +485,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="landmark"
-                  placeholder="Nearest Landmark (Optional)"
+                  placeholder="Nearest Landmark "
                   onChange={handleChange}
                   className="global-inputs"
                 />
@@ -503,7 +503,7 @@ function Pharmacy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="map_link"
-                  placeholder="Google Maps Location"
+                  placeholder="Google Maps Location (Link) *"
                   onChange={handleChange}
                   className="global-inputs"
                   isInvalid={addressErr}
@@ -544,7 +544,7 @@ function Pharmacy({ handleModalShow }) {
                 style={{ fontSize: "small", color: "black" }}
                 isInvalid={errors?.preferred_gender}
               >
-                <option value="">Select Gender of Care Giver</option>
+                <option value="">Select Gender of Care Giver *</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -589,7 +589,7 @@ function Pharmacy({ handleModalShow }) {
                 style={{ fontSize: "small", color: "black" }}
                 isInvalid={errors?.payment_mode}
               >
-                <option value="">Payment Code</option>
+                <option value="">Payment Code *</option>
                 <option value="Cash">Cash</option>
                 <option value="Credit Card">Credit Card</option>
               </Form.Control>

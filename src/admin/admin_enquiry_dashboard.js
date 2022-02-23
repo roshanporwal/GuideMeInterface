@@ -258,21 +258,22 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
   };
   const DashboardItem = ({ item_img, item_desc, item_link }) => {
     return (
-      <div
-        role={"button"}
-        className="dashboard-item-container text-center p-3"
-        onClick={() => {
-          fetchData(item_desc);
-          setTitle(item_desc);
-        }}
-      >
-        <div className="item-logo">
-          <img src={item_img} width="40px" alt="dashboard item" />
+        <div
+          role={"button"}
+          style = {{backgroundColor: title === item_desc ? "#787575" : ""}}
+          className="dashboard-item-container text-center p-3"
+          onClick={() => {
+            fetchData(item_desc);
+            setTitle(item_desc);
+          }}
+        >
+          <div className="item-logo">
+            <img src={item_img} width="40px" alt="dashboard item" />
+          </div>
+          <div className="item-desc">
+            <p>{item_desc}</p>
+          </div>
         </div>
-        <div className="item-desc">
-          <p>{item_desc}</p>
-        </div>
-      </div>
     );
   };
 

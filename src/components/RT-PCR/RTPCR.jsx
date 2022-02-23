@@ -210,7 +210,7 @@ function RTPCR({handleModalShow}) {
                             type='text'
                             name="name"
                             value = {name}
-                            placeholder='Person Name'
+                            placeholder='Person Name *'
                             className="global-inputs"
                             isInvalid={errors?.name}
                             disabled={true}
@@ -279,7 +279,7 @@ function RTPCR({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="symptoms"
-                            placeholder='Symptoms / Conditions'
+                            placeholder='Symptoms / Conditions *'
                             onChange={handleChange}
                             className="global-inputs"
                             isInvalid={errors?.symptoms}
@@ -320,7 +320,7 @@ function RTPCR({handleModalShow}) {
                                 minTime={new Date().setHours(7, 0, 0, 0)}
                                 maxTime={new Date().setHours(19, 0, 0, 0)}
                                 timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time 1' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 1*' />}
                             />
                         </div>
                         {dateerrors.dateOne ? (
@@ -343,7 +343,7 @@ function RTPCR({handleModalShow}) {
                                 minTime={new Date().setHours(7, 0, 0, 0)}
                                 maxTime={new Date().setHours(19, 0, 0, 0)}
                                 timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time 2' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 2*' />}
                             />
                             {dateerrors.dateTwo ? (
                             <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)

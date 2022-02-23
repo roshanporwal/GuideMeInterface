@@ -50,7 +50,7 @@ function ForFamily(props) {
                         // value={props.formValues.family}
                         className="global-inputs dropdown-toggle"
                     >
-                        <option key={99}>Select Family Member</option>
+                        <option key={99}>Select Family Member *</option>
                         {family ? family.map((target, index) => (
                             <option key={index} value={index}>
                                 {target.first_name} {target.last_name}

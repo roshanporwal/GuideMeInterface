@@ -13,6 +13,6 @@ export const validationSchema = yup.object().shape({
 
         // preferred_gender:yup.string().required("preffered gender is required"),
         // languages_prefer:yup.string().required("preffered language is required"),
-        payment_mode:yup.string().required("payment type is required"),
+        payment_mode:yup.string().required("Payment Type is required"),
         alternate_number:yup.string().matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
 })
