@@ -137,9 +137,9 @@ function SignUpScreen() {
       <Container>
         <div className="content-container">
           <div className="row  align-items-center justify-content-center">
-            <div className="col-md-6 mt-3 mt-lg-0">
+            <div className="col-md-6">
               <div className="login-form-container d-flex flex-column align-items-center">
-                <div className="sub-heading mt-3 mb-2">
+                <div className="sub-heading ">
                   <h5>Create An Account</h5>
                 </div>
                 <Form onSubmit={(e) => handleSubmit(e)} className="login-form">
@@ -320,7 +320,7 @@ function SignUpScreen() {
                           className="signup-inputs"
                           isInvalid={errors?.referredby}
                         >
-                          <option value="">Pt referred by</option>
+                          <option value="">Referred by</option>
                           <option key="Internal reference" value="Internal reference">Internal reference</option>
                           <option key="Patient reference" value="Patient reference">Patient reference</option>
                           <option key="Social media" value="Social media">Social media</option>
@@ -420,7 +420,7 @@ function SignUpScreen() {
                 </Form>
               </div>
             </div>
-            <div className="col-md-4 col-11 offset-md-1 mt-5">
+            <div className="col-md-4 col-11 offset-md-1 ">
               <div className="text-center">
                 <h1 className="heading">Welcome!</h1>
               </div>
@@ -429,7 +429,7 @@ function SignUpScreen() {
           </div>
         </div>
       </Container>
-      <div className="footer-row"></div>
+      <div className="footer-row mt-5"></div>
     </>
   );
 }

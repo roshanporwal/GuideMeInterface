@@ -74,9 +74,14 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
       },
       sortable: true,
     },
+    // {
+    //   name: "Condition /Symptoms",
+    //   selector: (row) => row["symptoms"],
+    //   sortable: true,
+    // },
     {
-      name: "Condition /Symptoms",
-      selector: (row) => row["symptoms"],
+      name: "Enquiry Date",
+      selector: (row) => convert(row["enquiry_date"]),
       sortable: true,
     },
     {

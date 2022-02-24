@@ -74,6 +74,7 @@ function PhysioTherapy({ handleModalShow }) {
     address_patient: '',
     mobile: '',
     insurance_card_copy: [],
+    map_link: ""
   });
   const [DateOne, setDateOne] = useState();
   const [DateTwo, setDateTwo] = useState();
@@ -90,6 +91,21 @@ function PhysioTherapy({ handleModalShow }) {
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+      setLink(true)
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+      setLink(true)
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -364,12 +380,13 @@ function PhysioTherapy({ handleModalShow }) {
               </div>
               <div className="col-7 global-inputs-check">
                 <Form.Check
-                  type="checkbox"
-                  name="location_link"
-                  label="Location Link"
-                  onChange={() => setLink(!link)}
-                  isInvalid={addressErr}
-                />
+                type="checkbox"
+                name="location_link"
+                label="Location Link"
+                checked = {link}
+                onChange={() => setLink(!link)}
+                isInvalid={addressErr}
+              />
               </div>
             </Form.Group>
             {/* { addressErr ? 
@@ -513,6 +530,7 @@ function PhysioTherapy({ handleModalShow }) {
                 <Form.Control
                   type="text"
                   name="map_link"
+                  value = {formValues.map_link}
                   placeholder="Google Maps Location (Link) *"
                   onChange={handleChange}
                   className="global-inputs"

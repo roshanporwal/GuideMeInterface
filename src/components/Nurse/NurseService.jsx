@@ -72,7 +72,8 @@ function NurseService({ handleModalShow }) {
     address_patient: '',
     mobile: '',
     insurance_card_copy: [],
-    languages_prefer: ""
+    languages_prefer: "",
+    map_link:""
   });
   //const [DateOne, setDateOne] = useState();
   const [reports, setReports] = useState([]);
@@ -89,6 +90,14 @@ function NurseService({ handleModalShow }) {
   { label: "Malayalam", value: "Malayalam" }, { label: "Bengali", value: "Bengali" }
   ];
   const [selected, setSelected] = useState([]);
+  
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+      setLink(true)
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -370,6 +379,7 @@ function NurseService({ handleModalShow }) {
                     type="checkbox"
                     name="location_link"
                     label="Location Link"
+                    checked = {link}
                     onChange={() => setLink(!link)}
                     isInvalid={addressErr}
                   />
@@ -516,6 +526,7 @@ function NurseService({ handleModalShow }) {
                   <Form.Control
                     type="text"
                     name="map_link"
+                    value = {formValues.map_link}
                     placeholder="Google Maps Location (Link) *"
                     onChange={handleChange}
                     className="global-inputs"

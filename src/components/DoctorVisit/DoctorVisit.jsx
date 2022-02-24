@@ -100,7 +100,8 @@ function DoctorVisit({ handleModalShow }) {
     mobile: "",
     insurance_card_copy: [],
     alternate_number : "",
-    languages_prefer: ""
+    languages_prefer: "",
+    map_link:""
   });
   const [languageErr,setLanguageErr] = useState("")
   const [DateOne, setDateOne] = useState();
@@ -112,6 +113,13 @@ function DoctorVisit({ handleModalShow }) {
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+      setLink(true)
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -412,6 +420,7 @@ function DoctorVisit({ handleModalShow }) {
                 type="checkbox"
                 name="location_link"
                 label="Location Link"
+                checked = {link}
                 onChange={() => setLink(!link)}
                 isInvalid={addressErr}
               />
@@ -558,6 +567,7 @@ function DoctorVisit({ handleModalShow }) {
               <Form.Control
                 type="text"
                 name="map_link"
+                value = {formValues.map_link}
                 placeholder="Google Maps Location (Link) *"
                 onChange={handleChange}
                 className="global-inputs"

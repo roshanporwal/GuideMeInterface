@@ -73,7 +73,6 @@ function FreeOpinion({handleModalShow}) {
         try {
             
             // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
-            console.log(DateOne)
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
             setRadioErr(opinion === "" ? "required" : "")
             await validationSchema.validate(values, { abortEarly: false });

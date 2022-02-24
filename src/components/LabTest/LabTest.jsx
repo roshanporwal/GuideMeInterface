@@ -73,6 +73,7 @@ function LabTest({ handleModalShow }) {
     address_patient: '',
     mobile: '',
     insurance_card_copy: [],
+    map_link:""
   });
   const [DateOne, setDateOne] = useState();
   const [DateTwo, setDateTwo] = useState();
@@ -86,6 +87,14 @@ function LabTest({ handleModalShow }) {
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+      setLink(true)
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -350,6 +359,7 @@ function LabTest({ handleModalShow }) {
                     type="checkbox"
                     name="location_link"
                     label="Location Link"
+                    checked = {link}
                     onChange={() => setLink(!link)}
                     isInvalid={addressErr}
                   />
@@ -497,6 +507,7 @@ function LabTest({ handleModalShow }) {
                     type="text"
                     name="map_link"
                     placeholder="Google Maps Location (Link) *"
+                    value = {formValues.map_link}
                     onChange={handleChange}
                     className="global-inputs"
                     isInvalid={addressErr}
