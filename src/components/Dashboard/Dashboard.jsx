@@ -128,7 +128,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </Col>
-                <div className ="col-lg-4 col-6 mt-2">
+                <div className ="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Pharmacy"
                     item_img={MedicineLogo}
@@ -136,7 +136,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </div>
-                <div className ="col-lg-4 col-6 mt-2">
+                <div className ="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Lab Tests"
                     item_img={LabLogo}
@@ -144,7 +144,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </div>
-                <div className ="col-lg-4 col-6 mt-2">
+                <div className ="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Diagnostics/ Radiology"
                     item_img={XRayLogo}

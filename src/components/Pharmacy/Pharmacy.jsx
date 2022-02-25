@@ -94,7 +94,10 @@ function Pharmacy({ handleModalShow }) {
     navigator.geolocation.getCurrentPosition(function(position) {
       formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
       setLink(true)
-    });
+    },
+    function error(msg) {alert('Please enable your GPS position feature.');}
+    ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+    );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   useEffect(() => {

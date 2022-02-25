@@ -1,5 +1,5 @@
 .content-container{
-  margin: 6% 0;
+  margin: 4% 0;
 }
 .grey-inputs{
     background-color: rgba(34, 34, 34, 0.1)!important;
@@ -51,7 +51,7 @@
 .footer-row{
     position: fixed;
     bottom: 0;
-    height: 248px;
+    height: 160px;
     z-index: -1;
     background-image: url('../../assets/footer-final.png');
     background-position: center;
