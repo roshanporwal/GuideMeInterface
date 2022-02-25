@@ -63,11 +63,9 @@ a{
     font-size: 12px!important;
 }
 .global-inputs-check{
-    background-color: rgba(245, 245, 245, 1)!important;
     padding-left: 30px!important;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     width: 50%;
-    margin-top: 24px;   
+    margin-top: 10px;   
 }
 .global-file-input{
     background-color: rgba(45, 182, 210, 1);

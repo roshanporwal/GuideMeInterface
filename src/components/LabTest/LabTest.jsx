@@ -336,7 +336,7 @@ function LabTest({ handleModalShow }) {
                 </div>
               </Form.Group>
             </div>
-            <div className='col-10'>
+            <div className='col-10 mt-2'>
               <div className='d-flex align-items-start justify-content-center mt-2'>
                 <div className="mx-1 mb-1">
                   <IoHomeOutline />
