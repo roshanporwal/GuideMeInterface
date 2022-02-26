@@ -113,14 +113,18 @@ function DoctorVisit({ handleModalShow }) {
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
-  useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(function(position) {
-      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-      setLink(true)
-    },
-    function error(msg) {alert('Please enable your GPS position feature.');}
-    ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  const geolocate = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      function(position) {
+        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+        setLink(true)
+      },
+    // function error(msg) {alert('Please enable your GPS position feature.');}
+    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
     );
+  }
+  useEffect(()=>{
+    geolocate()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   useEffect(() => {
@@ -697,7 +701,7 @@ function DoctorVisit({ handleModalShow }) {
               style={{ fontSize: "small", color: "black" }}
               isInvalid={errors?.payment_mode}
             >
-              <option value ="">Payment Code *</option>
+              <option value ="">Payment Mode *</option>
               <option value = "Cash">Cash</option>
               <option value = "Credit Card">Credit Card</option>
             </Form.Control>
