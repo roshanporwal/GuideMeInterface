@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaClock, FaRegUser } from 'react-icons/fa';
 import {
   MdLocationOn, MdOutlineFilePresent,
-  MdFormatListNumbered,
+  MdFormatListNumbered, MdOutlineCalendarToday,
   MdOutlineApartment, MdCall, MdTransgender, MdPayment
 } from 'react-icons/md';
 import { SiGooglemaps } from 'react-icons/si';
@@ -12,11 +12,18 @@ import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
+import DatePicker from "react-datepicker";
 import { validationSchema } from './nurseValidation';
 import ForFamily from "../AddFamily/ForFamily";
 import ThankYouModal from '../Layout/ThankYouModal'
 import { MultiSelect } from "react-multi-select-component";
 
+function convert(str) {
+  var date = new Date(str),
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    day = ("0" + date.getDate()).slice(-2);
+  return [day, mnth, date.getFullYear()].join("/");
+}
 function NurseService({ handleModalShow }) {
   // Create a reference to the hidden file input element
   // const hiddenFileInputInsurance = React.useRef(null);
@@ -32,7 +39,7 @@ function NurseService({ handleModalShow }) {
   const validate = async (values) => {
     try {
       // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
-      //    setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo: "" });
+      setDateErrors({ dateOne: DateOne === undefined ? "required" : "", dateTwo: DateTwo === undefined ? "required" : "" });
       if (formValues.languages_prefer === "")
         setLanguageErr("Preferred Language is Required.")
       else
@@ -59,9 +66,9 @@ function NurseService({ handleModalShow }) {
     hiddenFileInputReports.current.click();
   };
 
-  /* const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
-      <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
-  )); */
+  const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
+    <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
+  ));
   const [formValues, setFormValues] = useState({
     name: '',
     age: '',
@@ -73,9 +80,10 @@ function NurseService({ handleModalShow }) {
     mobile: '',
     insurance_card_copy: [],
     languages_prefer: "",
-    map_link:""
+    map_link: ""
   });
-  //const [DateOne, setDateOne] = useState();
+  const [DateOne, setDateOne] = useState();
+  const [DateTwo, setDateTwo] = useState();
   const [reports, setReports] = useState([]);
   // const [insurance, setInsurance] = useState();
 
@@ -90,17 +98,25 @@ function NurseService({ handleModalShow }) {
   { label: "Malayalam", value: "Malayalam" }, { label: "Bengali", value: "Bengali" }
   ];
   const [selected, setSelected] = useState([]);
-  
-  useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(function(position) {
-      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-      setLink(true)
-    },
-    function error(msg) {alert('Please enable your GPS position feature.');}
-    ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+
+  const [dateerrors, setDateErrors] = useState({
+    dateOne: "",
+    dateTwo: ""
+  });
+  const geolocate = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      function (position) {
+        formValues.map_link = "https://www.google.com/maps/@" + position.coords.latitude + "," + position.coords.longitude
+        setLink(true)
+      },
+      // function error(msg) {alert('Please enable your GPS position feature.');}
+      // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }
+  useEffect(() => {
+    geolocate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -172,7 +188,7 @@ function NurseService({ handleModalShow }) {
     const err = await validate(formValues);
     setErrors(err);
 
-    if (Object.keys(err).length === 0 && addressErr === ""/* && fileerrors.insurance === ""*/) {
+    if (Object.keys(err).length === 0 && addressErr === "" && DateOne && DateTwo/* && fileerrors.insurance === ""*/) {
       setLoading(true)
 
       const formData = new FormData();
@@ -191,6 +207,7 @@ function NurseService({ handleModalShow }) {
       formValues.status = "New"
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;
+      formValues.nursing_date_range = convert(DateOne) + "-" + convert(DateTwo)
 
       if (reports !== undefined) {
         for (const tp of reports) {
@@ -225,7 +242,7 @@ function NurseService({ handleModalShow }) {
     // }
   }
   if (submitted === true)
-    return (<ThankYouModal formValues = {formValues}/>)
+    return (<ThankYouModal formValues={formValues} />)
   else
     if (loading === true)
       return (
@@ -339,20 +356,70 @@ function NurseService({ handleModalShow }) {
 
               </Form.Group>
             </div>
+            <div className='col-5'>
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdOutlineCalendarToday />
+                </div>
+                <div>
+                  <DatePicker
+                    selected={DateOne}
+                    onChange={date => { setDateOne(date) }}
+                    dateFormat="dd/MM/yyyy"
+                    selectsStart
+                    startDate={DateOne}
+                    endDate={DateTwo}
+                    minDate={new Date()}
+                    minTime={new Date().setHours(7, 0, 0, 0)}
+                    maxTime={new Date().setHours(19, 0, 0, 0)}
+                    customInput={<DatePickerInput text='Start Date *' />}
+                  />
+                </div>
+                {dateerrors.dateOne ? (
+                  <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                  : null}
+              </Form.Group>
+            </div>
+            <div className='col-5'>
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdOutlineCalendarToday />
+                </div>
+                <div>
+                  <DatePicker
+                    selected={DateTwo}
+                    onChange={date => { setDateTwo(date) }}
+                    dateFormat="dd/MM/yyyy"
+                    selectsEnd
+                    startDate={DateOne}
+                    endDate={DateTwo}
+                    minDate={new Date()}
+                    minTime={new Date().setHours(7, 0, 0, 0)}
+                    maxTime={new Date().setHours(19, 0, 0, 0)}
+                    customInput={<DatePickerInput text='End Date *' />}
+                  />
+                </div>
+                {dateerrors.dateTwo ? (
+                  <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                  : null}
+              </Form.Group>
+            </div>
             <div className='col-10'>
               <Form.Group>
                 <div className="prepend-icon">
                   <FaClock />
                 </div>
                 <Form.Control
-                  type='text'
-                  name="preferred_date_two"
-                  placeholder='Time period for nursing service (number of days/months) *'
+                  type='number'
+                  name="time_period"
+                  placeholder='Time Period for Nursing Service (Hours/Day) *'
                   onChange={handleChange}
+                  min = "1"
+                  max = "24"
                   className="global-inputs"
-                  isInvalid={errors?.preferred_date_two}
+                  isInvalid={errors?.time_period}
                 />
-                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.preferred_date_two}</Form.Control.Feedback>
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.time_period}</Form.Control.Feedback>
 
               </Form.Group>
             </div>
@@ -382,7 +449,7 @@ function NurseService({ handleModalShow }) {
                     type="checkbox"
                     name="location_link"
                     label="Location Link"
-                    checked = {link}
+                    checked={link}
                     onChange={() => setLink(!link)}
                     isInvalid={addressErr}
                   />
@@ -529,7 +596,7 @@ function NurseService({ handleModalShow }) {
                   <Form.Control
                     type="text"
                     name="map_link"
-                    value = {formValues.map_link}
+                    value={formValues.map_link}
                     placeholder="Google Maps Location (Link) *"
                     onChange={handleChange}
                     className="global-inputs"
@@ -636,7 +703,7 @@ function NurseService({ handleModalShow }) {
                   style={{ fontSize: "small", color: "black" }}
                   isInvalid={errors?.payment_mode}
                 >
-                  <option value="">Payment Code *</option>
+                  <option value="">Payment Mode *</option>
                   <option value="Cash">Cash</option>
                   <option value="Credit Card">Credit Card</option>
                 </Form.Control>

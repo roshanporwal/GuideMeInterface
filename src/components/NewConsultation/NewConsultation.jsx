@@ -327,14 +327,14 @@ function NewConsultation({ handleModalShow }) {
             <Form.Control
               type="text"
               name="preferred_hospital_doctor"
-              placeholder="Preferred doctor/hospital/specialization *"
+              placeholder="Preferred doctor/hospital/specialization"
               onChange={handleChange}
               className="global-inputs"
-              isInvalid={errors?.preferred_hospital_doctor}
+              // isInvalid={errors?.preferred_hospital_doctor}
             />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+            {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.preferred_hospital_doctor}
-            </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
           </Form.Group>
         </div>
         <div className="col-10">

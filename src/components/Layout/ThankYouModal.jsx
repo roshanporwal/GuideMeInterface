@@ -41,8 +41,8 @@ function ThankYouModal(props) {
 			  {props.formValues.symptoms ? (	<p><b>Symptoms :</b> {props.formValues.symptoms}</p>):null}
 				{/* <p><b>Preferred Doctor :</b> Dr Ashwin</p> */}
 			
-				{props.formValues.preferred_date_first ? (<p><b>Preferred Date and Time 1 :</b> {convert(props.formValues.preferred_date_first)} {convertTime(props.formValues.preferred_date_first)} </p>):null}
-				{props.formValues.preferred_date_second ? (<p><b>Preferred Date and Time 2 :</b>{convert(props.formValues.preferred_date_second)} {convertTime(props.formValues.preferred_date_second)}</p>):null}
+				{props.formValues.preferred_date_first ? (<p><b>Preferred Date and Time 1 :</b> {convert(props.formValues.preferred_date_first)} {convertTime(props.formValues.preferred_date_first) === "0:00 am" ? "" : convertTime(props.formValues.preferred_date_first) } </p>):null}
+				{props.formValues.preferred_date_second ? (<p><b>Preferred Date and Time 2 :</b>{convert(props.formValues.preferred_date_second)} {convertTime(props.formValues.preferred_date_second) === "0:00 am" ? "":convertTime(props.formValues.preferred_date_second)}</p>):null}
 			</div>
 			<div className="row mt-3">
 				<div className="col-sm-5">

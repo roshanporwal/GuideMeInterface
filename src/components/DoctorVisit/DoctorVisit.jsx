@@ -616,14 +616,14 @@ function DoctorVisit({ handleModalShow }) {
             <Form.Control
               type="text"
               name="symptoms"
-              placeholder="Symptoms / Conditions *"
+              placeholder="Symptoms / Conditions"
               onChange={handleChange}
               className="global-inputs"
-              isInvalid={errors?.symptoms}
+              // isInvalid={errors?.symptoms}
             />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+            {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.symptoms}
-            </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
           </Form.Group>
         </div>
         <div className="col-10">

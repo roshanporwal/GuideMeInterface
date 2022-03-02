@@ -123,8 +123,10 @@ function feedback(enquries_id, login_id, data) {
   const req = instance.post(`/enquries/${login_id}/feedback?enquries_id=${enquries_id}`, data);
   return req
 }
-
-
+function sendInfo(login_id,id){
+  const req = instance.get(`/enquries/${login_id}/transfer?_id=${id}`);
+  return req
+}
 function sendmail(login_id, data) {
 
   const req = instance.post(`/sendmail/send`, data);
@@ -180,5 +182,6 @@ export {
   idealdata,
   smartsearch,
   deleteenquries,
-  setenquiriesstatus
+  setenquiriesstatus,
+  sendInfo
 }

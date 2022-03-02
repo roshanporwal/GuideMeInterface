@@ -16,10 +16,10 @@ function Mammogram({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     // const hiddenFileInputReports = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-        // reports:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     insurance:"",
+    //     // reports:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         DateTwo:""
@@ -30,7 +30,7 @@ function Mammogram({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : ""/*,reports:reports.length === 0 ? "required" : ""*/});
+            // setFileErrors({insurance:insurance === undefined ? "required" : ""/*,reports:reports.length === 0 ? "required" : ""*/});
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -108,7 +108,7 @@ function Mammogram({handleModalShow}) {
         const err = await validate(formValues);
         setErrors(err);
         // console.log(reports)
-        if(Object.keys(err).length === 0 && insurance)  {    
+        if(Object.keys(err).length === 0)  {    
                 setLoading(true)
                 const formData = new FormData();
 
@@ -345,7 +345,7 @@ function Mammogram({handleModalShow}) {
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Prescription Details *" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -355,9 +355,9 @@ function Mammogram({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
-                        {fileerrors.insurance ? (
+                        {/* {fileerrors.insurance ? (
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
-                        : null}  
+                        : null}   */}
                     </Form.Group>
                 </div>
                 {/* <div className='col-10 col-md-7'>

@@ -21,10 +21,10 @@ function LabTest({ handleModalShow }) {
   const hiddenFileInputInsurance = React.useRef(null);
   // const hiddenFileInputReports = React.useRef(null);
   const [errors, setErrors] = useState();
-  const [fileerrors, setFileErrors] = useState({
-    insurance: "",
-    // reports:"",
-  });
+  // const [fileerrors, setFileErrors] = useState({
+  //   insurance: "",
+  //   // reports:"",
+  // });
   const [dateerrors, setDateErrors] = useState({
     dateOne: "",
     dateTwo: "",
@@ -34,7 +34,7 @@ function LabTest({ handleModalShow }) {
 
   const validate = async (values) => {
     try {
-      setFileErrors({ insurance: insurance === undefined ? "required" : "",/*reports:reports === undefined ? "required" : ""*/ });
+      // setFileErrors({ insurance: insurance === undefined ? "required" : "",/*reports:reports === undefined ? "required" : ""*/ });
 
       setDateErrors({ dateOne: DateOne === undefined ? "required" : "", dateTwo: "" });
 
@@ -88,14 +88,18 @@ function LabTest({ handleModalShow }) {
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
 
-  useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(function(position) {
-      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-      setLink(true)
-    },
-    function error(msg) {alert('Please enable your GPS position feature.');}
-    ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  const geolocate = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      function(position) {
+        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+        setLink(true)
+      },
+    // function error(msg) {alert('Please enable your GPS position feature.');}
+    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
     );
+  }
+  useEffect(()=>{
+    geolocate()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   useEffect(() => {
@@ -156,7 +160,7 @@ function LabTest({ handleModalShow }) {
     handleAddress()
     const err = await validate(formValues);
     setErrors(err);
-    if (Object.keys(err).length === 0 && insurance) {
+    if (Object.keys(err).length === 0) {
       setLoading(true)
       const formData = new FormData();
 
@@ -613,7 +617,7 @@ function LabTest({ handleModalShow }) {
                   style={{ fontSize: "small", color: "black" }}
                   isInvalid={errors?.payment_mode}
                 >
-                  <option value="">Payment Code *</option>
+                  <option value="">Payment Mode *</option>
                   <option value="Cash">Cash</option>
                   <option value="Credit Card">Credit Card</option>
                 </Form.Control>
@@ -629,7 +633,7 @@ function LabTest({ handleModalShow }) {
                 </div>
 
                 <div role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                  <p>{insurance === undefined ? "Upload Prescription Details *" : insurance.name}</p>
+                  <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                 </div>
                 <input
                   type="file"
@@ -639,9 +643,9 @@ function LabTest({ handleModalShow }) {
                   style={{ display: 'none' }}
                   onChange={handleFiles}
                 />
-                {fileerrors.insurance ? (
+                {/* {fileerrors.insurance ? (
                   <Form.Label style={{ color: "red" }} type="valid">File is required</Form.Label>)
-                  : null}
+                  : null} */}
               </Form.Group>
             </div>
             {/* <div className='col-10 col-md-7'>

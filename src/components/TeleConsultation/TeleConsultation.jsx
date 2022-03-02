@@ -294,12 +294,12 @@ function TeleConsultation({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="hospital"
-                            placeholder='Preferred doctor/hospital/specialization *'
+                            placeholder='Preferred doctor/hospital/specialization'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.hospital}
+                            // isInvalid={errors?.hospital}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.hospital}</Form.Control.Feedback>
+                        {/* <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.hospital}</Form.Control.Feedback> */}
                     
                     </Form.Group>
                 </div>

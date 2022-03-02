@@ -2,7 +2,7 @@ import * as yup from 'yup';
 const mobileReg = /^(\+\d{1,3}[- ]?)?\d{10}$/
 export const validationSchema = yup.object().shape({
         current_diagnosis: yup.string().required("current diagnosis name is required"),
-        preferred_date_two: yup.string().required("time period  is required"),
+        time_period: yup.string().required("time period  is required"),
 
         // flat_number: yup.string().required("flat number name is required"),
         // building_name:yup.string().required("building name Info is required"),

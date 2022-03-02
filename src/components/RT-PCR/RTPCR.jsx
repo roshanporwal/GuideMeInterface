@@ -3,10 +3,14 @@ import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
      MdOutlineCalendarToday,
-     MdLocationOn
+     MdLocationOn, MdFormatListNumbered, MdOutlineApartment
     //  , MdOutlineFilePresent,
     // MdOutlineLocalHospital,  MdStickyNote2
 } from 'react-icons/md';
+import { SiGooglemaps } from 'react-icons/si';
+import { FaBuilding, FaGlobeAsia } from 'react-icons/fa'
+import { IoHomeOutline } from 'react-icons/io5'
+import { GiDirectionSigns } from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import {validationSchema} from "./rtpcrValidation";
@@ -27,6 +31,51 @@ function RTPCR({handleModalShow}) {
         dateOne:"",
         dateTwo:"",
     });
+    const [addressForm, setAddressForm] = useState(false);
+    const [addressErr, setAddressErr] = useState("")
+  const handleAddress = () => {
+    setAddressErr("")
+    if (
+      (formValues.flat_number &&
+        formValues.building_name &&
+        formValues.street_name &&
+        formValues.location &&
+        formValues.emirates)
+    ) {
+      formValues.address_patient =
+        formValues.flat_number +
+        ", " +
+        formValues.building_name +
+        ", " +
+        formValues.street_name +
+        ", " +
+        formValues.location +
+        ", " +
+        formValues.emirates +
+        ", " +
+        formValues.landmark;
+    }
+    if (!formValues.address_patient) {
+      if (!formValues.map_link) {
+        setAddressErr("Address Field is Required.")
+      }
+    }
+  };
+  const [link, setLink] = useState(false);
+  const geolocate = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      function(position) {
+        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+        setLink(true)
+      },
+    // function error(msg) {alert('Please enable your GPS position feature.');}
+    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+    );
+  }
+  useEffect(()=>{
+    geolocate()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   const [loading, setLoading] = useState(false);
   const [submitted,setSubmitted] = useState(false)
     const validate = async (values) => {
@@ -55,7 +104,7 @@ function RTPCR({handleModalShow}) {
     //     hiddenFileInputReports.current.click();
     // };
      
-    const DatePickerInput = forwardRef(({ value, onClick, text }, ref) => (
+    const DatePickerInput = forwardRef(({ value, onClick, text, invalid }, ref) => (
         <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
     ));
     const [formValues, setFormValues] = useState({
@@ -109,10 +158,11 @@ function RTPCR({handleModalShow}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        handleAddress()
         const err = await validate(formValues);
         setErrors(err);
         
-        if(Object.keys(err).length === 0 /* && fileerrors.insurance === ""*/)  {  
+        if(Object.keys(err).length === 0  && addressErr === "" && DateOne && DateTwo /* && fileerrors.insurance === ""*/)  {  
             setLoading(true)  
             const formData = new FormData();
 
@@ -201,6 +251,7 @@ function RTPCR({handleModalShow}) {
             />
           </Form.Group>
         </div>
+
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -223,6 +274,189 @@ function RTPCR({handleModalShow}) {
                     <div className="row justify-content-center">
                     <ForFamily setSelectedMember = {setSelectedMember} /></div>
                 ):null}
+                <div className='col-10 mt-2'>
+            <div className='d-flex align-items-start justify-content-center mt-2'>
+              <div className="mx-1 mb-1">
+                <IoHomeOutline />
+              </div>
+              <div>
+                <span>Address </span>
+              </div>
+            </div>
+          </div>
+          <div className="col-10">
+            <Form.Group className="d-flex">
+              <div className="col-5 global-inputs-check">
+                <Form.Check
+                  type="checkbox"
+                  name="address_field"
+                  label="Address Form"
+                  onChange={() => setAddressForm(!addressForm)}
+                  isInvalid={addressErr}
+                />
+              </div>
+              <div className="col-7 global-inputs-check">
+                <Form.Check
+                type="checkbox"
+                name="location_link"
+                label="Location Link"
+                checked = {link}
+                onChange={() => setLink(!link)}
+                isInvalid={addressErr}
+              />
+              </div>
+            </Form.Group>
+            {/* { addressErr ? 
+                <>{
+                (!link) ? 
+                <>
+                    {(!addressForm) ?
+                    <Form.Label style={{ color: "red" }} type="invalid">
+                    Atleast One field Should be checked.
+                    </Form.Label>  : null }
+                </>
+                : null 
+                }</>:null} */}
+          </div>
+          {addressForm ? <>
+            <div className="col-10 col-md-5">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdFormatListNumbered />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="flat_number"
+                  placeholder="Flat Number / Apartment Number *"
+                  onChange={handleChange}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                />
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                  Flat Number is required
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>
+            <div className="col-10 col-md-5">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <FaBuilding />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="building_name"
+                  placeholder="Building Name *"
+                  onChange={handleChange}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                />
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                  Building Name is required.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>
+            <div className="col-10 col-md-5">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <GiDirectionSigns />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="street_name"
+                  placeholder="Street Name *"
+                  onChange={handleChange}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                />
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                  Street Name is Required.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>
+            <div className="col-10 col-md-5">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdLocationOn />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="location"
+                  placeholder="Area / Location *"
+                  onChange={handleChange}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                />
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                  Area is Required.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>
+            <div className="col-10">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <FaGlobeAsia />
+                </div>
+                <Form.Control
+                  as="select"
+                  name="emirates"
+                  placeholder="Emirates"
+                  onChange={handleChange}
+                  value={formValues.emirates}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                  style={{ fontSize: "small", color: "black" }}
+                >
+                  <option value="">Select Emirates *</option>
+                  <option value="Abu Dhabi">Abu Dhabi</option>
+                  <option value="Dubai">Dubai</option>
+                  <option value="Sharjah">Sharjah</option>
+                  <option value="Ajman">Ajman</option>
+                  <option value="Umm Al Quwain">Umm Al Quwain</option>
+                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                  <option value="Fujairah">Fujairah</option>
+                  <option value="Al Ain">Al Ain</option>
+                </Form.Control>
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                  Emirates is Required.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>
+            <div className="col-10">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdOutlineApartment />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="landmark"
+                  placeholder="Nearest Landmark "
+                  onChange={handleChange}
+                  className="global-inputs"
+                />
+                {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              {errors?.landmark}
+            </Form.Control.Feedback> */}
+              </Form.Group>
+            </div> </> : null}
+          {link ?
+            <div className="col-10">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <SiGooglemaps />
+                </div>
+                <Form.Control
+                  type="text"
+                  name="map_link"
+                  value = {formValues.map_link}
+                  placeholder="Google Maps Location (Link) *"
+                  onChange={handleChange}
+                  className="global-inputs"
+                  isInvalid={addressErr}
+                />
+
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">Location Link is Required.</Form.Control.Feedback>
+              </Form.Group>
+            </div> : null}
                 {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -253,7 +487,7 @@ function RTPCR({handleModalShow}) {
                 </div> */}
 
                 {/* <Location setLocation = {setLocation}/> */}
-                <div className="col-10"> 
+                {/* <div className="col-10"> 
           <Form.Group>
             <div className="prepend-icon">
               <MdLocationOn />
@@ -270,7 +504,7 @@ function RTPCR({handleModalShow}) {
               {errors?.location}
             </Form.Control.Feedback>
           </Form.Group> 
-         </div>
+         </div> */}
                 {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
@@ -320,7 +554,7 @@ function RTPCR({handleModalShow}) {
                                 minTime={new Date().setHours(7, 0, 0, 0)}
                                 maxTime={new Date().setHours(19, 0, 0, 0)}
                                 timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 1*' />}
+                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 1*' invalid = {dateerrors.dateOne} />}
                             />
                         </div>
                         {dateerrors.dateOne ? (

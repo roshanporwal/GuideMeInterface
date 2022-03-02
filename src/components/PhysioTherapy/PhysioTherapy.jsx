@@ -92,14 +92,18 @@ function PhysioTherapy({ handleModalShow }) {
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
 
-  useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(function(position) {
-      formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-      setLink(true)
-    },
-    function error(msg) {alert('Please enable your GPS position feature.');}
-    ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  const geolocate = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      function(position) {
+        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+        setLink(true)
+      },
+    // function error(msg) {alert('Please enable your GPS position feature.');}
+    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
     );
+  }
+  useEffect(()=>{
+    geolocate()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   useEffect(() => {
@@ -210,7 +214,6 @@ function PhysioTherapy({ handleModalShow }) {
       if (abc.payload) {
         setLoading(false)
         setSubmitted(true)
-        handleModalShow();
       }
       else {
         alert(abc.message)
@@ -561,12 +564,12 @@ function PhysioTherapy({ handleModalShow }) {
               <Form.Control
                 type='text'
                 name="symptoms"
-                placeholder='Symptoms / Conditions *'
+                placeholder='Symptoms / Conditions'
                 onChange={handleChange}
                 className="global-inputs"
-                isInvalid={errors?.symptoms}
+                // isInvalid={errors?.symptoms}
               />
-              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback>
+              {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.symptoms}</Form.Control.Feedback> */}
 
             </Form.Group>
           </div>
@@ -630,7 +633,7 @@ function PhysioTherapy({ handleModalShow }) {
                 style={{ fontSize: "small", color: "black" }}
                 isInvalid={errors?.payment_mode}
               >
-                <option value="">Payment Code *</option>
+                <option value="">Payment Mode *</option>
                 <option value="Cash">Cash</option>
                 <option value="Credit Card">Credit Card</option>
               </Form.Control>

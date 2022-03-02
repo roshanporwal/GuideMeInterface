@@ -68,7 +68,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     {
       name: "Location",
       selector: (row) => {
-          return row["location"]
+          return row["location"] || row["map_link"]
         // if(row["location"])
         //   return `${row["location"].country} ${row["location"].state} ${row["location"].city}`
       },
@@ -462,7 +462,7 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
                   />
                   <h2>{target.completed}</h2>
                 </div>
-                <h3>Completed Enquiries</h3>
+                <h3>Completed</h3>
               </div>
               <div className="col-md-2 col-sm-6 lost_enquiries text-center">
                 <div className="d-flex justify-content-center align-items-center">

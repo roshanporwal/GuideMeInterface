@@ -15,9 +15,9 @@ import ThankYouModal from '../Layout/ThankYouModal'
 function UltraSound({handleModalShow}) {
     const hiddenFileInputInsurance = React.useRef(null);
     const [errors, setErrors] = useState();
-    const [fileerrors,setFileErrors] = useState({
-        insurance:"",
-    });
+    // const [fileerrors,setFileErrors] = useState({
+    //     insurance:"",
+    // });
     const [dateerrors,setDateErrors] = useState({
         dateOne:"",
         DateTwo:""
@@ -27,7 +27,7 @@ function UltraSound({handleModalShow}) {
 
     const validate = async (values) => {
         try {
-            setFileErrors({insurance:insurance === undefined ? "required" : ""});
+            // setFileErrors({insurance:insurance === undefined ? "required" : ""});
             setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : ""});
             await validationSchema.validate(values, { abortEarly: false });
             return {};
@@ -99,7 +99,7 @@ function UltraSound({handleModalShow}) {
         const err = await validate(formValues);
         setErrors(err);
         
-        if(Object.keys(err).length === 0 && insurance)  {    
+        if(Object.keys(err).length === 0 )  {    
                 setLoading(true)
                 const formData = new FormData();
 
@@ -331,12 +331,12 @@ function UltraSound({handleModalShow}) {
                         <Form.Control
                             type='text'
                             name="symptoms"
-                            placeholder='Symptoms/ Conditions *'
+                            placeholder='Symptoms/ Conditions'
                             onChange={handleChange}
                             className="global-inputs"
-                            isInvalid={errors?.symptoms}
+                            // isInvalid={errors?.symptoms}
                         />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback>
+                        {/* <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.symptoms}</Form.Control.Feedback> */}
 
                     </Form.Group>
                 </div>
@@ -348,7 +348,7 @@ function UltraSound({handleModalShow}) {
                         </div>
                         
                         <div  role="button" onClick={handleFileInsuranceClick} className='global-file-input'>
-                            <p>{insurance === undefined ? "Upload Prescription Details *" : insurance.name}</p>
+                            <p>{insurance === undefined ? "Upload Prescription Details" : insurance.name}</p>
                         </div>
                         <input
                             type="file"
@@ -358,9 +358,9 @@ function UltraSound({handleModalShow}) {
                             style={{ display: 'none' }}
                             onChange={handleFiles}
                         />
-                        {fileerrors.insurance ? (
+                        {/* {fileerrors.insurance ? (
                             <Form.Label style = {{color:"red"}} type = "valid">File is required</Form.Label>)
-                        : null}  
+                        : null}   */}
                     </Form.Group>
                 </div>
                 <div className='col-10 mt-2'>

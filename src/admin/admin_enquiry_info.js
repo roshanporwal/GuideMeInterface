@@ -8,7 +8,7 @@ import "./style.css";
 import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 // import constants from "../constant";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // import { Form } from "react-bootstrap";
 // import { FaComment } from "react-icons/fa";
 
@@ -36,6 +36,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
   const { state } = useLocation();
   const [enqurie_data, setEnqurie_data] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
   // const [show, setShow] = useState(false);
 
   // const handleOthersField = () => {
@@ -80,7 +81,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
       props.id
     );
     setEnqurie_data(getenquriesbyid.payload);
-    // console.log(getenquriesbyid.payload[0])
+    console.log(getenquriesbyid.payload[0])
     // const enq = getenquriesbyid.payload[0].hospitals;
     // setHopital_enq(enq);
     // if (enq.length !== 0) {
@@ -112,6 +113,17 @@ export default function ADMIN_ENQUIRY_INFO(props) {
   const DownloadReports = (element) => {
     window.open(element, "_blank");
   };
+  const sendInfo = async () => {
+    let data = localStorage.getItem("login");
+    data = JSON.parse(data);
+    const sendInfo = await auth_service.sendInfo(data.login_id,enqurie_data[0]._id)
+
+    if(sendInfo.payload){
+      navigate('/admin/sendquota',{ state:{id : sendInfo.payload}})
+    }
+    else
+      alert(sendInfo.message)
+  }
   const viewInsurance = () => {
     // console.log(enqurie_data[0]);
     if (enqurie_data[0].insurance_card_copy.length === 0) {
@@ -256,6 +268,11 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                         {convertTime(target.preferred_date_second)}
                       </p>
                     ) : null}
+                    {target.nursing_date_range ? 
+                    <p className="card-text">
+                    <b>Nursing Date Range : </b>
+                    {target.nursing_date_range} for {target.time_period} hours 
+                  </p>: null}
                     {target.preferred_gender ? (
                       <p className="card-text">
                         <b>Preferred Gender : </b>
@@ -370,6 +387,16 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       </div>
                     </div> : null
                 }
+                { enqurie_data[0].hospital_name ? 
+                    <div className="col-md-12">
+                      <div className="queryBox my-2">
+                        <h2>Status {enqurie_data[0].status}</h2>
+                        <p><b>Hospital Name : </b>{enqurie_data[0].hospital_name}</p>
+                       {enqurie_data[0].bill_amount ?  <p><b>Bill Amount : </b>{enqurie_data[0].bill_amount}</p> : null }
+                       {enqurie_data[0].commision_value ? <p><b>Commision Value : </b>{enqurie_data[0].commision_value}</p> : null }
+                      </div>
+                    </div> : null
+                }
                 {enqurie_data[0].reports[1] ? (
                   <div className="row m-2">
                     <div className="col-md-5 d-flex justify-content-between">
@@ -414,6 +441,9 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       </div>
                     </div> : null
                 }
+                <div className="col-md-12 text-center">
+                  <button type="button" className="btn btn-primary" onClick={sendInfo}><div>Send To Hospital</div></button>
+                </div>
               </div>
             </div>
           </div>
