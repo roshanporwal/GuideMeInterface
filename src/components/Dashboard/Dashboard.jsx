@@ -65,7 +65,7 @@ function Dashboard() {
                             }}
                           >
                             <div className="row">
-                            &nbsp;{data.name || data1.name}
+                            &nbsp;{data1.name}
                           <div className ="col-2"><FiLogOut/></div>
                           </div>
                           </div>  </> : 
