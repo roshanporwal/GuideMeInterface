@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "GMD",
+  "name": "Guide Me Doc",
   "icons": [
     {
       "src": "GuideMeDocLogo.ico",
@@ -11,7 +11,7 @@
       "src": "GuideMeDocLogo.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "GuideMeDocLogo.png",

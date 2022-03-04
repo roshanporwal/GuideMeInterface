@@ -230,6 +230,7 @@ function PATIENT_DASHBOARD(props) {
                     await ahospital_data;
                     ahospital_data = hospital_data.select_anesthesiologist ? setSelect_anesthesiologist(hospital_data.select_anesthesiologist) : null;
                     await ahospital_data;
+                    alert('Quote sent.')
                     window.location.reload();
 
                 }
@@ -632,7 +633,7 @@ function PATIENT_DASHBOARD(props) {
                                                     <Form.Check
                                                         label="Yes"
                                                         required
-                                                        ype="radio"
+                                                        type="radio"
                                                         name="free_room_upgrade"
                                                         id="yes"
                                                         value="yes"
