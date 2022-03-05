@@ -36,14 +36,14 @@ function Dashboard() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav style = {{width : "100%"}}>
-                  <div className = "offset-lg-1 col-sm-2">
+                  {data1 ? null : <div className = "offset-lg-1 col-sm-2">
                     <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
-                  </div>
-                  {data1.hospital_name ? 
+                  </div>}
+                  {data1 ? (data1.hospital_name ? 
                   <div className = "col-sm-2" style={{ color: "#164473" }} >
                     <div onClick={() => navigate('/hospital/dashboard')}>
                     Dashboard </div>
-                  </div> : null }
+                  </div> : null) : null }
                   {/* <Col lg={{ offset: 3 }} sm={5}>
                     <p style={{ color: "#164473" }}>Support</p>
                   </Col> */}
@@ -70,7 +70,7 @@ function Dashboard() {
                             }}
                           >
                             <div className="row">
-                            &nbsp;{data ? data.name : data1.hospital_name ? data1.hospital_name : ""}
+                            &nbsp;{data ? data.name : data1 ? (data1.hospital_name ? data1.hospital_name: "" ): ""}
                           <div className ="col-2"><FiLogOut/></div>
                           </div>
                           </div>  </> : 
