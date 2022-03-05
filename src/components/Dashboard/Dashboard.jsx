@@ -14,15 +14,15 @@ import XRayLogo from "../../assets/x-ray-logo.png";
 import { FiLogOut } from 'react-icons/fi'
 
 function Dashboard() {
-    const navigate = useNavigate();
-    let data = localStorage.getItem("login_patient")
-    if(data){
-        data = JSON.parse(data)
-    }
-    let data1 = localStorage.getItem("login")
-    if(data1){
-        data1 = JSON.parse(data1)
-    }
+  const navigate = useNavigate();
+  let data = localStorage.getItem("login_patient")
+  if (data) {
+    data = JSON.parse(data)
+  }
+  let data1 = localStorage.getItem("login")
+  if (data1) {
+    data1 = JSON.parse(data1)
+  }
   return (
     <>
       <div className="container-fluid">
@@ -35,53 +35,52 @@ function Dashboard() {
 
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav style = {{width : "100%"}}>
-                  {data1 ? null : <div className = "offset-lg-1 col-sm-2">
+                <Nav style={{ width: "100%" }}>
+                  {data1 ? null : <div className="offset-lg-1 col-sm-2">
                     <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
                   </div>}
-                  {data1 ? (data1.hospital_name ? 
-                  <div className = "col-sm-2" style={{ color: "#164473" }} >
-                    <div onClick={() => navigate('/hospital/dashboard')}>
-                    Dashboard </div>
-                  </div> : null) : null }
+                  {data1 ? (data1.hospital_name ?
+                    <div className="col-sm-2" style={{ color: "#164473" }} >
+                      <div onClick={() => navigate('/hospital/dashboard')}>
+                        Dashboard </div>
+                    </div> : null) : null}
                   {/* <Col lg={{ offset: 3 }} sm={5}>
                     <p style={{ color: "#164473" }}>Support</p>
                   </Col> */}
-                    <div className = "offset-lg-5 col-sm-2">
-                        {data || data1 ? 
-                          null : 
-                          <div
-                              className="btn btn-primary"
-                              onClick={() => navigate("/log-in")}
-                          >
-                          Login
-                          </div> 
-                      }
-                    </div>
-                    <div className = "col-sm-2">
-                        {data || data1 ? 
-                         <> <div
-                          className="btn btn-primary"
-                          onClick={() =>
-                            { 
-                              localStorage.removeItem("login");
-                              localStorage.removeItem("login_patient");
-                              window.location.reload()
-                            }}
-                          >
-                            <div className="row">
-                            &nbsp;{data ? data.name : data1 ? (data1.hospital_name ? data1.hospital_name: "" ): ""}
-                          <div className ="col-2"><FiLogOut/></div>
-                          </div>
-                          </div>  </> : 
-                          <div
-                              className="btn btn-primary"
-                              onClick={() => navigate("/hospital")}
-                          >
-                          Hospital Login
-                          </div> 
-                      }
-                    </div>
+                  <div className="offset-lg-5 col-sm-2">
+                    {data || data1 ?
+                      null :
+                      <div
+                        className="btn btn-primary"
+                        onClick={() => navigate("/log-in")}
+                      >
+                        Login
+                      </div>
+                    }
+                  </div>
+                  <div className="col-sm-2">
+                    {data || data1 ?
+                      <> <div
+                        className="btn btn-primary"
+                        onClick={() => {
+                          localStorage.removeItem("login");
+                          localStorage.removeItem("login_patient");
+                          window.location.reload()
+                        }}
+                      >
+                        <div className="row">
+                          &nbsp;{data ? data.name : data1 ? data1.hospital_name : "" }
+                          <div className="col-2"><FiLogOut /></div>
+                        </div>
+                      </div>  </> :
+                      <div
+                        className="btn btn-primary"
+                        onClick={() => navigate("/hospital")}
+                      >
+                        Hospital Login
+                      </div>
+                    }
+                  </div>
                 </Nav>
               </Navbar.Collapse>
             </Container>
@@ -100,7 +99,7 @@ function Dashboard() {
               </div>
               <div className="text-center">
                 <a className="dashboard-call-button" href="tel:+971 43562356">
-                +971 4 356 2 356
+                  +971 4 356 2 356
                 </a>
               </div>
               <div className="mt-5 dashboard-logo">
@@ -133,7 +132,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </Col>
-                <div className ="col-lg-4 col-6 mt-3">
+                <div className="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Pharmacy"
                     item_img={MedicineLogo}
@@ -141,7 +140,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </div>
-                <div className ="col-lg-4 col-6 mt-3">
+                <div className="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Lab Tests"
                     item_img={LabLogo}
@@ -149,7 +148,7 @@ function Dashboard() {
                     navigate={navigate}
                   />
                 </div>
-                <div className ="col-lg-4 col-6 mt-3">
+                <div className="col-lg-4 col-6 mt-3">
                   <DashboardItem
                     item_desc="Diagnostics/ Radiology"
                     item_img={XRayLogo}
@@ -163,10 +162,10 @@ function Dashboard() {
         </div>
       </Container>
       <div className="page-footer font-small blue">
-      <div className="footer-copyright text-center py-3">
-       All Rights Reserved @ Medi Connect International
+        <div className="footer-copyright text-center py-3">
+          All Rights Reserved @ Medi Connect International
+        </div>
       </div>
-    </div>
     </>
   );
 }
