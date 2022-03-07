@@ -414,7 +414,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                               onClick={() => DownloadReports(element)}
                             >
                               {" "}
-                              Download Report
+                              {/* {element.slice(61)} */}Download Report {index}
                             </div>
                           );
                         }
@@ -438,6 +438,14 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                       <div className="queryBox my-2">
                         <h2>Current Diagnosis</h2>
                         <p>{enqurie_data[0].current_diagnosis}</p>
+                      </div>
+                    </div> : null
+                }
+                {enqurie_data[0].medicine_name ?
+                    <div className="col-md-12">
+                      <div className="queryBox my-2">
+                        <h2>Medicine Names</h2>
+                        <p>{enqurie_data[0].medicine_name}</p>
                       </div>
                     </div> : null
                 }

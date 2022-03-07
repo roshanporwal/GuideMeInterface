@@ -9,7 +9,7 @@ import {
 import { SiGooglemaps } from 'react-icons/si';
 import { FaBuilding, FaGlobeAsia } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
-import { GiDirectionSigns } from 'react-icons/gi'
+import { GiDirectionSigns, GiMedicines } from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
 import * as auth_service from "../../service/auth_service";
@@ -615,7 +615,23 @@ function Pharmacy({ handleModalShow }) {
 
             </Form.Group>
           </div>
+          <div className = "col-10">
+          <Form.Group>
+              <div className="prepend-icon">
+                <GiMedicines />
+              </div>
+              <Form.Control
+                type='text'
+                name="medicine_name"
+                placeholder='Non-Prescriptive Medicines'
+                onChange={handleChange}
+                className="global-inputs"
+                // isInvalid={errors?.alternate_number}
+              />
+              {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.alternate_number}</Form.Control.Feedback> */}
 
+            </Form.Group>
+          </div>
           <div className='col-10 col-md-7'>
             <Form.Group>
               <div className="prepend-icon">

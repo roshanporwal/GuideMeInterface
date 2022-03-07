@@ -758,7 +758,16 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                             ))}
-
+                            {enqurie_data[0].medicine_name ?
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="diagnosisBox my-3">
+                                            <h2>Medicine Name</h2>
+                                            <p>{enqurie_data[0].medicine_name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            :null}
                             {show_quota ? null : (
                                 <div className="row">
                                     <div className="col-md-12">

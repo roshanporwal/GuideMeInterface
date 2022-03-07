@@ -106,7 +106,7 @@ function SignUpScreen() {
       terms === true
     ) {
       formValues.name = formValues.first_name + " " + formValues.family_name
-      formValues.dob = DateOne
+      formValues.dob = DateOne.toString()
       const formData = new FormData();
       formData.append("insurance_card_copy", insurance);
       formData.append("formValues", JSON.stringify(formValues));
