@@ -288,12 +288,12 @@ function PATIENT_DASHBOARD(props) {
                                 <div key={index}>
                                     <div className="PatientDetails">
                                         <h2 className="PatientName py-3">{target.patient_name}</h2>
-                                        <p><b>Phone Number : </b><span>{target.patient_mobile}</span></p>
-                                        <p><b>Email : </b><span>{target.patient_email}</span></p>
+                                        {/* <p><b>Phone Number : </b><span>{target.patient_mobile}</span></p>
+                                        <p><b>Email : </b><span>{target.patient_email}</span></p> */}
                                         <p><b>Age : </b><span>{target.patient_age}</span></p>
                                         <p><b>Gender : </b><span>{target.patient_gender}</span></p>
                                         <p><b>Nationality : </b><span>{target.patient_nationality}</span></p>
-                                        <h5><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></h5>  
+                                        <p><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></p>  
                                     </div>
                                 </div>
                             ))

@@ -36,11 +36,13 @@ function Dashboard() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav style={{ width: "100%" }}>
-                  {data1 ? null : <div className="offset-lg-1 col-sm-2">
+                {data1 ? (data1.hospital_name ? null :
+                  <div className="offset-lg-1 col-sm-2">
                     <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
-                  </div>}
+                  </div>) : null }
+                  {/* // } */}
                   {data1 ? (data1.hospital_name ?
-                    <div className="col-sm-2" style={{ color: "#164473" }} >
+                    <div className="offset-lg-1 col-sm-2" style={{ color: "#164473" }} >
                       <div onClick={() => navigate('/hospital/dashboard')}>
                         Dashboard </div>
                     </div> : null) : null}

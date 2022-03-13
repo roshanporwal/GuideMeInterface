@@ -10,6 +10,7 @@ import ReactGifLoader from "../interfacecomponents/gif_loader";
 import constants from "../constant";
 import { Button } from "antd";
 import { useLocation } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
 export default function ADMIN_PATIENT_DASHBOARD(props) {
     const { state } = useLocation();
@@ -66,7 +67,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             props.id
         );
         setEnqurie_data(getenquriesbyid.payload);
-        console.log(getenquriesbyid.payload[0]);
+        // console.log(getenquriesbyid.payload[0]);
         const enq = getenquriesbyid.payload[0].hospitals;
         setHopital_enq(enq);
         if (enq.length !== 0) {
@@ -123,6 +124,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         setLoading(false);
                         alert("Some thing Went Wrong");
                     });
+                // navigate()
             }
         }
     };
@@ -335,12 +337,15 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <p>
                                             <b>Id :</b> <span>{target.id}</span>
                                         </p>
-                                        { target.family ?
+                                        {target.family ? (
                                             <p>
-                                              <b>For Family Member : </b>
-                                              <span>{target.family.first_name} {target.family.last_name}</span>
-                                            </p> : null
-                                          }
+                                                <b>For Family Member : </b>
+                                                <span>
+                                                    {target.family.first_name}{" "}
+                                                    {target.family.last_name}
+                                                </span>
+                                            </p>
+                                        ) : null}
                                         <p>
                                             <b>Phone Number : </b>{" "}
                                             <span>{target.patient_mobile}</span>
@@ -357,25 +362,34 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <b>Gender : </b>{" "}
                                             <span>{target.patient_gender}</span>
                                         </p>
-                                        {target.patient_address ?
-                                          <p>
-                                            <b>Address : </b>{" "}
-                                            <span>target.patient_address</span>
-                                          </p> : null}
-                                          {target.map_link ? (
+                                        {target.patient_address ? (
                                             <p>
-                                              <b>Map Link : </b>
-                                              <span>
-                                                <a href={target.map_link}>
-                                                  {target.map_link.slice(28)}
-                                                </a>
-                                              </span>
+                                                <b>Address : </b>{" "}
+                                                <span>
+                                                    target.patient_address
+                                                </span>
                                             </p>
-                                          ) : null}
-                                        { target.insurance_name ? <p>
-                                          <b>Insurance Name : </b>{" "}
-                                          <span>{target.insurance_name}</span>
-                                        </p> : null }
+                                        ) : null}
+                                        {target.map_link ? (
+                                            <p>
+                                                <b>Map Link : </b>
+                                                <span>
+                                                    <a href={target.map_link}>
+                                                        {target.map_link.slice(
+                                                            28
+                                                        )}
+                                                    </a>
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        {target.insurance_name ? (
+                                            <p>
+                                                <b>Insurance Name : </b>{" "}
+                                                <span>
+                                                    {target.insurance_name}
+                                                </span>
+                                            </p>
+                                        ) : null}
                                         <p>
                                             <b>Nationality : </b>{" "}
                                             <span>
@@ -392,12 +406,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 </span>
                                             </p>
                                         ) : null}
-                                        { target.patient_referred_by ? 
-                                        <p>
-                                          <b>Referred By : </b>
-                                          <span>{target.patient_referred_by}</span>
-                                        </p> : null
-                                        }
+                                        {target.patient_referred_by ? (
+                                            <p>
+                                                <b>Referred By : </b>
+                                                <span>
+                                                    {target.patient_referred_by}
+                                                </span>
+                                            </p>
+                                        ) : null}
                                     </div>
                                 </div>
                             ))}
@@ -426,10 +442,12 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 {target.enquiry_date}
                                             </p>
                                         ) : null}
-                                        <p>
-                                            Patient Location :{" "}
-                                            {target.patient_nationality}
-                                        </p>
+                                        {target.location ? (
+                                            <p>
+                                                Patient Location :{" "}
+                                                {target.location}
+                                            </p>
+                                        ) : null}
                                         {target.proposal_date ? (
                                             <p>
                                                 Proposed Date :{" "}
@@ -462,11 +480,14 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 }
                                             </p>
                                         ) : null}
-                                        {target.nursing_date_range ? 
-                    <p className="card-text">
-                    <b>Nursing Date Range : </b>
-                    {target.nursing_date_range} for {target.time_period} hours 
-                  </p>: null}
+                                        {target.nursing_date_range ? (
+                                            <p className="card-text">
+                                                <b>Nursing Date Range : </b>
+                                                {
+                                                    target.nursing_date_range
+                                                } for {target.time_period} hours
+                                            </p>
+                                        ) : null}
                                         {target.transport_support_needed ? (
                                             <p>
                                                 Transport Support Needed :{" "}
@@ -504,8 +525,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             <div className="row">
                                 {enqurie_data.map((target, index) => (
                                     <div key={index} className="col-md-6">
-                                        {/* 
-                                        <p><b>Speciality : </b>{target.speciality}</p> */}
+                                        {/* <p><b>Speciality : </b>{target.speciality}</p> */}
                                         <p>
                                             <b>Medical History : </b>
                                             {target.medical_history}&nbsp;&nbsp;
@@ -758,16 +778,18 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                             ))}
-                            {enqurie_data[0].medicine_name ?
+                            {enqurie_data[0].medicine_name ? (
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="diagnosisBox my-3">
                                             <h2>Medicine Name</h2>
-                                            <p>{enqurie_data[0].medicine_name}</p>
+                                            <p>
+                                                {enqurie_data[0].medicine_name}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            :null}
+                            ) : null}
                             {show_quota ? null : (
                                 <div className="row">
                                     <div className="col-md-12">
@@ -839,9 +861,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <p>
                                     <b>Type of room</b>
                                 </p>
-                                <p>
+                                {/* <p>
                                     <b>Length of stay</b>
-                                </p>
+                                </p> */}
                                 <p>
                                     <b>Free room upgrade</b>
                                 </p>
@@ -863,30 +885,49 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     {target.estimate_price ? (
                                         <div>
                                             <p>{target.estimate_price}</p>
-                                            <p>{target.treatment_plan}</p>
-                                            <p>{target.inclusion}</p>
-                                            <p>{target.exclusion}</p>
-                                            <p>{target.estimate_copay}</p>
-                                            <p>{target.type_of_anesthesia}</p>
-                                            <p>{target.type_of_room}</p>
-                                            <p>{target.free_room_upgrade}</p>
-                                            <p>{target.free_physiotherapy}</p>
-                                            <p>{target.pickup_and_drop}</p>
-                                            <p>
-                                                {
+                                            <p data-tip={target.treatment_plan}>
+                                                <ReactTooltip />
+                                                {target.treatment_plan|| "-"}
+                                            </p>
+                                            <p>{target.inclusion|| "-"}</p>
+                                            <p>{target.exclusion|| "-"}</p>
+                                            <p>{target.estimate_copay|| "-"}</p>
+                                            <p>{target.type_of_anesthesia|| "-"}</p>
+                                            <p>{target.type_of_room || "-"}</p>
+                                            {/* <p>{target.length_of_stay}</p> */}
+                                            <p>{target.free_room_upgrade|| "-"}</p>
+                                            <p>{target.free_physiotherapy || "-"}</p>
+                                            <p>{target.pickup_and_drop || "-"}</p>
+                                            <p
+                                                data-tip={
                                                     target.free_other_speciality_consultant
                                                 }
-                                            </p>
-                                            <p>
+                                            >
+                                                <ReactTooltip />
                                                 {
-                                                    target.free_other_speciality_consultant
+                                                    target.free_other_speciality_consultant || "-"
                                                 }
                                             </p>
-                                            <p>
-                                                {
+                                            <p
+                                                data-tip={
                                                     target.free_other_speciality_consultant
                                                 }
+                                            >
+                                                <ReactTooltip />
+                                                {
+                                                    target.free_other_speciality_consultant || "-"
+                                                }
                                             </p>
+                                            {/* <p
+                                                data-tip={
+                                                    target.free_other_speciality_consultant
+                                                }
+                                            >
+                                                <ReactTooltip />
+                                                {
+                                                    target.free_other_speciality_consultant || "-"
+                                                }
+                                            </p> */}
                                             {enqurie_data[0].status ===
                                             "Awaiting From Patients" ? (
                                                 <button

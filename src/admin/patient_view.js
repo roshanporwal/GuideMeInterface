@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { useLocation } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
 
 export default function PATIENT_VIEW(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
@@ -15,6 +16,7 @@ export default function PATIENT_VIEW(props) {
     async function fetchData(id) {
         const getenquries = await auth_service.getenquriesbyid_patient(id)
         setEnqurie_data(getenquries.payload)
+        // console.log(getenquries.payload)
         const enq = getenquries.payload[0].hospitals
         setHopital_enq(enq)
         if (enq.length !== 0) {
@@ -26,7 +28,7 @@ export default function PATIENT_VIEW(props) {
           window.open (element,'_blank')  
     }
     const viewInsurance = () => {
-        console.log(enqurie_data[0]);
+        // console.log(enqurie_data[0]);
         if(enqurie_data[0].insurance_card_copy.length === 0){
             return  alert("No reports found")
         }
@@ -35,9 +37,11 @@ export default function PATIENT_VIEW(props) {
         });
          //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
     }
-
+    
     return (
         <>
+        <ReactTooltip />
+        <ReactTooltip />
 		<div className="container my-5">
 			<div className="row">
 				<div className="col-md-4">
@@ -45,13 +49,13 @@ export default function PATIENT_VIEW(props) {
 						enqurie_data.map((target, index) => (
 							<div key={index} {...target}>
 								<div className="PatientDetails">
-									<h2 class="PatientName py-3"><b>{target.patient_name}</b></h2>
+									<h2 className="PatientName py-3"><b>{target.patient_name}</b></h2>
 									<p><b>Phone Number :</b> <span>{target.patient_mobile}</span></p>
 									<p><b>Email :</b> <span>{target.patient_email}</span></p>	
 									<p><b>Age :</b> <span>{target.patient_age}</span></p>	
 									<p><b>Gender :</b> <span>{target.patient_gender}</span></p>	
 									<p><b>Nationality :</b> <span>{target.patient_nationality}</span></p>	
-									<p><b>Language :</b> <span>{target.languages_spoken}</span></p>
+                                    {target.languages_spoken[0] ? <p><b>Language :</b> <span>{target.languages_spoken}</span></p> : null }
 								</div>
 							</div>
 						))
@@ -154,29 +158,37 @@ export default function PATIENT_VIEW(props) {
                                 <p><b>Type of room</b></p>
                                 <p><b>Length of stay</b></p>
                                 <p><b>Free room upgrade</b></p>
+                                <p><b>Free telephonic feedback</b></p>
+                                <p><b>Translator</b></p>
                                 <p><b>Free Physiotherapy</b></p>
                                 <p><b>Pickup and drop</b></p>
                                 <p><b>Other free consultation</b></p>
-                                <p><b>Free Annual checkup</b></p>         
+                                <p><b>Free Annual checkup</b></p> 
+                                <p><b>Selected Doctors</b></p>    
+                                <p><b>General Disclaimer</b></p>    
                             </th>
                             {
                                 hopital_enq.map((target, index) => (
                                     <td key={index} >
                                         {target.estimate_price ?
                                         <div className="targetData">
-                                        <p>{target.estimate_price}</p>
-                                        <p>{target.treatment_plan}</p>
+                                        <p data-tip={target.estimate_price}>{target.estimate_price}</p>
+                                        <p data-tip={target.treatment_plan}>{target.treatment_plan}</p>
                                         <p>{target.inclusion}</p>
                                         <p>{target.exclusion}</p>
                                         <p>{target.estimate_copay}</p>
                                         <p>{target.type_of_anesthesia}</p>
                                         <p>{target.type_of_room}</p>
+                                        <p>{target.lenth_of_stay}</p>
                                         <p>{target.free_room_upgrade}</p>
+                                        <p>{target.free_telephonic_feedback}</p>
+                                        <p>{target.translator}</p>
                                         <p>{target.free_physiotherapy}</p>
                                         <p>{target.pickup_and_drop}</p>
                                         <p>{target.free_other_speciality_consultant}</p>
                                         <p>{target.free_other_speciality_consultant}</p>
-                                        <p>{target.free_other_speciality_consultant}</p>   
+                                        <p data-tip={target.select_doctor.join(", ")}><ReactTooltip/>{target.select_doctor.join(", ")} </p>
+                                        <p data-tip={target.general_disclaimer}><ReactTooltip/>{target.general_disclaimer}</p>
                                         </div>
                                         : <div>AWAITING FOR QUOTATION</div>
                                     }                           
