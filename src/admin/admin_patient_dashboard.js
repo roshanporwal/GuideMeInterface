@@ -817,16 +817,165 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         </div>
                     </div>
                 </div>
-                {show_quota ? (
+                {show_quota ?
+				<div className="container my-5">
+                    <div id="table-scroll" className="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                {
+                                    hopital_enq.map((target, index) => (
+                                    <th scope="col" key={index} >
+                                        <h2 className="HospitalTitle">{target.hospital_name}</h2>
+                                    </th>
+                                ))}                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>
+                                <p><b>Estimate Price</b></p>
+                                <p><b>Treatment Plan</b></p>
+                                <p><b>Inclusions</b></p>
+                                <p><b>Exclusions</b></p>
+                                <p><b>Copay Required</b></p>
+                                <p><b>Types of Anesthesia</b></p>
+                                <p><b>Type of room</b></p>
+                                <p><b>Length of stay</b></p>
+                                <p><b>Free room upgrade</b></p>
+                                <p><b>Free telephonic feedback</b></p>
+                                <p><b>Translator</b></p>
+                                <p><b>Free Physiotherapy</b></p>
+                                <p><b>Pickup and drop</b></p>
+                                <p><b>Other free consultation</b></p>
+                                <p><b>Free Annual checkup</b></p> 
+                                <p><b>Selected Doctors</b></p>    
+                                <p><b>General Disclaimer</b></p>   
+                                {/* <p></p>  */}
+                            </th>
+                            {
+                                hopital_enq.map((target, index) => (
+                                    <td key={index} >
+                                        {target.estimate_price ?
+                                        <div className="targetData">
+                                        <p data-tip={target.estimate_price}>{target.estimate_price}</p>
+                                        <p data-tip={target.treatment_plan}>{target.treatment_plan}</p>
+                                        <p>{target.inclusion}</p>
+                                        <p>{target.exclusion}</p>
+                                        <p>{target.estimate_copay}</p>
+                                        <p>{target.type_of_anesthesia}</p>
+                                        <p>{target.type_of_room}</p>
+                                        <p>{target.lenth_of_stay}</p>
+                                        <p>{target.free_room_upgrade}</p>
+                                        <p>{target.free_telephonic_feedback}</p>
+                                        <p>{target.translator}</p>
+                                        <p>{target.free_physiotherapy}</p>
+                                        <p>{target.pickup_and_drop}</p>
+                                        <p>{target.free_other_speciality_consultant}</p>
+                                        <p>{target.free_other_speciality_consultant}</p>
+                                        <p data-tip={target.select_doctor.join(", ")}><ReactTooltip/>{target.select_doctor.join(", ")} </p>
+                                        <p data-tip={target.general_disclaimer}><ReactTooltip/>{target.general_disclaimer}</p>
+                                        
+                                        </div>
+                                        : <div>AWAITING FOR QUOTATION</div>
+                                    }                           
+                                    </td>
+                            ))
+                            }       
+                        </tr>
+                        <tr className="mt-2">
+                            <th scope="col"></th>
+                            {
+                                hopital_enq.map((target, index) => (
+                                <th scope="col" key={index} >
+                                    {enqurie_data[0].status ===
+                            "Awaiting From Patients" ? (
+                                    <button
+                                        className="JoinButton Hover"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        onClick={() =>
+                                            setFormValue(
+                                                (prevState) => ({
+                                                    ...prevState,
+                                                    id: target.hospital_id,
+                                                })
+                                            )
+                                        }
+                                    >
+                                        Certified Patients
+                                    </button>
+                            ) : null}
+                                </th>
+                            ))}                              
+                            </tr>
+                            <tr>
+                            
+                        </tr>
+                        </tbody>
+                     </table>
+                     {enqurie_data[0].status === "Won Patients" ? (
+                            <div className="row mt-4">
+                                <div className="col-md-3 text-center">
+                                    <p>
+                                        <b>Won: </b>
+                                    </p>
+                                    <p>
+                                        <b>Transaction Value: </b>
+                                    </p>
+                                    <p>
+                                        <b>Commission Value:</b>
+                                    </p>
+                                </div>
+                                <div className="col-md-9">
+                                    <p>{enqurie_data[0].hospital_name} </p>
+                                    <p>{enqurie_data[0].value}</p>
+                                    <p>{enqurie_data[0].commission}</p>
+                                </div>
+                            </div>
+                        ) : null}
+                        <div className="py-5">
+                            {enqurie_data[0].status ===
+                            "Awaiting From Hospital" || enqurie_data[0].status.includes(" quotes recieved") ? (
+                                <div className="col-md-12 my-3">
+                                    <button
+                                        style={{ width: "100%" }}
+                                        className="JoinButton Hover"
+                                        onClick={() => handleSubmit("after")}
+                                    >
+                                        Forward to Patient
+                                    </button>
+                                </div>
+                            ) : enqurie_data[0].status === "Lost Patients" ||
+                              enqurie_data[0].status ===
+                                  "Won Patients" ? null : (
+                                <div className="col-md-12 ">
+                                    <button
+                                        style={{
+                                            width: "100%",
+                                            backgroundColor: "orange",
+                                        }}
+                                        className="JoinButton Hover"
+                                        onClick={() => wonandloss("reason")}
+                                    >
+                                        Patient Lost
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                </div>
+            </div> : null}
+                {/* {show_quota ? (
                     <div className="container my-5">
                         <div
                             className="row mb-3"
                             style={{ background: "#164473" }}
                         >
                             <div className="col-md-2">
-                                {/* empty column for table headling */}
-                            </div>
-                            {hopital_enq.map((target, index) => (
+                                {/* empty column for table headling */
+                            /* </div>
+                            hopital_enq.map((target, index) => (
                                 <div className="col-md-2" key={index}>
                                     <h2 className="HospitalTitle">
                                         {target.hospital_name}
@@ -861,9 +1010,9 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <p>
                                     <b>Type of room</b>
                                 </p>
-                                {/* <p>
+                                /* <p>
                                     <b>Length of stay</b>
-                                </p> */}
+                                </p> //comment-end}
                                 <p>
                                     <b>Free room upgrade</b>
                                 </p>
@@ -879,7 +1028,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <p>
                                     <b>Free Annual checkup</b>
                                 </p>
-                            </div>
+                            </div> 
                             {hopital_enq.map((target, index) => (
                                 <div className="col-md-2" key={index}>
                                     {target.estimate_price ? (
@@ -894,7 +1043,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>{target.estimate_copay|| "-"}</p>
                                             <p>{target.type_of_anesthesia|| "-"}</p>
                                             <p>{target.type_of_room || "-"}</p>
-                                            {/* <p>{target.length_of_stay}</p> */}
+                                            {/* <p>{target.length_of_stay}</p> comment-end
                                             <p>{target.free_room_upgrade|| "-"}</p>
                                             <p>{target.free_physiotherapy || "-"}</p>
                                             <p>{target.pickup_and_drop || "-"}</p>
@@ -927,7 +1076,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 {
                                                     target.free_other_speciality_consultant || "-"
                                                 }
-                                            </p> */}
+                                            </p> //comment-end
                                             {enqurie_data[0].status ===
                                             "Awaiting From Patients" ? (
                                                 <button
@@ -953,59 +1102,12 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         </div>
                                     )}
                                 </div>
-                            ))}
+                            ))} 
                         </div>
-                        {enqurie_data[0].status === "Won Patients" ? (
-                            <div className="row mt-4">
-                                <div className="col-md-3 text-center">
-                                    <p>
-                                        <b>Won: </b>
-                                    </p>
-                                    <p>
-                                        <b>Transaction Value: </b>
-                                    </p>
-                                    <p>
-                                        <b>Commission Value:</b>
-                                    </p>
-                                </div>
-                                <div className="col-md-9">
-                                    <p>{enqurie_data[0].hospital_name} </p>
-                                    <p>{enqurie_data[0].value}</p>
-                                    <p>{enqurie_data[0].commission}</p>
-                                </div>
-                            </div>
-                        ) : null}
-                        <div className="py-5">
-                            {enqurie_data[0].status ===
-                            "Awaiting From Hospital" ? (
-                                <div className="col-md-12 my-3">
-                                    <button
-                                        style={{ width: "100%" }}
-                                        className="JoinButton Hover"
-                                        onClick={() => handleSubmit("after")}
-                                    >
-                                        Forward to Patient
-                                    </button>
-                                </div>
-                            ) : enqurie_data[0].status === "Lost Patients" ||
-                              enqurie_data[0].status ===
-                                  "Won Patients" ? null : (
-                                <div className="col-md-12 ">
-                                    <button
-                                        style={{
-                                            width: "100%",
-                                            backgroundColor: "orange",
-                                        }}
-                                        className="JoinButton Hover"
-                                        onClick={() => wonandloss("reason")}
-                                    >
-                                        Patient Lost
-                                    </button>
-                                </div>
-                            )}
+                        
                         </div>
                     </div>
-                ) : null}
+                                    ) : null}*/}
             </>
         );
 }
