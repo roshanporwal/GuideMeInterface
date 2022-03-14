@@ -937,7 +937,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         ) : null}
                         <div className="py-5">
                             {enqurie_data[0].status ===
-                            "Awaiting From Hospital" || enqurie_data[0].status.includes(" quotes recieved") ? (
+                            "Awaiting From Hospital" || enqurie_data[0].status.toLowerCase().includes(" quotes recieved") ? (
                                 <div className="col-md-12 my-3">
                                     <button
                                         style={{ width: "100%" }}
