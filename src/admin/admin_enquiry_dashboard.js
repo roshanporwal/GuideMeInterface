@@ -108,54 +108,54 @@ export default function ADMIN_ENQUIRY_DASHBOARD(props) {
     //   selector: (row) => row["status"],
     //   sortable: true,
     // },
-    {
-      name: "Status",
-      selector: (row) => {
-        if (row["status"] === "New") {
-          return (
-            <select
-              onClick={(e) => {
-                handleStatusChanges(e, row["_id"]);
-              }}
-            >
-              <option value={row["status"]}>{row["status"]}</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-              <option value="Lost">Lost</option>
-            </select>
-          );
-        }
-        else if(row["status"] === "In Progress"){
-          return (
-            <select
-              onClick={(e) => {
-                handleStatusChanges(e, row["_id"]);
-              }}
-            >
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-              <option value="Lost">Lost</option>
-            </select>
-          );
-        }
-        else{
-          return(row["status"])
-        }
-      },
-      sortable: true,
-    },
+    // {
+    //   name: "Status",
+    //   selector: (row) => {
+    //     if (row["status"] === "New") {
+    //       return (
+    //         <select
+    //           onClick={(e) => {
+    //             handleStatusChanges(e, row["_id"]);
+    //           }}
+    //         >
+    //           <option value={row["status"]}>{row["status"]}</option>
+    //           <option value="In Progress">In Progress</option>
+    //           <option value="Completed">Completed</option>
+    //           <option value="Lost">Lost</option>
+    //         </select>
+    //       );
+    //     }
+    //     else if(row["status"] === "In Progress"){
+    //       return (
+    //         <select
+    //           onClick={(e) => {
+    //             handleStatusChanges(e, row["_id"]);
+    //           }}
+    //         >
+    //           <option value="In Progress">In Progress</option>
+    //           <option value="Completed">Completed</option>
+    //           <option value="Lost">Lost</option>
+    //         </select>
+    //       );
+    //     }
+    //     else{
+    //       return(row["status"])
+    //     }
+    //   },
+    //   sortable: true,
+    // },
   ];
-  const handleStatusChanges = async  (e,patient) =>{
-    setStatus(e.target.value)
-    setPatient1(patient)
-    if(e.target.value === "Completed")
-      setCompletedShow(true)
-    else if(e.target.value === "In Progress")
-      setProgressShow(true)
-    else if(e.target.value === "Lost"){
-      await postForm(patient,e.target.value)
-    }
-  }
+  // const handleStatusChanges = async  (e,patient) =>{
+  //   setStatus(e.target.value)
+  //   setPatient1(patient)
+  //   if(e.target.value === "Completed")
+  //     setCompletedShow(true)
+  //   else if(e.target.value === "In Progress")
+  //     setProgressShow(true)
+  //   else if(e.target.value === "Lost"){
+  //     await postForm(patient,e.target.value)
+  //   }
+  // }
   const handleCompletedClose = () => {
     setCompletedShow(false)
   }

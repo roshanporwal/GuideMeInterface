@@ -326,6 +326,7 @@ function SignUpScreen() {
                           <option key="Social media" value="Social media">Social media</option>
                           <option key="Insurance" value="Insurance">Insurance</option>
                           <option key="TPA" value="TPA">TPA</option>
+                          <option key="NOTA" value="None of the Above">None of the Above</option>
                         </Form.Control>
                         <Form.Control.Feedback
                           style={{ color: "red" }}
@@ -404,7 +405,7 @@ function SignUpScreen() {
                       />
                       </div>
                       <div className="col-10">
-                        <Form.Label for="terms-condition">I agree to <a href="/terms-and-conditions" target="_blank">terms & conditions. *</a></Form.Label>
+                        <Form.Label htmlFor="terms-condition">I agree to <a href="/terms-and-conditions" target="_blank">terms & conditions. *</a></Form.Label>
                       </div>
                     </div>
                     <Form.Control.Feedback

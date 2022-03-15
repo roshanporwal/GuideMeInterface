@@ -47,7 +47,7 @@ function LoginScreen() {
             const login = await auth_service.login(req)
             if(login.payload){
                 localStorage.setItem('login_patient', JSON.stringify(login.payload));
-                window.location = '/';
+                navigate('/');
             }
             else{
                 alert(login.message)

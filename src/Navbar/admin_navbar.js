@@ -22,7 +22,7 @@ export default function ADMIN_NAVBAR(props) {
             <div className="row">
                 <div className="col-md-12">
                   <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                      <Link to="/" className="navbar-brand"><img src= "/assets/images/GuideMeDocLogo.png" className="HeaderLogo" alt="" /></Link>
+                      <Link to="/admin/dashboard" className="navbar-brand"><img src= "/assets/images/GuideMeDocLogo.png" className="HeaderLogo" alt="" /></Link>
                       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                       </button>

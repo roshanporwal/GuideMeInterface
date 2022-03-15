@@ -50,11 +50,11 @@ export default function PATIENT_VIEW(props) {
 							<div key={index} {...target}>
 								<div className="PatientDetails">
 									<h2 className="PatientName py-3"><b>{target.patient_name}</b></h2>
-									<p><b>Phone Number :</b> <span>{target.patient_mobile}</span></p>
-									<p><b>Email :</b> <span>{target.patient_email}</span></p>	
-									<p><b>Age :</b> <span>{target.patient_age}</span></p>	
-									<p><b>Gender :</b> <span>{target.patient_gender}</span></p>	
-									<p><b>Nationality :</b> <span>{target.patient_nationality}</span></p>	
+									<p><b>Phone Number :</b> <span>{target.patient_mobile || "__"}</span></p>
+									<p><b>Email :</b> <span>{target.patient_email || "__"}</span></p>	
+									<p><b>Age :</b> <span>{target.patient_age || "__"}</span></p>	
+									<p><b>Gender :</b> <span>{target.patient_gender || "__"}</span></p>	
+									<p><b>Nationality :</b> <span>{target.patient_nationality || "__"}</span></p>	
                                     {target.languages_spoken[0] ? <p><b>Language :</b> <span>{target.languages_spoken}</span></p> : null }
 								</div>
 							</div>
@@ -65,13 +65,13 @@ export default function PATIENT_VIEW(props) {
 							<div key={index} {...target}>
 								<div className="PatientPreferencesDetails my-4">
 									<h2 className="PatientPreferences py-3">Patient Preferences</h2>
-									<p className="mb-1"><b>Patient Requirement :</b> {target.proposed_treatment_plan}</p>
-									<p><b>Patient Location :</b>{target.patient_nationality}</p>
-									<p><b>Proposed Date : </b>{target.proposal_date}</p>
-									<p><b>Transport Support Needed :</b>{target.transport_support_needed}</p>
-									<p><b>Accomodation / Other Logistic :</b>{target.accomodation}</p>
-									<p><b>Preferred Hospital Visit Type :</b> {target.preferred_hospital_visit}</p>
-									<p><b>Food Preferences : </b>{target.food_preferences}</p>
+									<p className="mb-1"><b>Patient Requirement :</b> {target.proposed_treatment_plan.join(", ") || "__"}</p>
+									<p><b>Patient Location :</b>{target.patient_nationality || "__"}</p>
+									<p><b>Proposed Date : </b>{target.proposal_date || "__"}</p>
+									<p><b>Transport Support Needed :</b>{target.transport_support_needed || "__"}</p>
+									<p><b>Accomodation / Other Logistic :</b>{target.accomodation || "__"}</p>
+									<p><b>Preferred Hospital Visit Type :</b> {target.preferred_hospital_visit || "__"}</p>
+									<p><b>Food Preferences : </b>{target.food_preferences || "__"}</p>
 								</div>
 							</div>
 				   ))}
@@ -80,9 +80,9 @@ export default function PATIENT_VIEW(props) {
                     {
                         enqurie_data.map((target, index) => (
                             <div key={index}>
-                                <p><b>Speciality : </b>{ }</p>
-                                <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
-                                <p><b>Status : </b>{target.status}</p> 
+                                <p><b>Speciality : </b>{ "__" }</p>
+                                <p><b>Medical History : </b>{target.medical_history || "__"}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                <p><b>Status : </b>{target.status || "__"}</p> 
                             </div>
                     ))}
 					{
@@ -174,21 +174,21 @@ export default function PATIENT_VIEW(props) {
                                         <div className="targetData">
                                         <p data-tip={target.estimate_price}>{target.estimate_price}</p>
                                         <p data-tip={target.treatment_plan}>{target.treatment_plan}</p>
-                                        <p>{target.inclusion}</p>
-                                        <p>{target.exclusion}</p>
-                                        <p>{target.estimate_copay}</p>
-                                        <p>{target.type_of_anesthesia}</p>
-                                        <p>{target.type_of_room}</p>
-                                        <p>{target.lenth_of_stay}</p>
-                                        <p>{target.free_room_upgrade}</p>
-                                        <p>{target.free_telephonic_feedback}</p>
-                                        <p>{target.translator}</p>
-                                        <p>{target.free_physiotherapy}</p>
-                                        <p>{target.pickup_and_drop}</p>
-                                        <p>{target.free_other_speciality_consultant}</p>
-                                        <p>{target.free_other_speciality_consultant}</p>
-                                        <p data-tip={target.select_doctor.join(", ")}><ReactTooltip/>{target.select_doctor.join(", ")} </p>
-                                        <p data-tip={target.general_disclaimer}><ReactTooltip/>{target.general_disclaimer}</p>
+                                        <ReactTooltip/><p data-tip={target.inclusion}>{target.inclusion || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.exclusion}>{target.exclusion || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.estimate_copay}>{target.estimate_copay || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.type_of_anesthesia}>{target.type_of_anesthesia || "__"}</p>
+                                        <p data-tip={target.type_of_room}>{target.type_of_room || "__"}</p>
+                                        <p data-tip={target.lenth_of_stay}>{target.lenth_of_stay || "__"}</p>
+                                        <p data-tip={target.free_room_upgrade}>{target.free_room_upgrade || "__"}</p>
+                                        <p data-tip={target.free_telephonic_feedback}>{target.free_telephonic_feedback || "__"}</p>
+                                        <p data-tip={target.translator}>{target.translator || "__"}</p>
+                                        <p data-tip={target.free_physiotherapy}>{target.free_physiotherapy || "__"}</p>
+                                        <p data-tip={target.pickup_and_drop}>{target.pickup_and_drop || "__"}</p>
+                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.select_doctor.join(", ")}>{target.select_doctor.join(", ") || "__"} </p>
+                                        <ReactTooltip/><p data-tip={target.general_disclaimer}>{target.general_disclaimer || "__"}</p>
                                         </div>
                                         : <div>AWAITING FOR QUOTATION</div>
                                     }                           

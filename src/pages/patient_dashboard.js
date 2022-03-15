@@ -290,10 +290,10 @@ function PATIENT_DASHBOARD(props) {
                                         <h2 className="PatientName py-3">{target.patient_name}</h2>
                                         {/* <p><b>Phone Number : </b><span>{target.patient_mobile}</span></p>
                                         <p><b>Email : </b><span>{target.patient_email}</span></p> */}
-                                        <p><b>Age : </b><span>{target.patient_age}</span></p>
-                                        <p><b>Gender : </b><span>{target.patient_gender}</span></p>
-                                        <p><b>Nationality : </b><span>{target.patient_nationality}</span></p>
-                                        <p><b>Language : </b> <span>{target.languages_spoken.join(', ')}</span></p>  
+                                        <p><b>Age : </b><span>{target.patient_age || "__"}</span></p>
+                                        <p><b>Gender : </b><span>{target.patient_gender || "__"}</span></p>
+                                        <p><b>Nationality : </b><span>{target.patient_nationality || "__"}</span></p>
+                                        <p><b>Language : </b> <span>{target.languages_spoken.join(', ') || "__"}</span></p>  
                                     </div>
                                 </div>
                             ))
@@ -304,13 +304,13 @@ function PATIENT_DASHBOARD(props) {
                                     <div className="PatientPreferencesDetails my-4">
                                         <h2 className="PatientPreferences py-3">Patient Preferences</h2>
                                         <p className="mb-1">Patient Requirement : </p>
-                                         <h6>{target.proposed_treatment_plan.join(', ')}</h6>
-                                        <p>Patient Location : {target.patient_nationality}</p>
-                                        <p>Proposed Date : {target.proposal_date}</p>
-                                        <p>Transport Support Needed : {target.transport_support_needed}</p>
-                                        <p>Accomodation / Other Logistic : {target.accomodation}</p>
-                                        <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit}</p>
-                                        <p>Food Preferences : {target.food_preferences} </p>                                         
+                                         <h6>{target.proposed_treatment_plan.join(', ') || "__"}</h6>
+                                        <p>Patient Location : {target.location || "__"}</p>
+                                        <p>Proposed Date : {target.proposal_date || "__"}</p>
+                                        <p>Transport Support Needed : {target.transport_support_needed || "__"}</p>
+                                        <p>Accomodation / Other Logistic : {target.accomodation || "__"}</p>
+                                        <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit || "__"}</p>
+                                        <p>Food Preferences : {target.food_preferences || "__"} </p>                                         
                                     </div>
                                 </div>
                             ))}
@@ -320,9 +320,9 @@ function PATIENT_DASHBOARD(props) {
                         {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>
-                                    <p><b>Speciality : </b>{ }</p>
-                                    <p><b>Medical History : </b>{target.medical_history}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
-                                    <p><b>Status : </b>{target.status}</p> 
+                                    <p><b>Speciality : </b>{ "__" }</p>
+                                    <p><b>Medical History : </b>{target.medical_history || "__"}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
+                                    <p><b>Status : </b>{target.status || "__"}</p> 
                                 </div>
                             ))}
                         {

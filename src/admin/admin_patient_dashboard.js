@@ -393,7 +393,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         <p>
                                             <b>Nationality : </b>{" "}
                                             <span>
-                                                {target.patient_nationality}
+                                                {target.patient_nationality || "----"}
                                             </span>
                                         </p>
                                         {target.languages_spoken[0] ? (
@@ -852,30 +852,29 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <p><b>Free Annual checkup</b></p> 
                                 <p><b>Selected Doctors</b></p>    
                                 <p><b>General Disclaimer</b></p>   
-                                {/* <p></p>  */}
                             </th>
                             {
                                 hopital_enq.map((target, index) => (
                                     <td key={index} >
                                         {target.estimate_price ?
                                         <div className="targetData">
-                                        <p data-tip={target.estimate_price}>{target.estimate_price}</p>
-                                        <p data-tip={target.treatment_plan}>{target.treatment_plan}</p>
-                                        <p>{target.inclusion}</p>
-                                        <p>{target.exclusion}</p>
-                                        <p>{target.estimate_copay}</p>
-                                        <p>{target.type_of_anesthesia}</p>
-                                        <p>{target.type_of_room}</p>
-                                        <p>{target.lenth_of_stay}</p>
-                                        <p>{target.free_room_upgrade}</p>
-                                        <p>{target.free_telephonic_feedback}</p>
-                                        <p>{target.translator}</p>
-                                        <p>{target.free_physiotherapy}</p>
-                                        <p>{target.pickup_and_drop}</p>
-                                        <p>{target.free_other_speciality_consultant}</p>
-                                        <p>{target.free_other_speciality_consultant}</p>
-                                        <p data-tip={target.select_doctor.join(", ")}><ReactTooltip/>{target.select_doctor.join(", ")} </p>
-                                        <p data-tip={target.general_disclaimer}><ReactTooltip/>{target.general_disclaimer}</p>
+                                        <p data-tip={target.estimate_price}>{target.estimate_price || "__"}</p>
+                                        <p data-tip={target.treatment_plan}>{target.treatment_plan || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.inclusion}>{target.inclusion || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.exclusion}>{target.exclusion || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.estimate_copay}>{target.estimate_copay || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.type_of_anesthesia}>{target.type_of_anesthesia || "__"}</p>
+                                        <p data-tip={target.type_of_room}>{target.type_of_room || "__"}</p>
+                                        <p data-tip={target.lenth_of_stay}>{target.lenth_of_stay || "__"}</p>
+                                        <p data-tip={target.free_room_upgrade}>{target.free_room_upgrade || "__"}</p>
+                                        <p data-tip={target.free_telephonic_feedback}>{target.free_telephonic_feedback || "__"}</p>
+                                        <p data-tip={target.translator}>{target.translator || "__"}</p>
+                                        <p data-tip={target.free_physiotherapy}>{target.free_physiotherapy || "__"}</p>
+                                        <p data-tip={target.pickup_and_drop}>{target.pickup_and_drop || "__"}</p>
+                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.select_doctor.join(", ")}>{target.select_doctor.join(", ") || "__"} </p>
+                                        <ReactTooltip/><p data-tip={target.general_disclaimer}>{target.general_disclaimer || "__"}</p>
                                         
                                         </div>
                                         : <div>AWAITING FOR QUOTATION</div>
@@ -966,148 +965,6 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         </div>
                 </div>
             </div> : null}
-                {/* {show_quota ? (
-                    <div className="container my-5">
-                        <div
-                            className="row mb-3"
-                            style={{ background: "#164473" }}
-                        >
-                            <div className="col-md-2">
-                                {/* empty column for table headling */
-                            /* </div>
-                            hopital_enq.map((target, index) => (
-                                <div className="col-md-2" key={index}>
-                                    <h2 className="HospitalTitle">
-                                        {target.hospital_name}
-                                    </h2>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="row">
-                            <div
-                                className="col-md-2"
-                                style={{ textAlign: "center" }}
-                            >
-                                <p>
-                                    <b>Estimate Price</b>
-                                </p>
-                                <p>
-                                    <b>Treatment Plan</b>
-                                </p>
-                                <p>
-                                    <b>Inclusions</b>
-                                </p>
-                                <p>
-                                    <b>Exclusions</b>
-                                </p>
-                                <p>
-                                    <b>Copay Required</b>
-                                </p>
-                                <p>
-                                    <b>Types of Anesthesia</b>
-                                </p>
-                                <p>
-                                    <b>Type of room</b>
-                                </p>
-                                /* <p>
-                                    <b>Length of stay</b>
-                                </p> //comment-end}
-                                <p>
-                                    <b>Free room upgrade</b>
-                                </p>
-                                <p>
-                                    <b>Free Physiotherapy</b>
-                                </p>
-                                <p>
-                                    <b>Pickup and drop</b>
-                                </p>
-                                <p>
-                                    <b>Other free consultation</b>
-                                </p>
-                                <p>
-                                    <b>Free Annual checkup</b>
-                                </p>
-                            </div> 
-                            {hopital_enq.map((target, index) => (
-                                <div className="col-md-2" key={index}>
-                                    {target.estimate_price ? (
-                                        <div>
-                                            <p>{target.estimate_price}</p>
-                                            <p data-tip={target.treatment_plan}>
-                                                <ReactTooltip />
-                                                {target.treatment_plan|| "-"}
-                                            </p>
-                                            <p>{target.inclusion|| "-"}</p>
-                                            <p>{target.exclusion|| "-"}</p>
-                                            <p>{target.estimate_copay|| "-"}</p>
-                                            <p>{target.type_of_anesthesia|| "-"}</p>
-                                            <p>{target.type_of_room || "-"}</p>
-                                            {/* <p>{target.length_of_stay}</p> comment-end
-                                            <p>{target.free_room_upgrade|| "-"}</p>
-                                            <p>{target.free_physiotherapy || "-"}</p>
-                                            <p>{target.pickup_and_drop || "-"}</p>
-                                            <p
-                                                data-tip={
-                                                    target.free_other_speciality_consultant
-                                                }
-                                            >
-                                                <ReactTooltip />
-                                                {
-                                                    target.free_other_speciality_consultant || "-"
-                                                }
-                                            </p>
-                                            <p
-                                                data-tip={
-                                                    target.free_other_speciality_consultant
-                                                }
-                                            >
-                                                <ReactTooltip />
-                                                {
-                                                    target.free_other_speciality_consultant || "-"
-                                                }
-                                            </p>
-                                            {/* <p
-                                                data-tip={
-                                                    target.free_other_speciality_consultant
-                                                }
-                                            >
-                                                <ReactTooltip />
-                                                {
-                                                    target.free_other_speciality_consultant || "-"
-                                                }
-                                            </p> //comment-end
-                                            {enqurie_data[0].status ===
-                                            "Awaiting From Patients" ? (
-                                                <button
-                                                    className="JoinButton Hover"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal"
-                                                    onClick={() =>
-                                                        setFormValue(
-                                                            (prevState) => ({
-                                                                ...prevState,
-                                                                id: target.hospital_id,
-                                                            })
-                                                        )
-                                                    }
-                                                >
-                                                    Certified Patients
-                                                </button>
-                                            ) : null}
-                                        </div>
-                                    ) : (
-                                        <div className="col-md-3">
-                                            <p>AWAITING FOR QUOTATION</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))} 
-                        </div>
-                        
-                        </div>
-                    </div>
-                                    ) : null}*/}
             </>
         );
 }

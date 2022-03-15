@@ -606,7 +606,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_Plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="surgical_consultation"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "surgical_consultation")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Surgical Consultation")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 />
                                                 <Form.Check
@@ -617,7 +617,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="admission"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "admission")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Admission")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 />
                                             </div>
@@ -630,7 +630,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="second_opinion_of_consultation"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "surgery")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Surgery")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 /><Form.Check
                                                     label="Consultation"
@@ -640,7 +640,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="second_opinion_of_consultation"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "consultation")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Consultation")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 />
                                             </div>
@@ -652,7 +652,7 @@ function PATIENT_FORM(props) {
                                                 name="proposed_treatment_plan"
                                                 value={formValues.proposed_treatment_plan}
                                                 id="second_opinion_of_consultation"
-                                                onChange={() => checkBox("proposed_treatment_plan", "second_opinion_of_consultation")}
+                                                onChange={() => checkBox("proposed_treatment_plan", "Second Opinion of Consultation")}
                                                 isInvalid={!!errors.proposed_treatment_plan}
                                             />
                                             <Form.Check
@@ -663,7 +663,7 @@ function PATIENT_FORM(props) {
                                                 name="proposed_treatment_plan"
                                                 value={formValues.proposed_treatment_plan}
                                                 id="international_expert_opinion"
-                                                onChange={() => checkBox("proposed_treatment_plan", "international_expert_opinino")}
+                                                onChange={() => checkBox("proposed_treatment_plan", "International Expert Opinion")}
                                                 isInvalid={!!errors.proposed_treatment_plan}
                                             />
                                             <div className="d-flex mb-1">
@@ -675,7 +675,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="home_care_services"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "home_care_services")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Home Care Services")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 />
                                                 <Form.Check
@@ -686,7 +686,7 @@ function PATIENT_FORM(props) {
                                                     name="proposed_treatment_plan"
                                                     value={formValues.proposed_treatment_plan}
                                                     id="teleconsultation"
-                                                    onChange={() => checkBox("proposed_treatment_plan", "teleconsultation")}
+                                                    onChange={() => checkBox("proposed_treatment_plan", "Teleconsultation")}
                                                     isInvalid={!!errors.proposed_treatment_plan}
                                                 />
 
@@ -785,13 +785,13 @@ function PATIENT_FORM(props) {
                                                     <Form.Check
                                                         label="Yes"
                                                         required
-                                                        className="mb-0"
+                                                        // className="mb-0"
                                                         type="radio"
                                                         name="ambulance_support_needed"
                                                         id="yes"
                                                         value="yes"
                                                         onChange={handleChange}
-                                                        isInvalid={!!errors.ambulance_support_neededce}
+                                                        isInvalid={!!errors.ambulance_support_needed}
                                                     />
                                                 </div>
                                                 <div className="col-md-4">
@@ -835,7 +835,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="english"
-                                                        onChange={() => checkBox("languages_spoken", "english")}
+                                                        onChange={() => checkBox("languages_spoken", "English")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -847,7 +847,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="arabic"
-                                                        onChange={() => checkBox("languages_spoken", "arabic")}
+                                                        onChange={() => checkBox("languages_spoken", "Arabic")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -859,7 +859,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="hindi"
-                                                        onChange={() => checkBox("languages_spoken", "hindi")}
+                                                        onChange={() => checkBox("languages_spoken", "Hindi")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -871,7 +871,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="urdu"
-                                                        onChange={() => checkBox("languages_spoken", "urdu")}
+                                                        onChange={() => checkBox("languages_spoken", "Urdu")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -883,7 +883,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="tagaloug"
-                                                        onChange={() => checkBox("languages_spoken", "tagaloug")}
+                                                        onChange={() => checkBox("languages_spoken", "Tagaloug")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -895,7 +895,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="french"
-                                                        onChange={() => checkBox("languages_spoken", "french")}
+                                                        onChange={() => checkBox("languages_spoken", "French")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -907,7 +907,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="afrikaans"
-                                                        onChange={() => checkBox("languages_spoken", "afrikaans")}
+                                                        onChange={() => checkBox("languages_spoken", "Afrikaans")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -919,7 +919,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="malayalam"
-                                                        onChange={() => checkBox("languages_spoken", "malayalam")}
+                                                        onChange={() => checkBox("languages_spoken", "Malayalam")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
@@ -931,7 +931,7 @@ function PATIENT_FORM(props) {
                                                         name="languages_spoken"
                                                         value={formValues.languages_spoken}
                                                         id="bengali"
-                                                        onChange={() => checkBox("languages_spoken", "bengali")}
+                                                        onChange={() => checkBox("languages_spoken", "Bengali")}
                                                         isInvalid={!!errors.languages_spoken}
                                                     />
                                                 </div>
