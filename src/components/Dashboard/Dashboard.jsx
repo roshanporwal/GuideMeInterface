@@ -39,8 +39,10 @@ function Dashboard() {
                   {data1 ? (data1.hospital_name ? null :
                     <div className="offset-lg-1 col-sm-2">
                       <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
-                    </div>) : null}
-                  {/* // } */}
+                    </div>) : <div className="offset-lg-1 col-sm-2">
+                      <a style={{ color: "#164473" }} href="https://econsult.guidemedoc.com:8000/">E-Consult</a>
+                    </div>}
+                    
                   {data1 ? (data1.hospital_name ?
                     <div className="offset-lg-1 col-sm-2" style={{ color: "#164473" }} >
                       <div onClick={() => navigate('/hospital/dashboard')}>
