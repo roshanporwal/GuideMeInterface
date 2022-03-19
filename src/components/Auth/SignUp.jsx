@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import * as auth_service from "../../service/auth_service";
 import { signupvalidationSchema } from "./authValidation";
 import { Country } from "country-state-city";
+import Input from 'react-phone-number-input/input'
+import 'react-phone-number-input/style.css'
 
 function SignUpScreen() {
   const navigate = useNavigate();
@@ -59,6 +61,10 @@ function SignUpScreen() {
     setFormValues({ ...formValues, [name]: value });
   };
   const countries = Country.getAllCountries();
+  const handleNumber = (e) => {
+    if(e)
+      formValues.mobile = e.toString()
+  }
   const validate = async (values) => {
     try {
       setDateErrors({
@@ -111,14 +117,15 @@ function SignUpScreen() {
       formData.append("insurance_card_copy", insurance);
       formData.append("formValues", JSON.stringify(formValues));
       const createaccount = await auth_service.createaccount(formData);
-      // console.log(createaccount)
       if (createaccount.payload) {
         navigate("/log-in");
       } else {
         alert(createaccount.message);
       }
     }
-    console.log(err)
+    else{
+      console.log(err)
+    }
   };
   return (
     <>
@@ -193,21 +200,18 @@ function SignUpScreen() {
                         <div className="prepend-icon-auth">
                           <MdCall />
                         </div>
-                        <Form.Control
-                          type="text"
+                        <Input
                           name="mobile"
                           placeholder="Mobile Number *"
-                          onChange={handleChange}
+                          onChange={handleNumber}
                           value={formValues.mobile}
-                          className="signup-inputs"
-                          isInvalid={errors?.mobile}
+                          className="signup-inputs form-control"
                         />
-                        <Form.Control.Feedback
-                          style={{ color: "red" }}
-                          type="invalid"
-                        >
-                          {errors?.mobile}
-                        </Form.Control.Feedback>
+                        {errors?.mobile ? (
+                          <Form.Label style={{ color: "red" }} type="valid">
+                            {errors?.mobile}
+                          </Form.Label>
+                        ) : null}
                       </Form.Group>
                     </div>
                     <div className="col-md-6 mt-1 mt-lg-0">

@@ -152,7 +152,7 @@ function PATIENT_DASHBOARD(props) {
         const hospital_data = getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
         getenquriesbyid.payload[0].status = hospital_data.status
         setEnqurie_data(getenquriesbyid.payload)
-
+         // console.log(getenquriesbyid.payload)
         if (hospital_data != null) {
             
             let ahospital_data = hospital_data.select_doctor ? setSelect_doctor(hospital_data.select_doctor) : null;
@@ -514,7 +514,7 @@ function PATIENT_DASHBOARD(props) {
                                                 type="radio"
                                                 name="translator"
                                                 id="yes"
-                                                value="yes"
+                                                value="Yes"
                                                 checked={formValues.translator === "yes"}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.translator}
@@ -527,7 +527,7 @@ function PATIENT_DASHBOARD(props) {
                                                 type="radio"
                                                 name="translator"
                                                 id="no"
-                                                value="no"
+                                                value="No"
                                                 checked={formValues.translator === "no"}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.translator}
@@ -544,7 +544,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="radio"
                                                     name="type_of_anesthesia"
                                                     id="local"
-                                                    value="local"
+                                                    value="Local"
                                                     checked={formValues.type_of_anesthesia === "local"}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
@@ -557,7 +557,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="radio"
                                                     name="type_of_anesthesia"
                                                     id="general"
-                                                    value="general"
+                                                    value="General"
                                                     checked={formValues.type_of_anesthesia === "general"}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
@@ -570,7 +570,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="radio"
                                                     name="type_of_anesthesia"
                                                     id="epidural"
-                                                    value="epidural"
+                                                    value="Epidural"
                                                     checked={formValues.type_of_anesthesia === "epidural"}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
@@ -636,7 +636,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="radio"
                                                         name="free_room_upgrade"
                                                         id="yes"
-                                                        value="yes"
+                                                        value="Yes"
                                                         checked={formValues.free_room_upgrade === "yes"}
                                                         onChange={handleChange}
                                                         isInvalid={!!errors.free_room_upgrade}
@@ -647,7 +647,7 @@ function PATIENT_DASHBOARD(props) {
                                                        type="radio"
                                                         name="free_room_upgrade"
                                                         id="no"
-                                                        value="no"
+                                                        value="No"
                                                         checked={formValues.free_room_upgrade === "no"}
                                                         onChange={handleChange}
                                                          isInvalid={!!errors.free_room_upgrade}
@@ -658,7 +658,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="radio"
                                                         name="free_room_upgrade"
                                                         id="at_discount"
-                                                        value="at_discount"
+                                                        value="At Discount"
                                                         checked={formValues.free_room_upgrade === "at_discount"}
                                                         onChange={handleChange}
                                                         isInvalid={!!errors.free_room_upgrade}
@@ -675,7 +675,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="yes"
-                                                            value="yes"
+                                                            value="Yes"
                                                             checked={formValues.free_physiotherapy === "yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
@@ -686,7 +686,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="no"
-                                                            value="no"
+                                                            value="No"
                                                             checked={formValues.free_physiotherapy === "no"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
@@ -697,7 +697,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="free_physiotherapy"
                                                             id="at_discount"
-                                                            value="at_discount"
+                                                            value="At Discount"
                                                             checked={formValues.free_physiotherapy === "at_discount"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
@@ -731,7 +731,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="yes"
-                                                        value="yes"
+                                                        value="Yes"
                                                         checked={formValues.free_telephonic_feedback === "yes"}
                                                         onChange={handleChange}
                                                         isInvalid={!!errors.free_telephonic_feedback}
@@ -744,7 +744,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="no"
-                                                        value="no"
+                                                        value="No"
                                                         checked={formValues.free_telephonic_feedback === "no"}
                                                         onChange={handleChange}
                                                         isInvalid={!!errors.free_telephonic_feedback}
@@ -757,7 +757,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="radio"
                                                         name="free_telephonic_feedback"
                                                         id="at_discount"
-                                                        value="at_discount"
+                                                        value="At Discount"
                                                         onChange={handleChange}
                                                         checked={formValues.free_telephonic_feedback === "at_discount"}
                                                         isInvalid={!!errors.free_telephonic_feedback}
@@ -777,7 +777,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="patients"
-                                                        value="patients"
+                                                        value="Patients"
                                                         checked={free_annual_checkup.find(item => item === "patients")}
                                                         onChange={() => checkBox("free_annual_checkup", "patients")}
                                                         isInvalid={!!errors.free_annual_checkup}
@@ -790,7 +790,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="family_members"
-                                                        value="family_members"
+                                                        value="Family Members"
                                                         checked={free_annual_checkup.find(item => item === "family_members")}
                                                         onChange={() => checkBox("free_annual_checkup", "family_members")}
                                                         isInvalid={!!errors.free_annual_checkup}
@@ -803,7 +803,7 @@ function PATIENT_DASHBOARD(props) {
                                                         type="checkbox"
                                                         name="free_annual_checkup"
                                                         id="at_discount"
-                                                        value="at_discount"
+                                                        value="At Discount"
                                                         checked={free_annual_checkup.find(item => item === "at_discount")}
                                                         onChange={() => checkBox("free_annual_checkup", "at_discount")}
                                                         isInvalid={!!errors.free_annual_checkup}
@@ -823,7 +823,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="yes"
-                                                            value="yes"
+                                                            value="Yes"
                                                             checked={formValues.pickup_and_drop === "yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
@@ -834,7 +834,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="no"
-                                                            value="no"
+                                                            value="No"
                                                             checked={formValues.pickup_and_drop === "no"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
@@ -845,7 +845,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="pickup_and_drop"
                                                             id="at_discount"
-                                                            value="at_discount"
+                                                            value="At Discount"
                                                             checked={formValues.pickup_and_drop === "at_discount"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
@@ -862,7 +862,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="yes"
-                                                            value="yes"
+                                                            value="Yes"
                                                             checked={formValues.free_patient_dedicated_relationship === "yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
@@ -873,7 +873,7 @@ function PATIENT_DASHBOARD(props) {
                                                             type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="no"
-                                                            value="no"
+                                                            value="No"
                                                             checked={formValues.free_patient_dedicated_relationship === "no"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
@@ -884,7 +884,7 @@ function PATIENT_DASHBOARD(props) {
                                                            type="radio"
                                                             name="free_patient_dedicated_relationship"
                                                             id="available"
-                                                            value="available"
+                                                            value="Available"
                                                             checked={formValues.free_patient_dedicated_relationship === "available"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
@@ -893,7 +893,6 @@ function PATIENT_DASHBOARD(props) {
                                                 <Form.Control.Feedback style={{ color: "red" }}>{errors?.free_patient_dedicated_relationship}</Form.Control.Feedback>
                                             </div>
                                         </div>
-                                      
                                         <div className = "row mt-2">
                                             <div className = "col-md-6">
                                                 <Form.Group>

@@ -3,6 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as auth_service from "../services/auth_service";
 import { useLocation } from "react-router-dom";
 import ReactTooltip from 'react-tooltip';
+import constants from "../constant";
 
 export default function PATIENT_VIEW(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
@@ -25,17 +26,17 @@ export default function PATIENT_VIEW(props) {
     }
 
     const DownloadReports = (element) => {
-          window.open (element,'_blank')  
+          window.open (constants.serverBaseUrl+element,'_blank')  
     }
     const viewInsurance = () => {
         // console.log(enqurie_data[0]);
         if(enqurie_data[0].insurance_card_copy.length === 0){
             return  alert("No reports found")
         }
-        enqurie_data[0].insurance_card_copy.forEach(element => {
-          window.open (element,'_blank')  
-        });
-         //window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
+        // enqurie_data[0].insurance_card_copy.forEach(element => {
+            window.open(constants.serverBaseUrl+enqurie_data[0].insurance_card_copy[0], "_blank");
+        // });
+        //  window.open (enqurie_data[0].insurance_card_copy[0],'_blank') 
     }
     
     return (
@@ -101,7 +102,7 @@ export default function PATIENT_VIEW(props) {
                              <div className="col-md-5 d-flex justify-content-between">
                                 {enqurie_data[0].reports.map((element,index) => {
                                     
-                                    if(element.search('http://192.46.209.112:8080/download') !== -1){
+                                    if(element.search('/download') !== -1){
                                         
                                     return(
                                         <div className="DownloadButton Hover m-1" key={index}
@@ -149,46 +150,62 @@ export default function PATIENT_VIEW(props) {
                         <tbody>
                         <tr>
                             <th>
-                                <p><b>Estimate Price</b></p>
+                            <p><b>Estimate Price</b></p>
                                 <p><b>Treatment Plan</b></p>
                                 <p><b>Inclusions</b></p>
                                 <p><b>Exclusions</b></p>
                                 <p><b>Copay Required</b></p>
-                                <p><b>Types of Anesthesia</b></p>
-                                <p><b>Type of room</b></p>
-                                <p><b>Length of stay</b></p>
-                                <p><b>Free room upgrade</b></p>
-                                <p><b>Free telephonic feedback</b></p>
+                                <p><b>Copay Percentage</b></p>
                                 <p><b>Translator</b></p>
+                                <p><b>Types of Anesthesia</b></p>
+                                <p><b>Type of Room</b></p>
+                                <p><b>Length of stay in Hospital</b></p>
+                                <p><b>Length of stay in Country</b></p>
+                                <p><b>Free room upgrade</b></p>
                                 <p><b>Free Physiotherapy</b></p>
+                                <p><b>Other Free Consultation</b></p>
+                                <p><b>Free telephonic feedback</b></p>
+                                <p><b>Free Annual Checkup</b></p>
                                 <p><b>Pickup and drop</b></p>
-                                <p><b>Other free consultation</b></p>
-                                <p><b>Free Annual checkup</b></p> 
+                                <p><b>Dedicated Relationship</b></p>
+                                <p><b>Benefits For Patient</b></p>
+                                <p><b>Benefits of Attendants</b></p>
+                                <p><b>Food Menu</b></p>
+                                <p><b>Confirm Date</b></p>
                                 <p><b>Selected Doctors</b></p>    
-                                <p><b>General Disclaimer</b></p>    
+                                <p><b>General Disclaimer</b></p> 
+                                <p><b>Other Comments</b></p> 
                             </th>
                             {
                                 hopital_enq.map((target, index) => (
                                     <td key={index} >
                                         {target.estimate_price ?
                                         <div className="targetData">
-                                        <p data-tip={target.estimate_price}>{target.estimate_price}</p>
-                                        <p data-tip={target.treatment_plan}>{target.treatment_plan}</p>
+                                        <ReactTooltip/><p data-tip={target.estimate_price}>{target.estimate_price || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.treatment_plan}>{target.treatment_plan || "__"}</p>
                                         <ReactTooltip/><p data-tip={target.inclusion}>{target.inclusion || "__"}</p>
                                         <ReactTooltip/><p data-tip={target.exclusion}>{target.exclusion || "__"}</p>
                                         <ReactTooltip/><p data-tip={target.estimate_copay}>{target.estimate_copay || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.estimate_copay_percentage}>{target.estimate_copay_percentage || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.translator}>{target.translator || "__"}</p>
                                         <ReactTooltip/><p data-tip={target.type_of_anesthesia}>{target.type_of_anesthesia || "__"}</p>
                                         <p data-tip={target.type_of_room}>{target.type_of_room || "__"}</p>
-                                        <p data-tip={target.lenth_of_stay}>{target.lenth_of_stay || "__"}</p>
+                                        <p data-tip={target.expected_length}>{target.expected_length || "__"}</p>
+                                        <p data-tip={target.length_of_stay}>{target.length_of_stay || "__"}</p>
                                         <p data-tip={target.free_room_upgrade}>{target.free_room_upgrade || "__"}</p>
-                                        <p data-tip={target.free_telephonic_feedback}>{target.free_telephonic_feedback || "__"}</p>
-                                        <p data-tip={target.translator}>{target.translator || "__"}</p>
                                         <p data-tip={target.free_physiotherapy}>{target.free_physiotherapy || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <p data-tip={target.free_telephonic_feedback}>{target.free_telephonic_feedback || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.free_annual_checkup.join(", ")}>{target.free_annual_checkup.join(", ") || "__"}</p>
                                         <p data-tip={target.pickup_and_drop}>{target.pickup_and_drop || "__"}</p>
-                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
-                                        <p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.free_patient_dedicated_relationship}>{target.free_patient_dedicated_relationship || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.benefits_for_patient}>{target.benefits_for_patient || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.benefits_for_attendent}>{target.benefits_for_attendent || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.food_menu}>{target.food_menu || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.confirmation}>{target.confirmation || "__"}</p>
                                         <ReactTooltip/><p data-tip={target.select_doctor.join(", ")}>{target.select_doctor.join(", ") || "__"} </p>
                                         <ReactTooltip/><p data-tip={target.general_disclaimer}>{target.general_disclaimer || "__"}</p>
+                                        <ReactTooltip/><p data-tip={target.other_comments}>{target.other_comments || "__"}</p>
                                         </div>
                                         : <div>AWAITING FOR QUOTATION</div>
                                     }                           

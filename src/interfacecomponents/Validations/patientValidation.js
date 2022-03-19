@@ -13,7 +13,7 @@ export const validationSchema = yup.object().shape({
        //patient_reports: yup.mixed().required("Patient reports are required"),
         current_diagnosis: yup.string().required("Patient current diagnosis is required"),
         //insurance_name: yup.string().required("Insurance name is required"),
-        insurance_card_copy: yup.mixed().required("Patient insurance card copy is required"),
+        // insurance_card_copy: yup.mixed().required("Patient insurance card copy is required"),
         //medical_history: yup.string().required("Patient medical history is required"),
         airport_transfer_needed: yup.string().required("Please select an option"),
         ambulance_support_needed: yup.string().required("Please select an option"),

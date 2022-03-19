@@ -9,6 +9,7 @@ import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 // import constants from "../constant";
 import { useNavigate, useLocation } from "react-router-dom";
+import constants from "../constant";
 // import { Form } from "react-bootstrap";
 // import { FaComment } from "react-icons/fa";
 
@@ -111,7 +112,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
   // };
 
   const DownloadReports = (element) => {
-    window.open(element, "_blank");
+    window.open(constants.serverBaseUrl+element, "_blank");
   };
   const sendInfo = async () => {
     let data = localStorage.getItem("login");
@@ -129,9 +130,10 @@ export default function ADMIN_ENQUIRY_INFO(props) {
     if (enqurie_data[0].insurance_card_copy.length === 0) {
       return alert("No reports found");
     }
-    enqurie_data[0].insurance_card_copy.forEach((element) => {
-      window.open(element, "_blank");
-    });
+    // enqurie_data[0].insurance_card_copy.forEach((element) => {
+      window.open(constants.serverBaseUrl+enqurie_data[0].insurance_card_copy[0], "_blank");
+
+    // });
     //window.open (enqurie_data[0].insurance_card_copy[0],'_blank')
   };
 
@@ -404,7 +406,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                         // console.log(element)
                         if (
                           element.search(
-                            "http://192.46.209.112:8080/download"
+                            "/download"
                           ) !== -1
                         ) {
                           return (
@@ -414,7 +416,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                               onClick={() => DownloadReports(element)}
                             >
                               {" "}
-                              {/* {element.slice(61)} */}Download Report {index}
+                              {/* {element.slice(61)} */}Download Report
                             </div>
                           );
                         }

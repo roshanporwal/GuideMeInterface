@@ -1,12 +1,12 @@
 import * as yup from 'yup';
 
-const mobileReg = /^(\+\d{1,3}[- ]?)?\d{10}$/
+// const mobileReg = /^(\+\d{1,3}[- ]?)?\d{10}$/
 const nameReg = /^[a-z ,.'-]+$/i
 const emailReg = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/
 
 export const loginvalidationSchema = yup.object().shape({
         //patient_email: yup.string().email().required("Patient email is required"),
-        mobile: yup.string().required("Mobile is required").matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
+        mobile: yup.string().required("Mobile Number is required"),
         //patient_age: yup.string().required("Patient age is required"),
         // patient_gender: yup.string().required("Patient gender is required"),
         // current_diagnosis: yup.string().required("Patient current diagnosis is required"),
@@ -20,7 +20,7 @@ export const loginvalidationSchema = yup.object().shape({
 export const signupvalidationSchema = yup.object().shape({
         first_name: yup.string().required("First Name is required").matches(nameReg, {message:'Please Enter a valid First Name',excludeEmptyString:true}),
         family_name: yup.string().required("Family Name is required").matches(nameReg, {message:'Please Enter a valid Family Name',excludeEmptyString:true}),
-        mobile: yup.string().required("Mobile is required").matches(mobileReg, {message:'Please Enter a valid Mobile Number',excludeEmptyString:true}),
+        mobile: yup.string().required("Mobile is required"),
         email: yup.string().required("Email is required").matches(emailReg, {message:'Please Enter a valid Email-ID',excludeEmptyString:true}),
         // dob: yup.string().required("Date of Birth is required"),
         gender: yup.string().required("Gender is required"),

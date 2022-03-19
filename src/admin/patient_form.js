@@ -49,7 +49,7 @@ function PATIENT_FORM(props) {
         patient_reports: "",
         current_diagnosis: "",
 
-        insurance_card_copy: "",
+        // insurance_card_copy: "",
         medical_history: "",
         proposed_treatment_plan: [],
         other_plan: "",
@@ -89,7 +89,7 @@ function PATIENT_FORM(props) {
         patient_document: "",
         patient_reports: "",
         current_diagnosis: "",
-        insurance_card_copy: "",
+        // insurance_card_copy: "",
         medical_history: "",
         proposed_treatment_plan: "",
         other_plan: "",
@@ -158,6 +158,7 @@ function PATIENT_FORM(props) {
                         formData.append('patient_reports', tp);
                     }
                 }
+                
                 formData.append('insurance_card_copy', insurance_card_copy);
                 formData.append('formValues', JSON.stringify(formValues));
                 if (form.checkValidity() === false) {
@@ -173,7 +174,6 @@ function PATIENT_FORM(props) {
                         setShow(true)
                     }
                 })
-
             }
         }
     }
