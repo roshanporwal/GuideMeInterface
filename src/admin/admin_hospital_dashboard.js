@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 /* import Pagination from "react-js-pagination"; */
@@ -36,7 +37,6 @@ const customStyles = {
 
 export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
     const [enquriesstatus, setEnquriesstatus] = useState([])
     const [search, setSearch] = useState('');
     const [enquries, setEnquries] = useState([]);
@@ -126,11 +126,14 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         },
 
     ];
-
+    const [loading, setLoading] = useState(true);
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
 
     useEffect(() => {
-
         fetchData().then(() => setLoading(false));
+        fetchData1().then(() => setLoading1(false));
+        fetchData2().then(() => setLoading2(false));
     }, []);
     const handleSearch = (event) => {
         setSearch(event.target.value);
@@ -143,7 +146,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
             data = JSON.parse(data)
             const getadminstaus = await auth_service.deleteenquries(data.login_id, row)
             if (getadminstaus.payload) {
-                window.location.reload();
+                fetchData1()
             }
         }
         else {
@@ -151,11 +154,24 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
         }
     }
 
-
-
+    // const [data,setData] = useState();
+    async function fetchData1() {
+        setLoading1(true)
+        let data = localStorage.getItem("login")
+        data = (JSON.parse(data))
+        const getenquries = await auth_service.getenquries(data.login_id)
+        setEnquries(getenquries.payload.reverse())
+        setLoading1(false)
+    }
+    async function fetchData2(){
+        let data = localStorage.getItem("login")
+        data = (JSON.parse(data))
+        const getfeeback = await auth_service.getfeedback(data.login_id)
+        setFeedback(getfeeback.payload)
+    }
     async function fetchData() {
         let data = localStorage.getItem("login")
-        data = JSON.parse(data)
+        data = (JSON.parse(data))
         const getadminstaus = await auth_service.getadminstaus(data.login_id)
         setEnquriesstatus(getadminstaus.payload)
         let data_pie = []
@@ -185,11 +201,6 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                 }
             ]
         })
-        const getenquries = await auth_service.getenquries(data.login_id)
-        setEnquries(getenquries.payload.reverse())
-        const getfeeback = await auth_service.getfeedback(data.login_id)
-        setFeedback(getfeeback.payload)
-
     }
 
 
@@ -198,13 +209,13 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
     };
 
 
-    if (loading === true)
-        return (
-            <>
-                <ReactGifLoader />
-            </>
-        )
-    else
+    // if (loading === true)
+    //     return (
+    //         <>
+    //             <ReactGifLoader />
+    //         </>
+    //     )
+    // else
         return (
             <>
                 <ADMIN_NAVBAR />
@@ -215,7 +226,7 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                         </div>
                     </div>
                 </div>
-                {
+                { loading ? <ReactGifLoader /> :
                     enquriesstatus.map((target, index) => (
                         <div className="container pb-5" key={index}{...target}>
                             <div className="row">
@@ -326,28 +337,30 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                             <label htmlFor="search" style={{ width: "100%" }}> Search by Patient Name: </label>
                             <input id="search" className="form-control mt-2" type="text" onChange={handleSearch} />
                         </div>
-                        <div className="col-md-12">
-                            <DataTable
-                                className="react_table"
-                                style={{ paddingTop: "30px" }}
-                                columns={columns}
-                                data={enquries.filter((item) =>
-                                    item.patient_name.toLowerCase().includes(search.toLowerCase())
-                                )}
-                                highlightOnHover
-                                pagination
-                                paginationPerPage={5}
-                                defaultSortField="patient_name"
-                                onRowClicked={(target) => handleSubmit(target)}
-                                paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
-                                customStyles={customStyles}
-                                paginationComponentOptions={{
-                                    rowsPerPageText: 'Records per page:',
-                                    rangeSeparatorText: 'out of',
+                        { loading1 ? <ReactGifLoader /> :
+                            <div className="col-md-12">
+                                <DataTable
+                                    className="react_table"
+                                    style={{ paddingTop: "30px" }}
+                                    columns={columns}
+                                    data={enquries.filter((item) =>
+                                        item.patient_name.toLowerCase().includes(search.toLowerCase())
+                                    )}
+                                    highlightOnHover
+                                    pagination
+                                    paginationPerPage={5}
+                                    defaultSortField="patient_name"
+                                    onRowClicked={(target) => handleSubmit(target)}
+                                    paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+                                    customStyles={customStyles}
+                                    paginationComponentOptions={{
+                                        rowsPerPageText: 'Records per page:',
+                                        rangeSeparatorText: 'out of',
 
-                                }}
-                            />
-                        </div>
+                                    }}
+                                />
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="container my-5">
@@ -356,27 +369,29 @@ export default function ADMIN_HOSPITAL_DASHBOARD(props) {
                             <label htmlFor="search" style={{ width: "100%" }}> Search by Patient Name: </label>
                             <input id="search" className="form-control mt-2" type="text" onChange={handleSearch} />
                         </div>
-                        <div className="col-md-12">
-                            <DataTable
-                                className="react_table"
-                                style={{ paddingTop: "30px" }}
-                                columns={columns_feedback}
-                                data={feedback.filter((item) =>
-                                    item.patient_name.toLowerCase().includes(search.toLowerCase())
-                                )}
-                                highlightOnHover
-                                pagination
-                                paginationPerPage={5}
-                                defaultSortField="patient_name"
-                                paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
-                                customStyles={customStyles}
-                                paginationComponentOptions={{
-                                    rowsPerPageText: 'Records per page:',
-                                    rangeSeparatorText: 'out of',
+                        { loading2 ? <ReactGifLoader /> :
+                            <div className="col-md-12">
+                                <DataTable
+                                    className="react_table"
+                                    style={{ paddingTop: "30px" }}
+                                    columns={columns_feedback}
+                                    data={feedback.filter((item) =>
+                                        item.patient_name.toLowerCase().includes(search.toLowerCase())
+                                    )}
+                                    highlightOnHover
+                                    pagination
+                                    paginationPerPage={5}
+                                    defaultSortField="patient_name"
+                                    paginationRowsPerPageOptions={[3, 5, 15, 25, 50]}
+                                    customStyles={customStyles}
+                                    paginationComponentOptions={{
+                                        rowsPerPageText: 'Records per page:',
+                                        rangeSeparatorText: 'out of',
 
-                                }}
-                            />
-                        </div>
+                                    }}
+                                />
+                            </div>
+                        }
                     </div>
                 </div>
             </>
