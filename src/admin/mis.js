@@ -16,8 +16,8 @@ function Mis() {
         return (
             <>
                 <ADMIN_NAVBAR />
-                <Button onClick={() => { window.location.href =`${constants.serverBaseUrl}uploadexcel/patient_excel` }}>patient</Button>
-                <Button onClick={()=> { window.location.href =`${constants.serverBaseUrl}uploadexcel/hospital_excel` }}>Hospital</Button>
+                <Button onClick={() => { window.location.href =`${constants.serverBaseUrl}/uploadexcel/patient_excel` }}>patient</Button>
+                <Button onClick={()=> { window.location.href =`${constants.serverBaseUrl}/uploadexcel/hospital_excel` }}>Hospital</Button>
             </>
         );
    
