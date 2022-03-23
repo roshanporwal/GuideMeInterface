@@ -9,10 +9,12 @@ import ADMIN_NAVBAR from "../Navbar/admin_navbar";
 import ReactGifLoader from "../interfacecomponents/gif_loader";
 import constants from "../constant";
 import { Button } from "antd";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
+
 export default function ADMIN_PATIENT_DASHBOARD(props) {
+    const navigate = useNavigate();
     const { state } = useLocation();
     const [enqurie_data, setEnqurie_data] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -129,6 +131,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             }
             else{
                 alert("Mail not sent. Please try again later.")
+                navigate(0)
             }
         }
     };
