@@ -3,35 +3,42 @@ import { useState } from 'react';
 import { Container, Row ,Col, Form} from 'react-bootstrap';
 import Logo from '../../assets/guidemedoc-logo.png';
 import HeroImage from '../../assets/login-hero.png';
-import {MdCall} from 'react-icons/md'
+import {MdCall,MdPassword} from 'react-icons/md'
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 import * as auth_service from "../../service/auth_service";
 import {loginvalidationSchema} from "./authValidation";
+import Input from 'react-phone-number-input/input'
+import 'react-phone-number-input/style.css'
+
 function LoginScreen() {
     const navigate = useNavigate();
     const [errors, setErrors] = useState();
 
 
     const [formValues,setFormValues] = useState({
-        mobile:""
+        mobile:"",
+        otp:""
     });
 
     const handleChange = (e) => {
         let {name,value} = e.target;
         setFormValues({...formValues,[name]:value});
     }
+    const handleNumber = (e) => {
+        if(e)
+            formValues.mobile = e.toString()
+    }
+    const [login,setLogin] = useState()
     const validate = async (values) => {
         try {
             await loginvalidationSchema.validate(values, { abortEarly: false });
             return {};
         } catch (err) {
-            
             let errObj = {};
              for (let { path, message } of err.inner) {
                 errObj[path] = message;
             }
-            
             return errObj;
         }
     }; 
@@ -39,27 +46,34 @@ function LoginScreen() {
         e.preventDefault();
         const err = await validate(formValues);
         setErrors(err);
-        if(Object.keys(err).length === 0){
-            const req ={
-                login_id:formValues.mobile,
-
-            }
-            const login = await auth_service.login(req)
-            if(login.payload){
-                localStorage.setItem('login_patient', JSON.stringify(login.payload));
-                navigate('/');
+        if (Object.keys(err).length === 0) {
+            if(login){
+                if(Number(formValues.otp) === login.otp){
+                    localStorage.setItem('login_patient', JSON.stringify(login));
+                    navigate("/")
+                }
+                else{
+                    alert("Incorrect OTP entered!")
+                }
             }
             else{
-                alert(login.message)
+                const req = {
+                    login_id: formValues.mobile,
+                    name: formValues.name
+                }
+                const temp = await auth_service.login(req)
+                if(temp.payload){
+                    setLogin(temp.payload)
+                }
+                else{
+                    alert(temp.message)
+                }
             }
-            
-        }
-        
-        
+        }        
     }
-
     return ( 
         <>
+        {/* {console.log(login)} */}
             <div className='container-fluid'>
             <Row className="header-row">
                 <Col role="button" lg={{span:2,offset:1}} xs={6} onClick={() => navigate('/')}>
@@ -84,20 +98,40 @@ function LoginScreen() {
                                             <div className="prepend-icon-auth">
                                                 <MdCall />
                                             </div>
-                                            <Form.Control 
-                                                type='text'
+                                            <Input
                                                 name="mobile"
                                                 placeholder='Enter Your Mobile Number'
-                                                onChange={handleChange}
+                                                onChange={handleNumber}
                                                 value={formValues.mobile}
+                                                className="grey-inputs form-control"
+                                                isinvalid={errors?.mobile}
+                                            />
+                                            {errors?.mobile ? (
+                                                <Form.Label style={{ color: "red" }} type="valid">
+                                                    {errors?.mobile}
+                                                </Form.Label>
+                                            ) : null}
+                                        </Form.Group>
+                                        { login ? <Form.Group className = "mt-4">
+                                            <div className="prepend-icon-auth">
+                                                <MdPassword />
+                                            </div>
+                                            <Form.Control 
+                                                type = "number"
+                                                autoComplete="one-time-code"
+                                                pattern="\d{6}"
+                                                name="otp"
+                                                placeholder='Enter OTP'
+                                                onChange={handleChange}
+                                                value={formValues.otp}
                                                 className="grey-inputs"
-                                                isInvalid={errors?.mobile}
+                                                isInvalid={errors?.otp}
                                             />
                                             <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.mobile}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    <div className='text-center mt-4'>
-                                        <input className="login-submit" type="submit" value="LOGIN" />
-                                    </div>
+                                        </Form.Group> : null }
+                                        <div className='text-center mt-4'>
+                                            <input className="login-submit" type="submit" value={login ? "LOGIN":"SEND OTP"}  />
+                                        </div>
                                 </Form>
                                 <div className='sub-heading mt-4'>
                                     <p>New User ?</p>
