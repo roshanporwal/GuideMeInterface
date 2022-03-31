@@ -120,7 +120,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
     const sendInfo = await auth_service.sendInfo(data.login_id,enqurie_data[0]._id)
 
     if(sendInfo.payload){
-      navigate('/admin/sendquota',{ state:{id : sendInfo.payload}})
+      navigate('/admin/dashboard')
     }
     else
       alert(sendInfo.message)
