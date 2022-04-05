@@ -4,6 +4,7 @@ import * as auth_service from "../services/auth_service";
 import { useLocation } from "react-router-dom";
 import ReactTooltip from 'react-tooltip';
 import constants from "../constant";
+import {FaFileDownload } from 'react-icons/fa'
 
 export default function PATIENT_VIEW(props) {
     const [enqurie_data, setEnqurie_data] = useState([])
@@ -128,10 +129,11 @@ export default function PATIENT_VIEW(props) {
                             </div>
 						</div>
                     ))}
-
+                <div className="text-center"><button onClick={() => window.print()}>Download Quote <FaFileDownload/></button></div>
                 </div>
             </div>
 		</div>	
+        
 		{show_quota ?
 				<div className="container my-5">
                     <div id="table-scroll" className="table-scroll">

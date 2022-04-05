@@ -59,6 +59,19 @@
     width: 100%;
     background-size: 100% 100%;
 }
+.global-file-input{
+    background-color: rgba(45, 182, 210, 1);
+    border-radius: 12px;
+    
+    text-align: center;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 13px;
+    color: black;
+}
+.global-file-input p{
+    margin-left: 14px;
+    padding: 12px 0px;
+}
 @media screen and (max-width:768px) {    
     .footer-row{
         height: 99px;
