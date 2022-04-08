@@ -137,7 +137,7 @@ export default function PATIENT_VIEW(props) {
             {show_quota ?
                 <div className="container my-5">
                     <div id="table-scroll" className="table-scroll">
-                        {/* <table>
+                        <table>
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -215,101 +215,6 @@ export default function PATIENT_VIEW(props) {
                                         ))
                                     }
                                 </tr>
-                            </tbody>
-                        </table> */}
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    {
-                                        hopital_enq.map((target, index) => (
-                                            <th scope="col" key={index} >
-                                                <h2 className="HospitalTitle">{target.hospital_name}</h2>
-                                            </th>
-                                        ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>Estimate Price</b></td>
-                                    <td><b>Treatment Plan</b></td>
-                                    <td><b>Inclusions</b></td>
-                                    <td><b>Exclusions</b></td>
-                                    <td><b>Copay Required</b></td>
-                                    <td><b>Copay Percentage</b></td>
-                                    <td><b>Translator</b></td>
-                                    <td><b>Types of Anesthesia</b></td>
-                                    <td><b>Type of Room</b></td>
-                                    <td><b>Length of stay in Hospital</b></td>
-                                    <td><b>Length of stay in Country</b></td>
-                                    <td><b>Free room upgrade</b></td>
-                                    <td><b>Free Physiotherapy</b></td>
-                                    <td><b>Other Free Consultation</b></td>
-                                    <td><b>Free telephonic feedback</b></td>
-                                    <td><b>Free Annual Checkup</b></td>
-                                    <td><b>Pickup and drop</b></td>
-                                    <td><b>Dedicated Relationship</b></td>
-                                    <td><b>Benefits For Patient</b></td>
-                                    <td><b>Benefits of Attendants</b></td>
-                                    <td><b>Food Menu</b></td>
-                                    <td><b>Confirm Date</b></td>
-                                    <td><b>Selected Doctors</b></td>
-                                    <td><b>General Disclaimer</b></td>
-                                    <td><b>Other Comments</b></td>
-                                </tr>
-                                {
-                                    hopital_enq.map((target,index) => (
-                                        <>
-                                            {target.estimate_price ?
-                                                <tr>
-                                                    <td>{target.estimate_price}</td>
-                                                    <td>{target.estimate_price}</td>
-                                                    <td>{target.estimate_price}</td>
-
-                                                    <p data-tip={target.estimate_price}>{target.estimate_price || "__"}</p>
-                                                </tr>
-                                                : <div>Awaiting for Hospital</div>   
-                                        }
-                                        </>
-                                    ))
-                                }
-                                {/* {
-                                    hopital_enq.map((target, index) => (
-                                        <td key={index} >
-                                            {target.estimate_price ?
-                                                <div className="targetData">
-                                                    <ReactTooltip /><p data-tip={target.estimate_price}>{target.estimate_price || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.treatment_plan}>{target.treatment_plan || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.inclusion}>{target.inclusion || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.exclusion}>{target.exclusion || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.estimate_copay}>{target.estimate_copay || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.estimate_copay_percentage}>{target.estimate_copay_percentage || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.translator}>{target.translator || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.type_of_anesthesia}>{target.type_of_anesthesia || "__"}</p>
-                                                    <p data-tip={target.type_of_room}>{target.type_of_room || "__"}</p>
-                                                    <p data-tip={target.expected_length}>{target.expected_length || "__"}</p>
-                                                    <p data-tip={target.length_of_stay}>{target.length_of_stay || "__"}</p>
-                                                    <p data-tip={target.free_room_upgrade}>{target.free_room_upgrade || "__"}</p>
-                                                    <p data-tip={target.free_physiotherapy}>{target.free_physiotherapy || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.free_other_speciality_consultant}>{target.free_other_speciality_consultant || "__"}</p>
-                                                    <p data-tip={target.free_telephonic_feedback}>{target.free_telephonic_feedback || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.free_annual_checkup.join(", ")}>{target.free_annual_checkup.join(", ") || "__"}</p>
-                                                    <p data-tip={target.pickup_and_drop}>{target.pickup_and_drop || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.free_patient_dedicated_relationship}>{target.free_patient_dedicated_relationship || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.benefits_for_patient}>{target.benefits_for_patient || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.benefits_for_attendent}>{target.benefits_for_attendent || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.food_menu}>{target.food_menu || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.confirmation}>{target.confirmation || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.select_doctor.join(", ")}>{target.select_doctor.join(", ") || "__"} </p>
-                                                    <ReactTooltip /><p data-tip={target.general_disclaimer}>{target.general_disclaimer || "__"}</p>
-                                                    <ReactTooltip /><p data-tip={target.other_comments}>{target.other_comments || "__"}</p>
-                                                </div>
-                                                : <div>AWAITING FOR QUOTATION</div>
-                                            }
-                                        </td>
-                                    ))
-                                } */}
-
                             </tbody>
                         </table>
                     </div>
