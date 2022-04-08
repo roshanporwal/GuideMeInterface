@@ -162,12 +162,13 @@ function Dashboard() {
                 </div>
               </Row>
             </div>
+            
           </div>
         </div>
       </Container>
       <div className="page-footer font-small blue">
         <div className="footer-copyright text-center py-3">
-          All Rights Reserved @ Medi Connect International
+          All Rights Reserved @ Medi Connect International <a href="/terms-and-conditions" target="_blank"><br/>Terms & Conditions</a>
         </div>
       </div>
     </>

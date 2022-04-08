@@ -878,9 +878,9 @@ align-items: center;
     z-index:4;
   }
   
-  a:focus {
+  /* a:focus {
     background: red;
-  } /* testing links*/
+  } testing links */
   
   th:first-child {  
     width:200px;

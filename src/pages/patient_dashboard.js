@@ -9,6 +9,7 @@ import HospitalNavbar from "../Navbar/hospital_navbar";
 import './style.css'
 import ReactGifLoader from '../interfacecomponents/gif_loader';
 import { useLocation } from "react-router-dom";
+import constants from "../constant";
 
 const res = {
     "patient_details": [
@@ -175,7 +176,6 @@ function PATIENT_DASHBOARD(props) {
 
 
     function checkBox(name, value) {
-
         if (name === "select_doctor") {
             if (select_doctor.find(item => item === value)) {
                 setSelect_doctor(select_doctor.filter(item => item !== value));
@@ -191,8 +191,8 @@ function PATIENT_DASHBOARD(props) {
                 setSelect_anesthesiologist(prevArray => [...prevArray, value]);
             }
         } else if (name === "free_annual_checkup") {
-            if (select_anesthesiologist.find(item => item === value)) {
-                setFree_annual_checkup(select_anesthesiologist.filter(item => item !== value));
+            if (free_annual_checkup.find(item => item === value)) {
+                setFree_annual_checkup(free_annual_checkup.filter(item => item !== value));
 
             } else {
                 setFree_annual_checkup(prevArray => [...prevArray, value]);
@@ -239,7 +239,19 @@ function PATIENT_DASHBOARD(props) {
             }
         }
     };
-
+    const viewInsurance = () => {
+        // console.log(enqurie_data[0]);
+        if (enqurie_data[0].insurance_card_copy.length === 0) {
+            return alert("No reports found");
+        }
+        // enqurie_data[0].insurance_card_copy.forEach((element) => {
+            window.open(constants.serverBaseUrl+enqurie_data[0].insurance_card_copy[0], "_blank");
+        // });
+        //window.open (enqurie_data[0].insurance_card_copy[0],'_blank')
+    };
+    const DownloadReports = (element) => {
+        window.open(constants.serverBaseUrl+element, "_blank");
+    };
     const handleChange = e => {
         const { name, value } = e.currentTarget
         setFormValue(prevState => ({
@@ -335,20 +347,47 @@ function PATIENT_DASHBOARD(props) {
                                 </div>
                             ))
                         }
-                        {enqurie_data[0].reports[1] ?
-                            <div className="row justify-content-center">
-                                <div className="col-md-5">
-                                    <div className="DownloadButton" 
-                                    onClick={() => { window.location.href = enqurie_data[0].reports[1] }} >Download Reports
-                                    <i className="fa fa-download "></i></div>
+                        {enqurie_data[0].reports[1] ? (
+                                <div className="row m-2">
+                                    <div className="col-md-5 d-flex justify-content-between">
+                                        {enqurie_data[0].reports.map(
+                                            (element, index) => {
+                                                if (
+                                                    element.search(
+                                                        "/download"
+                                                    ) !== -1
+                                                ) {
+                                                    return (
+                                                        <div
+                                                            className="DownloadButton Hover m-1"
+                                                            key={index}
+                                                            onClick={() =>
+                                                                DownloadReports(
+                                                                    element
+                                                                )
+                                                            }
+                                                        >
+                                                            {" "}
+                                                            Download Report
+                                                        </div>
+                                                    );
+                                                }
+                                                return null;
+                                            }
+                                        )}
+                                    </div>
+                                    <div className="col-md-2"></div>
+                                    <div className="col-md-5">
+                                        <div
+                                            className="InsuranceButton Hover"
+                                            onClick={() => viewInsurance()}
+                                        >
+                                            View Insurance
+                                            {/* <i className="fa fa-eye "></i> */}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-md-5">
-                                    <div className="InsuranceButton" onClick={() => { window.location.href = enqurie_data[0].insurance_card_copy[0] }}>View Insurance
-                                    <i className="fa fa-eye "></i></div>
-                                </div>
-                            </div>
-                            :
-                            null}
+                            ) : null}
                         {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>

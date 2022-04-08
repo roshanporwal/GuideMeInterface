@@ -208,7 +208,7 @@ function FreeOpinion({handleModalShow}) {
                             <Form.Control
                                 type='text'
                                 name="current_diagnosis"
-                                placeholder='Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared) *'
+                                placeholder='Name of the Diagnosed Medical Condition *'
                                 onChange={handleChange}
                                 className="global-inputs"
                                 isInvalid={errors?.current_diagnosis}

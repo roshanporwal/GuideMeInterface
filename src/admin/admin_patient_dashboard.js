@@ -118,7 +118,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
             };
             const getenquries = await auth_service.sendmail(data.login_id, url);
             
-            console.log(getenquries);
+            // console.log(getenquries);
             if (getenquries.payload) {
                 alert("sent successfully");
                 fetchData(props)
@@ -127,11 +127,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         setLoading(false);
                         alert("Some thing Went Wrong");
                     });
-                // navigate()
+                navigate("/admin/dashboard")
             }
             else{
                 alert("Mail not sent. Please try again later.")
-                navigate(0)
+                // navigate(0)
             }
         }
     };
