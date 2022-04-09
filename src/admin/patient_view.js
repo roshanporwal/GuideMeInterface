@@ -137,7 +137,257 @@ export default function PATIENT_VIEW(props) {
             {show_quota ?
                 <div className="container my-5">
                     <div id="table-scroll" className="table-scroll">
-                        <table>
+                    <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    {
+                                        hopital_enq.map((target, index) => (
+                                            <th scope="col" key={index} >
+                                                <h2 className="HospitalTitle">{target.hospital_name}</h2>
+                                            </th>
+                                        ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Estimate Price</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.estimate_price || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Treatment Plan</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.treatment_plan || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Inclusions</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.inclusion || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Inclusions</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.inclusion || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Exclusions</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.exclusion || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Copay Required</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.estimate_copay || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Copay Percentage</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.estimate_copay_percentage || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Translator</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.translator || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Types of Anesthesia</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.type_of_anesthesia || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Type of Room</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.type_of_room || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Length of stay in Hospital</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.expected_length || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Length of stay in Country</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.length_of_stay || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Free room upgrade</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.free_room_upgrade || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Other Free Consultation</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.free_physiotherapy || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Free Physiotherapy</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.free_other_speciality_consultant || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Free Telephonic Feedback</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.free_telephonic_feedback || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Free Annual Checkup</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            
+                                            <td key={index} >
+                                                {target.free_annual_checkup ? 
+                                                target.free_annual_checkup.join(", ") || "__" : null }
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Pickup and drop</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.pickup_and_drop || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Dedicated Relationship</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.free_patient_dedicated_relationship || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Benefits For Patient</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.benefits_for_patient || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Benefits of Attendants</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.benefits_for_attendent || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Food Menu</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.food_menu || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Confirm Date</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.confirmation || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Selected Doctors</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.select_doctor ? 
+                                                target.select_doctor.join(", ") || "__" : null }
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>General Disclaimer</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.general_disclaimer || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Other Comments</b></td>
+                                   { hopital_enq.map((target, index) => (
+                                            <td key={index} >
+                                                {target.other_comments || "__"}
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                        {/* <table>
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -214,7 +464,7 @@ export default function PATIENT_VIEW(props) {
                                             </td>
                                         ))
                                     }
-                                </tr>
+                                </tr> */}
                             </tbody>
                         </table>
                     </div>
