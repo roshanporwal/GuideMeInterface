@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser, FaGlobeAsia } from 'react-icons/fa';
 import {
-     MdLocationOn, MdOutlineCalendarToday, MdUploadFile,
+     MdOutlineCalendarToday, MdUploadFile,
     
 } from 'react-icons/md';
 import DatePicker from "react-datepicker";
@@ -298,12 +298,12 @@ function Mammogram({handleModalShow}) {
               </div>
               <Form.Control
                 as="select"
-                name="address_patient"
+                name="location"
                 placeholder="Emirates"
                 onChange={handleChange}
-                value = {formValues.address_patient}
+                value = {formValues.location}
                 className="global-inputs"
-                isInvalid={errors?.address_patient}
+                isInvalid={errors?.location}
                 style={{ fontSize: "small", color: "black" }}
               >
                 <option value="">Select Emirates *</option>
@@ -316,11 +316,11 @@ function Mammogram({handleModalShow}) {
                 <option value="Fujairah">Fujairah</option>
                <option value="Al Ain">Al Ain</option>
               </Form.Control>
-              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.address_patient}</Form.Control.Feedback>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
 
             </Form.Group>
           </div>
-                <div className='col-10'>
+                {/* <div className='col-10'>
                     <Form.Group >
                         <div className="prepend-icon">
                             <MdLocationOn />
@@ -336,7 +336,7 @@ function Mammogram({handleModalShow}) {
                         <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.location}</Form.Control.Feedback>
 
                     </Form.Group>
-                </div>
+                </div> */}
                 
                 <div className='col-10 col-md-7'>
                     <Form.Group>

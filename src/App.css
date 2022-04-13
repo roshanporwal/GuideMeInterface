@@ -855,9 +855,9 @@ align-items: center;
     border-bottom: 0px;
     height: 30px;
   }
-  .table-scroll td {
+  /* .table-scroll td {
     padding:10px 0px;
-  }
+  } */
   .table-scroll thead th {
    padding: 0px 10px;
     background: #164473;
@@ -882,7 +882,7 @@ align-items: center;
     background: red;
   } testing links */
   
-  th:first-child {  
+  /* th:first-child {  
     width:200px;
     max-width:200px;
     position: -webkit-sticky;
@@ -895,7 +895,7 @@ align-items: center;
     width:200px;
     max-width:200px;   
     z-index: 5;  
-  }
+  } */
   .targetData p{
     height: 45px;
     margin: 0px;

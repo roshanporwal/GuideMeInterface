@@ -80,30 +80,30 @@ function NewConsultation({ handleModalShow }) {
   //   state: "",
   //   city: ""
   // })
-  const [submitted,setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-    const [name,setName] = useState("")
-    const [familyCheckBox, setFamilyCheckBox] = useState(false);
-    const [data, setData] = useState();
-    const [selectedMember, setSelectedMember] = useState();
-    useEffect(() => {
-        async function fetchData() {
-            let data = localStorage.getItem("login_patient")
-            if (data !== null) {
-                data = JSON.parse(data)
-                setName(data.name)
-                setData(data)
-            }
-        }
-        fetchData()
-    }, []);
-    const handleForFamily = async (e) => {
-        if (!familyCheckBox) {
-            setFamilyCheckBox(true);
-        } else {
-            setFamilyCheckBox(false);
-        }
-    };
+  const [name, setName] = useState("")
+  const [familyCheckBox, setFamilyCheckBox] = useState(false);
+  const [data, setData] = useState();
+  const [selectedMember, setSelectedMember] = useState();
+  useEffect(() => {
+    async function fetchData() {
+      let data = localStorage.getItem("login_patient")
+      if (data !== null) {
+        data = JSON.parse(data)
+        setName(data.name)
+        setData(data)
+      }
+    }
+    fetchData()
+  }, []);
+  const handleForFamily = async (e) => {
+    if (!familyCheckBox) {
+      setFamilyCheckBox(true);
+    } else {
+      setFamilyCheckBox(false);
+    }
+  };
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -111,6 +111,7 @@ function NewConsultation({ handleModalShow }) {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const err = await validate(formValues);
     setErrors(err);
@@ -124,8 +125,8 @@ function NewConsultation({ handleModalShow }) {
       formValues.email = data.email;
       formValues.current_diagnosis = formValues.symptoms;
       formValues.preferred_date_first = dateOne.toString();
-      if(dateTwo)
-                formValues.preferred_date_second = dateTwo.toString();
+      if (dateTwo)
+        formValues.preferred_date_second = dateTwo.toString();
       formValues.dob = data.dob;
       formValues.gender = data.gender;
       formValues.insurance_card_copy = data.insurance_card_copy;
@@ -159,7 +160,7 @@ function NewConsultation({ handleModalShow }) {
       }
     }
   };
-  
+
 
   const validate = async (values) => {
     try {
@@ -187,8 +188,8 @@ function NewConsultation({ handleModalShow }) {
     //     setInsurance(e.target.files[0])
     // }
   };
-  if(submitted === true)
-    return(<ThankYouModal formValues = {formValues}/>)
+  if (submitted === true)
+    return (<ThankYouModal formValues={formValues} />)
   else if (loading === true)
     return (
       <>
@@ -196,198 +197,175 @@ function NewConsultation({ handleModalShow }) {
       </>
     );
   else
-  return (
-    
-    <div className="form-container">
-      <Form
-        onSubmit={(e) => handleSubmit(e)}
-        className="row justify-content-center"
-      >
-       <div className="col-3">
-          <Form.Group className="d-flex">
-            <Form.Check
-              type="radio"
-              name="form-type"
-              label="Myself"
-              onChange={() => {setFamilyCheckBox(false); setSelectedMember()}}
-              defaultChecked = {true}
-            />
-          </Form.Group>
-        </div>
-        <div className="col-6">
-          <Form.Group className="d-flex">
-            <Form.Check
-              type="radio"
-              name="form-type"
-              label="For Family"
-              onChange={handleForFamily}
-            />
-          </Form.Group>
-        </div>
-        <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <FaRegUser />
-            </div>
-            <Form.Control
-              type="text"
-              name="name"
-              value={name}
-              placeholder="Person Name *"
-              // onChange={handleChange}
-              className="global-inputs"
-              isInvalid={errors?.name}
-              disabled={true}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              {errors?.name}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        {familyCheckBox ? (
-                    <div className="row justify-content-center">
-                    <ForFamily setSelectedMember = {setSelectedMember} /></div>
-                ):null}
-        {/* <div className="col-7">
-           <Form.Group>
-            <div className="prepend-icon">
-              <MdFamilyRestroom />
-            </div>
-            <Form.Control
-              type="text"
-              name="family"
-              placeholder="Add Family Member"
-              onChange={handleChange}
-              className="global-inputs"
-              readOnly
-              onClick={handleFamilyShow}
-            />
-          </Form.Group>
-        </div> */}
+    return (
 
-        {/*
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlinePersonAdd />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="register"
-                            placeholder='Register Patient'
-                            onChange={handleChange}
-                            className="global-inputs"
-                            readOnly
-                            onClick={handlePatientShow}
-                        />
-                    </Form.Group>
-                </div> */}
-        {/* <Location setLocation={setLocation} /> */}
-        <div className="col-10"> 
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdLocationOn />
-            </div>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Location *"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={errors?.location}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              {errors?.location}
-            </Form.Control.Feedback>
-          </Form.Group> 
-         </div>
-      <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdStickyNote2 />
-            </div>
-            <Form.Control
-              type="text"
-              name="symptoms"
-              placeholder="Symptoms / Conditions *"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={errors?.symptoms}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              {errors?.symptoms}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-        <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdOutlineLocalHospital />
-            </div>
-            <Form.Control
-              type="text"
-              name="preferred_hospital_doctor"
-              placeholder="Preferred doctor/hospital/specialization"
-              onChange={handleChange}
-              className="global-inputs"
+      <div className="form-container">
+        <Form
+          onSubmit={(e) => handleSubmit(e)}
+          className="row justify-content-center"
+        >
+          <div className="col-3">
+            <Form.Group className="d-flex">
+              <Form.Check
+                type="radio"
+                name="form-type"
+                label="Myself"
+                onChange={() => { setFamilyCheckBox(false); setSelectedMember() }}
+                defaultChecked={true}
+              />
+            </Form.Group>
+          </div>
+          <div className="col-6">
+            <Form.Group className="d-flex">
+              <Form.Check
+                type="radio"
+                name="form-type"
+                label="For Family"
+                onChange={handleForFamily}
+              />
+            </Form.Group>
+          </div>
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <FaRegUser />
+              </div>
+              <Form.Control
+                type="text"
+                name="name"
+                value={name}
+                placeholder="Person Name *"
+                // onChange={handleChange}
+                className="global-inputs"
+                isInvalid={errors?.name}
+                disabled={true}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                {errors?.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          {familyCheckBox ? (
+            <div className="row justify-content-center">
+              <ForFamily setSelectedMember={setSelectedMember} /></div>
+          ) : null}
+          
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdLocationOn />
+              </div>
+              <Form.Control
+                as="select"
+                name="location"
+                placeholder="Emirates"
+                onChange={handleChange}
+                value = {formValues.location}
+                className="global-inputs"
+                isInvalid={errors?.location}
+                style={{ fontSize: "small", color: "black" }}
+              >
+                <option value="">Select Emirates *</option>
+                <option value="Abu Dhabi">Abu Dhabi</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Sharjah">Sharjah</option>
+                <option value="Ajman">Ajman</option>
+                <option value="Umm Al Quwain">Umm Al Quwain</option>
+        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                <option value="Fujairah">Fujairah</option>
+               <option value="Al Ain">Al Ain</option>
+              </Form.Control>
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.location}</Form.Control.Feedback>
+
+            </Form.Group>
+          </div>
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdStickyNote2 />
+              </div>
+              <Form.Control
+                type="text"
+                name="symptoms"
+                placeholder="Symptoms / Conditions *"
+                onChange={handleChange}
+                className="global-inputs"
+                isInvalid={errors?.symptoms}
+              />
+              <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                {errors?.symptoms}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </div>
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineLocalHospital />
+              </div>
+              <Form.Control
+                type="text"
+                name="preferred_hospital_doctor"
+                placeholder="Preferred doctor/hospital/specialization"
+                onChange={handleChange}
+                className="global-inputs"
               // isInvalid={errors?.preferred_hospital_doctor}
-            />
-            {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+              />
+              {/* <Form.Control.Feedback style={{ color: "red" }} type="invalid">
               {errors?.preferred_hospital_doctor}
             </Form.Control.Feedback> */}
-          </Form.Group>
-        </div>
-        <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdOutlineCalendarToday />
-            </div>
-            <div>
-              <DatePicker
-                selected={dateOne}
-                onChange={(date) => setDateOne(date)}
-                showTimeSelect
-                dateFormat="dd/MM/yyyy hhaa"
-                minDate = {new Date()}
-                minTime = {new Date().setHours(7, 0, 0, 0)}
-                maxTime = {new Date().setHours(19, 0, 0, 0)}
-                customInput={<DatePickerInput text="Preferred Date and Time 1 *" />}
-                isInvalid={errors?.dateOne}
-              />
-              {dateerrors.dateOne ? (
-                <Form.Label style={{ color: "red" }} type="valid">
-                  Date is required
-                </Form.Label>
-              ) : null}
-            </div>
-          </Form.Group>
-        </div>
-        <div className="col-10">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdOutlineCalendarToday />
-            </div>
-            <div>
-              <DatePicker
-                selected={dateTwo}
-                onChange={(date) => setDateTwo(date)}
-                dateFormat="dd/MM/yyyy hhaa"
-                showTimeSelect
-                minDate = {new Date()}
-                minTime = {new Date().setHours(7, 0, 0, 0)}
-                maxTime = {new Date().setHours(19, 0, 0, 0)}
-                customInput={<DatePickerInput text="Preferred Date and Time 2 *" />}
-                isInvalid={errors?.dateTwo}
-              />
-              {dateerrors.dateTwo ? (
-                <Form.Label style={{ color: "red" }} type="valid">
-                  Date is required
-                </Form.Label>
-              ) : null}
-            </div>
-          </Form.Group>
-        </div>
-        {/*
+            </Form.Group>
+          </div>
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineCalendarToday />
+              </div>
+              <div>
+                <DatePicker
+                  selected={dateOne}
+                  onChange={(date) => setDateOne(date)}
+                  showTimeSelect
+                  dateFormat="dd/MM/yyyy hhaa"
+                  minDate={new Date()}
+                  minTime={new Date().setHours(7, 0, 0, 0)}
+                  maxTime={new Date().setHours(19, 0, 0, 0)}
+                  customInput={<DatePickerInput text="Preferred Date and Time 1 *" />}
+                  isInvalid={errors?.dateOne}
+                />
+                {dateerrors.dateOne ? (
+                  <Form.Label style={{ color: "red" }} type="valid">
+                    Date is required
+                  </Form.Label>
+                ) : null}
+              </div>
+            </Form.Group>
+          </div>
+          <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineCalendarToday />
+              </div>
+              <div>
+                <DatePicker
+                  selected={dateTwo}
+                  onChange={(date) => setDateTwo(date)}
+                  dateFormat="dd/MM/yyyy hhaa"
+                  showTimeSelect
+                  minDate={new Date()}
+                  minTime={new Date().setHours(7, 0, 0, 0)}
+                  maxTime={new Date().setHours(19, 0, 0, 0)}
+                  customInput={<DatePickerInput text="Preferred Date and Time 2 *" />}
+                  isInvalid={errors?.dateTwo}
+                />
+                {dateerrors.dateTwo ? (
+                  <Form.Label style={{ color: "red" }} type="valid">
+                    Date is required
+                  </Form.Label>
+                ) : null}
+              </div>
+            </Form.Group>
+          </div>
+          {/*
                 <div className='col-10 col-md-5'>
                     <Form.Group>
                        <div className="prepend-icon">
@@ -413,39 +391,39 @@ function NewConsultation({ handleModalShow }) {
                 </div>
                         */}
 
-        <div className="col-10 col-md-7">
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdOutlineFilePresent />
-            </div>
-            <div
-              role="button"
-              onClick={handleFileReportsClick}
-              className="global-file-input"
-            >
-              <p>
-                {reports.length === 0
-                  ? "Upload Reports (If Any)"
-                  : reports.length + " File(s) Uploaded"}
-              </p>
-            </div>
-            <Form.Control
-              type="file"
-              name="reports"
-              ref={hiddenFileInputReports}
-              accept="image/*,application/pdf"
-              style={{ display: "none" }}
-              onChange={handleFiles}
-              multiple
-            />
-          </Form.Group>
-        </div>
-        <div className="text-center mt-4">
-          <input className="form-button" type="submit" value="SUBMIT" />
-        </div>
-      </Form>
-    </div>
-  );
+          <div className="col-10 col-md-7">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdOutlineFilePresent />
+              </div>
+              <div
+                role="button"
+                onClick={handleFileReportsClick}
+                className="global-file-input"
+              >
+                <p>
+                  {reports.length === 0
+                    ? "Upload Reports (If Any)"
+                    : reports.length + " File(s) Uploaded"}
+                </p>
+              </div>
+              <Form.Control
+                type="file"
+                name="reports"
+                ref={hiddenFileInputReports}
+                accept="image/*,application/pdf"
+                style={{ display: "none" }}
+                onChange={handleFiles}
+                multiple
+              />
+            </Form.Group>
+          </div>
+          <div className="text-center mt-4">
+            <input className="form-button" type="submit" value="SUBMIT" />
+          </div>
+        </Form>
+      </div>
+    );
 }
 
 export default NewConsultation;

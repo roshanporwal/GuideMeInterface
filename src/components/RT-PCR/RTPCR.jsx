@@ -2,37 +2,46 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { FaRegUser } from 'react-icons/fa';
 import {
-     MdOutlineCalendarToday,
-     MdLocationOn, MdFormatListNumbered, MdOutlineApartment
-    //  , MdOutlineFilePresent,
-    // MdOutlineLocalHospital,  MdStickyNote2
+  MdOutlineCalendarToday,
+  MdLocationOn, MdFormatListNumbered, MdOutlineApartment
+  //  , MdOutlineFilePresent,
+  // MdOutlineLocalHospital,  MdStickyNote2
 } from 'react-icons/md';
-import { SiGooglemaps } from 'react-icons/si';
 import { FaBuilding, FaGlobeAsia } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
 import DatePicker from "react-datepicker";
 import ReactGifLoader from "../../interfacecomponents/gif_loader";
-import {validationSchema} from "./rtpcrValidation";
+import { validationSchema } from "./rtpcrValidation";
 import * as auth_service from "../../service/auth_service";
 import ForFamily from "../AddFamily/ForFamily";
 // import Location from '../../interfacecomponents/location'
 import ThankYouModal from '../Layout/ThankYouModal'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-function RTPCR({handleModalShow}) {
-    // const hiddenFileInputInsurance = React.useRef(null);
-    // const hiddenFileInputReports = React.useRef(null);
-    const [errors, setErrors] = useState();
-    // const [fileerrors,setFileErrors] = useState({
-    //     // insurance:"",
-    //     reports:"",
-    // });
-    const [dateerrors,setDateErrors] = useState({
-        dateOne:"",
-        dateTwo:"",
-    });
-    const [addressForm, setAddressForm] = useState(false);
-    const [addressErr, setAddressErr] = useState("")
+function RTPCR({ handleModalShow }) {
+  // const hiddenFileInputInsurance = React.useRef(null);
+  // const hiddenFileInputReports = React.useRef(null);
+  const [errors, setErrors] = useState();
+  // const [fileerrors,setFileErrors] = useState({
+  //     // insurance:"",
+  //     reports:"",
+  // });
+  const [dateerrors, setDateErrors] = useState({
+    dateOne: "",
+    dateTwo: "",
+  });
+  // const [addressForm, setAddressForm] = useState(false);
+  const [addressErr, setAddressErr] = useState("")
+  const [address, setAddress] = useState("");
+  const [coordinate, setCoordinate] = useState({ lat: '', lag: '' });
+  const handleSelect = async value => {
+    const results = await geocodeByAddress(value)
+    const latLng = await getLatLng(results[0])
+    setAddress(value)
+    formValues.location = value
+    setCoordinate(latLng)
+  };
   const handleAddress = () => {
     setAddressErr("")
     if (
@@ -55,237 +64,239 @@ function RTPCR({handleModalShow}) {
         ", " +
         formValues.landmark;
     }
-    if (!formValues.address_patient) {
-      if (!formValues.map_link) {
-        setAddressErr("Address Field is Required.")
-      }
+    else {
+      setAddressErr("Address not entered.")
     }
   };
-  const [link, setLink] = useState(false);
-  const geolocate = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      function(position) {
-        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-        setLink(true)
-      },
-    // function error(msg) {alert('Please enable your GPS position feature.');}
-    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
-    );
-  }
-  useEffect(()=>{
-    geolocate()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // const [link, setLink] = useState(false);
+  // const geolocate = async () => {
+  //   await navigator.geolocation.getCurrentPosition(
+  //     function(position) {
+  //       formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+  //       setLink(true)
+  //     },
+  //   // function error(msg) {alert('Please enable your GPS position feature.');}
+  //   // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  //   );
+  // }
+  // useEffect(()=>{
+  //   geolocate()
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
   const [loading, setLoading] = useState(false);
-  const [submitted,setSubmitted] = useState(false)
-    const validate = async (values) => {
-        try {
-            // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
-            setDateErrors({dateOne:DateOne === undefined ? "required" : "",dateTwo:DateTwo === undefined ? "required" : "" });
-            await validationSchema.validate(values, { abortEarly: false });
-            return {};
-        } catch (err) {
-            let errObj = {};
-             for (let { path, message } of err.inner) {
-                errObj[path] = message;
-            }
-            return errObj;
-        }
-    }; 
-    
-    // Programatically click the hidden file input element
-    // when the Button component is clicked
-    // const handleFileInsuranceClick = event => {
-    //     hiddenFileInputInsurance.current.click();
-    // };
-    // Programatically click the hidden file input element
-    // when the Button component is clicked
-    // const handleFileReportsClick = event => {
-    //     hiddenFileInputReports.current.click();
-    // };
-     
-    const DatePickerInput = forwardRef(({ value, onClick, text, invalid }, ref) => (
-        <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
-    ));
-    const [formValues, setFormValues] = useState({
-        name:'',
-        age:'',
-        gender:'',
-        nationality:'',
-        email:'',
-        referredby : '',
-        mobile:'',
-        insurance_card_copy: [],
-        current_diagnosis:''
-    });
-    // const [location,setLocation ] = useState({
-    //     country : "",
-    //     state: "",
-    //     city: ""
-    //   })
+  const [submitted, setSubmitted] = useState(false)
+  const validate = async (values) => {
+    try {
+      // setFileErrors({/*insurance:insurance === undefined ? "required" : "",*/reports:reports === undefined ? "required" : ""});
+      setDateErrors({ dateOne: DateOne === undefined ? "required" : "", dateTwo: DateTwo === undefined ? "required" : "" });
+      await validationSchema.validate(values, { abortEarly: false });
+      return {};
+    } catch (err) {
+      let errObj = {};
+      for (let { path, message } of err.inner) {
+        errObj[path] = message;
+      }
+      return errObj;
+    }
+  };
 
-    const [DateOne, setDateOne] = useState();
-    const [DateTwo, setDateTwo] = useState();
-    // const [reports, setReports] = useState([]);
-    // const [insurance, setInsurance] = useState();
-    const [name,setName] = useState("")
-    const [familyCheckBox, setFamilyCheckBox] = useState(false);
-    const [data, setData] = useState();
-    const [selectedMember, setSelectedMember] = useState();
-    useEffect(() => {
-        async function fetchData() {
-            let data = localStorage.getItem("login_patient")
-            if (data !== null) {
-                data = JSON.parse(data)
-                setName(data.name)
-                setData(data)
-            }
-        }
-        fetchData()
-    }, []);
-    const handleForFamily = async (e) => {
-        if (!familyCheckBox) {
-            setFamilyCheckBox(true);
-        } else {
-            setFamilyCheckBox(false);
-        }
-    };
+  // Programatically click the hidden file input element
+  // when the Button component is clicked
+  // const handleFileInsuranceClick = event => {
+  //     hiddenFileInputInsurance.current.click();
+  // };
+  // Programatically click the hidden file input element
+  // when the Button component is clicked
+  // const handleFileReportsClick = event => {
+  //     hiddenFileInputReports.current.click();
+  // };
 
-    const handleChange = (e) => {
-        let { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
+  const DatePickerInput = forwardRef(({ value, onClick, text, invalid }, ref) => (
+    <input readOnly placeholder={text} className="form-control global-inputs" onClick={onClick} ref={ref} value={value} />
+  ));
+  const [formValues, setFormValues] = useState({
+    name: '',
+    age: '',
+    gender: '',
+    nationality: '',
+    email: '',
+    referredby: '',
+    mobile: '',
+    insurance_card_copy: [],
+    current_diagnosis: '',
+    location: '',
+    map_link: ''
+  });
+  // const [location,setLocation ] = useState({
+  //     country : "",
+  //     state: "",
+  //     city: ""
+  //   })
+
+  const [DateOne, setDateOne] = useState();
+  const [DateTwo, setDateTwo] = useState();
+  // const [reports, setReports] = useState([]);
+  // const [insurance, setInsurance] = useState();
+  const [name, setName] = useState("")
+  const [familyCheckBox, setFamilyCheckBox] = useState(false);
+  const [data, setData] = useState();
+  const [selectedMember, setSelectedMember] = useState();
+  useEffect(() => {
+    async function fetchData() {
+      let data = localStorage.getItem("login_patient")
+      if (data !== null) {
+        data = JSON.parse(data)
+        setName(data.name)
+        setData(data)
+      }
+    }
+    fetchData()
+  }, []);
+  const handleForFamily = async (e) => {
+    if (!familyCheckBox) {
+      setFamilyCheckBox(true);
+    } else {
+      setFamilyCheckBox(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    handleAddress()
+    const err = await validate(formValues);
+    setErrors(err);
+    if (Object.keys(err).length === 0 && DateOne && DateTwo /* && fileerrors.insurance === ""*/) {
+      setLoading(true)
+      const formData = new FormData();
+
+      // setFormValues({ ...formValues, patient_id: data.id });
+      formValues.patient_id = data.id
+      formValues.name = data.name;
+      formValues.dob = data.dob;
+      formValues.gender = data.gender;
+      formValues.current_diagnosis = formValues.symptoms
+      formValues.nationality = data.nationality;
+      formValues.email = data.email;
+      formValues.referredby = data.referredby;
+      formValues.mobile = data.login_id;
+      formValues.insurance_card_copy = data.insurance_card_copy
+      formValues.preferred_date_first = DateOne.toString()
+      if (DateTwo)
+        formValues.preferred_date_second = DateTwo.toString()
+      formValues.type = "Home Service"
+      formValues.subtype = "RT PCR Test";
+      formValues.status = "New"
+      formValues.insurance_name = data.insurance_name
+      formValues.family = selectedMember;
+      if(coordinate.lat.toString() && coordinate.lng.toString())
+        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
+
+
+      // if (reports !== undefined) {
+      //     for (const tp of reports) {
+      //         formData.append('patient_reports', tp);
+      //     }
+      // }
+      // formData.append('insurance_card_copy', insurance);
+      formData.append('formValues', JSON.stringify(formValues));
+
+      const abc = await auth_service.createNewenqurire(data.login_id, formData)
+      if (abc.payload) {
+        setSubmitted(true)
+        setLoading(false)
+        // handleModalShow();
+      }
+      else {
+        alert(abc.message)
+        setLoading(false)
+      }
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        handleAddress()
-        const err = await validate(formValues);
-        setErrors(err);
-        
-        if(Object.keys(err).length === 0  && addressErr === "" && DateOne && DateTwo /* && fileerrors.insurance === ""*/)  {  
-            setLoading(true)  
-            const formData = new FormData();
-
-            // setFormValues({ ...formValues, patient_id: data.id });
-            formValues.patient_id = data.id
-            formValues.name = data.name;
-            formValues.dob = data.dob;
-            formValues.gender = data.gender;
-            formValues.current_diagnosis = formValues.symptoms
-            formValues.nationality = data.nationality;
-            formValues.email = data.email;
-            formValues.referredby = data.referredby;
-            formValues.mobile = data.login_id;            
-            formValues.insurance_card_copy = data.insurance_card_copy
-            formValues.preferred_date_first = DateOne.toString()
-            if(DateTwo)
-                formValues.preferred_date_second = DateTwo.toString()
-            formValues.type = "Home Service"
-            formValues.subtype = "RT PCR Test";
-            formValues.status = "New"
-            formValues.insurance_name = data.insurance_name   
-            formValues.family = selectedMember;    
-
-
-            // if (reports !== undefined) {
-            //     for (const tp of reports) {
-            //         formData.append('patient_reports', tp);
-            //     }
-            // }
-            // formData.append('insurance_card_copy', insurance);
-            formData.append('formValues', JSON.stringify(formValues));
-            
-            const abc = await auth_service.createNewenqurire(data.login_id, formData)
-            if(abc.payload){
-                setSubmitted(true)
-                setLoading(false)
-                // handleModalShow();
-            }
-            else{
-                alert(abc.message)
-                    setLoading(false)
-            }
-        }
-
-    }
-    // const handleFiles = e => {
-    //     const { name } = e.currentTarget
-    //     if (name === 'reports') {
-    //         setReports(e.target.files)
-    //     }
-    //     // else {
-    //     //     setInsurance(e.target.files[0])
-    //     // }
-    // }
-    if(submitted === true)
-    return(<ThankYouModal formValues = {formValues}/>)
+  }
+  // const handleFiles = e => {
+  //     const { name } = e.currentTarget
+  //     if (name === 'reports') {
+  //         setReports(e.target.files)
+  //     }
+  //     // else {
+  //     //     setInsurance(e.target.files[0])
+  //     // }
+  // }
+  if (submitted === true)
+    return (<ThankYouModal formValues={formValues} />)
   else
     if (loading === true)
-    return (
-      <>
-        <ReactGifLoader />
-      </>
-    );
-  else
-    return (
+      return (
+        <>
+          <ReactGifLoader />
+        </>
+      );
+    else
+      return (
+
         <div className="form-container">
-            <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
+          <Form onSubmit={e => handleSubmit(e)} className="row justify-content-center">
             <div className="col-3">
-          <Form.Group className="d-flex">
-            <Form.Check
-              type="radio"
-              name="form-type"
-              label="Myself"
-              onChange={() => {setFamilyCheckBox(false); setSelectedMember()}}
-              defaultChecked = {true}
-            />
-          </Form.Group>
-        </div>
-        <div className="col-6">
-          <Form.Group className="d-flex">
-            <Form.Check
-              type="radio"
-              name="form-type"
-              label="For Family"
-              onChange={handleForFamily}
-            />
-          </Form.Group>
-        </div>
+              <Form.Group className="d-flex">
+                <Form.Check
+                  type="radio"
+                  name="form-type"
+                  label="Myself"
+                  onChange={() => { setFamilyCheckBox(false); setSelectedMember() }}
+                  defaultChecked={true}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-6">
+              <Form.Group className="d-flex">
+                <Form.Check
+                  type="radio"
+                  name="form-type"
+                  label="For Family"
+                  onChange={handleForFamily}
+                />
+              </Form.Group>
+            </div>
 
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <FaRegUser />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="name"
-                            value = {name}
-                            placeholder='Person Name *'
-                            className="global-inputs"
-                            isInvalid={errors?.name}
-                            disabled={true}
-                        />
-                        <Form.Control.Feedback style = {{color:"red"}} type = "invalid">{errors?.name}</Form.Control.Feedback>
-
-                    </Form.Group>
+            <div className='col-10'>
+              <Form.Group>
+                <div className="prepend-icon">
+                  <FaRegUser />
                 </div>
-                {familyCheckBox ? (
-                    <div className="row justify-content-center">
-                    <ForFamily setSelectedMember = {setSelectedMember} /></div>
-                ):null}
-                <div className='col-10 mt-2'>
-            <div className='d-flex align-items-start justify-content-center mt-2'>
-              <div className="mx-1 mb-1">
-                <IoHomeOutline />
-              </div>
-              <div>
-                <span>Address </span>
+                <Form.Control
+                  type='text'
+                  name="name"
+                  value={name}
+                  placeholder='Person Name *'
+                  className="global-inputs"
+                  isInvalid={errors?.name}
+                  disabled={true}
+                />
+                <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.name}</Form.Control.Feedback>
+
+              </Form.Group>
+            </div>
+            {familyCheckBox ? (
+              <div className="row justify-content-center">
+                <ForFamily setSelectedMember={setSelectedMember} /></div>
+            ) : null}
+            <div className='col-10 mt-2'>
+              <div className='d-flex align-items-start justify-content-center mt-2'>
+                <div className="mx-1 mb-1">
+                  <IoHomeOutline />
+                </div>
+                <div>
+                  <span>Address </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-10">
-            <Form.Group className="d-flex">
+            <div className="col-10">
+              {/* <Form.Group className="d-flex">
               <div className="col-5 global-inputs-check">
                 <Form.Check
                   type="checkbox"
@@ -305,8 +316,8 @@ function RTPCR({handleModalShow}) {
                 isInvalid={addressErr}
               />
               </div>
-            </Form.Group>
-            {/* { addressErr ? 
+            </Form.Group> */}
+              {/* { addressErr ? 
                 <>{
                 (!link) ? 
                 <>
@@ -317,8 +328,7 @@ function RTPCR({handleModalShow}) {
                 </>
                 : null 
                 }</>:null} */}
-          </div>
-          {addressForm ? <>
+            </div>
             <div className="col-10 col-md-5">
               <Form.Group>
                 <div className="prepend-icon">
@@ -355,7 +365,7 @@ function RTPCR({handleModalShow}) {
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
+            <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
                   <GiDirectionSigns />
@@ -373,22 +383,43 @@ function RTPCR({handleModalShow}) {
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
+            <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
                   <MdLocationOn />
                 </div>
-                <Form.Control
-                  type="text"
-                  name="location"
-                  placeholder="Area / Location *"
-                  onChange={handleChange}
-                  className="global-inputs"
-                  isInvalid={addressErr}
-                />
-                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-                  Area is Required.
-                </Form.Control.Feedback>
+                <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                      <Form.Control
+                        type="text"
+                        className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })}
+                        isInvalid={addressErr}
+                      />
+                      <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                        Location is Required.
+                      </Form.Control.Feedback>
+                      {/* <input className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })} /> */}
+                      <div>
+                        {loading && <div><ReactGifLoader /></div>}
+                        {suggestions.map(suggestion => {
+                          const className = suggestion.active
+                            ? 'suggestion-item-active'
+                            : 'suggestion-item';
+                          const style = suggestion.active
+                            ? { backgroundColor: '#e0e0e0', cursor: 'pointer', marginTop: '7px', marginBottom: "7px" }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer', marginBottom: '5px' };
+                          return <div key={'mykey' + suggestion.index} {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style,
+                          })}>
+                            {suggestion.description}
+                          </div>
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </PlacesAutocomplete>
               </Form.Group>
             </div>
             <div className="col-10">
@@ -437,8 +468,8 @@ function RTPCR({handleModalShow}) {
               {errors?.landmark}
             </Form.Control.Feedback> */}
               </Form.Group>
-            </div> </> : null}
-          {link ?
+            </div>
+            {/* {link ?
             <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
@@ -456,8 +487,8 @@ function RTPCR({handleModalShow}) {
 
                 <Form.Control.Feedback style={{ color: "red" }} type="invalid">Location Link is Required.</Form.Control.Feedback>
               </Form.Group>
-            </div> : null}
-                {/* <div className='col-10 col-md-5'>
+            </div> : null} */}
+            {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdFamilyRestroom />
@@ -471,7 +502,7 @@ function RTPCR({handleModalShow}) {
                         />
                     </Form.Group>
                 </div> */}
-                {/* <div className='col-10 col-md-5'>
+            {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlinePersonAdd />
@@ -486,8 +517,8 @@ function RTPCR({handleModalShow}) {
                     </Form.Group>
                 </div> */}
 
-                {/* <Location setLocation = {setLocation}/> */}
-                {/* <div className="col-10"> 
+            {/* <Location setLocation = {setLocation}/> */}
+            {/* <div className="col-10"> 
           <Form.Group>
             <div className="prepend-icon">
               <MdLocationOn />
@@ -505,7 +536,7 @@ function RTPCR({handleModalShow}) {
             </Form.Control.Feedback>
           </Form.Group> 
          </div> */}
-                {/* <div className='col-10'>
+            {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdStickyNote2 />
@@ -522,7 +553,7 @@ function RTPCR({handleModalShow}) {
 
                     </Form.Group>
                 </div> */}
-                {/* <div className='col-10'>
+            {/* <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineLocalHospital />
@@ -539,53 +570,53 @@ function RTPCR({handleModalShow}) {
                     
                     </Form.Group>
                 </div> */}
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineCalendarToday />
-                        </div>
-                        <div>
-                            <DatePicker
-                                selected={DateOne}
-                                onChange={date => { setDateOne(date) }}
-                                dateFormat="dd/MM/yyyy hhaa"
-                                showTimeSelect
-                                minDate={new Date()}
-                                minTime={new Date().setHours(7, 0, 0, 0)}
-                                maxTime={new Date().setHours(19, 0, 0, 0)}
-                                timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 1*' invalid = {dateerrors.dateOne} />}
-                            />
-                        </div>
-                        {dateerrors.dateOne ? (
-                            <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
-                            : null}
-                    </Form.Group>
+            <div className='col-10'>
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdOutlineCalendarToday />
                 </div>
-                <div className='col-10'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlineCalendarToday />
-                        </div>
-                        <div>
-                            <DatePicker
-                                selected={DateTwo}
-                                onChange={date => { setDateTwo(date) }}
-                                dateFormat="dd/MM/yyyy hhaa"
-                                showTimeSelect
-                                minDate={new Date()}
-                                minTime={new Date().setHours(7, 0, 0, 0)}
-                                maxTime={new Date().setHours(19, 0, 0, 0)}
-                                timeIntervals={60}
-                                customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 2*' />}
-                            />
-                            {dateerrors.dateTwo ? (
-                            <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
-                            : null}
-                        </div>
-                    </Form.Group>
+                <div>
+                  <DatePicker
+                    selected={DateOne}
+                    onChange={date => { setDateOne(date) }}
+                    dateFormat="dd/MM/yyyy hhaa"
+                    showTimeSelect
+                    minDate={new Date()}
+                    minTime={new Date().setHours(7, 0, 0, 0)}
+                    maxTime={new Date().setHours(19, 0, 0, 0)}
+                    timeIntervals={60}
+                    customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 1*' invalid={dateerrors.dateOne} />}
+                  />
                 </div>
-                {/* <div className='col-10 col-md-5'>
+                {dateerrors.dateOne ? (
+                  <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                  : null}
+              </Form.Group>
+            </div>
+            <div className='col-10'>
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdOutlineCalendarToday />
+                </div>
+                <div>
+                  <DatePicker
+                    selected={DateTwo}
+                    onChange={date => { setDateTwo(date) }}
+                    dateFormat="dd/MM/yyyy hhaa"
+                    showTimeSelect
+                    minDate={new Date()}
+                    minTime={new Date().setHours(7, 0, 0, 0)}
+                    maxTime={new Date().setHours(19, 0, 0, 0)}
+                    timeIntervals={60}
+                    customInput={<DatePickerInput text='Preferred Date and Time of Sample Collection 2*' />}
+                  />
+                  {dateerrors.dateTwo ? (
+                    <Form.Label style={{ color: "red" }} type="valid">Date is required</Form.Label>)
+                    : null}
+                </div>
+              </Form.Group>
+            </div>
+            {/* <div className='col-10 col-md-5'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdUploadFile />
@@ -607,7 +638,7 @@ function RTPCR({handleModalShow}) {
                         : null}   
                     </Form.Group>
                 </div> */}
-                {/* <div className='col-10 col-md-7'>
+            {/* <div className='col-10 col-md-7'>
                     <Form.Group>
                         <div className="prepend-icon">
                             <MdOutlineFilePresent />
@@ -627,12 +658,12 @@ function RTPCR({handleModalShow}) {
                         
                     </Form.Group>
                 </div> */}
-                <div className='text-center mt-4'>
-                    <input className="form-button" type="submit" value="SUBMIT" />
-                </div>
-            </Form>
+            <div className='text-center mt-4'>
+              <input className="form-button" type="submit" value="SUBMIT" />
+            </div>
+          </Form>
         </div>
-    );
+      );
 }
 
 export default RTPCR;

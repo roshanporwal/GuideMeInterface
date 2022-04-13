@@ -31,6 +31,7 @@
     "react-multi-select-component": "^4.1.8",
     "react-multiple-image-uploader": "^1.0.3",
     "react-phone-number-input": "^3.1.46",
+    "react-places-autocomplete": "^7.3.0",
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",

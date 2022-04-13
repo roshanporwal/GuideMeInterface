@@ -16,6 +16,7 @@ import * as auth_service from "../../service/auth_service";
 import { validationSchema } from './labValidation';
 import ForFamily from "../AddFamily/ForFamily";
 import ThankYouModal from '../Layout/ThankYouModal'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 function LabTest({ handleModalShow }) {
   const hiddenFileInputInsurance = React.useRef(null);
@@ -31,6 +32,16 @@ function LabTest({ handleModalShow }) {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false)
+
+  const [address, setAddress] = useState("");
+  const [coordinate, setCoordinate] = useState({ lat: '', lag: '' });
+  const handleSelect = async value => {
+    const results = await geocodeByAddress(value)
+    const latLng = await getLatLng(results[0])
+    setAddress(value)
+    formValues.location = value
+    setCoordinate(latLng)
+  };
 
   const validate = async (values) => {
     try {
@@ -73,35 +84,33 @@ function LabTest({ handleModalShow }) {
     address_patient: '',
     mobile: '',
     insurance_card_copy: [],
-    map_link:""
+    map_link:"",
+    location:""
   });
   const [DateOne, setDateOne] = useState();
   const [DateTwo, setDateTwo] = useState();
   // const [reports, setReports] = useState([]);
   const [insurance, setInsurance] = useState();
 
-  const [link, setLink] = useState(false);
-  const [addressForm, setAddressForm] = useState(false);
-
   const [name, setName] = useState("")
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
 
-  const geolocate = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      function(position) {
-        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-        setLink(true)
-      },
-    // function error(msg) {alert('Please enable your GPS position feature.');}
-    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
-    );
-  }
-  useEffect(()=>{
-    geolocate()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // const geolocate = async () => {
+  //   await navigator.geolocation.getCurrentPosition(
+  //     function(position) {
+  //       formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+  //       setLink(true)
+  //     },
+  //   // function error(msg) {alert('Please enable your GPS position feature.');}
+  //   // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  //   );
+  // }
+  // useEffect(()=>{
+  //   geolocate()
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -123,13 +132,13 @@ function LabTest({ handleModalShow }) {
 
   const [addressErr, setAddressErr] = useState("");
   const handleAddress = () => {
-    setAddressErr("");
+    setAddressErr("")
     if (
-      formValues.flat_number &&
-      formValues.building_name &&
-      formValues.street_name &&
-      formValues.location &&
-      formValues.emirates
+      (formValues.flat_number &&
+        formValues.building_name &&
+        formValues.street_name &&
+        formValues.location &&
+        formValues.emirates)
     ) {
       formValues.address_patient =
         formValues.flat_number +
@@ -144,10 +153,8 @@ function LabTest({ handleModalShow }) {
         ", " +
         formValues.landmark;
     }
-    if (!formValues.address_patient) {
-      if (!formValues.map_link) {
-        setAddressErr("Address Field is Required.");
-      }
+    else {
+      setAddressErr("Address not entered.")
     }
   };
   const handleChange = (e) => {
@@ -180,6 +187,8 @@ function LabTest({ handleModalShow }) {
       formValues.status = "New"
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;
+      if (coordinate.lat.toString() && coordinate.lng.toString())
+        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
 
       /* if (reports !== undefined) {
            for (const tp of reports) {
@@ -350,7 +359,7 @@ function LabTest({ handleModalShow }) {
                 </div>
               </div>
             </div>
-            <div className="col-10">
+            {/* <div className="col-10">
               <Form.Group className="d-flex">
                 <div className="col-5 global-inputs-check">
                   <Form.Check
@@ -371,7 +380,7 @@ function LabTest({ handleModalShow }) {
                     isInvalid={addressErr}
                   />
                 </div>
-              </Form.Group>
+              </Form.Group> */}
               {/* { addressErr ? 
                 <>{
                 (!link) ? 
@@ -383,8 +392,8 @@ function LabTest({ handleModalShow }) {
                 </>
                 : null 
                 }</>:null} */}
-            </div>
-            {addressForm ? <>
+            {/* </div> */}
+            {/* {addressForm ? <> */}
               <div className="col-10 col-md-5">
                 <Form.Group>
                   <div className="prepend-icon">
@@ -421,7 +430,7 @@ function LabTest({ handleModalShow }) {
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
-              <div className="col-10 col-md-5">
+              <div className="col-10">
                 <Form.Group>
                   <div className="prepend-icon">
                     <GiDirectionSigns />
@@ -439,24 +448,45 @@ function LabTest({ handleModalShow }) {
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
-              <div className="col-10 col-md-5">
-                <Form.Group>
-                  <div className="prepend-icon">
-                    <MdLocationOn />
-                  </div>
-                  <Form.Control
-                    type="text"
-                    name="location"
-                    placeholder="Area / Location *"
-                    onChange={handleChange}
-                    className="global-inputs"
-                    isInvalid={addressErr}
-                  />
-                  <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-                    Area is Required.
-                  </Form.Control.Feedback>
-                </Form.Group>
+              <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdLocationOn />
               </div>
+              <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <Form.Control
+                      type="text"
+                      className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })}
+                      isInvalid={addressErr}
+                    />
+                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                      Location is Required.
+                    </Form.Control.Feedback>
+                    {/* <input className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })} /> */}
+                    <div>
+                      {loading && <div><ReactGifLoader /></div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'suggestion-item-active'
+                          : 'suggestion-item';
+                        const style = suggestion.active
+                          ? { backgroundColor: '#e0e0e0', cursor: 'pointer', marginTop: '7px', marginBottom: "7px" }
+                          : { backgroundColor: '#ffffff', cursor: 'pointer', marginBottom: '5px' };
+                        return <div key={'mykey' + suggestion.index} {...getSuggestionItemProps(suggestion, {
+                          className,
+                          style,
+                        })}>
+                          {suggestion.description}
+                        </div>
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </Form.Group>
+          </div>
               <div className="col-10">
                 <Form.Group>
                   <div className="prepend-icon">
@@ -503,8 +533,8 @@ function LabTest({ handleModalShow }) {
               {errors?.landmark}
             </Form.Control.Feedback> */}
                 </Form.Group>
-              </div> </> : null}
-            {link ?
+              </div> 
+            {/* {link ?
               <div className="col-10">
                 <Form.Group>
                   <div className="prepend-icon">
@@ -522,7 +552,7 @@ function LabTest({ handleModalShow }) {
 
                   <Form.Control.Feedback style={{ color: "red" }} type="invalid">Location Link is Required.</Form.Control.Feedback>
                 </Form.Group>
-              </div> : null}
+              </div> : null} */}
             <div className='col-10'>
               <Form.Group>
                 <div className="prepend-icon">

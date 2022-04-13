@@ -6,7 +6,6 @@ import {
   MdFormatListNumbered,
   MdOutlineApartment, MdCall, MdTransgender, MdPayment
 } from 'react-icons/md';
-import { SiGooglemaps } from 'react-icons/si';
 import { FaBuilding, FaGlobeAsia, FaClipboardList, FaLanguage } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
@@ -17,6 +16,7 @@ import { validationSchema } from './physioTherapyValidation';
 import ForFamily from "../AddFamily/ForFamily";
 import ThankYouModal from '../Layout/ThankYouModal'
 import { MultiSelect } from "react-multi-select-component";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 function PhysioTherapy({ handleModalShow }) {
   // const hiddenFileInputInsurance = React.useRef(null);
@@ -32,6 +32,16 @@ function PhysioTherapy({ handleModalShow }) {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false)
+  
+  const [address, setAddress] = useState("");
+  const [coordinate, setCoordinate] = useState({ lat: '', lag: '' });
+  const handleSelect = async value => {
+    const results = await geocodeByAddress(value)
+    const latLng = await getLatLng(results[0])
+    setAddress(value)
+    formValues.location = value
+    setCoordinate(latLng)
+  };
   // Programatically click the hidden file input element
   // when the Button component is clicked
   // const handleFileInsuranceClick = event => {
@@ -74,7 +84,8 @@ function PhysioTherapy({ handleModalShow }) {
     address_patient: '',
     mobile: '',
     insurance_card_copy: [],
-    map_link: ""
+    map_link: "",
+    location:""
   });
   const [DateOne, setDateOne] = useState();
   const [DateTwo, setDateTwo] = useState();
@@ -85,27 +96,27 @@ function PhysioTherapy({ handleModalShow }) {
   ];
   const [selected, setSelected] = useState([]);
   // const [insurance, setInsurance] = useState();
-  const [link, setLink] = useState(false);
-  const [addressForm, setAddressForm] = useState(false);
+  // const [link, setLink] = useState(false);
+  // const [addressForm, setAddressForm] = useState(false);
   const [name, setName] = useState("")
   const [familyCheckBox, setFamilyCheckBox] = useState(false);
   const [data, setData] = useState();
   const [selectedMember, setSelectedMember] = useState();
 
-  const geolocate = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      function(position) {
-        formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
-        setLink(true)
-      },
-    // function error(msg) {alert('Please enable your GPS position feature.');}
-    // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
-    );
-  }
-  useEffect(()=>{
-    geolocate()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // const geolocate = async () => {
+  //   await navigator.geolocation.getCurrentPosition(
+  //     function(position) {
+  //       formValues.map_link = "https://www.google.com/maps/@"+position.coords.latitude+","+position.coords.longitude
+  //       setLink(true)
+  //     },
+  //   // function error(msg) {alert('Please enable your GPS position feature.');}
+  //   // ,{maximumAge:10000, timeout:10000, enableHighAccuracy: true}
+  //   );
+  // }
+  // useEffect(()=>{
+  //   geolocate()
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
   useEffect(() => {
     async function fetchData() {
       let data = localStorage.getItem("login_patient")
@@ -148,10 +159,8 @@ function PhysioTherapy({ handleModalShow }) {
         ", " +
         formValues.landmark;
     }
-    if (!formValues.address_patient) {
-      if (!formValues.map_link) {
-        setAddressErr("Address Field is Required.")
-      }
+    else {
+      setAddressErr("Address not entered.")
     }
   };
   const valueRenderer = (selected) => {
@@ -200,6 +209,8 @@ function PhysioTherapy({ handleModalShow }) {
       formValues.status = "New"
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;
+      if (coordinate.lat.toString() && coordinate.lng.toString())
+        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
 
       if (reports !== undefined) {
         for (const tp of reports) {
@@ -285,34 +296,6 @@ function PhysioTherapy({ handleModalShow }) {
             <div className="row justify-content-center">
               <ForFamily setSelectedMember={setSelectedMember} /></div>
           ) : null}
-          {/*  <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdFamilyRestroom />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="family"
-                            placeholder='Add Family Member'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div>
-                <div className='col-10 col-md-5'>
-                    <Form.Group>
-                        <div className="prepend-icon">
-                            <MdOutlinePersonAdd />
-                        </div>
-                        <Form.Control
-                            type='text'
-                            name="register"
-                            placeholder='Register Patient'
-                            onChange={handleChange}
-                            className="global-inputs"
-                        />
-                    </Form.Group>
-                </div> */}
           <div className='col-10'>
             <Form.Group>
               <div className="prepend-icon">
@@ -366,7 +349,7 @@ function PhysioTherapy({ handleModalShow }) {
               </div>
             </div>
           </div>
-          <div className="col-10">
+          {/* <div className="col-10">
             <Form.Group className="d-flex">
               <div className="col-5 global-inputs-check">
                 <Form.Check
@@ -387,7 +370,7 @@ function PhysioTherapy({ handleModalShow }) {
                 isInvalid={addressErr}
               />
               </div>
-            </Form.Group>
+            </Form.Group> */}
             {/* { addressErr ? 
                 <>{
                 (!link) ? 
@@ -399,8 +382,7 @@ function PhysioTherapy({ handleModalShow }) {
                 </>
                 : null 
                 }</>:null} */}
-          </div>
-          {addressForm ? <>
+          {/* </div> */}
             <div className="col-10 col-md-5">
               <Form.Group>
                 <div className="prepend-icon">
@@ -437,7 +419,7 @@ function PhysioTherapy({ handleModalShow }) {
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
+            <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
                   <GiDirectionSigns />
@@ -455,24 +437,45 @@ function PhysioTherapy({ handleModalShow }) {
                 </Form.Control.Feedback>
               </Form.Group>
             </div>
-            <div className="col-10 col-md-5">
-              <Form.Group>
-                <div className="prepend-icon">
-                  <MdLocationOn />
-                </div>
-                <Form.Control
-                  type="text"
-                  name="location"
-                  placeholder="Area / Location *"
-                  onChange={handleChange}
-                  className="global-inputs"
-                  isInvalid={addressErr}
-                />
-                <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-                  Area is Required.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </div>
+            <div className="col-10">
+            <Form.Group>
+              <div className="prepend-icon">
+                <MdLocationOn />
+              </div>
+              <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <Form.Control
+                      type="text"
+                      className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })}
+                      isInvalid={addressErr}
+                    />
+                    <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                      Location is Required.
+                    </Form.Control.Feedback>
+                    {/* <input className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })} /> */}
+                    <div>
+                      {loading && <div><ReactGifLoader /></div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'suggestion-item-active'
+                          : 'suggestion-item';
+                        const style = suggestion.active
+                          ? { backgroundColor: '#e0e0e0', cursor: 'pointer', marginTop: '7px', marginBottom: "7px" }
+                          : { backgroundColor: '#ffffff', cursor: 'pointer', marginBottom: '5px' };
+                        return <div key={'mykey' + suggestion.index} {...getSuggestionItemProps(suggestion, {
+                          className,
+                          style,
+                        })}>
+                          {suggestion.description}
+                        </div>
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </Form.Group>
+          </div>
             <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
@@ -519,8 +522,8 @@ function PhysioTherapy({ handleModalShow }) {
               {errors?.landmark}
             </Form.Control.Feedback> */}
               </Form.Group>
-            </div> </> : null}
-          {link ?
+            </div> 
+          {/* {link ?
             <div className="col-10">
               <Form.Group>
                 <div className="prepend-icon">
@@ -538,7 +541,7 @@ function PhysioTherapy({ handleModalShow }) {
 
                 <Form.Control.Feedback style={{ color: "red" }} type="invalid">Location Link is Required.</Form.Control.Feedback>
               </Form.Group>
-            </div> : null}
+            </div> : null} */}
           <div className='col-10'>
             <Form.Group>
               <div className="prepend-icon">

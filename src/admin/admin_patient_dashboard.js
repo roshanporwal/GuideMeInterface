@@ -382,9 +382,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                                 <b>Map Link : </b>
                                                 <span>
                                                     <a href={target.map_link}>
-                                                        {target.map_link.slice(
-                                                            28
-                                                        )}
+                                                        {target.map_link}
                                                     </a>
                                                 </span>
                                             </p>

@@ -12,6 +12,7 @@ import { validationSchema } from './teleValidation';
 import ForFamily from "../AddFamily/ForFamily";
 // import Location from '../../interfacecomponents/location'
 import ThankYouModal from '../Layout/ThankYouModal'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 function TeleConsultation({handleModalShow}) {
     // const hiddenFileInputInsurance = React.useRef(null);
@@ -27,6 +28,15 @@ function TeleConsultation({handleModalShow}) {
     });
   const [loading, setLoading] = useState(false);
   const [submitted,setSubmitted] = useState(false)
+  const [address, setAddress] = useState("");
+  const [coordinate, setCoordinate] = useState({ lat: '', lag: '' });
+  const handleSelect = async value => {
+    const results = await geocodeByAddress(value)
+    const latLng = await getLatLng(results[0])
+    setAddress(value)
+    formValues.location = value
+    setCoordinate(latLng)
+  };
 //   const [location,setLocation ] = useState({
 //     country : "",
 //     state: "",
@@ -133,7 +143,8 @@ function TeleConsultation({handleModalShow}) {
             formValues.preferred_date_first = DateOne.toString()
             if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
-
+            if(coordinate.lat.toString() && coordinate.lng.toString())
+                formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
 
             if (reports !== undefined) {
                 for (const tp of reports) {
@@ -251,24 +262,46 @@ function TeleConsultation({handleModalShow}) {
                     </Form.Group>
                 </div> */}
                {/* <Location setLocation = {setLocation}/> */}
-               <div className="col-10"> 
-          <Form.Group>
-            <div className="prepend-icon">
-              <MdLocationOn />
+               <div className="col-10">
+              <Form.Group>
+                <div className="prepend-icon">
+                  <MdLocationOn />
+                </div>
+                <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                      <Form.Control
+                        type="text"
+                        onChange={handleChange}
+                        className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })}
+                        isInvalid={errors?.location}
+                      />
+                      <Form.Control.Feedback style={{ color: "red" }} type="invalid">
+                        Location is Required.
+                      </Form.Control.Feedback>
+                      {/* <input className="form-control global-inputs" {...getInputProps({ placeholder: "Area / Location *" })} /> */}
+                      <div>
+                        {loading && <div><ReactGifLoader /></div>}
+                        {suggestions.map(suggestion => {
+                          const className = suggestion.active
+                            ? 'suggestion-item-active'
+                            : 'suggestion-item';
+                          const style = suggestion.active
+                            ? { backgroundColor: '#e0e0e0', cursor: 'pointer', marginTop: '7px', marginBottom: "7px" }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer', marginBottom: '5px' };
+                          return <div key={'mykey' + suggestion.index} {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style,
+                          })}>
+                            {suggestion.description}
+                          </div>
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </PlacesAutocomplete>
+              </Form.Group>
             </div>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Location *"
-              onChange={handleChange}
-              className="global-inputs"
-              isInvalid={errors?.location}
-            />
-            <Form.Control.Feedback style={{ color: "red" }} type="invalid">
-              {errors?.location}
-            </Form.Control.Feedback>
-          </Form.Group> 
-         </div>
                 <div className='col-10'>
                     <Form.Group>
                         <div className="prepend-icon">

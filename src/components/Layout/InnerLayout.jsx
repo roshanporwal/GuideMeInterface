@@ -75,7 +75,7 @@ function InnerLayout(props) {
     }
     return (
         <div>
-            {/* {console.log(login)} */}
+            {console.log(login)}
             {data === null ?
                 <Container>
                     <div className="content-container">
