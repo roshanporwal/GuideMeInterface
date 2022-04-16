@@ -125,7 +125,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                     .then(() => setLoading(false))
                     .catch((c) => {
                         setLoading(false);
-                        alert("Some thing Went Wrong");
+                        // alert("Some thing Went Wrong");
                     });
                 navigate("/admin/dashboard")
             }

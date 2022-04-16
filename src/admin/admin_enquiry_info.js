@@ -266,7 +266,7 @@ export default function ADMIN_ENQUIRY_INFO(props) {
                     {target.preferred_date_second &&
                     convertTime(target.preferred_date_second) !== "0:00 am" ? (
                       <p className="card-text">
-                        <b>Proposed Time : </b>
+                        <b>Proposed Time Second: </b>
                         {convertTime(target.preferred_date_second)}
                       </p>
                     ) : null}

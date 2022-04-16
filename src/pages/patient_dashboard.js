@@ -309,14 +309,14 @@ function PATIENT_DASHBOARD(props) {
                                                 </span>
                                             </p>
                                         ) : null}
-                                        <p>
+                                        {/* <p>
                                             <b>Phone Number : </b>{" "}
                                             <span>{target.patient_mobile}</span>
                                         </p>
                                         <p>
                                             <b>Email : </b>{" "}
                                             <span>{target.patient_email}</span>
-                                        </p>
+                                        </p> */}
                                         <p>
                                             <b>Age : </b>{" "}
                                             <span>{target.patient_age}</span>
