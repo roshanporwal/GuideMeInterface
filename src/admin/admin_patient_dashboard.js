@@ -532,7 +532,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             <div className="row">
                                 {enqurie_data.map((target, index) => (
                                     <div key={index} className="col-md-6">
-                                        <p><b>Speciality : </b>{target.preferred_hospital_doctor}</p>
+                                        <p><b>Speciality : </b>{target.preferred_hospital_doctor || "__"}</p>
                                         <p>
                                             <b>Medical History : </b>
                                             {target.medical_history}&nbsp;&nbsp;

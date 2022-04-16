@@ -486,7 +486,7 @@ function PATIENT_DASHBOARD(props) {
                         {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>
-                                    <p><b>Speciality : </b>{ "__" }</p>
+                                    <p><b>Speciality : </b>{target.preferred_hospital_doctor || "__"}</p>
                                     <p><b>Medical History : </b>{target.medical_history || "__"}&nbsp;&nbsp;{target.med2}&nbsp;&nbsp;{target.med3}</p>
                                     <p><b>Status : </b>{target.status || "__"}</p> 
                                 </div>
