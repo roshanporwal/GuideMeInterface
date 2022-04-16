@@ -159,6 +159,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 formValues.id,
                 formValues
             );
+            console.log(wonandloss)
             if (wonandloss.payload) {
                 window.location.reload();
             }
@@ -373,7 +374,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             <p>
                                                 <b>Address : </b>{" "}
                                                 <span>
-                                                    target.patient_address
+                                                    {target.patient_address}
                                                 </span>
                                             </p>
                                         ) : null}
@@ -527,10 +528,11 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                         </div>
 
                         <div className="col-md-8">
+                            {/* {console.log(enqurie_data)} */}
                             <div className="row">
                                 {enqurie_data.map((target, index) => (
                                     <div key={index} className="col-md-6">
-                                        {/* <p><b>Speciality : </b>{target.speciality}</p> */}
+                                        <p><b>Speciality : </b>{target.preferred_hospital_doctor}</p>
                                         <p>
                                             <b>Medical History : </b>
                                             {target.medical_history}&nbsp;&nbsp;

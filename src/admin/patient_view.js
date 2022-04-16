@@ -137,7 +137,7 @@ export default function PATIENT_VIEW(props) {
             {show_quota ?
                 <div className="container my-5">
                     <div id="table-scroll" className="table-scroll">
-                    <table>
+                    <table className="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -164,15 +164,6 @@ export default function PATIENT_VIEW(props) {
                                    { hopital_enq.map((target, index) => (
                                             <td key={index} >
                                                 {target.treatment_plan || "__"}
-                                            </td>
-                                        ))
-                                    }
-                                </tr>
-                                <tr>
-                                    <td><b>Inclusions</b></td>
-                                   { hopital_enq.map((target, index) => (
-                                            <td key={index} >
-                                                {target.inclusion || "__"}
                                             </td>
                                         ))
                                     }

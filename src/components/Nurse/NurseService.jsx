@@ -216,7 +216,7 @@ function NurseService({ handleModalShow }) {
       formValues.family = selectedMember;
       formValues.nursing_date_range = convert(DateOne) + "-" + convert(DateTwo)
       if (coordinate.lat.toString() && coordinate.lng.toString())
-        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
+        formValues.map_link = "https://www.google.com/maps/@"+coordinate.lat.toString() + "," + coordinate.lng.toString()
 
       if (reports !== undefined) {
         for (const tp of reports) {

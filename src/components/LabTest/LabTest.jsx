@@ -6,7 +6,6 @@ import {
   MdFormatListNumbered,
   MdOutlineApartment, MdCall, MdPayment
 } from 'react-icons/md';
-import { SiGooglemaps } from 'react-icons/si';
 import { FaBuilding, FaGlobeAsia, } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { GiDirectionSigns } from 'react-icons/gi'
@@ -188,7 +187,7 @@ function LabTest({ handleModalShow }) {
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;
       if (coordinate.lat.toString() && coordinate.lng.toString())
-        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
+        formValues.map_link = "https://www.google.com/maps/@"+coordinate.lat.toString() + "," + coordinate.lng.toString()
 
       /* if (reports !== undefined) {
            for (const tp of reports) {

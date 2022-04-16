@@ -296,7 +296,7 @@ function SignUpScreen() {
                         <Form.Control
                           type="text"
                           name="insurance_name"
-                          placeholder="Insurance Name *"
+                          placeholder="Insurance Name"
                           onChange={handleChange}
                           value={formValues.insurance_name}
                           className="signup-inputs"

@@ -115,7 +115,7 @@ function NewConsultation({ handleModalShow }) {
     e.preventDefault();
     const err = await validate(formValues);
     setErrors(err);
-    if (Object.keys(err).length === 0 /*&& fileerrors.insurance === ""*/) {
+    if (Object.keys(err).length === 0 && dateOne && dateTwo /*&& fileerrors.insurance === ""*/) {
       setLoading(true)
       const formData = new FormData();
 
@@ -124,7 +124,8 @@ function NewConsultation({ handleModalShow }) {
       formValues.name = data.name;
       formValues.email = data.email;
       formValues.current_diagnosis = formValues.symptoms;
-      formValues.preferred_date_first = dateOne.toString();
+      if(dateOne)
+        formValues.preferred_date_first = dateOne.toString();
       if (dateTwo)
         formValues.preferred_date_second = dateTwo.toString();
       formValues.dob = data.dob;

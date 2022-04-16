@@ -144,7 +144,7 @@ function TeleConsultation({handleModalShow}) {
             if(DateTwo)
                 formValues.preferred_date_second = DateTwo.toString()
             if(coordinate.lat.toString() && coordinate.lng.toString())
-                formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
+                formValues.map_link = "https://www.google.com/maps/@"+coordinate.lat.toString() + "," + coordinate.lng.toString()
 
             if (reports !== undefined) {
                 for (const tp of reports) {

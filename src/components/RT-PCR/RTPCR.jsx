@@ -194,7 +194,7 @@ function RTPCR({ handleModalShow }) {
       formValues.insurance_name = data.insurance_name
       formValues.family = selectedMember;
       if(coordinate.lat.toString() && coordinate.lng.toString())
-        formValues.map_link = coordinate.lat.toString() + " " + coordinate.lng.toString()
+        formValues.map_link = "https://www.google.com/maps/@"+coordinate.lat.toString() + "," + coordinate.lng.toString()
 
 
       // if (reports !== undefined) {

@@ -138,7 +138,7 @@ function FreeOpinion({handleModalShow}) {
     }
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Name of the diagnosed medical condition(compulsory)- ICD code(list to be shared) *
+            Name of the diagnosed medical condition *
         </Tooltip>
         )
     const handleFiles = e => {

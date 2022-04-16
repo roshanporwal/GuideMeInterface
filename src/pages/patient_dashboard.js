@@ -153,7 +153,7 @@ function PATIENT_DASHBOARD(props) {
         const hospital_data = getenquriesbyid.payload[0].hospitals.find(item => item.hospital_id === data._id)
         getenquriesbyid.payload[0].status = hospital_data.status
         setEnqurie_data(getenquriesbyid.payload)
-         // console.log(getenquriesbyid.payload)
+        //  console.log(getenquriesbyid.payload)
         if (hospital_data != null) {
             
             let ahospital_data = hospital_data.select_doctor ? setSelect_doctor(hospital_data.select_doctor) : null;
@@ -300,12 +300,81 @@ function PATIENT_DASHBOARD(props) {
                                 <div key={index}>
                                     <div className="PatientDetails">
                                         <h2 className="PatientName py-3">{target.patient_name}</h2>
-                                        {/* <p><b>Phone Number : </b><span>{target.patient_mobile}</span></p>
-                                        <p><b>Email : </b><span>{target.patient_email}</span></p> */}
-                                        <p><b>Age : </b><span>{target.patient_age || "__"}</span></p>
-                                        <p><b>Gender : </b><span>{target.patient_gender || "__"}</span></p>
-                                        <p><b>Nationality : </b><span>{target.patient_nationality || "__"}</span></p>
-                                        <p><b>Language : </b> <span>{target.languages_spoken.join(', ') || "__"}</span></p>  
+                                        {target.family ? (
+                                            <p>
+                                                <b>For Family Member : </b>
+                                                <span>
+                                                    {target.family.first_name}{" "}
+                                                    {target.family.last_name}
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        <p>
+                                            <b>Phone Number : </b>{" "}
+                                            <span>{target.patient_mobile}</span>
+                                        </p>
+                                        <p>
+                                            <b>Email : </b>{" "}
+                                            <span>{target.patient_email}</span>
+                                        </p>
+                                        <p>
+                                            <b>Age : </b>{" "}
+                                            <span>{target.patient_age}</span>
+                                        </p>
+                                        <p>
+                                            <b>Gender : </b>{" "}
+                                            <span>{target.patient_gender}</span>
+                                        </p>
+                                        {target.patient_address ? (
+                                            <p>
+                                                <b>Address : </b>{" "}
+                                                <span>
+                                                    {target.patient_address}
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        {target.map_link ? (
+                                            <p>
+                                                <b>Map Link : </b>
+                                                <span>
+                                                    <a href={target.map_link}>
+                                                        {target.map_link}
+                                                    </a>
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        {target.insurance_name ? (
+                                            <p>
+                                                <b>Insurance Name : </b>{" "}
+                                                <span>
+                                                    {target.insurance_name}
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        <p>
+                                            <b>Nationality : </b>{" "}
+                                            <span>
+                                                {target.patient_nationality || "----"}
+                                            </span>
+                                        </p>
+                                        {target.languages_spoken[0] ? (
+                                            <p>
+                                                <b>Language : </b>{" "}
+                                                <span>
+                                                    {target.languages_spoken.join(
+                                                        ", "
+                                                    )}
+                                                </span>
+                                            </p>
+                                        ) : null}
+                                        {target.patient_referred_by ? (
+                                            <p>
+                                                <b>Referred By : </b>
+                                                <span>
+                                                    {target.patient_referred_by}
+                                                </span>
+                                            </p>
+                                        ) : null} 
                                     </div>
                                 </div>
                             ))
@@ -316,13 +385,98 @@ function PATIENT_DASHBOARD(props) {
                                     <div className="PatientPreferencesDetails my-4">
                                         <h2 className="PatientPreferences py-3">Patient Preferences</h2>
                                         <p className="mb-1">Patient Requirement : </p>
-                                         <h6>{target.proposed_treatment_plan.join(', ') || "__"}</h6>
-                                        <p>Patient Location : {target.location || "__"}</p>
-                                        <p>Proposed Date : {target.proposal_date || "__"}</p>
-                                        <p>Transport Support Needed : {target.transport_support_needed || "__"}</p>
-                                        <p>Accomodation / Other Logistic : {target.accomodation || "__"}</p>
-                                        <p>Preferred Hospital Visit Type : {target.preferred_hospital_visit || "__"}</p>
-                                        <p>Food Preferences : {target.food_preferences || "__"} </p>                                         
+                                        {target.proposed_treatment_plan[0] ? (
+                                            <>
+                                                <p className="mb-1">
+                                                    Patient Requirement :{" "}
+                                                </p>
+                                                <h6>
+                                                    {target.proposed_treatment_plan.join(
+                                                        ", "
+                                                    )}
+                                                </h6>{" "}
+                                            </>
+                                        ) : null}
+                                        {target.enquiry_date ? (
+                                            <p>
+                                                Enquiry Date :{" "}
+                                                {target.enquiry_date}
+                                            </p>
+                                        ) : null}
+                                        {target.location ? (
+                                            <p>
+                                                Patient Location :{" "}
+                                                {target.location}
+                                            </p>
+                                        ) : null}
+                                        {target.proposal_date ? (
+                                            <p>
+                                                Proposed Date :{" "}
+                                                {target.proposal_date}
+                                            </p>
+                                        ) : null}
+                                        {target.proposal_date_time_first &&
+                                        target.proposal_date_time_first !==
+                                            "0:00 am" ? (
+                                            <p>
+                                                Proposal Time :{" "}
+                                                {
+                                                    target.proposal_date_time_first
+                                                }
+                                            </p>
+                                        ) : null}
+                                        {target.proposal_date_second ? (
+                                            <p>
+                                                Alternate Proposed Date :{" "}
+                                                {target.proposal_date_second}
+                                            </p>
+                                        ) : null}
+                                        {target.proposal_date_time_second &&
+                                        target.proposal_date_time_second !==
+                                            "0:00 am" ? (
+                                            <p>
+                                                Alternate Proposal Time :{" "}
+                                                {
+                                                    target.proposal_date_time_second
+                                                }
+                                            </p>
+                                        ) : null}
+                                        {target.nursing_date_range ? (
+                                            <p className="card-text">
+                                                <b>Nursing Date Range : </b>
+                                                {
+                                                    target.nursing_date_range
+                                                } for {target.time_period} hours
+                                            </p>
+                                        ) : null}
+                                        {target.transport_support_needed ? (
+                                            <p>
+                                                Transport Support Needed :{" "}
+                                                {
+                                                    target.transport_support_needed
+                                                }
+                                            </p>
+                                        ) : null}
+                                        {target.accomodation ? (
+                                            <p>
+                                                Accomodation / Other Logistic :{" "}
+                                                {target.accomodation}
+                                            </p>
+                                        ) : null}
+                                        {target.preferred_hospital_visit ? (
+                                            <p>
+                                                Preferred Hospital Visit Type :{" "}
+                                                {
+                                                    target.preferred_hospital_visit
+                                                }
+                                            </p>
+                                        ) : null}
+                                        {target.food_preferences ? (
+                                            <p>
+                                                Food Preferences :{" "}
+                                                {target.food_preferences}{" "}
+                                            </p>
+                                        ) : null}                                       
                                     </div>
                                 </div>
                             ))}
