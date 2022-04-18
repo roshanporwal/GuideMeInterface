@@ -335,7 +335,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                 </div>
                 <div className="container my-5">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             {enqurie_data.map((target, index) => (
                                 <div key={index}>
                                     <div className="PatientDetails">
@@ -343,7 +343,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             {target.patient_name}
                                         </h2>
                                         <p>
-                                            <b>Id :</b> <span>{target.id}</span>
+                                            <b>Id :</b> <span style={{whiteSpace: 'pre-wrap', overflowWrap: 'break-word'}}>{target.id}</span>
                                         </p>
                                         {target.family ? (
                                             <p>
@@ -360,7 +360,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         </p>
                                         <p>
                                             <b>Email : </b>{" "}
-                                            <span>{target.patient_email}</span>
+                                            <span style={{whiteSpace: 'pre-wrap', overflowWrap: 'break-word'}}>{target.patient_email}</span>
                                         </p>
                                         <p>
                                             <b>Age : </b>{" "}
@@ -527,7 +527,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                             ))}
                         </div>
 
-                        <div className="col-md-8">
+                        <div className="col-md-7">
                             {/* {console.log(enqurie_data)} */}
                             <div className="row">
                                 {enqurie_data.map((target, index) => (
@@ -727,7 +727,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                 <div className="row" key={index}>
                                     <div className="col-md-12">
                                         <div className="queryBox my-2">
-                                            <h2>Query</h2>
+                                            <h2>Query / Current Diagnosis</h2>
                                             <p>{target.current_diagnosis}</p>
                                         </div>
                                     </div>
@@ -775,7 +775,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                             ) : null}
-                            {enqurie_data.map((target, index) => (
+                            {/* {enqurie_data.map((target, index) => (
                                 <div className="row" key={index}>
                                     <div className="col-md-12">
                                         <div className="diagnosisBox my-3">
@@ -784,7 +784,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            ))} */}
                             {enqurie_data[0].medicine_name ? (
                                 <div className="row">
                                     <div className="col-md-12">

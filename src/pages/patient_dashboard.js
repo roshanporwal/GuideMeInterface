@@ -294,7 +294,7 @@ function PATIENT_DASHBOARD(props) {
             <HospitalNavbar />
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-5">
                         {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>
@@ -384,7 +384,6 @@ function PATIENT_DASHBOARD(props) {
                                 <div key={index}>
                                     <div className="PatientPreferencesDetails my-4">
                                         <h2 className="PatientPreferences py-3">Patient Preferences</h2>
-                                        <p className="mb-1">Patient Requirement : </p>
                                         {target.proposed_treatment_plan[0] ? (
                                             <>
                                                 <p className="mb-1">
@@ -482,7 +481,7 @@ function PATIENT_DASHBOARD(props) {
                             ))}
                     </div>
 
-                    <div className="col-md-8">
+                    <div className="col-md-7">
                         {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>
@@ -495,7 +494,7 @@ function PATIENT_DASHBOARD(props) {
                             enqurie_data.map((target, index) => (
                                 <div key={index} >
                                     <div className="queryBox my-2">
-                                        <h2>Query</h2>                                              
+                                        <h2>Query / Current Diagnosis</h2>                                              
                                         <p>{target.current_diagnosis}</p>
                                     </div>
                                 </div>
@@ -542,7 +541,7 @@ function PATIENT_DASHBOARD(props) {
                                     </div>
                                 </div>
                             ) : null}
-                        {
+                        {/* {
                             enqurie_data.map((target, index) => (
                                 <div key={index}>
                                     <div className="diagnosisBox my-3">
@@ -550,7 +549,7 @@ function PATIENT_DASHBOARD(props) {
                                          <p>{target.current_diagnosis}</p>                                          
                                     </div>
                                 </div>
-                            ))}
+                            ))} */}
                             {
                                  sendquote ?
                                 <div className="text-center">  
