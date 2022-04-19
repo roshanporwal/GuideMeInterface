@@ -133,7 +133,6 @@ function PATIENT_DASHBOARD(props) {
     const [free_annual_checkup, setFree_annual_checkup] = useState([])
     const [sendquote, setSendquote] = useState(true)
     const [sendquotebutton, setSendquotebutton] = useState(true)
-
     useEffect(() => {
 
         fetchData(state).then(() => setLoading(false));;
@@ -155,7 +154,6 @@ function PATIENT_DASHBOARD(props) {
         setEnqurie_data(getenquriesbyid.payload)
         //  console.log(getenquriesbyid.payload)
         if (hospital_data != null) {
-            
             let ahospital_data = hospital_data.select_doctor ? setSelect_doctor(hospital_data.select_doctor) : null;
             await ahospital_data;
             ahospital_data = hospital_data.select_doctor ? setSendquote(false) : null;
@@ -219,7 +217,6 @@ function PATIENT_DASHBOARD(props) {
                 setEnqurie_data(getenquries.payload)
                 const hospital_data = getenquries.payload[0].hospitals.find(item => item.hospital_id === data._id)
                 if (hospital_data != null) {
-                    setFormValue(hospital_data)
                     let ahospital_data = hospital_data.select_doctor ? setSelect_doctor(hospital_data.select_doctor) : null;
                     await ahospital_data;
                     ahospital_data = hospital_data.select_doctor ? setSendquote(false) : null;
@@ -572,6 +569,7 @@ function PATIENT_DASHBOARD(props) {
                                                                 name="select_doctor"
                                                                 value={formValues.select_doctor}
                                                                 checked={select_doctor.length !== 0 ? select_doctor.find(item => item === target.doctor_name) : false}
+                                                                disabled = {!sendquotebutton}
                                                                 onChange={() => checkBox("select_doctor", target.doctor_name)}
                                                                 isInvalid={!!errors.select_doctor}
                                                             />
@@ -592,6 +590,7 @@ function PATIENT_DASHBOARD(props) {
                                                                 name="select_doctor"
                                                                 value={formValues.select_anesthesiologist}
                                                                 onChange={() => checkBox("select_doctor")}
+                                                                disabled = {!sendquotebutton}
                                                                 isInvalid={!!errors.select_anesthesiologist}
                                                             />
                                                         ))}
@@ -610,6 +609,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="treatment_plan"
                                                     value={formValues.treatment_plan}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.treatment_plan}
                                                 />
@@ -625,6 +625,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="estimate_price"
                                                     value={formValues.estimate_price}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.estimate_price}
                                                 />
@@ -643,6 +644,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="inclusion"
                                                     value={formValues.inclusion}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.inclusion}
                                                 />
@@ -658,6 +660,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="exclusion"
                                                     value={formValues.exclusion}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.exclusion}
                                                 />
@@ -676,6 +679,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="estimate_copay"
                                                     value={formValues.estimate_copay}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.estimate_copay}
                                                 />
@@ -691,6 +695,7 @@ function PATIENT_DASHBOARD(props) {
                                                     type="text"
                                                     name="estimate_copay_percentage"
                                                     value={formValues.estimate_copay_percentage}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.estimate_copay_percentage}
                                                 />
@@ -709,7 +714,8 @@ function PATIENT_DASHBOARD(props) {
                                                 value="Yes"
                                                 checked={formValues.translator === "Yes"}
                                                 onChange={handleChange}
-                                                isInvalid={!!errors.translator}
+                                                    disabled = {!sendquotebutton}
+                                                    isInvalid={!!errors.translator}
                                              />
                                         </div>
                                         <div className="col-md-6">
@@ -721,7 +727,8 @@ function PATIENT_DASHBOARD(props) {
                                                 id="no"
                                                 value="No"
                                                 checked={formValues.translator === "No"}
-                                                onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                 isInvalid={!!errors.translator}
                                             />     
                                         </div>
@@ -738,6 +745,7 @@ function PATIENT_DASHBOARD(props) {
                                                     id="local"
                                                     value="Local"
                                                     checked={formValues.type_of_anesthesia === "Local"}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
                                                 />
@@ -751,6 +759,7 @@ function PATIENT_DASHBOARD(props) {
                                                     id="general"
                                                     value="General"
                                                     checked={formValues.type_of_anesthesia === "General"}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
                                                 />
@@ -764,6 +773,7 @@ function PATIENT_DASHBOARD(props) {
                                                     id="epidural"
                                                     value="Epidural"
                                                     checked={formValues.type_of_anesthesia === "Epidural"}
+                                                    disabled = {!sendquotebutton}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.type_of_anesthesia}
                                                 />
@@ -779,7 +789,8 @@ function PATIENT_DASHBOARD(props) {
                                                 type="text"
                                                 name="type_of_room"
                                                 value={formValues.type_of_room}
-                                                onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                 isInvalid={!!errors.type_of_room}
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.type_of_room}</Form.Control.Feedback>
@@ -795,7 +806,8 @@ function PATIENT_DASHBOARD(props) {
                                                         type="text"
                                                         name="expected_length"
                                                         value={formValues.expected_length}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.expected_length}
                                                     />
                                                     <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.expected_length}</Form.Control.Feedback>
@@ -810,7 +822,8 @@ function PATIENT_DASHBOARD(props) {
                                                         type="text"
                                                         name="length_of_stay"
                                                         value={formValues.length_of_stay}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.length_of_stay}
                                                     />
                                                     <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.length_of_stay}</Form.Control.Feedback>
@@ -830,7 +843,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="yes"
                                                         value="Yes"
                                                         checked={formValues.free_room_upgrade === "Yes"}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.free_room_upgrade}
                                                     />
                                                     <Form.Check
@@ -852,7 +866,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="at_discount"
                                                         value="At Discount"
                                                         checked={formValues.free_room_upgrade === "At Discount"}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.free_room_upgrade}
                                                         />
                                                 </div>
@@ -869,7 +884,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="yes"
                                                             value="Yes"
                                                             checked={formValues.free_physiotherapy === "Yes"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
                                                         />
                                                         <Form.Check
@@ -880,7 +896,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="no"
                                                             value="No"
                                                             checked={formValues.free_physiotherapy === "No"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
                                                         />
                                                         <Form.Check
@@ -891,7 +908,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="at_discount"
                                                             value="At Discount"
                                                             checked={formValues.free_physiotherapy === "At Discount"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.free_physiotherapy}
                                                         />
                                                 </div>
@@ -907,7 +925,8 @@ function PATIENT_DASHBOARD(props) {
                                                 type="text"
                                                 name="free_other_speciality_consultant"
                                                 value={formValues.free_other_speciality_consultant}
-                                                onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                 isInvalid={!!errors.free_other_speciality_consultant}
                                             />
                                             <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.free_other_speciality_consultant}</Form.Control.Feedback>
@@ -925,7 +944,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="yes"
                                                         value="Yes"
                                                         checked={formValues.free_telephonic_feedback === "Yes"}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.free_telephonic_feedback}
                                                     />
                                                 </div>
@@ -938,7 +958,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="no"
                                                         value="No"
                                                         checked={formValues.free_telephonic_feedback === "No"}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.free_telephonic_feedback}
                                                     />
                                                 </div>
@@ -950,7 +971,8 @@ function PATIENT_DASHBOARD(props) {
                                                         name="free_telephonic_feedback"
                                                         id="at_discount"
                                                         value="At Discount"
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         checked={formValues.free_telephonic_feedback === "At Discount"}
                                                         isInvalid={!!errors.free_telephonic_feedback}
                                                     />
@@ -971,7 +993,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="patients"
                                                         value="patients"
                                                         checked={free_annual_checkup.find(item => item === "patients")}
-                                                        onChange={() => checkBox("free_annual_checkup", "patients")}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={() => checkBox("free_annual_checkup", "patients")}
                                                         isInvalid={!!errors.free_annual_checkup}
                                                     />
                                                 </div>
@@ -984,7 +1007,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="family_members"
                                                         value="family_members"
                                                         checked={free_annual_checkup.find(item => item === "family_members")}
-                                                        onChange={() => checkBox("free_annual_checkup", "family_members")}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={() => checkBox("free_annual_checkup", "family_members")}
                                                         isInvalid={!!errors.free_annual_checkup}
                                                     />
                                                 </div>
@@ -997,7 +1021,8 @@ function PATIENT_DASHBOARD(props) {
                                                         id="at_discount"
                                                         value="at_discount"
                                                         checked={free_annual_checkup.find(item => item === "at_discount")}
-                                                        onChange={() => checkBox("free_annual_checkup", "at_discount")}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={() => checkBox("free_annual_checkup", "at_discount")}
                                                         isInvalid={!!errors.free_annual_checkup}
                                                     />
                                                 </div>
@@ -1017,7 +1042,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="yes"
                                                             value="Yes"
                                                             checked={formValues.pickup_and_drop === "Yes"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
                                                     />
                                                     <Form.Check
@@ -1028,7 +1054,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="no"
                                                             value="No"
                                                             checked={formValues.pickup_and_drop === "No"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
                                                     />
                                                     <Form.Check
@@ -1039,7 +1066,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="at_discount"
                                                             value="Could be planned"
                                                             checked={formValues.pickup_and_drop === "Could be planned"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.pickup_and_drop}
                                                     />
                                                 </div>
@@ -1055,7 +1083,8 @@ function PATIENT_DASHBOARD(props) {
                                                             name="free_patient_dedicated_relationship"
                                                             id="yes"
                                                             value="Yes"
-                                                            checked={formValues.free_patient_dedicated_relationship === "Yes"}
+                                                    disabled = {!sendquotebutton}
+                                                    checked={formValues.free_patient_dedicated_relationship === "Yes"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
                                                     />
@@ -1066,7 +1095,8 @@ function PATIENT_DASHBOARD(props) {
                                                             name="free_patient_dedicated_relationship"
                                                             id="no"
                                                             value="No"
-                                                            checked={formValues.free_patient_dedicated_relationship === "No"}
+                                                    disabled = {!sendquotebutton}
+                                                    checked={formValues.free_patient_dedicated_relationship === "No"}
                                                             onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
                                                     />
@@ -1078,7 +1108,8 @@ function PATIENT_DASHBOARD(props) {
                                                             id="available"
                                                             value="Available"
                                                             checked={formValues.free_patient_dedicated_relationship === "Available"}
-                                                            onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                             isInvalid={!!errors.free_patient_dedicated_relationship}
                                                     />
                                                 </div>
@@ -1095,7 +1126,8 @@ function PATIENT_DASHBOARD(props) {
                                                         type="text"
                                                         name="benefits_for_patient"
                                                         value={formValues.benefits_for_patient}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.benefits_for_patient}
                                                     />
                                                     <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_patient}</Form.Control.Feedback>
@@ -1110,7 +1142,8 @@ function PATIENT_DASHBOARD(props) {
                                                         type="text"
                                                         name="benefits_for_attendent"
                                                         value={formValues.benefits_for_attendent}
-                                                        onChange={handleChange}
+                                                    disabled = {!sendquotebutton}
+                                                    onChange={handleChange}
                                                         isInvalid={!!errors.benefits_for_attendent}
                                                     />
                                                     <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.benefits_for_attendent}</Form.Control.Feedback>
@@ -1126,6 +1159,7 @@ function PATIENT_DASHBOARD(props) {
                                                 type="text"
                                                 name="food_menu"
                                                 value={formValues.food_menu}
+                                                disabled = {!sendquotebutton}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.food_menu}
                                             />
@@ -1139,6 +1173,7 @@ function PATIENT_DASHBOARD(props) {
                                                 type="date"
                                                 name="confirmation"
                                                 value={formValues.confirmation}
+                                                disabled = {!sendquotebutton}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.confirmation}
                                             />
@@ -1153,6 +1188,7 @@ function PATIENT_DASHBOARD(props) {
                                                 type="text"
                                                 name="general_disclaimer"
                                                 value={formValues.general_disclaimer}
+                                                disabled = {!sendquotebutton}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.general_disclaimer}
                                             />
@@ -1167,6 +1203,7 @@ function PATIENT_DASHBOARD(props) {
                                                 style={{ height: '100px',border: "2px solid #164473", borderRadius: 10 }}
                                                 name="other_comments"
                                                 value={formValues.other_comments}
+                                                disabled = {!sendquotebutton}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
