@@ -603,7 +603,7 @@ function PATIENT_DASHBOARD(props) {
                                         <div className = "row">
                                             <div className = "col-md-6">
                                                 <Form.Group>
-                                                <Form.Label>Treatment Plan</Form.Label>
+                                                <Form.Label>Treatment Plan *</Form.Label>
                                                 <Form.Control
                                                     required
                                                     style={{ border: "2px solid #164473", borderRadius: 10 }}
@@ -618,7 +618,7 @@ function PATIENT_DASHBOARD(props) {
                                             </div>
                                             <div className = "col-md-6">
                                                 <Form.Group>
-                                                <Form.Label>Estimate Price</Form.Label>
+                                                <Form.Label>Estimate Price *</Form.Label>
                                                 <Form.Control
                                                     required
                                                     style={{ border: "2px solid #164473", borderRadius: 10 }}
@@ -1146,7 +1146,7 @@ function PATIENT_DASHBOARD(props) {
                                         </Form.Group>
                                         
                                         <Form.Group className="mt-2">
-                                            <Form.Label>General disclaimer</Form.Label>
+                                            <Form.Label>General disclaimer *</Form.Label>
                                             <Form.Control
                                                 required
                                                 style={{ border: "2px solid #164473", borderRadius: 10 }}
