@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Logo from "../../assets/guidemedoc-logo.png";
 import HeroImage from "../../assets/login-hero.png";
@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import * as auth_service from "../../service/auth_service";
+import * as auth_services from "../../services/auth_service";
 import { signupvalidationSchema } from "./authValidation";
 import { Country } from "country-state-city";
 import Input from 'react-phone-number-input/input'
@@ -65,6 +66,16 @@ function SignUpScreen() {
     if(e)
       formValues.mobile = e.toString()
   }
+  useEffect(() => {
+    fetchData();
+  }, []);
+  async function fetchData() {
+       
+    const idealdata = await auth_services.idealdata()
+    setIdeal(idealdata.payload)
+    
+  }
+  const [ideal,setIdeal] = useState();
   const validate = async (values) => {
     try {
       setDateErrors({
@@ -288,28 +299,27 @@ function SignUpScreen() {
                         ) : null}
                       </Form.Group>
                     </div>
+                    { ideal ?
                     <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
                           <FaShieldAlt />
                         </div>
-                        <Form.Control
-                          type="text"
+                        <Form.Select
                           name="insurance_name"
-                          placeholder="Insurance Name"
                           onChange={handleChange}
                           value={formValues.insurance_name}
                           className="signup-inputs"
                           isInvalid={errors?.insurance_name}
-                        />
-                        <Form.Control.Feedback
-                          style={{ color: "red" }}
-                          type="invalid"
                         >
-                          {errors?.insurance_name}
-                        </Form.Control.Feedback>
+                          <option value="">Select Insurance</option>
+
+                          {ideal.insurance.map((item,index)=>{
+                              return <option key={index}>{item}</option>;
+                          })}
+                        </Form.Select>
                       </Form.Group>
-                    </div>
+                    </div> : null }
                     <div className="col-md-6 mt-1 mt-lg-0">
                       <Form.Group className="my-3">
                         <div className="prepend-icon-auth">
@@ -345,8 +355,7 @@ function SignUpScreen() {
                         <div className="prepend-icon-auth">
                           <MdFlag />
                         </div>
-                        <Form.Control
-                          as="select"
+                        <Form.Select
                           name="nationality"
                           placeholder="Nationality"
                           onChange={handleChange}
@@ -361,7 +370,7 @@ function SignUpScreen() {
                             countries.map((e) => 
                               <option key = {e.name} value = {e.name}>{e.name} {e.flag}</option>)
                           }
-                        </Form.Control>
+                        </Form.Select>
                         <Form.Control.Feedback
                           style={{ color: "red" }}
                           type="invalid"

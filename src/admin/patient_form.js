@@ -714,9 +714,7 @@ function PATIENT_FORM(props) {
 
                                             />
                                             {show ?
-
                                                 <Form.Control
-
                                                     required
                                                     style={{ border: "2px solid #164473", borderRadius: 10, marginBottom: "10px", }}
                                                     type="text"
@@ -726,9 +724,6 @@ function PATIENT_FORM(props) {
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.other_plan}
                                                 /> : ""}
-
-
-
                                         </div>
                                         <Form.Control.Feedback style={{ color: "red" }} type="invalid">{errors?.other_plan}</Form.Control.Feedback>
 
