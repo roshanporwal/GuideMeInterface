@@ -153,15 +153,17 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
         let data = localStorage.getItem("login");
         data = JSON.parse(data);
         if (wonorloss === "won") {
-            const wonandloss = await auth_service.won(
-                enqurie_data[0]._id,
-                data.login_id,
-                formValues.id,
-                formValues
-            );
-            console.log(wonandloss)
-            if (wonandloss.payload) {
-                window.location.reload();
+            if(formValues.transaction && formValues.commission){
+                const wonandloss = await auth_service.won(
+                    enqurie_data[0]._id,
+                    data.login_id,
+                    formValues.id,
+                    formValues
+                );
+                console.log(wonandloss)
+                if (wonandloss.payload) {
+                    window.location.reload();
+                }
             }
         } else if (wonorloss === "lost") {
             const patient_lost_reason = lossreason;
@@ -288,6 +290,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             className="form-control"
                                             onChange={handleChange}
                                             type="text"
+                                            required
                                             name="transaction"
                                             id="transaction"
                                             value={formValues.transaction}
@@ -303,6 +306,7 @@ export default function ADMIN_PATIENT_DASHBOARD(props) {
                                             placeholder="Commision Value"
                                             className="form-control"
                                             onChange={handleChange}
+                                            required
                                             type="text"
                                             name="commission"
                                             id="commission"
